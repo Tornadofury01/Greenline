@@ -1,26 +1,41 @@
+import { FlaskConical } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
+import Logo from './Logo.jsx';
+import { NavItems } from './BottomNav.jsx';
 
 export default function Header() {
   const { t, lang, setLang, field } = useApp();
   return (
-    <header className="header">
-      <div className="brand">
-        <img src="/icon.svg" alt="" width="32" height="32" />
-        <div>
-          <div className="brand-name">{t('app.title')}</div>
-          <div className="brand-tag">{t('app.tagline')}</div>
+    <>
+      <header className="header">
+        <div className="header-inner">
+          <div className="brand">
+            <Logo />
+            <span className="brand-name">{t('app.title')}</span>
+            <span className="brand-tag">{t('app.tagline')}</span>
+          </div>
+          {/* Desktop (1024px+): navigation lives in the header. Phones use the bottom bar. */}
+          <nav className="top-nav" aria-label={t('nav.label')}>
+            <NavItems />
+          </nav>
+          <div className="lang" role="group" aria-label={t('app.langGroup')}>
+            {['en', 'es'].map((code) => (
+              <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}
+                aria-label={t(`app.langName.${code}`)}>
+                {t(`app.langShort.${code}`)}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      <div className="header-right">
-        {field?.isSampleData && <span className="badge">{t('app.sampleBadge')}</span>}
-        <button
-          className="lang-toggle"
-          onClick={() => setLang(lang === 'en' ? 'es' : 'en')}
-          aria-label={t('app.langToggleLabel')}
-        >
-          {t('app.langToggle')}
-        </button>
-      </div>
-    </header>
+      </header>
+      {field?.isSampleData && (
+        <div className="sample-strip" role="note">
+          <div className="sample-strip-inner">
+            <FlaskConical size={16} aria-hidden="true" />
+            <span>{t('app.sampleNotice')}</span>
+          </div>
+        </div>
+      )}
+    </>
   );
 }

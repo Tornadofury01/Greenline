@@ -1,56 +1,200 @@
 {
   "app": {
     "title": "Greenline",
-    "tagline": "Compare rotaciones de cultivos con datos de la NASA",
-    "sampleBadge": "Datos de ejemplo",
-    "langToggle": "English",
-    "langToggleLabel": "Cambiar idioma a inglés"
+    "tagline": "Planeación de rotación de cultivos con datos de la NASA",
+    "langGroup": "Idioma",
+    "langName": {
+      "en": "English",
+      "es": "Español"
+    },
+    "langShort": {
+      "en": "EN",
+      "es": "ES"
+    },
+    "sampleNotice": "Mostrando datos de ejemplo de una parcela de demostración. Todavía no son mediciones reales."
   },
   "nav": {
+    "label": "Principal",
     "field": "Parcela",
     "farm": "Granja",
-    "story": "Historia",
+    "story": "Historial",
     "compare": "Comparar",
     "handoff": "Experto"
   },
   "common": {
-    "next": "Siguiente",
-    "judgmentNote": "Greenline apoya su criterio y a los expertos locales. No los reemplaza.",
-    "noField": "Primero elija una parcela para ver esta pantalla.",
+    "judgmentNote": "Esta herramienta apoya su criterio y a sus expertos locales. No los reemplaza.",
+    "noFieldTitle": "Aún no hay parcela",
+    "noField": "Primero elija su parcela. Después esta página se llenará.",
     "goPick": "Elegir parcela",
     "close": "Cerrar",
-    "glossaryLabel": "¿Qué significa esto?",
-    "points": "puntos",
-    "outOf100": "de 100",
-    "years": "años"
+    "explain": "¿Qué es {term}?",
+    "source": "Fuente",
+    "sampleValues": "valores de ejemplo",
+    "and": "y"
+  },
+  "units": {
+    "in": "pulg"
+  },
+  "picker": {
+    "empty": "Aún no hay cultivos.",
+    "hint": "Toque los cultivos en el orden en que los siembra. Toque un cultivo de arriba para quitarlo.",
+    "remove": "Quitar {crop}, temporada {n}",
+    "add": "Agregar {crop}"
   },
   "pick": {
     "title": "Elija su parcela",
-    "hint": "Toque su parcela en el mapa. Por ahora, cualquier toque carga una parcela de ejemplo cerca de Denton.",
-    "mapOffline": "El mapa necesita conexión a internet. Aún puede cargar la parcela de ejemplo.",
-    "loadSample": "Cargar parcela de ejemplo",
-    "summaryTitle": "Su parcela",
-    "county": "Condado",
-    "cell": "Celda del mapa (30 m)",
+    "intro": "Busque su parcela en el mapa y tóquela.",
+    "mapLabel": "Mapa del norte de Texas",
+    "mapHint": "En esta demostración, cualquier toque carga una parcela de ejemplo cerca de Denton.",
+    "mapOffline": "El mapa necesita internet. Aún puede cargar la parcela de ejemplo.",
+    "loadSample": "Cargar la parcela de ejemplo",
+    "summaryTitle": "Su parcela de un vistazo",
+    "location": "Ubicación",
+    "countyValue": "Condado de {county}, {state}",
+    "cellDetail": "Cuadro del mapa {cell} (30 m)",
     "soil": "Suelo",
+    "soilValue": "{texture}, {drainage}",
+    "soilDetail": "Serie {series} · {om}% de materia orgánica · grupo hidrológico {group}",
     "slope": "Pendiente",
-    "recentCrops": "Cultivos recientes",
-    "privacy": "Guardamos una celda de 30 m, nunca su ubicación exacta.",
-    "continue": "Cuéntenos sobre su granja"
+    "slopeWord": {
+      "flat": "Plana",
+      "gentle": "Pendiente suave",
+      "moderate": "Pendiente moderada",
+      "steep": "Empinada"
+    },
+    "slopeDetail": "{pct}% de inclinación promedio",
+    "recentCrops": "Últimos 3 cultivos",
+    "privacy": "Guardamos un cuadro de 30 m, nunca su ubicación exacta.",
+    "continue": "Siguiente: su granja",
+    "emptySummary": "Toque su parcela en el mapa, o cargue la parcela de ejemplo para probar la aplicación."
   },
   "farm": {
     "title": "Su granja",
-    "currentRotation": "¿Qué siembra ahora? (toque en orden)",
-    "currentHint": "Toque los cultivos para agregarlos en orden. Toque un cultivo de su lista para quitarlo.",
-    "yourList": "Su rotación",
-    "emptyList": "Aún no hay cultivos",
-    "priorities": "¿Qué es lo más importante para usted?",
+    "intro": "Tres pasos rápidos. Sus respuestas se quedan en este teléfono.",
+    "step1": "¿Qué siembra ahora?",
+    "step2": "¿Qué es lo más importante?",
+    "step2Hint": "Elija una o más. Cuentan doble en el puntaje.",
+    "step3": "¿Cuáles son sus límites?",
     "waterMode": "¿Usa riego?",
+    "waterSource": "¿De dónde viene su agua?",
     "equipment": "Equipo que tiene",
     "budget": "Presupuesto para cambios",
-    "waterSource": "Fuente de agua",
     "market": "¿Dónde vende o usa sus cultivos?",
     "seeResults": "Comparar rotaciones"
+  },
+  "story": {
+    "title": "El historial de su parcela",
+    "kicker": "Hallazgo principal",
+    "headline": "Su parcela queda sin cubierta unos {months} meses al año.",
+    "headlineDetail": "Por lo general en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
+    "statDrought": "Años de sequía",
+    "statRain": "Lluvia por año",
+    "rainDetail": "Promedio ({mm} mm)",
+    "statHeat": "Días de más de 95°F",
+    "heatDetail": "Promedio por año",
+    "statBare": "Días sin cubierta",
+    "bareDetail": "Promedio por año",
+    "chartTitle": "Lluvia de cada año desde 2005",
+    "chartCaption": "Cada barra es un año. Las barras rojas son años de sequía: {years}.",
+    "chartAlt": "Gráfica de barras de la lluvia anual de 2005 a 2025. Promedio de unas {avg} pulgadas. Años de sequía: {years}.",
+    "tooltipRain": "Lluvia",
+    "bareTitle": "¿Cuándo estuvo el suelo desnudo?",
+    "bareCaption": "Cada fila es un año y cada cuadro un mes. Los cuadros cafés con rayas indican poca o ninguna cubierta vegetal.",
+    "legendBare": "Suelo desnudo",
+    "legendCovered": "Con plantas",
+    "year": "Año",
+    "monthsShort": [
+      "E",
+      "F",
+      "M",
+      "A",
+      "M",
+      "J",
+      "J",
+      "A",
+      "S",
+      "O",
+      "N",
+      "D"
+    ],
+    "monthsLong": [
+      "enero",
+      "febrero",
+      "marzo",
+      "abril",
+      "mayo",
+      "junio",
+      "julio",
+      "agosto",
+      "septiembre",
+      "octubre",
+      "noviembre",
+      "diciembre"
+    ],
+    "next": "Ver opciones de rotación"
+  },
+  "compare": {
+    "title": "Comparar rotaciones",
+    "intro": "Los puntajes son de 0 a 100, según sus metas y límites. Más alto, mejor ajuste.",
+    "glance": "De un vistazo",
+    "glanceHint": "Abra cada opción abajo para ver por qué obtuvo ese puntaje.",
+    "current": "Lo que siembra ahora",
+    "option": "Opción {letter}",
+    "letters": [
+      "A",
+      "B",
+      "C"
+    ],
+    "custom": "Su propia rotación",
+    "bestMatch": "La mejor para sus metas",
+    "outOf": "de 100",
+    "delta": {
+      "up": "{n} puntos mejor que ahora",
+      "down": "{n} puntos menos que ahora",
+      "same": "Igual que ahora"
+    },
+    "confidenceBadge": "Confianza {level}",
+    "showDetails": "Ver detalles",
+    "hideDetails": "Ocultar detalles",
+    "why": "Por qué este puntaje",
+    "benefits": "Lo bueno para usted",
+    "gaps": "Puntos débiles",
+    "risks": "Riesgos a vigilar",
+    "breakdown": "Puntaje por meta (0–10)",
+    "picked": "Su meta",
+    "meterLabel": "{n} de 10",
+    "confidenceWhy": "¿Qué tan seguros estamos?",
+    "evidence": "Datos usados",
+    "none": "No se encontró nada.",
+    "noCurrent": "Díganos qué siembra ahora para compararlo.",
+    "goFarm": "Agregar mis cultivos",
+    "buildOwn": "Pruebe su propia rotación",
+    "buildHint": "Elija cultivos en orden. Se califica igual que las opciones de arriba.",
+    "scoreIt": "Calificar mi rotación"
+  },
+  "handoff": {
+    "title": "Resumen para su agente de extensión",
+    "intro": "Imprima esta página o guárdela como PDF. Llévela a su oficina de AgriLife Extension del condado.",
+    "print": "Imprimir o guardar como PDF",
+    "fieldSection": "La parcela",
+    "climateSection": "Historial del clima, 2005–2025",
+    "farmSection": "La granja y sus metas",
+    "growNow": "Siembra ahora",
+    "goals": "Metas",
+    "water": "Agua",
+    "sells": "Vende a",
+    "resultsSection": "Rotaciones comparadas",
+    "questionsSection": "Preguntas para el experto",
+    "questions": [
+      "¿Estos cultivos se ajustan al mercado y la semilla disponibles aquí?",
+      "¿Qué fechas de siembra y densidades funcionan aquí?",
+      "¿Hay programas de costo compartido (como NRCS EQIP) para cultivos de cobertura?",
+      "¿Qué riesgos no estoy viendo en esta parcela?"
+    ],
+    "notesSection": "Notas",
+    "sources": "Fuentes de datos",
+    "sampleNote": "Este resumen usa datos de ejemplo, no mediciones de esta parcela.",
+    "generated": "Hecho con Greenline el {date}"
   },
   "priorities": {
     "water": "Ahorrar agua",
@@ -60,25 +204,33 @@
     "cattle": "Alimentar ganado"
   },
   "options": {
-    "waterMode": { "dryland": "Temporal (solo lluvia)", "irrigated": "Con riego" },
-    "equipment": { "no_till_drill": "Sembradora de labranza cero", "conventional": "Labranza convencional", "baler": "Empacadora de heno", "none": "Nada especial" },
-    "budget": { "low": "Bajo", "medium": "Medio", "high": "Alto" },
-    "waterSource": { "rain": "Solo lluvia", "well": "Pozo", "pond": "Estanque o tanque", "canal": "Canal o distrito" },
-    "market": { "elevator": "Elevador de granos", "gin": "Despepitadora de algodón", "cattle": "Mi propio ganado", "local": "Compradores locales" }
-  },
-  "story": {
-    "title": "La historia de su parcela",
-    "chartTitle": "Lluvia por año, 2005–2025",
-    "chartUnit": "mm de lluvia",
-    "bareTitle": "¿Cuándo estuvo el suelo desnudo?",
-    "bareHint": "Los cuadros cafés son meses con poca o ninguna cobertura vegetal (NDVI menor a 0.25).",
-    "statDrought": "Años de sequía",
-    "statRain": "Lluvia promedio por año",
-    "statHeat": "Días de calor por año (prom.)",
-    "statBare": "Días de suelo desnudo por año (prom.)",
-    "mm": "mm",
-    "days": "días",
-    "monthsShort": ["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"]
+    "waterMode": {
+      "dryland": "Temporal (solo lluvia)",
+      "irrigated": "Con riego"
+    },
+    "equipment": {
+      "no_till_drill": "Sembradora de labranza cero",
+      "conventional": "Labranza convencional",
+      "baler": "Empacadora de heno",
+      "none": "Nada especial"
+    },
+    "budget": {
+      "low": "Bajo",
+      "medium": "Medio",
+      "high": "Alto"
+    },
+    "waterSource": {
+      "rain": "Solo lluvia",
+      "well": "Pozo",
+      "pond": "Estanque o tanque",
+      "canal": "Canal o distrito"
+    },
+    "market": {
+      "elevator": "Elevador de granos",
+      "gin": "Despepitadora de algodón",
+      "cattle": "Mi propio ganado",
+      "local": "Compradores locales"
+    }
   },
   "yearType": {
     "drought": "Sequía",
@@ -86,30 +238,11 @@
     "heat": "Calor",
     "normal": "Normal"
   },
-  "compare": {
-    "title": "Comparar rotaciones",
-    "current": "Lo que siembra ahora",
-    "suggested": "Opción sugerida",
-    "custom": "Su propia rotación",
-    "score": "Puntaje",
-    "confidence": "Confianza",
-    "tapForDetails": "Toque para ver detalles",
-    "hideDetails": "Ocultar detalles",
-    "why": "Por qué este puntaje",
-    "breakdown": "Puntaje por prioridad",
-    "evidence": "Evidencia (datos de NASA y USDA)",
-    "benefits": "Beneficios",
-    "gaps": "Carencias",
-    "risks": "Riesgos",
-    "confidenceWhy": "Por qué esta confianza",
-    "none": "Nada que mostrar",
-    "picked": "usted eligió esto",
-    "buildOwn": "Armar mi propia rotación",
-    "buildHint": "Toque los cultivos en orden para armar una rotación. Se califica de la misma forma.",
-    "scoreIt": "Calificar mi rotación",
-    "noCurrent": "Agregue su rotación actual en la pantalla Granja para compararla."
+  "confidenceLevel": {
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja"
   },
-  "confidenceLevel": { "high": "Alta", "medium": "Media", "low": "Baja" },
   "tags": {
     "nitrogen": "Aporta nitrógeno",
     "cover": "Cubre el suelo",
@@ -154,25 +287,6 @@
     "newCrops": "La mayoría de los cultivos son nuevos en esta parcela.",
     "placeholderTraits": "Los valores de los cultivos son estimaciones iniciales y aún se revisan."
   },
-  "handoff": {
-    "title": "Resumen para su agente de extensión del condado",
-    "intro": "Lleve o envíe esta página a su oficina local de AgriLife Extension para hablar de sus opciones.",
-    "print": "Imprimir o guardar como PDF",
-    "fieldSection": "Parcela",
-    "farmSection": "Granja y metas",
-    "resultsSection": "Rotaciones comparadas",
-    "climateSection": "Historial climático",
-    "questionsSection": "Preguntas para el experto",
-    "questions": [
-      "¿Estos cultivos se ajustan al mercado y la semilla disponibles aquí?",
-      "¿Qué fechas de siembra y densidades funcionan aquí?",
-      "¿Hay programas de costo compartido (como NRCS EQIP) para cultivos de cobertura?",
-      "¿Qué riesgos no estoy viendo en esta parcela?"
-    ],
-    "notesSection": "Notas",
-    "generated": "Hecho con Greenline el {date}",
-    "sources": "Fuentes de datos"
-  },
   "crops": {
     "winter_wheat": "Trigo de invierno",
     "grain_sorghum": "Sorgo de grano",
@@ -198,19 +312,52 @@
     "grazeout_wheat_sudan": "Trigo de pastoreo y sudán"
   },
   "soil": {
-    "texture": { "clay": "Arcilla", "clay_loam": "Franco arcilloso", "loam": "Franco", "sandy_loam": "Franco arenoso" },
-    "drainage": { "well drained": "Buen drenaje", "moderately well drained": "Drenaje moderado", "poorly drained": "Mal drenaje" },
+    "texture": {
+      "clay": "Arcilla",
+      "clay_loam": "Franco arcilloso",
+      "loam": "Franco",
+      "sandy_loam": "Franco arenoso"
+    },
+    "drainage": {
+      "well drained": "buen drenaje",
+      "moderately well drained": "drenaje moderado",
+      "poorly drained": "mal drenaje"
+    },
     "group": "Grupo hidrológico {group}",
     "organicMatter": "{value}% de materia orgánica"
   },
   "glossary": {
-    "ndvi": { "title": "NDVI (verdor de las plantas)", "text": "Una medida satelital de qué tan verdes y vivas están las plantas, de 0 (desnudo) a 1 (muy verde). Texto provisional." },
-    "soilMoisture": { "title": "Anomalía de humedad del suelo", "text": "Qué tan húmedo o seco estuvo el suelo comparado con lo normal, del satélite SMAP de la NASA. Texto provisional." },
-    "hydrologicGroup": { "title": "Grupo hidrológico", "text": "Qué tan rápido el agua entra al suelo. El grupo A es el más rápido, el D el más lento (más escurrimiento). Texto provisional." },
-    "coverCrop": { "title": "Cultivo de cobertura", "text": "Un cultivo sembrado sobre todo para proteger y alimentar el suelo entre cultivos comerciales. Texto provisional." },
-    "slope": { "title": "Pendiente", "text": "Qué tan inclinada es la parcela. Más pendiente significa que la lluvia arrastra el suelo más rápido. De NASA SRTM. Texto provisional." },
-    "confidence": { "title": "Confianza", "text": "Cuántos datos respaldan este puntaje y qué tan conocidos son estos cultivos en su parcela. Texto provisional." },
-    "score": { "title": "Puntaje", "text": "Un resumen de 0 a 100 de qué tan bien se ajusta una rotación a sus prioridades y límites. Cada regla es abierta y editable. Texto provisional." },
-    "bareDays": { "title": "Días de suelo desnudo", "text": "Días en que los satélites vieron poca o ninguna cobertura vegetal, dejando el suelo expuesto al viento y la lluvia. Texto provisional." }
+    "ndvi": {
+      "title": "NDVI (verdor de las plantas)",
+      "text": "Los satélites miden qué tan verde se ve el suelo, de 0 (tierra desnuda) a 1 (cultivo verde y denso). Debajo de 0.25 contamos el mes como sin cubierta."
+    },
+    "soilMoisture": {
+      "title": "Humedad del suelo",
+      "text": "Qué tan húmeda o seca estuvo la capa superior del suelo comparada con un año normal. Se mide desde el espacio con el satélite SMAP de la NASA."
+    },
+    "hydrologicGroup": {
+      "title": "Grupo hidrológico",
+      "text": "Qué tan rápido entra la lluvia en su suelo. El grupo A es el más rápido. El grupo D es el más lento, así que más lluvia escurre de la parcela."
+    },
+    "coverCrop": {
+      "title": "Cultivo de cobertura",
+      "text": "Un cultivo sembrado sobre todo para proteger y alimentar el suelo entre cultivos comerciales, como el centeno o la veza vellosa."
+    },
+    "slope": {
+      "title": "Pendiente",
+      "text": "Qué tan inclinada es su parcela. En terreno más inclinado, la lluvia arrastra el suelo más rápido. Se mide con un mapa de elevación de la NASA."
+    },
+    "confidence": {
+      "title": "Confianza",
+      "text": "Qué tan seguros estamos de un puntaje. Es más alta cuando hay muchos años de datos y los cultivos ya se han sembrado en su parcela."
+    },
+    "score": {
+      "title": "Puntaje",
+      "text": "Un número de 0 a 100 de qué tan bien se ajusta una rotación a sus metas y límites. Sus metas elegidas cuentan doble. Cada regla está abierta para que los expertos la revisen."
+    },
+    "bareDays": {
+      "title": "Días sin cubierta",
+      "text": "Días en que los satélites vieron poca o ninguna cubierta vegetal, así que el suelo quedó expuesto al viento y la lluvia."
+    }
   }
 }
