@@ -34,7 +34,14 @@
     "receiptOpen": "Ver los datos detrás de esto",
     "receiptTitle": "De dónde viene esto",
     "receiptLine": "{resolution} · {dates}",
-    "unknown": "Desconocido"
+    "unknown": "Desconocido",
+    "scale": {
+      "patch": "Medido en su campo",
+      "area": "Valor regional para su zona",
+      "county": "Promedio del condado",
+      "state": "Promedio del estado",
+      "model": "Resultado de un modelo"
+    }
   },
   "units": {
     "in": "pulg"
@@ -331,7 +338,14 @@
     "drySoilYears": "El suelo estuvo al menos 10% más seco de lo normal en {count} de {total} temporadas.",
     "lowOrganicMatter": "La materia orgánica del suelo es baja ({om}%), así que los cultivos de cobertura y las leguminosas ayudan más.",
     "rotationBare": "Estimamos que esta rotación deja el suelo desnudo unos {days} días al año.",
-    "bareCalibrated": "Para {crops}, la estimación usa el registro satelital de esta parcela."
+    "bareCalibrated": "Para {crops}, la estimación usa el registro satelital de esta parcela.",
+    "erodible": "Este suelo se erosiona fácilmente en esta pendiente (factor de erosión K {k} × pendiente de {slope}%), así que los días sin cobertura cuestan más aquí.",
+    "notErodible": "Este suelo resiste la erosión en esta pendiente (factor de erosión K {k} × pendiente de {slope}%), así que los días sin cobertura cuestan un poco menos aquí.",
+    "soilStore": {
+      "low": "Su suelo guarda solo unas {inches} pulgadas de agua en los primeros 3 pies, así que los cultivos que necesitan mucha agua sufren más en años secos.",
+      "mid": "Su suelo guarda unas {inches} pulgadas de agua en los primeros 3 pies, una cantidad promedio.",
+      "high": "Su suelo guarda unas {inches} pulgadas de agua en los primeros 3 pies. Eso ayuda a los cultivos en sequías cortas, así que los cultivos que necesitan mucha agua pierden un poco menos."
+    }
   },
   "benefits": {
     "water": "Usa poca agua.",
@@ -371,12 +385,16 @@
     "cdlNoise": "Los mapas de cultivos a veces se equivocan.",
     "traitsEstimated": "{crops}: algunos rasgos usados aquí son estimaciones aproximadas, no de una fuente publicada.",
     "bareEstimated": "Los días de suelo desnudo de {crops} son una estimación, no una medición en este campo.",
-    "prismAgrees": "Los datos de lluvia de la NASA coinciden con la lluvia de estaciones en tierra (PRISM): correlación {corr}, {pct}% de diferencia.",
-    "prismDisagrees": "Los datos de lluvia de la NASA difieren de la lluvia de estaciones en tierra (PRISM): correlación {corr}, {pct}% de diferencia.",
     "resolution": "Nivel de detalle: {fine} para verdor y mapas de cultivos, {mid} para lluvia por satélite y humedad del suelo, {coarse} para temperatura. El clima es un promedio de un área, no una medición de su campo.",
     "toneUp": "Aumenta la confianza",
     "toneDown": "Reduce la confianza",
-    "toneNote": "Bueno saber"
+    "toneNote": "Bueno saber",
+    "prism": {
+      "agreesLower": "La lluvia de {name} coincide con la lluvia de estaciones en tierra (PRISM) año por año en este campo: correlación {corr}, {pct}% más baja ({years} años).",
+      "agreesHigher": "La lluvia de {name} coincide con la lluvia de estaciones en tierra (PRISM) año por año en este campo: correlación {corr}, {pct}% más alta ({years} años).",
+      "differsLower": "La lluvia de {name} no coincide con la lluvia de estaciones en tierra (PRISM) en este campo: correlación {corr}, {pct}% más baja ({years} años).",
+      "differsHigher": "La lluvia de {name} no coincide con la lluvia de estaciones en tierra (PRISM) en este campo: correlación {corr}, {pct}% más alta ({years} años)."
+    }
   },
   "crops": {
     "winter_wheat": "Trigo de invierno",
@@ -468,7 +486,7 @@
     },
     "frost": {
       "title": "Riesgo de helada y días sin helada",
-      "text": "Los días sin helada son los días entre la última helada de primavera y la primera de otoño (mínima de 32°F o menos), según NASA POWER, con datos de PRISM medidos en tierra como comprobación donde los tenemos. Definen las fechas de siembra y si un cultivo de cobertura de invierno alcanza a terminar. Greenline los usa para clasificar los años por tipo. Todavía no puntúa el riesgo de helada de una rotación."
+      "text": "Los días sin helada son los días entre la última helada de primavera y la primera de otoño (una mínima de 32 °F o menos). Las fechas de helada en la página de su campo vienen de PRISM (4 km, de estaciones meteorológicas): la fecha media de los últimos 10 años. El modelo de tipos de año de Greenline usa los días sin helada de NASA POWER, que en promedio dan unos 3 días más. Marcan las ventanas de siembra y si un cultivo de cobertura de temporada fresca puede terminar. Greenline todavía no califica el riesgo de helada de una rotación."
     },
     "waterBalance": {
       "title": "Balance de agua",
@@ -481,6 +499,30 @@
     "sensor2013": {
       "title": "Por qué importa 2013",
       "text": "Landsat 8 se lanzó en 2013 y ve el verdor de las plantas un poco más alto que los antiguos Landsat 5 y 7. Con un límite fijo para “desnudo”, eso solo hace que los años recientes parezcan menos desnudos. Todavía no igualamos los dos sensores, así que todos los números de días desnudos usan solo 2013 en adelante. Los años anteriores se siguen usando para el historial de lluvia y calor."
+    },
+    "prism": {
+      "title": "Lluvia de estaciones en tierra (PRISM)",
+      "text": "PRISM (Universidad Estatal de Oregón) mapea la lluvia en una cuadrícula de 4 km con miles de pluviómetros y estaciones meteorológicas. Lo usamos para revisar los datos de lluvia de la NASA. En 201 campos del norte de Texas (2008–2024), la lluvia anual de NASA POWER coincidió con PRISM con una correlación de 0.92 y marcó cerca de 9% menos; GPM IMERG coincidió con 0.93 y marcó cerca de 4% más. Ambos datos de la NASA se ajustan en parte con pluviómetros, así que esto muestra consistencia, no una prueba totalmente independiente. No cambia los puntos de confianza."
+    },
+    "kFactor": {
+      "title": "Riesgo de erosión (factor K)",
+      "text": "Qué tan fácil la lluvia arrastra la capa superior de su suelo, según el estudio de suelos del USDA. Va de 0.02 a 0.69. Menos de 0.20 es bajo, de 0.20 a 0.35 moderado, más de 0.35 alto. Greenline multiplica K por su pendiente: cuando K × pendiente es 0.5 o más (por ejemplo K 0.25 en una pendiente de 2%), los días sin cobertura cuestan más en el puntaje de erosión."
+    },
+    "tFactor": {
+      "title": "Pérdida de suelo tolerable (T)",
+      "text": "Lo máximo de suelo, en toneladas por acre al año, que se puede perder por agua o viento sin que el campo deje de ser productivo a largo plazo. Del estudio de suelos del USDA, de 1 a 5. Los suelos profundos tienen 5. Es un límite que no se debe pasar, no una medición de lo que se pierde hoy."
+    },
+    "waterStorage": {
+      "title": "Agua que guarda el suelo",
+      "text": "Cuánta agua pueden sacar las plantas del primer metro (3.3 pies) de suelo cuando está lleno, según el estudio de suelos del USDA. Más reserva ayuda a los cultivos en sequías. Greenline la usa en el puntaje de agua: con menos de 4 pulgadas, los cultivos que necesitan mucha agua pierden más en campos con sequías frecuentes; con 6 pulgadas o más, un poco menos."
+    },
+    "landCapability": {
+      "title": "Clase de capacidad de la tierra",
+      "text": "La calificación del USDA, de 1 a 8, de qué tan apta es la tierra para cultivos sin riego. La clase 1 tiene menos límites; de la clase 5 en adelante es sobre todo para pasto o árboles. La letra indica el límite: e erosión, w humedad, s suelo (poco profundo, pedregoso o seco), c clima. Se muestra como contexto; no entra en el puntaje."
+    },
+    "grossRevenue": {
+      "title": "Ingreso bruto (estimación en dólares)",
+      "text": "Rendimiento del condado × precio de Texas, promedio de 2021–2025, de la encuesta USDA NASS Quick Stats. Es el dinero que entra antes de cualquier costo (semilla, fertilizante, combustible, renta), así que no es ganancia. Cuando NASS no publica el rendimiento de su condado, usamos el promedio regional o de Texas y lo decimos. Los promedios de Texas incluyen granjas con riego de las High Plains y pueden ser altos para el norte de Texas de temporal. Los dólares nunca cambian el puntaje ni el orden de las opciones."
     }
   },
   "si": {
@@ -632,5 +674,98 @@
     "jump": "Ir a una palabra",
     "dataLabel": "Datos",
     "back": "Volver"
+  },
+  "whatIf": {
+    "drier": "Suposición: {pct}% menos lluvia que el año promedio de este campo.",
+    "wetter": "Suposición: {pct}% más lluvia que el año promedio de este campo, con más días de lluvia fuerte.",
+    "hotter": "Suposición: {extra} días más a 95 °F o más ({days} en vez de unos {avg}).",
+    "normal": "Suposición: un año promedio para este campo. Todavía no cambió nada."
+  },
+  "whatIfUi": {
+    "title": "¿Y si…?",
+    "caption": "Cambie el clima y vea cómo resiste cada opción. Partimos del año promedio de su propio campo.",
+    "rain": "Lluvia vs. promedio",
+    "heat": "Días extra sobre 95 °F",
+    "rainNormal": "Promedio",
+    "rainValue": "{pct}%",
+    "heatNormal": "Ninguno",
+    "heatValue": "+{n} días",
+    "banner": "Hipotético, no es un pronóstico.",
+    "bannerDetail": "Estos puntajes muestran un año inventado para explorar riesgos. No predicen el próximo año.",
+    "reset": "Restablecer",
+    "assumption": "Los días de lluvia fuerte suben y bajan con la lluvia. La humedad del suelo no cambia. Los puntajes usan las mismas reglas que la repetición de un mal año.",
+    "glanceTitle": "Cómo resiste cada opción en su año hipotético",
+    "scoreLine": "Puntaje hipotético: {score} de 10",
+    "heading": "En su año hipotético",
+    "note": "Una prueba de estrés para un año inventado, hecho con los promedios de su campo. No es un pronóstico ni una estimación de rendimiento.",
+    "badge": "Hipotético"
+  },
+  "dollars": {
+    "estimate": "Estimación",
+    "grossLine": "≈ ${usd}/acre al año",
+    "noGross": "No hay rendimiento ni precio de NASS para estos cultivos",
+    "notProfit": "Ingreso bruto, antes de costos. No es ganancia.",
+    "stateWarnShort": "Algunos rendimientos son promedios de Texas, que incluyen granjas con riego y pueden ser altos para esta zona.",
+    "fertShort": "+ unos ${lo}–${hi}/acre al año en nitrógeno",
+    "title": "Dinero (estimación)",
+    "cropMath": "{yield} {yieldUnit} × {price} {priceUnit}, promedio de {years}",
+    "level": {
+      "county": "Rendimiento: promedio del condado de {county}.",
+      "district": "Rendimiento: promedio regional (distrito {district}), no de su condado.",
+      "state": "Rendimiento: promedio de Texas, no de su condado. Los promedios de Texas incluyen granjas con riego de las High Plains y pueden ser altos para el norte de Texas de temporal.",
+      "stateOk": "Rendimiento: promedio del estado de Oklahoma, no de su condado."
+    },
+    "status": {
+      "fallow": "{crop}: nada que vender ($0).",
+      "cover": "{crop}: no se vende. Su valor está en el suelo y el nitrógeno.",
+      "priceOnly": "{crop}: NASS tiene un precio de Texas pero no un rendimiento para su condado, así que no hay cifra en dólares.",
+      "noData": "{crop}: no hay rendimiento ni precio de NASS, así que no hay cifra en dólares. Consulte a su comprador o a AgriLife."
+    },
+    "perYear": "Toda la rotación: unos ${usd} por acre al año, bruto.",
+    "partial": "Solo {priced} de {years} años tienen precio de NASS, así que esto promedia esos años.",
+    "fert": "Nitrógeno de {crops}: vale unos ${lo}–${hi} por acre al año en fertilizante que tal vez no necesite comprar. Contamos el {share}% del nitrógeno fijado, a ${price} por libra de N.",
+    "nPlaceholder": "El precio del nitrógeno es provisional, no viene de NASS. Consulte con su proveedor.",
+    "nUnknown": "Nitrógeno de {crops}: todavía no se sabe.",
+    "okNote": "Campo en Oklahoma: rendimientos de Oklahoma, precios de Texas.",
+    "source": "Encuesta USDA NASS Quick Stats: rendimientos y precios recibidos en Texas, promedios de {years}.",
+    "notInScore": "Los dólares se muestran solo como contexto. No cambian el puntaje ni el orden de las opciones."
+  },
+  "soilFacts": {
+    "title": "Su suelo: {series}",
+    "k": "Riesgo de erosión (K)",
+    "kWord": {
+      "low": "Bajo",
+      "moderate": "Moderado",
+      "high": "Alto"
+    },
+    "kDetail": "Factor de erosión K = {k} (de 0.02 a 0.69; más alto se erosiona más fácil)",
+    "t": "Pérdida de suelo tolerable (T)",
+    "tValue": "{t} toneladas por acre al año",
+    "tDetail": "Lo máximo que este campo puede perder al año y seguir productivo",
+    "water": "Agua que guarda el suelo (primer metro)",
+    "waterValue": "{inches} pulg.",
+    "waterDetail": "{cm} cm de agua que las plantas pueden usar, en los primeros 3.3 pies",
+    "lcc": "Clase de capacidad de la tierra",
+    "lccValue": "Clase {cls}",
+    "lccValueSub": "Clase {cls}, {sub}",
+    "sub": {
+      "e": "límites por erosión",
+      "w": "límites por humedad",
+      "s": "límites del suelo (poco profundo, pedregoso o seco)",
+      "c": "límites por clima"
+    },
+    "lccDetail": "La clase 1 tiene menos límites para cultivos; la clase 8 no es para cultivos (sin riego)",
+    "source": "Estudio de suelos del USDA (SSURGO), suelo principal de su campo"
+  },
+  "frost": {
+    "title": "Fechas de helada",
+    "spring": "Última helada de primavera",
+    "fall": "Primera helada de otoño",
+    "date": "Alrededor del {day} de {month}",
+    "typical": "Fecha media, {from}–{to}",
+    "season": "Temporada sin heladas",
+    "seasonValue": "{days} días",
+    "powerNote": "NASA POWER indica {days} días. El modelo de tipos de año usa ese dato.",
+    "source": "Temperaturas diarias de PRISM (4 km, de estaciones meteorológicas), mínima de 32 °F o menos"
   }
 }

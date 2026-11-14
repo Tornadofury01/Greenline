@@ -29,8 +29,12 @@ export function AppProvider({ children }) {
   const [how, setHow] = useState({ from: 'field', term: null });
   const openHow = (term = null) => { setHow({ from: screen === 'how' ? how.from : screen, term }); setScreen('how'); };
   const [field, setField] = useState(null);
-  // The bad year being replayed on the Compare screen (null = normal years). Shared so Field story can open it.
-  const [replayYear, setReplayYear] = useState(null);
+  // One scenario slot for the Compare screen: a real bad year (replayYear) OR a what-if ({ rainPct, heatDays }).
+  // Picking one clears the other. Shared so Field story can open a replay.
+  const [replayYear, setReplayYearRaw] = useState(null);
+  const [whatIf, setWhatIfRaw] = useState(null);
+  const setReplayYear = (year) => { setReplayYearRaw(year); if (year != null) setWhatIfRaw(null); };
+  const setWhatIf = (w) => { setWhatIfRaw(w); if (w) setReplayYearRaw(null); };
   const [farm, setFarm] = useState({ ...DEFAULT_FARM, ...saved.farm });
 
   useEffect(() => {
@@ -45,7 +49,8 @@ export function AppProvider({ children }) {
     try {
       const f = await load();
       setField(f);
-      setReplayYear(null);
+      setReplayYearRaw(null);
+      setWhatIfRaw(null);
       setFarm((prev) => (prev.currentRotation.length ? prev : { ...prev, currentRotation: guessCurrentRotation(f) }));
     } finally {
       setLoading(false);
@@ -58,7 +63,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, pickField, pickDemo, loading, farm, updateFarm };
+  const value = { lang, setLang, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickDemo, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

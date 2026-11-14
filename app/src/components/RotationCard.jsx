@@ -3,7 +3,7 @@
 import { useId, useState } from 'react';
 import {
   Award, ChevronDown, ArrowUp, ArrowDown, Minus, ArrowRight, CircleCheck, CircleMinus,
-  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun, Droplet, Bug, BookOpen,
+  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun, Droplet, Bug, BookOpen, FlaskConical,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { formatReason } from '../i18n.js';
@@ -12,6 +12,7 @@ import { topReasons } from '@scoring/confidence.js';
 import { ConfidenceBadge, Receipt } from './Small.jsx';
 import Verdict from './Verdict.jsx';
 import CoverStrip from './CoverStrip.jsx';
+import { DollarFace, DollarDetails } from './DollarBlock.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
 import { cropInsight, cropDriverText, stressDriverText, modelSummary } from '../si.js';
 
@@ -151,7 +152,9 @@ function ReplaySummary({ replay, normal, shown }) {
   return (
     <div className="replay-sum">
       <Verdict verdict={replay.verdict} />
-      <span>{t('replayUi.scoreLine', { year: replay.year, score: Math.round(replay.score * 10) / 10 })}</span>
+      <span>{replay.hypothetical
+        ? t('whatIfUi.scoreLine', { score: Math.round(replay.score * 10) / 10 })
+        : t('replayUi.scoreLine', { year: replay.year, score: Math.round(replay.score * 10) / 10 })}</span>
       <span className="muted">{t('replayUi.vsNormal', { n: Math.abs(diff), dir: t(`replayUi.dir${dir}`) })}</span>
     </div>
   );
@@ -203,8 +206,10 @@ function EvidenceFooter({ result }) {
 
 // open/onToggle are optional: pass them to control several cards together (desktop side-by-side view).
 export default function RotationCard({ result, label, name, best = false, delta = null, bareDelta = null, defaultOpen = false, open: openProp, onToggle }) {
-  const { t, replayYear } = useApp();
-  const rp = replayYear != null && result.replay ? result.replay : null;
+  const { t, replayYear, whatIf } = useApp();
+  // A scenario (real replay year or what-if) is on: the card shows its numbers.
+  const rp = (replayYear != null || whatIf) && result.replay ? result.replay : null;
+  const scenarioTitle = rp && (rp.hypothetical ? t('whatIfUi.heading') : t('replayUi.heading', { year: rp.year }));
   const shown = rp ? result.replayTotal : result.total;
   const [openOwn, setOpenOwn] = useState(defaultOpen);
   const open = openProp ?? openOwn;
@@ -222,11 +227,12 @@ export default function RotationCard({ result, label, name, best = false, delta 
         <div className="rot-top">
           <div>
             <div className="rot-label">{label}</div>
+            {rp?.hypothetical && <span className="badge badge-hypo"><FlaskConical size={14} aria-hidden="true" />{t('whatIfUi.badge')}</span>}
             <h3>{name}</h3>
           </div>
           <div className="rot-score">
             <div className="rot-score-num">{shown}</div>
-            <div className="rot-score-of">{rp ? t('replayUi.heading', { year: rp.year }) : t('compare.outOf')}</div>
+            <div className="rot-score-of">{rp ? scenarioTitle : t('compare.outOf')}</div>
           </div>
         </div>
         <CropSteps crops={result.crops} />
@@ -242,6 +248,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
         <Delta value={delta} />
         {rp && <ReplaySummary replay={rp} normal={result.total} shown={shown} />}
         <TopReason crops={result.crops} />
+        <DollarFace dollars={result.dollars} />
       </div>
 
       <button type="button" className="rot-toggle" aria-expanded={open} aria-controls={detailsId} onClick={() => setOpen(!open)}>
@@ -253,10 +260,10 @@ export default function RotationCard({ result, label, name, best = false, delta 
         <div className="rot-details" id={detailsId}>
           {rp && (
             <section className="detail">
-              <h4>{t('replayUi.heading', { year: rp.year })}</h4>
+              <h4>{scenarioTitle}</h4>
               <IconList items={rp.reasons} Icon={Lightbulb} tone="info" />
               {rp.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
-              <p className="muted small">{t('replayUi.note')}</p>
+              <p className="muted small">{rp.hypothetical ? t('whatIfUi.note') : t('replayUi.note')}</p>
             </section>
           )}
           {result.tags.length > 0 && (
@@ -309,6 +316,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
             {rp?.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
             <p className="muted small">{t('bareUi.caveat')}</p>
           </section>
+          <DollarDetails dollars={result.dollars} />
           <section className="detail">
             <h4>{t('compare.breakdown')} <GlossaryIcon term="score" /></h4>
             {PRIORITIES.map((p) => {

@@ -8,8 +8,8 @@ import RotationCard from '../components/RotationCard.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
 import ReplayBar from '../components/ReplayBar.jsx';
 import Verdict from '../components/Verdict.jsx';
+import { HypotheticalBanner } from '../components/WhatIfSliders.jsx';
 import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
-// import WhatIfSliders from '../components/future/WhatIfSliders.jsx'; // FUTURE
 
 // True on desktop, where rotation cards sit side by side.
 function useWide(query = '(min-width: 1024px)') {
@@ -24,7 +24,9 @@ function useWide(query = '(min-width: 1024px)') {
 }
 
 export default function CompareRotations() {
-  const { t, field, setScreen, replayYear } = useApp();
+  const { t, field, setScreen, replayYear, whatIf } = useApp();
+  // A scenario is on: a real replay year or a what-if (never both).
+  const scenario = replayYear != null || !!whatIf;
   const scores = useScores();
   const [custom, setCustom] = useState([]);
   const [scored, setScored] = useState(null); // crops the farmer asked us to score
@@ -48,10 +50,10 @@ export default function CompareRotations() {
   // "Best match" = top suggestion, only if it beats what the farmer grows now.
   const bestKey = options[0] && (!current || options[0].result.total > current.result.total) ? options[0].key : null;
   const rows = [current, ...options].filter(Boolean);
-  // While replaying a year, every number on the page is the replay score; otherwise the normal score.
-  const shownScore = (r) => (replayYear != null && r.replayTotal != null ? r.replayTotal : r.total);
+  // While a scenario is on, every number on the page is the scenario score; otherwise the normal score.
+  const shownScore = (r) => (scenario && r.replayTotal != null ? r.replayTotal : r.total);
   // While replaying a drought year, bare days count cover crops as partly established.
-  const bareOf = (r) => (replayYear != null && r.replay?.bareDays) || r.bareDays;
+  const bareOf = (r) => (scenario && r.replay?.bareDays) || r.bareDays;
   const bareDelta = (r) => (current ? bareOf(r).bareDays - bareOf(current.result).bareDays : null);
   const delta = (r) => (current ? shownScore(r) - shownScore(current.result) : null);
 
@@ -62,7 +64,8 @@ export default function CompareRotations() {
       <ReplayBar />
 
       <section className="card" aria-labelledby="glance-title">
-        <h2 id="glance-title">{replayYear != null ? t('replayUi.glanceTitle', { year: replayYear }) : t('compare.glance')}</h2>
+        <h2 id="glance-title">{replayYear != null ? t('replayUi.glanceTitle', { year: replayYear }) : whatIf ? t('whatIfUi.glanceTitle') : t('compare.glance')}</h2>
+        {whatIf && <HypotheticalBanner />}
         <div className="glance">
           {rows.map((r) => (
             <div key={r.key} className={`glance-row ${r.key === bestKey ? 'is-best' : ''}`}>
@@ -71,7 +74,7 @@ export default function CompareRotations() {
                 {r.label}
               </span>
               <span className="glance-score">{shownScore(r.result)}</span>
-              {replayYear != null && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} /></span>}
+              {scenario && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} /></span>}
               <span className="glance-bar" aria-hidden="true"><span style={{ width: `${shownScore(r.result)}%` }} /></span>
               <span className="glance-days">{t('bareUi.glanceDays', { n: bareOf(r.result).bareDays })}</span>
             </div>

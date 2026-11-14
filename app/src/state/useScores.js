@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { scoreRotation, suggestRotations } from '@scoring/index.js';
 import { crops, candidateRotations } from '../data/loadField.js';
 import { useApp } from './AppContext.jsx';
+import economics from '@content/economics.json';
 
 export function farmToConstraints(farm) {
   return {
@@ -15,8 +16,9 @@ export function farmToConstraints(farm) {
 }
 
 export function useScores() {
-  const { field, farm, replayYear } = useApp();
-  const options = { replayYear };
+  const { field, farm, replayYear, whatIf } = useApp();
+  // One scenario at a time (AppContext keeps them exclusive). Dollars are display only.
+  const options = { replayYear, whatIf, economics };
   return useMemo(() => {
     if (!field) return null;
     const constraints = farmToConstraints(farm);
@@ -29,5 +31,5 @@ export function useScores() {
     const scoreCustom = (cropIds) =>
       scoreRotation({ id: 'custom', crops: cropIds }, field, farm.priorities, constraints, crops, options);
     return { current, suggested, scoreCustom };
-  }, [field, farm, replayYear]);
+  }, [field, farm, replayYear, whatIf]);
 }

@@ -34,7 +34,14 @@
     "receiptOpen": "Show the data behind this",
     "receiptTitle": "Where this comes from",
     "receiptLine": "{resolution} · {dates}",
-    "unknown": "Unknown"
+    "unknown": "Unknown",
+    "scale": {
+      "patch": "Measured on your field",
+      "area": "Regional value for your area",
+      "county": "County average",
+      "state": "State average",
+      "model": "Model result"
+    }
   },
   "units": {
     "in": "in"
@@ -331,7 +338,14 @@
     "drySoilYears": "Soil was at least 10% drier than normal in {count} of {total} growing seasons.",
     "lowOrganicMatter": "Topsoil organic matter is low ({om}%), so cover crops and legumes help more.",
     "rotationBare": "We estimate this rotation leaves the soil bare about {days} days a year.",
-    "bareCalibrated": "For {crops}, the estimate uses this field's own satellite record."
+    "bareCalibrated": "For {crops}, the estimate uses this field's own satellite record.",
+    "erodible": "This soil erodes easily on this slope (erosion factor K {k} × {slope}% slope), so bare days cost more here.",
+    "notErodible": "This soil holds together on this slope (erosion factor K {k} × {slope}% slope), so bare days cost a bit less here.",
+    "soilStore": {
+      "low": "Your soil holds only about {inches} in of water in the top 3 ft, so thirsty crops suffer more in dry years.",
+      "mid": "Your soil holds about {inches} in of water in the top 3 ft, an average amount.",
+      "high": "Your soil holds about {inches} in of water in the top 3 ft. That carries crops through short dry spells, so thirsty crops lose a little less."
+    }
   },
   "benefits": {
     "water": "Uses little water.",
@@ -371,12 +385,16 @@
     "cdlNoise": "Crop maps are sometimes wrong.",
     "traitsEstimated": "{crops}: some traits used here are rough estimates, not from a published source.",
     "bareEstimated": "Bare-day timing for {crops} is an estimate, not measured on this field.",
-    "prismAgrees": "NASA rain data agrees with ground-station rain (PRISM): correlation {corr}, {pct}% apart.",
-    "prismDisagrees": "NASA rain data differs from ground-station rain (PRISM): correlation {corr}, {pct}% apart.",
     "resolution": "Detail level: {fine} for greenness and crop maps, {mid} for satellite rain and soil moisture, {coarse} for temperature. Weather is an area average, not a reading from your field.",
     "toneUp": "Adds confidence",
     "toneDown": "Lowers confidence",
-    "toneNote": "Good to know"
+    "toneNote": "Good to know",
+    "prism": {
+      "agreesLower": "{name} rain matches ground-station rain (PRISM) year to year on this field: correlation {corr}, {pct}% lower ({years} years).",
+      "agreesHigher": "{name} rain matches ground-station rain (PRISM) year to year on this field: correlation {corr}, {pct}% higher ({years} years).",
+      "differsLower": "{name} rain differs from ground-station rain (PRISM) on this field: correlation {corr}, {pct}% lower ({years} years).",
+      "differsHigher": "{name} rain differs from ground-station rain (PRISM) on this field: correlation {corr}, {pct}% higher ({years} years)."
+    }
   },
   "crops": {
     "winter_wheat": "Winter wheat",
@@ -468,7 +486,7 @@
     },
     "frost": {
       "title": "Frost risk and frost-free days",
-      "text": "Frost-free days are the days between the last freeze in spring and the first freeze in fall (a low of 32°F or colder), from NASA POWER, with ground-based PRISM data as a cross-check where we have it. They set planting windows and decide whether a cool-season cover crop can finish. Greenline uses them to sort years into types. It does not score frost risk for a rotation yet."
+      "text": "Frost-free days are the days between the last freeze in spring and the first freeze in fall (a low of 32°F or colder). The frost dates on your field page come from PRISM (4 km, from weather stations): the middle date of the last 10 years. Greenline's year-pattern model uses NASA POWER's frost-free days, which run about 3 days longer on average. They set planting windows and decide whether a cool-season cover crop can finish. Greenline doesn't score frost risk for a rotation yet."
     },
     "waterBalance": {
       "title": "Water balance",
@@ -481,6 +499,30 @@
     "sensor2013": {
       "title": "Why 2013 matters",
       "text": "Landsat 8 launched in 2013 and sees plant greenness a little higher than the older Landsat 5 and 7. With a fixed cutoff for “bare”, that alone makes later years look less bare. We have not matched the two sensors yet, so every bare-day number uses 2013 and later only. Older years are still used for rain and heat history."
+    },
+    "prism": {
+      "title": "Ground-station rain (PRISM)",
+      "text": "PRISM (Oregon State University) maps rain on a 4 km grid from thousands of rain gauges and weather stations. We use it to check NASA's rain data. Across 201 North Texas fields (2008–2024), yearly rain from NASA POWER matched PRISM with a correlation of 0.92 and read about 9% low; GPM IMERG matched at 0.93 and read about 4% high. Both NASA datasets are partly adjusted with gauge data, so this shows consistency, not fully independent proof. It doesn't change the confidence points."
+    },
+    "kFactor": {
+      "title": "Erosion risk (K factor)",
+      "text": "How easily rain washes away your topsoil, from the USDA soil survey. It runs from about 0.02 to 0.69. Under 0.20 is low, 0.20 to 0.35 moderate, over 0.35 high. Greenline multiplies K by your slope: when K × slope is 0.5 or more (for example K 0.25 on a 2% slope), bare days cost more in the erosion score."
+    },
+    "tFactor": {
+      "title": "Tolerable soil loss (T)",
+      "text": "The most soil, in tons per acre a year, that can wash or blow away while the field stays productive long term. From the USDA soil survey, 1 to 5. Deep soils get 5. It's a limit to stay under, not a measurement of what's lost now."
+    },
+    "waterStorage": {
+      "title": "Water the soil holds",
+      "text": "How much water plants can pull from the top 1 meter (3.3 ft) of soil when it's full, from the USDA soil survey. More storage carries crops through dry spells. Greenline uses it in the water score: under 4 in, thirsty crops lose more in drought-prone fields; 6 in or more, a little less."
+    },
+    "landCapability": {
+      "title": "Land capability class",
+      "text": "The USDA's 1 to 8 rating of how suited land is to crops without irrigation. Class 1 has the fewest limits; class 5 and up are mostly for grass or trees. The letter says what limits it: e erosion, w wetness, s soil (shallow, stony or droughty), c climate. Shown for context; it isn't in the score."
+    },
+    "grossRevenue": {
+      "title": "Gross revenue (dollar estimate)",
+      "text": "County yield × Texas price, averaged over 2021–2025, from the USDA NASS Quick Stats survey. It's money in before any costs (seed, fertilizer, fuel, rent), so it is not profit. When NASS doesn't publish your county's yield, we use the regional or Texas average and say so. Texas averages include irrigated High Plains farms and may run high for dryland North Texas. Dollars never change the score or the order of options."
     }
   },
   "si": {
@@ -632,5 +674,98 @@
     "jump": "Jump to a word",
     "dataLabel": "Data",
     "back": "Back"
+  },
+  "whatIf": {
+    "drier": "What-if: {pct}% less rain than this field's average year.",
+    "wetter": "What-if: {pct}% more rain than this field's average year, with more heavy-rain days.",
+    "hotter": "What-if: {extra} extra days at 95 °F or hotter ({days} instead of about {avg}).",
+    "normal": "What-if: an average year for this field. Nothing changed yet."
+  },
+  "whatIfUi": {
+    "title": "What if?",
+    "caption": "Change the weather and see how each option holds up. We start from your field's own average year.",
+    "rain": "Rain vs. average",
+    "heat": "Extra days above 95 °F",
+    "rainNormal": "Average",
+    "rainValue": "{pct}%",
+    "heatNormal": "None",
+    "heatValue": "+{n} days",
+    "banner": "Hypothetical, not a forecast.",
+    "bannerDetail": "These scores show a made-up year to explore risk. They don't predict next year.",
+    "reset": "Reset",
+    "assumption": "Heavy-rain days rise and fall with rain. Soil moisture isn't changed. Scores use the same rules as the bad-year replay.",
+    "glanceTitle": "How each option holds up in your what-if year",
+    "scoreLine": "What-if score: {score} out of 10",
+    "heading": "In your what-if year",
+    "note": "A stress check for a made-up year, built from your field's averages. Not a forecast or a yield estimate.",
+    "badge": "Hypothetical"
+  },
+  "dollars": {
+    "estimate": "Estimate",
+    "grossLine": "≈ ${usd}/acre a year",
+    "noGross": "No NASS yield or price for these crops",
+    "notProfit": "Gross revenue, before costs. Not profit.",
+    "stateWarnShort": "Some yields are Texas averages, which include irrigated farms and may run high here.",
+    "fertShort": "+ about ${lo}–${hi}/acre a year in nitrogen",
+    "title": "Money (estimate)",
+    "cropMath": "{yield} {yieldUnit} × {price} {priceUnit}, average of {years}",
+    "level": {
+      "county": "Yield: {county} County average.",
+      "district": "Yield: regional average ({district} district), not your county's.",
+      "state": "Yield: Texas average, not your county's. Texas averages include irrigated High Plains farms and may run high for dryland North Texas.",
+      "stateOk": "Yield: Oklahoma state average, not your county's."
+    },
+    "status": {
+      "fallow": "{crop}: nothing to sell ($0).",
+      "cover": "{crop}: not sold. Its value is soil and nitrogen.",
+      "priceOnly": "{crop}: NASS has a Texas price but no yield for your county, so no dollar figure.",
+      "noData": "{crop}: no NASS yield or price, so no dollar figure. Ask your buyer or AgriLife."
+    },
+    "perYear": "Whole rotation: about ${usd} per acre a year, gross.",
+    "partial": "Only {priced} of {years} years have a NASS price, so this averages those years.",
+    "fert": "Nitrogen from {crops}: worth about ${lo}–${hi} per acre a year in fertilizer you may not need to buy. We count {share}% of the nitrogen fixed, at ${price} per lb of N.",
+    "nPlaceholder": "The nitrogen price is a placeholder, not from NASS. Check with your dealer.",
+    "nUnknown": "Nitrogen from {crops}: not known yet.",
+    "okNote": "Oklahoma field: Oklahoma yields, Texas prices.",
+    "source": "USDA NASS Quick Stats survey: yields and Texas prices received, {years} averages.",
+    "notInScore": "Dollars are shown for context only. They don't change the score or the order of options."
+  },
+  "soilFacts": {
+    "title": "Your soil: {series}",
+    "k": "Erosion risk (K)",
+    "kWord": {
+      "low": "Low",
+      "moderate": "Moderate",
+      "high": "High"
+    },
+    "kDetail": "Erosion factor K = {k} (0.02 to 0.69; higher erodes more easily)",
+    "t": "Tolerable soil loss (T)",
+    "tValue": "{t} tons per acre a year",
+    "tDetail": "Most soil this field can lose a year and still stay productive",
+    "water": "Water the soil holds (top 1 m)",
+    "waterValue": "{inches} in",
+    "waterDetail": "{cm} cm of water plants can use, in the top 3.3 ft",
+    "lcc": "Land capability class",
+    "lccValue": "Class {cls}",
+    "lccValueSub": "Class {cls}, {sub}",
+    "sub": {
+      "e": "erosion limits",
+      "w": "wetness limits",
+      "s": "soil limits (shallow, stony or droughty)",
+      "c": "climate limits"
+    },
+    "lccDetail": "Class 1 has the fewest limits for crops, class 8 is not for crops (without irrigation)",
+    "source": "USDA soil survey (SSURGO), main soil on your field"
+  },
+  "frost": {
+    "title": "Frost dates",
+    "spring": "Last spring frost",
+    "fall": "First fall frost",
+    "date": "About {month} {day}",
+    "typical": "Middle date, {from}–{to}",
+    "season": "Frost-free season",
+    "seasonValue": "{days} days",
+    "powerNote": "NASA POWER says {days} days. The year-pattern model uses that one.",
+    "source": "PRISM daily temperatures (4 km, from weather stations), low of 32 °F or colder"
   }
 }
