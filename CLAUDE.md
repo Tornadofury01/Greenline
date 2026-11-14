@@ -4,7 +4,9 @@ A mobile-first PWA for the NASA Space Apps challenge "Field Shift: Adapting Farm
 It helps North Texas farmers compare crop rotations using NASA Earth observation data.
 **It supports farmer judgment and local experts. It doesn't replace them.**
 
-Current stage: a skeleton running on **fake sample data**. Real data, AI and advanced features come later.
+Current stage: running on **real data for 201 North Texas fields** (NASA POWER, IMERG, SMAP, Landsat, SRTM, SSURGO, CDL)
+and three trained SI models (season/crop classifier, vegetation stress signal, year patterns; see `pipeline/MODELS.md`).
+The fake `shared/sample-field.json` is only a fallback when a field file is missing.
 
 ## Stack
 - Vite + React (JavaScript, no TypeScript), Leaflet (react-leaflet 4), Recharts, vite-plugin-pwa
@@ -52,6 +54,13 @@ npm run build      # production build + service worker
 npm run preview    # test the built PWA
 npm run selftest   # scoring sanity checks
 ```
+
+## Build status
+Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-data`) only touches `/pipeline`, `/shared`, `/docs`.
+- [x] **Phase 0: crop traits.** `crops.json` follows `docs/crop-traits-verification.md` and `-2.md` (sourced water, drought sensitivity, N fixation, sesame and late-rye-kill risks). Still `"verified": false`.
+- [ ] **Phase 1: signature features.** Bad-year replay that re-scores rotations; bare days per rotation; clearer green / residue / bare story.
+- [ ] **Phase 2:** not started (fertilizer-saved estimate from `nFixLbPerAcre`).
+- [ ] **Phase 4:** not started.
 
 ## Roadmap
 - [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields
