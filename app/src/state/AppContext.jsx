@@ -1,5 +1,5 @@
 // App-wide state: language, current screen, selected field, and the farmer's answers.
-// Answers are saved in localStorage as a convenience only (it can be empty or blocked).
+// Only the language is saved in localStorage (it can be empty or blocked). Farm answers are not kept between visits.
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { makeT } from '../i18n.js';
 import { loadFieldAt, loadFieldById, loadDemoField, guessCurrentRotation } from '../data/loadField.js';
@@ -35,12 +35,13 @@ export function AppProvider({ children }) {
   const [whatIf, setWhatIfRaw] = useState(null);
   const setReplayYear = (year) => { setReplayYearRaw(year); if (year != null) setWhatIfRaw(null); };
   const setWhatIf = (w) => { setWhatIfRaw(w); if (w) setReplayYearRaw(null); };
-  const [farm, setFarm] = useState({ ...DEFAULT_FARM, ...saved.farm });
+  const [farm, setFarm] = useState({ ...DEFAULT_FARM });
 
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ lang, farm })); } catch { /* ignore */ }
+    // Only the language is remembered. The farm answers are never saved: they reset on every visit.
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ lang })); } catch { /* ignore */ }
     document.documentElement.lang = lang;
-  }, [lang, farm]);
+  }, [lang]);
 
   const [loading, setLoading] = useState(false);
   // A field file that couldn't be loaded: { reason: 'network' | 'missing', id }. The previous field stays on screen.
