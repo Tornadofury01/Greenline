@@ -36,6 +36,7 @@ SOURCES = [
     {"dataset": "USDA SSURGO", "variable": "soil series, texture, drainage, organic matter, erosion factors (K, T), available water, land capability class", "resolution": "map unit (1:24,000)", "dateRange": "current"},
     {"dataset": "SRTM", "variable": "slope", "resolution": "30 m", "dateRange": "2000"},
     {"dataset": "MODIS MOD16A2GF", "variable": "evapotranspiration (tested, not used in scores)", "resolution": "500 m", "dateRange": "2008-2025"},
+    {"dataset": "NASS Quick Stats", "variable": "county crop yields, Texas price received (marketing year)", "resolution": "county / state", "dateRange": "2008-2025"},
     {"dataset": "NASS Crop Progress", "variable": "planting and harvest dates (Texas)", "resolution": "state", "dateRange": "2008-2025"},
     {"dataset": "Greenline SI models", "variable": "crop and cover classifier, weather risk signal, year types", "resolution": "per field", "dateRange": "2008-2025"},
 ]
@@ -102,6 +103,48 @@ def agreement(pairs):
             "pct": round(float((b.mean() - a.mean()) / a.mean() * 100), 0)}
 
 
+# NASS units: yield unit x this factor = price unit (sorghum 56 lb/bu -> cwt; sunflower lb -> cwt).
+TO_PRICE_UNIT = {"corn": 1, "cotton": 1, "grain_sorghum": 0.56, "winter_wheat": 1, "soybeans": 1, "oats": 1, "sunflower": 0.01}
+RECENT = (2021, 2025)
+
+
+def market(fid_state, fid_county, ny, prices):
+    """County yields (falling back to district, then state) and Texas prices, plus a recent-years summary."""
+    y = ny[(ny.state == fid_state)]
+    own = y[(y.level == "county") & (y.county == fid_county)]
+    district = own.district.iloc[0] if len(own) else None  # None: county has no NASS rows -> state fallback only
+    rows = []
+    for crop in sorted(y.crop.unique()):
+        for year in range(2008, 2026):
+            for level, sel in (("county", own), ("district", y[(y.level == "district") & (y.district == district)]),
+                               ("state", y[y.level == "state"])):
+                v = sel[(sel.crop == crop) & (sel.year == year)].dropna(subset=["value"])
+                if len(v):
+                    rows.append({"crop": crop, "year": year, "value": nn(v.value.iloc[0], 1), "unit": v.unit.iloc[0], "level": level})
+                    break
+    price_rows = [{"crop": r.crop, "year": int(r.year), "value": nn(r.value, 2), "unit": r.unit}
+                  for r in prices.dropna(subset=["value"]).itertuples()]
+    recent = []
+    for crop in sorted({r["crop"] for r in rows}):
+        # One geographic level per crop (never mix county and state): county if it has >= 3 of the 5 years.
+        # State yields include irrigated High Plains fields, so they read high for dryland North Texas.
+        win = [r for r in rows if r["crop"] == crop and RECENT[0] <= r["year"] <= RECENT[1]]
+        ys = []
+        for level in ("county", "district", "state"):
+            ys = [r for r in win if r["level"] == level]
+            if len(ys) >= 3 or level == "state":
+                break
+        ps = [r for r in price_rows if r["crop"] == crop and RECENT[0] <= r["year"] <= RECENT[1]]
+        if not ys or not ps:
+            continue
+        yv, pv = float(np.mean([r["value"] for r in ys])), float(np.mean([r["value"] for r in ps]))
+        recent.append({"crop": crop, "years": f"{RECENT[0]}-{RECENT[1]}", "yield": round(yv, 1), "yieldUnit": ys[0]["unit"],
+                       "yieldLevel": ys[0]["level"], "yieldYears": len(ys), "price": round(pv, 2), "priceUnit": ps[0]["unit"],
+                       "grossPerAcreUsd": round(yv * TO_PRICE_UNIT[crop] * pv)})
+    return {"county": fid_county, "district": district, "priceState": "TX", "yields": rows, "pricesTx": price_rows,
+            "recent": recent}
+
+
 def state(v):
     if v is None or pd.isna(v):
         return None
@@ -139,6 +182,9 @@ def main():
     imy = im.groupby(["fieldId", "year"]).precipMm.sum()
     prism_y = pd.read_csv(F / "prism_yearly.csv").set_index(["fieldId", "year"])
     prism_m = pd.read_csv(F / "prism_monthly.csv").sort_values(["fieldId", "year", "month"])
+    nass_y = pd.read_csv(ROOT / "pipeline" / "data" / "nass_yields.csv")
+    nass_p = pd.read_csv(ROOT / "pipeline" / "data" / "nass_prices_tx.csv")
+    market_cache = {}
 
     index = []
     for f in fields.itertuples():
@@ -234,6 +280,7 @@ def main():
             "coverYearly": cover,
             "bareDaysPerYear": bare,
             "quality": quality,
+            "market": market_cache.setdefault((f.state, f.county), market(f.state, f.county, nass_y, nass_p)),
             "si": {"models": {**si["models"], "seasonCrop": {**si["models"]["seasonCrop"], "perClass": PER_CLASS}},
                    "years": si["years"], "replayPresets": si["replayPresets"]},
             "sources": SOURCES,

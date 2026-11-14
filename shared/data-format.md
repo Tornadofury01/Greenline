@@ -85,6 +85,8 @@ Empty cell = no valid data that month. All rows have `year` and, for monthly fil
 | `smap_monthly.csv` | `days, sm_surface, sm_rootzone` | SMAP L4, m³/m³, ~11 km |
 | `imerg_monthly.csv` | `precipMm` | GPM IMERG V07 monthly total |
 | `terrain.csv` | `elevationM, slopePct` | One row. SRTM 30 m |
+| `nass_yields.csv` | `crop, state, level, county, district, year, value, unit, raw` | From `pipeline/nass_quickstats.py`. Our counties, their districts, TX and OK state |
+| `nass_prices_tx.csv` | `crop, year, value, unit` | Texas, marketing year |
 | `nass_crop_progress_tx_monthly.csv` | `crop, stage, pctMean, pctEndOfMonth, weeks` | Texas statewide weekly Crop Progress, averaged by month |
 
 ## Multi-field CSVs (`/pipeline/data/fields/`)
@@ -168,6 +170,10 @@ How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVer
 | `coverYearly[]` | array | `{ year, months[12], cloudyMonths }`. `months` = `green` / `residue` / `bare` / `null` (no clear image). 2008+ come from model 1 |
 | `bareDaysPerYear[]` | | Adds `greenDays` and `score` (0–100). Years with fewer than 9 clear months are left out |
 | `quality` | object | `rainAgreement { years, corr, imergVsPowerPct }`, `rainVsPrism { power, imerg }` (each `{ years, corr, pct }` or `null`: annual rain vs PRISM, `pct` = how much higher than PRISM), `modelAgreesWithCdlPct`, `cloudyMonthsPct`, `climateYears`, `cropYears`. Used by the confidence score |
+| `market` | object | USDA NASS Quick Stats (survey). `{ county, district, priceState: "TX", yields[], pricesTx[], recent[] }`. Same for every field in a county |
+| `market.yields[]` | | `{ crop, year, value, unit, level }`, 2008–2025. `level` = `county`, or the fallback `district` (NASS stopped district yields after 2019) or `state` when NASS doesn't publish the county. `crop` ids: `corn`, `cotton` (upland), `grain_sorghum`, `winter_wheat`, `soybeans`, `oats`, `sunflower` (soybeans and oats aren't in `crops.json` yet) |
+| `market.pricesTx[]` | | `{ crop, year, value, unit }`: Texas marketing-year average price received, nominal $. Units differ: `$/bu`, `$/lb` (cotton), `$/cwt` (sorghum, sunflower), `$/ton` (`alfalfa` hay). Oklahoma fields use Texas prices too |
+| `market.recent[]` | | `{ crop, years, yield, yieldUnit, yieldLevel, yieldYears, price, priceUnit, grossPerAcreUsd }`: 2021–2025 averages at one level (county if ≥ 3 years, else district, else state). `grossPerAcreUsd` = yield × price after unit conversion (sorghum 56 lb/bu, sunflower lb → cwt). Gross revenue, **not profit**; costs aren't included |
 | `si` | object | `{ models, years, replayPresets }`, the same as `/shared/si/<fieldId>.json` (below). `models.seasonCrop.perClass` adds held-out recall/precision per crop |
 
 Known data caveat: Landsat 8 (2013–) reads NDVI slightly higher than Landsat 5/7 and the sensors are not harmonized yet,

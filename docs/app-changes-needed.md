@@ -29,3 +29,22 @@ New keys: `climateYearly[].precipMmPrism`, `stormDaysPrism`, `lastSpringFrostPri
   that uses it. `/scoring/scoreRotation.js` `EVIDENCE` may need a `PRISM` name.
 - **i18n (en + es):** "Last spring frost", "First fall frost", "Ground-station rain (PRISM)".
 - **Validation slide:** numbers are in `/docs/data-validation.md`.
+
+## 3. Dollar estimates from NASS (county yields, Texas prices)
+New `field.market` (see `/shared/data-format.md`).
+- **Rotation cards:** ground the dollar estimate in `market.recent[]`. For each crop it has a 2021–2025
+  yield, price and `grossPerAcreUsd` (already unit-converted). Show it as "≈ $X/acre gross (Ellis County yields,
+  Texas prices, 2021–2025)". It is **gross revenue, not profit**; say so.
+- **Show the level:** when `yieldLevel` is `district` or `state`, say "regional / Texas average yield". Texas
+  state yields include irrigated High Plains fields and read high for dryland North Texas.
+- **Crop ids:** `soybeans` and `oats` have NASS data but aren't in `crops.json`. `cowpea`, `cereal_rye`,
+  `hairy_vetch`, `sorghum_sudangrass`, `sesame` and `fallow` have no NASS yield or price (cover crops: $0 or
+  a forage value from experts). `alfalfa` has a hay price (`$/ton`) but no county yield.
+- **Units:** sorghum yield is bu/acre but its price is $/cwt (1 bu = 56 lb = 0.56 cwt). Sunflower is lb/acre
+  and $/cwt. `grossPerAcreUsd` already handles this; any app math on `yields[]`/`pricesTx[]` must too.
+- **Oklahoma fields** (nt-056, nt-081, nt-148) use Oklahoma yields but Texas prices (`market.priceState`).
+- **What-if sliders:** `pricesTx[]` gives the 2008–2025 price range for a realistic price slider.
+- **Sources:** new `NASS Quick Stats` entry in `field.sources`; add it to `src` on money reasons and to
+  `EVIDENCE` in `/scoring/scoreRotation.js`.
+- **i18n (en + es):** "gross per acre", "county average yield", "regional average", "Texas average",
+  "not profit: costs not included".
