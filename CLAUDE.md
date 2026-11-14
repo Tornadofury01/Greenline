@@ -28,7 +28,8 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
   (built by `pipeline/build_fields.py`); falls back to the fake `sample-field.json` if a file is missing.
 - **Demo field: one setting**, `DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local`). Default `nt-103`.
 - SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
-- Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them.
+- Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them, with `sources[].scale` (your field vs regional).
+- Dollars: `scoring/economics.js` (display only, from `field.market`), N price placeholder in `content/economics.json`. What-if: `whatIfHazards()` in `scoring/rules/replay.js`.
 - Scoring: `scoring/scoreRotation.js` → `scoreRotation(rotation, field, priorities, constraints, cropLibrary)`.
   One rule per file in `scoring/rules/`. The same function scores current, suggested and custom rotations.
   Rules return **i18n keys and params**, never English text.
@@ -80,18 +81,14 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] SI visible: card shows overall + balanced accuracy + the "same as last year" baseline; weather risk signal only where it beat the baseline, with the error numbers; SHAP "what mattered most" in the Evidence line.
   - [x] "How we know" screen (`screens/HowWeKnow.jsx`, header book button and card links, `glossary.*` en + es): NDVI, NDTI/residue, ET, soil moisture anomaly, frost, water balance, bare days, confidence, held-out accuracy, satellite vs ground, why 2013 matters. Not a bottom tab (6 don't fit at 375 px).
   - Tools: `npm run i18n` (from `app/`) checks en/es keys and `{placeholders}` match. Spanish uses formal *usted*.
-- [ ] **Phase 2b: dollars and what-if** (separate session; placeholder prices, don't copy the datasets session's uncommitted NASS CSVs).
-  - **Dollar estimates**, shown on the card only, never in the score:
-    - New `content/economics.json`: placeholder N price ($/lb), N credit share (50%: cover crops don't hand over all the nitrogen they fix), and yield + unit + $/unit for wheat, sorghum, cotton, corn, sunflower, sesame, alfalfa hay, sorghum-sudangrass hay. Every entry `placeholder: true` with a source label.
-    - New pure `scoring/economics.js`: `estimateDollars(crops, econ)` returns `{ fertilizer: {lo, hi}, grossPerAcreYear, byCrop[], placeholder, src }`. `scoreRotation` takes `economics` via `options` and returns `dollars`. Built so a later `field.economics` (NASS county yields) can override the defaults. Alfalfa (`nFixLbPerAcre: null`) shows "not known yet".
-    - `DollarBlock` on the card with an "Estimate" pill, a `<Receipt>` source and a "placeholder figures" notice. Income is labeled "gross, before costs". No profit number.
-    - New `docs/economics-placeholders-todo.md` (the only new /docs file): which numbers are placeholders, the NASS series from `pipeline/nass_quickstats.py`, the JSON shape the app expects.
-  - **What-if sliders** (rain %, temperature °F), reusing the replay logic:
-    - In `scoring/rules/replay.js` split `hazardsFromRow(field, row)` out of `yearHazards`. New `whatIfHazards(field, { rainPct, tempF })` builds a pretend row from the field's own averages: rain x (1 + pct), heat-stress days + 7 per °F (stated assumption, field files have no daily temperatures), storms scale with rain, SMAP null.
-    - `replayRule` takes a hazards object. `scoreRotation` `options.whatIf` goes through the same blend path as `replayYear`, with `replay.hypothetical = true`.
-    - AppContext: `whatIf` and `replayYear` share one scenario slot (setting one clears the other). `useScores` passes it.
-    - Build `WhatIfSliders.jsx` (move out of `future/`): rain -50…+50 % step 10, temperature -2…+6 °F step 1, native range inputs >= 44 px, Reset, "Hypothetical, not a forecast" banner, placed in the Replay card. Card labels get what-if variants and a "Hypothetical" badge.
-    - Selftest: -40 % rain scores <= normal; 0/0 is close to a mild year.
+- [x] **Phase 2b: dollars, what-if, soil and PRISM** (after merging the datasets branch from `main`).
+  - [x] Dollars, display only (`scoring/economics.js` `estimateDollars`, `options.economics`, result `dollars`; `components/DollarBlock.jsx`). Gross revenue per acre per rotation year from the field's real NASS `market.recent[]` (2021–2025), labeled "gross revenue, before costs, not profit", with county / district / Texas-average yield level and the High Plains caveat. Years follow the bare-days rule (cover crops ride along); crops without NASS data are listed, not guessed. Fertilizer value = `nFixLbPerAcre` × N price × 50%. Selftest checks dollars never change totals.
+  - [x] What-if sliders (`components/WhatIfSliders.jsx`, in the Replay card): rain −50…+50 % and extra days ≥ 95 °F 0…+40, via `whatIfHazards()` → the same `hazardsFromRow()` / `replayRule()` path as bad-year replay. One scenario slot in AppContext. "Hypothetical, not a forecast" banner and card badge.
+  - [x] Scenario totals now only subtract from the normal total (drop from a stress-free year). Before, a weak rotation could score higher in a drought than in a normal year. A 0/0 what-if equals the normal total.
+  - [x] Soil facts card (K, T, water in top 1 m, land capability class) on Field story and Expert handoff; PRISM frost dates (median of the last 10 years), POWER frost-free days kept for model 3.
+  - [x] Rules: erosion uses SSURGO K × slope ≥ 0.5 (was slope > 2 %; flags 90 % vs 92 % of fields). Water scales the thirsty-crop drought penalty by soil water (< 10 cm × 1.25, ≥ 15 cm × 0.75). nt-103: same order of options; rotations with corn or cotton gain about 1 point.
+  - [x] Confidence: PRISM agreement for POWER and IMERG with the field's numbers (no points: not independent, see `docs/data-validation.md`). `EVIDENCE` has PRISM, NASS Quick Stats, SSURGO. Receipts show "measured on your field" vs "regional value" from `sources[].scale`.
+  - Decisions: N price is a placeholder ($0.60/lb N, `content/economics.json`): NASS has no Texas fertilizer price. No price slider. `docs/economics-placeholders-todo.md` dropped (real NASS data now).
 - [ ] **Phase 4:** not started.
 
 ## Roadmap
@@ -99,7 +96,7 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
 - [ ] Real data for every 30 m cell (today a tap loads the nearest sampled field)
 - [ ] Harmonize Landsat 5/7 with Landsat 8/9 NDVI (see MODELS.md)
 - [ ] Verify crop traits with Texas A&M AgriLife and NRCS. Agree on the `yearType` classification rule
-- [ ] What-if sliders (rain, temperature; prices come with Phase 2b dollars) → `app/src/components/future/WhatIfSliders.jsx`
+- [x] What-if sliders (rain, hot days) → `app/src/components/WhatIfSliders.jsx`. A price slider could use `market.pricesTx[]` (2008–2025)
 - [ ] Field walk mode (live GPS → cell, kept on device) → `FieldWalkMode.jsx`
 - [ ] Memory pins (farmer notes on the map) → `MemoryPins.jsx`
 - [ ] Vulnerability zones map (erosion and drought hot spots) → `VulnerabilityZonesMap.jsx`
