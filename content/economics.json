@@ -1,8 +1,19 @@
 {
-  "_note": "Dollar settings for scoring/economics.js. Crop yields and prices are NOT here: they come from each field's real USDA NASS data (field.market.recent, 2021-2025). Only the nitrogen price is a placeholder, because NASS Quick Stats has no fertilizer price series for Texas.",
+  "_note": "Dollar settings for scoring/economics.js. Crop yields and prices are NOT here: they come from each field's real USDA NASS data (field.market.recent, 2021-2025). NASS Quick Stats has no fertilizer price series for Texas, so the nitrogen price comes from the USDA AMS Illinois Production Cost Report: a national estimate, not Texas.",
+  "_nPriceMath": "USDA AMS Illinois Production Cost Report (Bi-weekly), Nov 13, 2026, distributor ask averages. Anhydrous ammonia 82-0-0: $981.11/ton / (2000 lb x 0.82 = 1640 lb N) = $0.598/lb N -> 0.60 (used: cheapest N per lb, so the legume nitrogen credit is not overstated). For comparison: urea 46-0-0 $770.00/ton / 920 lb N = $0.837/lb N; UAN 28% $467.86/ton / 560 lb N = $0.835/lb N.",
   "nPricePerLb": 0.6,
-  "nPricePlaceholder": true,
-  "nPriceSource": "Placeholder: rough 2024 U.S. retail price of nitrogen fertilizer (anhydrous ammonia or urea, per pound of N). Check with your dealer.",
+  "nPricePlaceholder": false,
+  "nPriceSource": {
+    "dataset": "USDA AMS Illinois Production Cost Report",
+    "report": "USDA AMS Illinois Production Cost Report (Bi-weekly), report 3195",
+    "url": "https://mymarketnews.ams.usda.gov/viewReport/3195",
+    "date": "2026-11-13",
+    "area": "Illinois",
+    "product": "Anhydrous ammonia 82-0-0",
+    "usdPerTon": 981.11,
+    "nShare": 0.82,
+    "scale": "national"
+  },
   "nCreditShare": 0.5,
   "nCreditSource": "Cover crops don't hand over all the nitrogen they fix to the next crop. We count half (planning rule of thumb, still to be checked with AgriLife / NRCS)."
 }

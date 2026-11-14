@@ -27,13 +27,14 @@ export function PageHead({ title, intro }) {
 // Evidence receipt: tap a claim to see which datasets back it, with resolution and dates.
 // `src` is a list of dataset names matching field.sources[].dataset. Without matches it renders plain text.
 // field.sources[].scale: is the number read over the field itself, or a regional / county / state value?
-const SCALES = ['patch', 'area', 'county', 'state', 'model'];
+// `extra`: rows shaped like field.sources for sources that aren't per-field (e.g. the national N price).
+const SCALES = ['patch', 'area', 'county', 'state', 'national', 'model'];
 
-export function Receipt({ src, children }) {
+export function Receipt({ src, extra, children }) {
   const { t, field } = useApp();
   const [open, setOpen] = useState(false);
   const id = useId();
-  const rows = (src || []).map((d) => field?.sources.find((s) => s.dataset === d)).filter(Boolean);
+  const rows = [...(src || []).map((d) => field?.sources.find((s) => s.dataset === d)), ...(extra || [])].filter(Boolean);
   if (!rows.length) return <span>{children}</span>;
   return (
     <span className="receipt-wrap">
@@ -52,7 +53,7 @@ export function Receipt({ src, children }) {
               {SCALES.includes(s.scale) && <span className={`receipt-scale scale-${s.scale}`}>{t(`common.scale.${s.scale}`)}</span>}
             </span>
           ))}
-          {field.isSampleData && <span className="muted">{t('common.sampleValues')}</span>}
+          {field?.isSampleData && <span className="muted">{t('common.sampleValues')}</span>}
         </span>
       )}
     </span>

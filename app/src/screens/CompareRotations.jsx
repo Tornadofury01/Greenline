@@ -55,6 +55,9 @@ export default function CompareRotations() {
   // While replaying a drought year, bare days count cover crops as partly established.
   const bareOf = (r) => (scenario && r.replay?.bareDays) || r.bareDays;
   const bareDelta = (r) => (current ? bareOf(r).bareDays - bareOf(current.result).bareDays : null);
+  // A scenario score clamped to 0: the verdict stands in for the number (see RotationCard).
+  const isMaxed = (r) => scenario && r.replayTotal === 0 && !!r.replay;
+  const anyMaxed = rows.some((r) => isMaxed(r.result));
   const delta = (r) => (current ? shownScore(r) - shownScore(current.result) : null);
 
   return (
@@ -73,13 +76,18 @@ export default function CompareRotations() {
                 {r.key === bestKey && <Award size={18} color="var(--color-primary)" aria-label={t('compare.bestMatch')} />}
                 {r.label}
               </span>
-              <span className="glance-score">{shownScore(r.result)}</span>
-              {scenario && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} /></span>}
+              <span className="glance-score">
+                {isMaxed(r.result)
+                  ? <><span aria-hidden="true">—</span><span className="sr-only">{t('replayUi.verdict.maxed')}</span></>
+                  : shownScore(r.result)}
+              </span>
+              {scenario && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} maxed={isMaxed(r.result)} /></span>}
               <span className="glance-bar" aria-hidden="true"><span style={{ width: `${shownScore(r.result)}%` }} /></span>
               <span className="glance-days">{t('bareUi.glanceDays', { n: bareOf(r.result).bareDays })}</span>
             </div>
           ))}
         </div>
+        {anyMaxed && <p className="hint">{t('replayUi.maxedNote')}</p>}
         <p className="hint">{t('compare.glanceHint')}</p>
       </section>
 

@@ -1,6 +1,7 @@
 // Dollar estimates on a rotation card. DISPLAY ONLY: they never change a score or a ranking.
 // Gross revenue (before costs, not profit) comes from the field's real USDA NASS 2021-2025 averages
-// (scoring/economics.js). The N price behind the fertilizer value is a placeholder (content/economics.json).
+// (scoring/economics.js). The N price behind the fertilizer value is a national estimate from the USDA AMS
+// Illinois Production Cost Report (content/economics.json), labeled "not Texas".
 import { DollarSign, Sprout } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { Receipt } from './Small.jsx';
@@ -18,6 +19,22 @@ export function levelText(t, level, d) {
   if (level === 'county') return t('dollars.level.county', { county: d.county });
   if (level === 'district') return t('dollars.level.district', { district: d.district || '' });
   return d.state === 'OK' ? t('dollars.level.stateOk') : t('dollars.level.state');
+}
+
+// Receipt row for the N price (USDA AMS Illinois report: national, not Texas). None when it's a placeholder.
+// The report date ("2026-11-13") is shown in the reader's language.
+export function reportDate(iso, lang) {
+  return new Date(`${iso}T12:00:00`).toLocaleDateString(lang, { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function nPriceRows(t, lang, f) {
+  const s = f.source;
+  if (f.placeholder || !s) return [];
+  return [{
+    dataset: s.dataset,
+    variable: t('dollars.nSourceVar', { perTon: usd(s.usdPerTon), perLb: f.nPrice.toFixed(2) }),
+    resolution: s.area, dateRange: reportDate(s.date, lang), scale: s.scale,
+  }];
 }
 
 // Card face: one gross number and, for nitrogen fixers, the fertilizer value.
@@ -47,7 +64,7 @@ export function DollarFace({ dollars: d }) {
 
 // Details: crop by crop, with yield level, the fertilizer math and every caveat.
 export function DollarDetails({ dollars: d }) {
-  const { t } = useApp();
+  const { t, lang } = useApp();
   if (!d) return null;
   const crop = (id) => t(`crops.${id}`);
   return (
@@ -80,13 +97,15 @@ export function DollarDetails({ dollars: d }) {
       )}
       {d.fertilizer && (
         <p className="small">
-          <Receipt src={['NASS Quick Stats']}>
+          <Receipt extra={nPriceRows(t, lang, d.fertilizer)}>
             {t('dollars.fert', {
               crops: d.fertilizer.crops.map(crop).join(', '), lo: usd(d.fertilizer.lo), hi: usd(d.fertilizer.hi),
               price: d.fertilizer.nPrice.toFixed(2), share: Math.round(d.fertilizer.share * 100),
             })}
           </Receipt>
-          {d.fertilizer.placeholder && <span className="muted"> {t('dollars.nPlaceholder')}</span>}
+          <span className={d.fertilizer.placeholder ? 'muted' : 'dollar-warn'}>
+            {' '}{d.fertilizer.placeholder ? t('dollars.nPlaceholder') : t('dollars.nSource', { date: reportDate(d.fertilizer.source.date, lang) })}
+          </span>
         </p>
       )}
       {d.nUnknown.length > 0 && <p className="small">{t('dollars.nUnknown', { crops: d.nUnknown.map(crop).join(', ') })}</p>}

@@ -40,7 +40,8 @@
       "area": "Regional value for your area",
       "county": "County average",
       "state": "State average",
-      "model": "Model result"
+      "model": "Model result",
+      "national": "National estimate, not Texas"
     }
   },
   "units": {
@@ -627,7 +628,8 @@
     "verdict": {
       "holds": "Holds up",
       "strained": "Under strain",
-      "struggles": "Struggles"
+      "struggles": "Struggles",
+      "maxed": "Struggles badly"
     },
     "scoreLine": "{year} replay score: {score} out of 10",
     "vsNormal": "{n} points {dir} than in a normal year",
@@ -639,7 +641,9 @@
     "glanceTitle": "How each option holds up in {year}",
     "see": "See how rotations hold up in {year}",
     "noYear": "No weather record for {year} on this field.",
-    "coverRule": "In drought years we count cover crops as only half established, so their bare-day savings are halved. A dry fall can stop them from coming up, and we don't want the replay to oversell them."
+    "coverRule": "In drought years we count cover crops as only half established, so their bare-day savings are halved. A dry fall can stop them from coming up, and we don't want the replay to oversell them.",
+    "maxedNote": "Extreme settings max out the stress, so this option bottoms out. The exact score is in the details.",
+    "totalLine": "Score in this scenario: {score} out of 100."
   },
   "bareUi": {
     "stripAlt": "Estimated months with bare ground: {months}.",
@@ -724,11 +728,13 @@
     "perYear": "Whole rotation: about ${usd} per acre a year, gross.",
     "partial": "Only {priced} of {years} years have a NASS price, so this averages those years.",
     "fert": "Nitrogen from {crops}: worth about ${lo}–${hi} per acre a year in fertilizer you may not need to buy. We count {share}% of the nitrogen fixed, at ${price} per lb of N.",
-    "nPlaceholder": "The nitrogen price is a placeholder, not from NASS. Check with your dealer.",
+    "nPlaceholder": "The nitrogen price is a rough estimate, to be checked with AgriLife or a local dealer.",
     "nUnknown": "Nitrogen from {crops}: not known yet.",
     "okNote": "Oklahoma field: Oklahoma yields, Texas prices.",
     "source": "USDA NASS Quick Stats survey: yields and Texas prices received, {years} averages.",
-    "notInScore": "Dollars are shown for context only. They don't change the score or the order of options."
+    "notInScore": "Dollars are shown for context only. They don't change the score or the order of options.",
+    "nSource": "National estimate, not Texas: Illinois dealer price of anhydrous ammonia (82% N), USDA AMS report of {date}. Ask your dealer for local prices.",
+    "nSourceVar": "Anhydrous ammonia (82% N): ${perTon} per ton ÷ 1,640 lb N = ${perLb} per lb of N"
   },
   "soilFacts": {
     "title": "Your soil: {series}",

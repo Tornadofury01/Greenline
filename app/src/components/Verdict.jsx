@@ -4,13 +4,15 @@ import { useApp } from '../state/AppContext.jsx';
 
 const ICON = { holds: CircleCheck, strained: TriangleAlert, struggles: CircleX };
 
-export default function Verdict({ verdict }) {
+// maxed: the scenario score bottomed out at 0, so the verdict reads "Struggles badly" and can stand in for the number.
+export default function Verdict({ verdict: v, maxed = false, big = false }) {
   const { t } = useApp();
+  const verdict = maxed ? 'struggles' : v;
   const Icon = ICON[verdict];
   if (!Icon) return null;
   return (
-    <span className={`verdict verdict-${verdict}`}>
-      <Icon size={16} aria-hidden="true" />{t(`replayUi.verdict.${verdict}`)}
+    <span className={`verdict verdict-${verdict}${big ? ' verdict-big' : ''}`}>
+      <Icon size={big ? 20 : 16} aria-hidden="true" />{t(`replayUi.verdict.${maxed ? 'maxed' : verdict}`)}
     </span>
   );
 }

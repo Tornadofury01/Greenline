@@ -9,8 +9,14 @@
 // each one is its own year. Gross per acre per year = sum over priced years / number of priced years.
 //
 // Fertilizer value of nitrogen-fixing crops = nFixLbPerAcre range x N price x credit share (50%: cover crops
-// don't hand over all the nitrogen they fix), averaged per rotation year. The N price is a placeholder
-// (content/economics.json): NASS has no fertilizer price series for Texas.
+// don't hand over all the nitrogen they fix), averaged per rotation year. NASS has no fertilizer price series
+// for Texas, so the N price comes from the USDA AMS Illinois Production Cost Report (bi-weekly, report 3195),
+// a NATIONAL estimate, not Texas (content/economics.json, nPriceSource). Product price -> $/lb N:
+//   anhydrous ammonia 82-0-0, Nov 13 2026: $981.11/ton / (2000 lb x 0.82 = 1640 lb N) = $0.598 -> $0.60/lb N (used)
+//   urea 46-0-0:   $770.00/ton / (2000 x 0.46 = 920 lb N) = $0.837/lb N
+//   UAN 28-0-0:    $467.86/ton / (2000 x 0.28 = 560 lb N) = $0.835/lb N
+// Anhydrous is the cheapest N per pound, so the legume credit is not overstated.
+// If nPriceSource is missing, `placeholder` is true and the app calls it a rough estimate.
 //
 // econ: parsed /content/economics.json. Returns null when the field has no market data (e.g. the fake sample).
 
@@ -61,7 +67,9 @@ export function estimateDollars(crops, field, econ) {
         lo: Math.round(fixers.reduce((a, c) => a + c.nFixLbPerAcre[0], 0) * perLb / Math.max(1, years)),
         hi: Math.round(fixers.reduce((a, c) => a + c.nFixLbPerAcre[1], 0) * perLb / Math.max(1, years)),
         crops: [...new Set(fixers.map((c) => c.id))],
-        nPrice: econ.nPricePerLb, share: econ.nCreditShare, placeholder: !!econ.nPricePlaceholder,
+        nPrice: econ.nPricePerLb, share: econ.nCreditShare,
+        source: econ.nPriceSource ?? null,
+        placeholder: !!econ.nPricePlaceholder || !econ.nPriceSource,
       }
     : null;
   const nUnknown = [...new Set(crops.filter((c) => c.nitrogenFixing && c.nFixLbPerAcre == null).map((c) => c.id))];

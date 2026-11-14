@@ -29,7 +29,7 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 - **Demo field: one setting**, `DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local`). Default `nt-103`.
 - SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
 - Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them, with `sources[].scale` (your field vs regional).
-- Dollars: `scoring/economics.js` (display only, from `field.market`), N price placeholder in `content/economics.json`. What-if: `whatIfHazards()` in `scoring/rules/replay.js`.
+- Dollars: `scoring/economics.js` (display only, from `field.market`), N price in `content/economics.json` (USDA AMS Illinois Production Cost Report, national, not Texas). What-if: `whatIfHazards()` in `scoring/rules/replay.js`.
 - Scoring: `scoring/scoreRotation.js` → `scoreRotation(rotation, field, priorities, constraints, cropLibrary)`.
   One rule per file in `scoring/rules/`. The same function scores current, suggested and custom rotations.
   Rules return **i18n keys and params**, never English text.
@@ -88,7 +88,8 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] Soil facts card (K, T, water in top 1 m, land capability class) on Field story and Expert handoff; PRISM frost dates (median of the last 10 years), POWER frost-free days kept for model 3.
   - [x] Rules: erosion uses SSURGO K × slope ≥ 0.5 (was slope > 2 %; flags 90 % vs 92 % of fields). Water scales the thirsty-crop drought penalty by soil water (< 10 cm × 1.25, ≥ 15 cm × 0.75). nt-103: same order of options; rotations with corn or cotton gain about 1 point.
   - [x] Confidence: PRISM agreement for POWER and IMERG with the field's numbers (no points: not independent, see `docs/data-validation.md`). `EVIDENCE` has PRISM, NASS Quick Stats, SSURGO. Receipts show "measured on your field" vs "regional value" from `sources[].scale`.
-  - Decisions: N price is a placeholder ($0.60/lb N, `content/economics.json`): NASS has no Texas fertilizer price. No price slider. `docs/economics-placeholders-todo.md` dropped (real NASS data now).
+  - Decisions: N price $0.60/lb N from the USDA AMS Illinois Production Cost Report (Nov 13 2026, anhydrous 82% N, $981.11/ton ÷ 1,640 lb N; math in `content/economics.json` and `scoring/economics.js`), labeled "national estimate, not Texas": NASS has no Texas fertilizer price. No price slider. `docs/economics-placeholders-todo.md` dropped (real NASS data now).
+  - [x] Fixes: a scenario score clamped to 0 shows the verdict "Struggles badly" (card and glance) with a "settings max out the stress" note; the number stays in the details. `<Receipt extra>` takes non-field sources (scale `national`).
 - [ ] **Phase 4:** not started.
 
 ## Roadmap

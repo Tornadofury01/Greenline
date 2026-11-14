@@ -529,6 +529,7 @@ dialog.sheet::backdrop { background: rgb(27 31 28 / 0.45); }
 .verdict-strained { background: var(--color-warn-soft); border-color: var(--color-warn-fill); color: var(--color-warn); }
 .verdict-struggles { background: var(--color-risk-soft); border-color: var(--color-risk); color: var(--color-risk); }
 .glance-verdict { grid-column: 1 / -1; }
+.verdict-big { min-height: 44px; padding: 6px 14px; border-radius: 22px; font-size: var(--text-md); white-space: normal; text-align: center; }
 .replay-sum { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-half) var(--s-1); margin-top: var(--s-1); font-size: var(--text-xs); }
 
 /* Bare days on rotation cards */

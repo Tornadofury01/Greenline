@@ -40,7 +40,8 @@
       "area": "Valor regional para su zona",
       "county": "Promedio del condado",
       "state": "Promedio del estado",
-      "model": "Resultado de un modelo"
+      "model": "Resultado de un modelo",
+      "national": "Estimación nacional, no de Texas"
     }
   },
   "units": {
@@ -627,7 +628,8 @@
     "verdict": {
       "holds": "Aguanta",
       "strained": "Con presión",
-      "struggles": "Le cuesta"
+      "struggles": "Le cuesta",
+      "maxed": "Le cuesta mucho"
     },
     "scoreLine": "Puntaje de {year}: {score} de 10",
     "vsNormal": "{n} puntos {dir} que en un año normal",
@@ -639,7 +641,9 @@
     "glanceTitle": "Cómo aguanta cada opción en {year}",
     "see": "Ver cómo aguantan las rotaciones en {year}",
     "noYear": "No hay registro de clima de {year} para esta parcela.",
-    "coverRule": "En años de sequía contamos los cultivos de cobertura como solo medio establecidos, así que sus días desnudos ahorrados se reducen a la mitad. Un otoño seco puede impedir que salgan, y no queremos que la repetición los exagere."
+    "coverRule": "En años de sequía contamos los cultivos de cobertura como solo medio establecidos, así que sus días desnudos ahorrados se reducen a la mitad. Un otoño seco puede impedir que salgan, y no queremos que la repetición los exagere.",
+    "maxedNote": "Los ajustes extremos llevan el estrés al máximo, así que esta opción toca fondo. El puntaje exacto está en los detalles.",
+    "totalLine": "Puntaje en este escenario: {score} de 100."
   },
   "bareUi": {
     "stripAlt": "Meses estimados con suelo desnudo: {months}.",
@@ -724,11 +728,13 @@
     "perYear": "Toda la rotación: unos ${usd} por acre al año, bruto.",
     "partial": "Solo {priced} de {years} años tienen precio de NASS, así que esto promedia esos años.",
     "fert": "Nitrógeno de {crops}: vale unos ${lo}–${hi} por acre al año en fertilizante que tal vez no necesite comprar. Contamos el {share}% del nitrógeno fijado, a ${price} por libra de N.",
-    "nPlaceholder": "El precio del nitrógeno es provisional, no viene de NASS. Consulte con su proveedor.",
+    "nPlaceholder": "El precio del nitrógeno es una estimación aproximada, que falta revisar con AgriLife o con un proveedor local.",
     "nUnknown": "Nitrógeno de {crops}: todavía no se sabe.",
     "okNote": "Campo en Oklahoma: rendimientos de Oklahoma, precios de Texas.",
     "source": "Encuesta USDA NASS Quick Stats: rendimientos y precios recibidos en Texas, promedios de {years}.",
-    "notInScore": "Los dólares se muestran solo como contexto. No cambian el puntaje ni el orden de las opciones."
+    "notInScore": "Los dólares se muestran solo como contexto. No cambian el puntaje ni el orden de las opciones.",
+    "nSource": "Estimación nacional, no de Texas: precio de distribuidores de Illinois para amoníaco anhidro (82% N), informe de USDA AMS del {date}. Pregunte a su proveedor por los precios locales.",
+    "nSourceVar": "Amoníaco anhidro (82% N): ${perTon} por tonelada ÷ 1,640 lb de N = ${perLb} por libra de N"
   },
   "soilFacts": {
     "title": "Su suelo: {series}",

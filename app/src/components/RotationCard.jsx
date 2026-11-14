@@ -145,10 +145,12 @@ function ModelInsights({ crops }) {
 }
 
 // On the card face during a replay: verdict, the year's score and how it differs from a normal year.
-function ReplaySummary({ replay, normal, shown }) {
+// When the score bottomed out at 0 (maxed), the verdict is already the headline: show why instead of numbers.
+function ReplaySummary({ replay, normal, shown, maxed }) {
   const { t } = useApp();
   const diff = shown - normal;
   const dir = diff > 0 ? 'Up' : diff < 0 ? 'Down' : 'Same';
+  if (maxed) return <div className="replay-sum"><span className="muted">{t('replayUi.maxedNote')}</span></div>;
   return (
     <div className="replay-sum">
       <Verdict verdict={replay.verdict} />
@@ -211,6 +213,8 @@ export default function RotationCard({ result, label, name, best = false, delta 
   const rp = (replayYear != null || whatIf) && result.replay ? result.replay : null;
   const scenarioTitle = rp && (rp.hypothetical ? t('whatIfUi.heading') : t('replayUi.heading', { year: rp.year }));
   const shown = rp ? result.replayTotal : result.total;
+  // Extreme scenarios clamp the score to 0: lead with the verdict, keep the number in the details.
+  const maxed = !!rp && shown === 0;
   const [openOwn, setOpenOwn] = useState(defaultOpen);
   const open = openProp ?? openOwn;
   const setOpen = onToggle ?? setOpenOwn;
@@ -231,7 +235,9 @@ export default function RotationCard({ result, label, name, best = false, delta 
             <h3>{name}</h3>
           </div>
           <div className="rot-score">
-            <div className="rot-score-num">{shown}</div>
+            {maxed
+              ? <Verdict verdict={rp.verdict} maxed big />
+              : <div className="rot-score-num">{shown}</div>}
             <div className="rot-score-of">{rp ? scenarioTitle : t('compare.outOf')}</div>
           </div>
         </div>
@@ -246,7 +252,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
         </div>
         <ToneList items={topReasons(result.confidence)} className="icon-list conf-face" />
         <Delta value={delta} />
-        {rp && <ReplaySummary replay={rp} normal={result.total} shown={shown} />}
+        {rp && <ReplaySummary replay={rp} normal={result.total} shown={shown} maxed={maxed} />}
         <TopReason crops={result.crops} />
         <DollarFace dollars={result.dollars} />
       </div>
@@ -261,6 +267,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           {rp && (
             <section className="detail">
               <h4>{scenarioTitle}</h4>
+              <p className="small">{t('replayUi.totalLine', { score: shown })} {t('replayUi.vsNormal', { n: Math.abs(shown - result.total), dir: t(`replayUi.dir${shown > result.total ? 'Up' : shown < result.total ? 'Down' : 'Same'}`) })}</p>
               <IconList items={rp.reasons} Icon={Lightbulb} tone="info" />
               {rp.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
               <p className="muted small">{rp.hypothetical ? t('whatIfUi.note') : t('replayUi.note')}</p>
