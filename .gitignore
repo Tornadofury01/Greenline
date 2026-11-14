@@ -51,3 +51,6 @@ Thumbs.db
 
 # Vercel (project link + pulled settings, per machine)
 .vercel/
+
+# Local design references (third-party images, never commit)
+design-refs/
