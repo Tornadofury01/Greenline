@@ -64,3 +64,21 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 
 ## `sources[]`
 `{ dataset, variable, resolution, dateRange }`. These are shown on the expert handoff page. Dataset names should match the `EVIDENCE` names in `/scoring/scoreRotation.js`.
+
+## Pipeline CSV outputs (`/pipeline/data/`)
+Intermediate, monthly files from `pipeline/greenline_pipeline.py`. A later step turns them into the field JSON above
+(for example `ndviMonthly` from Landsat filled with HLS/MODIS, `climateYearly` from POWER + IMERG + SMAP).
+Empty cell = no valid data that month. All rows have `year` and, for monthly files, `month` (1–12).
+
+| File | Columns | Units / notes |
+|---|---|---|
+| `power_monthly.csv` | `tMeanC, tMaxC, tMinC, precipMm, heatStressDays, frostDays, daysWithData` | °C monthly means of daily values; precip summed; heat stress = Tmax ≥ 35 °C; frost = Tmin ≤ 0 °C |
+| `power_yearly.csv` | `lastSpringFrost, firstFallFrost, frostFreeDays, heatStressDays, precipMm, completeYear` | Frost = Tmin ≤ 0 °C, split at Jul 1. ISO dates |
+| `landsat_monthly.csv` | `scenes, ndvi, ndti, bsi` | Monthly median of cloud-masked Landsat 5/7/8/9 C2 L2. NDTI = (SWIR1−SWIR2)/(SWIR1+SWIR2), residue; BSI = bare soil index |
+| `hls_s30_monthly.csv` | `scenes, ndvi` | HLS Sentinel-2, Fmask cloud-masked |
+| `modis_ndvi_monthly.csv` | `scenes, ndvi` | MOD13Q1, 250 m, good-quality pixels |
+| `cdl_history.csv` | `code, cdlName` | One row per year (no month). Most common CDL class in the field. Map to `/content/crops.json` ids later |
+| `smap_monthly.csv` | `days, sm_surface, sm_rootzone` | SMAP L4, m³/m³, ~11 km |
+| `imerg_monthly.csv` | `precipMm` | GPM IMERG V07 monthly total |
+| `terrain.csv` | `elevationM, slopePct` | One row. SRTM 30 m |
+| `nass_crop_progress_tx_monthly.csv` | `crop, stage, pctMean, pctEndOfMonth, weeks` | Texas statewide weekly Crop Progress, averaged by month |
