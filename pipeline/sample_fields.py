@@ -7,6 +7,10 @@ Points are CDL pixel centers chosen by us, never a farmer's GPS position.
 Usage (from the repo root):
     pipeline/.venv/Scripts/python pipeline/sample_fields.py all
 Steps: fields, landsat, cdl, smap, imerg, storms, et, power, all
+Harmonization checks (not part of "all"; see docs/landsat-harmonization-results.md):
+    landsat_harmonized   2008-2025, TM/ETM+ mapped to OLI (Roy et al. 2016) -> landsat_monthly_harmonized.csv
+    landsat_overlap      2013-2021, L7-only (raw and harmonized) vs L8-only   -> landsat_overlap_l7_l8.csv
+    --years Y0 Y1 limits either step (smoke tests).
 """
 import argparse
 import sys
@@ -120,13 +124,13 @@ def run_landsat():
     save(df.rename(columns={"n": "scenes"}).round(4), "landsat_monthly")
 
 
-def landsat_collection_all(ee):
+def landsat_collection_all(ee, **kw):
     # Same processing as the demo field, but over the whole North Texas box.
     import greenline_pipeline as gp
     old = gp.region
     gp.region = lambda ee_: ee_.Geometry.Rectangle(BBOX)
     try:
-        return landsat_collection(ee)
+        return landsat_collection(ee, **kw)
     finally:
         gp.region = old
 
@@ -391,13 +395,79 @@ def run_prism_yearly():
              "frostFreeDays"]].round(1), "prism_yearly")
 
 
+HARM_YEARS = None  # set by --years
+
+
+def run_landsat_harmonized():
+    """Same as run_landsat, but Landsat 5/7 reflectance is mapped to Landsat 8/9 (OLI) per scene, before
+    the monthly median, so mixed-sensor months are corrected too."""
+    y0, y1 = HARM_YEARS or (Y0, Y1)
+    print(f"Landsat harmonized {y0}-{y1} ...")
+    ee = ee_init()
+    df = per_month_sample(ee, landsat_collection_all(ee, harmonize=True), ["ndvi", "ndti", "bsi"], y0, y1, 30,
+                          name="landsat_harm")
+    save(df.rename(columns={"n": "scenes"}).round(4), "landsat_monthly_harmonized" + ("" if not HARM_YEARS else f"_{y0}_{y1}"))
+
+
+def run_landsat_overlap():
+    """Sensor-overlap check: for the same field and month, Landsat 7 alone (raw and Roy-harmonized) vs
+    Landsat 8 alone. One image per month with all three composites, one reduceRegions call."""
+    y0, y1 = HARM_YEARS or (2013, 2021)
+    print(f"Landsat L7 vs L8 overlap {y0}-{y1} ...")
+    ee = ee_init()
+    bands = ["ndvi", "ndti", "bsi"]
+    cols = {"l7": landsat_collection_all(ee, sensors=("L7",)),
+            "l7h": landsat_collection_all(ee, harmonize=True, sensors=("L7",)),
+            "l8": landsat_collection_all(ee, sensors=("L8",))}
+    fc = fields_fc(ee)
+    names = [f"{k}_{b}" for k in cols for b in bands]
+    parts = []
+    for y in range(y0, y1 + 1):
+        for attempt in range(3):
+            try:
+                feats = []
+                for m in range(1, 13):
+                    s = ee.Date.fromYMD(y, m, 1)
+                    imgs, counts = [], {}
+                    for k, col in cols.items():
+                        sub = col.filterDate(s, s.advance(1, "month")).select(bands)
+                        empty = ee.Image.constant([0] * 3).rename(bands).updateMask(0)
+                        imgs.append(ee.Image(ee.Algorithms.If(sub.size().gt(0), sub.median(), empty))
+                                    .rename([f"{k}_{b}" for b in bands]))
+                        counts[f"{k}_n"] = sub.size()
+                    img = ee.Image.cat(imgs)
+                    r = img.reduceRegions(fc, ee.Reducer.mean(), 30).map(
+                        lambda f, m=m, c=counts: f.set({"year": y, "month": m, **c}).setGeometry(None))
+                    feats.append(r)
+                got = ee.FeatureCollection(feats).flatten().getInfo()["features"]
+                parts.append(pd.DataFrame([g["properties"] for g in got]))
+                print(f"  overlap {y}")
+                break
+            except Exception as e:
+                print(f"  overlap {y} retry ({str(e)[:80]})")
+                time.sleep(5)
+        else:
+            raise RuntimeError(f"overlap {y} failed")
+    df = pd.concat(parts, ignore_index=True)
+    for c in names:
+        if c not in df:
+            df[c] = None
+    save(df[["fieldId", "year", "month", "l7_n", "l8_n"] + names].round(4),
+         "landsat_overlap_l7_l8" + ("" if not HARM_YEARS else f"_{y0}_{y1}"))
+
+
+EXTRA_STEPS = {"landsat_harmonized": run_landsat_harmonized, "landsat_overlap": run_landsat_overlap}
+
 STEPS = {"prism": run_prism, "prism_yearly": run_prism_yearly, "landsat_early": run_landsat_early, "terrain": run_terrain, "soil": run_soil, "power_long": run_power_long,
          "fields": run_fields, "cdl": run_cdl, "landsat": run_landsat, "smap": run_smap, "imerg": run_imerg,
          "storms": run_storms, "et": run_et, "power": run_power}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("steps", nargs="+", choices=[*STEPS, "all"])
+    ap.add_argument("steps", nargs="+", choices=[*STEPS, *EXTRA_STEPS, "all"])
+    ap.add_argument("--years", nargs=2, type=int, metavar=("Y0", "Y1"), help="year range for the harmonization steps")
     a = ap.parse_args()
+    if a.years:
+        HARM_YEARS = tuple(a.years)
     for s in (list(STEPS) if "all" in a.steps else a.steps):
-        STEPS[s]()
+        {**STEPS, **EXTRA_STEPS}[s]()

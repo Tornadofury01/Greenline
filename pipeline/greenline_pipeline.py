@@ -191,28 +191,46 @@ def chunked(ee, col, bands, reducer, y0, y1, scale, step=5):
     return df[["year", "month", "scenes"] + bands]
 
 
-def landsat_collection(ee):
+# TM/ETM+ -> OLI surface-reflectance cross-calibration, OLS, OLI = a + b * ETM+ (reflectance units).
+# Roy, D.P., Kovalskyy, V., Zhang, H.K., Vermote, E.F., Yan, L., Kumar, S.S., Egorov, A. (2016).
+# Characterization of Landsat-7 to Landsat-8 reflective wavelength and normalized difference vegetation
+# index continuity. Remote Sensing of Environment 185: 57-70, Table 2. doi:10.1016/j.rse.2015.12.024
+# Fit on ETM+ (Collection 1-era SR); applying it to TM is common practice but an approximation.
+# Order: B, G, R, N, S1, S2.
+ROY2016_SLOPE = [0.8474, 0.8483, 0.9047, 0.8462, 0.8937, 0.9071]
+ROY2016_ITCP = [0.0003, 0.0088, 0.0061, 0.0412, 0.0254, 0.0172]
+
+LANDSAT_IDS = {"L5": "LANDSAT/LT05/C02/T1_L2", "L7": "LANDSAT/LE07/C02/T1_L2",
+               "L8": "LANDSAT/LC08/C02/T1_L2", "L9": "LANDSAT/LC09/C02/T1_L2"}
+
+
+def landsat_collection(ee, harmonize=False, sensors=("L5", "L7", "L8", "L9")):
     """Landsat 5/7/8/9 Collection 2 L2 surface reflectance, cloud-masked, harmonized band names,
-    with NDVI, NDTI (residue) and BSI (bare soil)."""
-    def prep(img, blue, green, red, nir, swir1, swir2):
+    with NDVI, NDTI (residue) and BSI (bare soil).
+    harmonize=True maps TM/ETM+ reflectance to OLI with Roy et al. (2016) before the indices are computed.
+    sensors limits the collection (e.g. ("L7",) for sensor-overlap checks)."""
+    def prep(img, blue, green, red, nir, swir1, swir2, to_oli=False):
         qa = img.select("QA_PIXEL")
         clear = qa.bitwiseAnd(0b11111).eq(0)  # fill, dilated cloud, cirrus, cloud, shadow
         sr = img.select([blue, green, red, nir, swir1, swir2], ["B", "G", "R", "N", "S1", "S2"]) \
             .multiply(0.0000275).add(-0.2)
+        if to_oli:
+            sr = sr.multiply(ee.Image.constant(ROY2016_SLOPE)).add(ee.Image.constant(ROY2016_ITCP)) \
+                .rename(["B", "G", "R", "N", "S1", "S2"])
         ndvi = sr.normalizedDifference(["N", "R"]).rename("ndvi")
         ndti = sr.normalizedDifference(["S1", "S2"]).rename("ndti")
         bsi = sr.expression("((S1 + R) - (N + B)) / ((S1 + R) + (N + B))",
                             {"S1": sr.select("S1"), "R": sr.select("R"), "N": sr.select("N"), "B": sr.select("B")}).rename("bsi")
         return ndvi.addBands([ndti, bsi]).updateMask(clear).copyProperties(img, ["system:time_start"])
 
-    tm = lambda i: prep(i, "SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B7")
+    tm = lambda i: prep(i, "SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B7", to_oli=harmonize)
     oli = lambda i: prep(i, "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B6", "SR_B7")
     g = region(ee)
-    c = lambda cid, f: ee.ImageCollection(cid).filterBounds(g).map(f)
-    return (c("LANDSAT/LT05/C02/T1_L2", tm)
-            .merge(c("LANDSAT/LE07/C02/T1_L2", tm))
-            .merge(c("LANDSAT/LC08/C02/T1_L2", oli))
-            .merge(c("LANDSAT/LC09/C02/T1_L2", oli)))
+    c = lambda s: ee.ImageCollection(LANDSAT_IDS[s]).filterBounds(g).map(tm if s in ("L5", "L7") else oli)
+    out = c(sensors[0])
+    for s in sensors[1:]:
+        out = out.merge(c(s))
+    return out
 
 
 def run_landsat():

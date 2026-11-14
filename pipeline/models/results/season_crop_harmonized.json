@@ -1,0 +1,402 @@
+{
+ "model": "season_crop",
+ "validation": "leave-one-year-out",
+ "years": [
+  2008,
+  2025
+ ],
+ "nFieldYears": 3618,
+ "nFields": 201,
+ "classCounts": {
+  "corn": 1277,
+  "winter_wheat": 1176,
+  "grain_sorghum": 330,
+  "cotton": 277,
+  "fallow": 187,
+  "other": 145,
+  "small_grain": 108,
+  "soybeans": 101
+ },
+ "scores": {
+  "randomForest": {
+   "accuracy": 0.764,
+   "balancedAccuracy": 0.514,
+   "macroF1": 0.528
+  },
+  "gradientBoosting": {
+   "accuracy": 0.765,
+   "balancedAccuracy": 0.527,
+   "macroF1": 0.549
+  },
+  "baselineMajorityClass": {
+   "accuracy": 0.355,
+   "balancedAccuracy": 0.125,
+   "macroF1": 0.065
+  },
+  "baselineSameAsLastYear": {
+   "accuracy": 0.344,
+   "balancedAccuracy": 0.302,
+   "macroF1": 0.249
+  }
+ },
+ "chosen": "gradientBoosting",
+ "perClass": {
+  "corn": {
+   "recall": 0.878,
+   "precision": 0.812,
+   "n": 1277
+  },
+  "cotton": {
+   "recall": 0.798,
+   "precision": 0.674,
+   "n": 277
+  },
+  "fallow": {
+   "recall": 0.412,
+   "precision": 0.507,
+   "n": 187
+  },
+  "grain_sorghum": {
+   "recall": 0.388,
+   "precision": 0.467,
+   "n": 330
+  },
+  "other": {
+   "recall": 0.448,
+   "precision": 0.67,
+   "n": 145
+  },
+  "small_grain": {
+   "recall": 0.167,
+   "precision": 0.439,
+   "n": 108
+  },
+  "soybeans": {
+   "recall": 0.188,
+   "precision": 0.442,
+   "n": 101
+  },
+  "winter_wheat": {
+   "recall": 0.939,
+   "precision": 0.859,
+   "n": 1176
+  }
+ },
+ "confusion": {
+  "labels": [
+   "corn",
+   "cotton",
+   "fallow",
+   "grain_sorghum",
+   "other",
+   "small_grain",
+   "soybeans",
+   "winter_wheat"
+  ],
+  "matrix": [
+   [
+    1121,
+    15,
+    15,
+    87,
+    4,
+    0,
+    9,
+    26
+   ],
+   [
+    9,
+    221,
+    13,
+    20,
+    3,
+    1,
+    5,
+    5
+   ],
+   [
+    36,
+    9,
+    77,
+    7,
+    10,
+    4,
+    5,
+    39
+   ],
+   [
+    133,
+    45,
+    5,
+    128,
+    4,
+    1,
+    2,
+    12
+   ],
+   [
+    26,
+    6,
+    10,
+    9,
+    65,
+    1,
+    3,
+    25
+   ],
+   [
+    4,
+    3,
+    6,
+    4,
+    2,
+    18,
+    0,
+    71
+   ],
+   [
+    32,
+    23,
+    8,
+    11,
+    4,
+    1,
+    19,
+    3
+   ],
+   [
+    20,
+    6,
+    18,
+    8,
+    5,
+    15,
+    0,
+    1104
+   ]
+  ]
+ },
+ "perYearAccuracy": {
+  "randomForest": {
+   "2008": 0.721,
+   "2009": 0.683,
+   "2010": 0.66,
+   "2011": 0.7,
+   "2012": 0.701,
+   "2013": 0.816,
+   "2014": 0.771,
+   "2015": 0.67,
+   "2016": 0.775,
+   "2017": 0.856,
+   "2018": 0.84,
+   "2019": 0.806,
+   "2020": 0.687,
+   "2021": 0.781,
+   "2022": 0.793,
+   "2023": 0.795,
+   "2024": 0.838,
+   "2025": 0.854
+  },
+  "gradientBoosting": {
+   "2008": 0.726,
+   "2009": 0.688,
+   "2010": 0.645,
+   "2011": 0.735,
+   "2012": 0.701,
+   "2013": 0.816,
+   "2014": 0.791,
+   "2015": 0.695,
+   "2016": 0.78,
+   "2017": 0.836,
+   "2018": 0.815,
+   "2019": 0.786,
+   "2020": 0.716,
+   "2021": 0.766,
+   "2022": 0.783,
+   "2023": 0.81,
+   "2024": 0.838,
+   "2025": 0.833
+  }
+ },
+ "doubleCropFieldYearsCdl": 17,
+ "fallowRecall": 0.412,
+ "shapGlobalTop": [
+  {
+   "feature": "ndvi_spring_minus_summer",
+   "text": "spring vs. summer greenness",
+   "meanAbsShap": 0.0192
+  },
+  {
+   "feature": "ndvi_06",
+   "text": "greenness (NDVI) in June",
+   "meanAbsShap": 0.018
+  },
+  {
+   "feature": "bsi_06",
+   "text": "bare soil (BSI) in June",
+   "meanAbsShap": 0.0153
+  },
+  {
+   "feature": "ndvi_03",
+   "text": "greenness (NDVI) in March",
+   "meanAbsShap": 0.014
+  },
+  {
+   "feature": "ndti_06",
+   "text": "crop residue (NDTI) in June",
+   "meanAbsShap": 0.0136
+  },
+  {
+   "feature": "bsi_03",
+   "text": "bare soil (BSI) in March",
+   "meanAbsShap": 0.0127
+  },
+  {
+   "feature": "bsi_04",
+   "text": "bare soil (BSI) in April",
+   "meanAbsShap": 0.0124
+  },
+  {
+   "feature": "bsi_08",
+   "text": "bare soil (BSI) in August",
+   "meanAbsShap": 0.0113
+  }
+ ],
+ "shapTopByClass": {
+  "corn": [
+   "spring vs. summer greenness",
+   "greenness (NDVI) in June",
+   "greenness (NDVI) in May"
+  ],
+  "cotton": [
+   "bare soil (BSI) in August",
+   "spring vs. summer greenness",
+   "greenness (NDVI) in June"
+  ],
+  "fallow": [
+   "greenness (NDVI) in June",
+   "bare soil (BSI) in August",
+   "spring vs. summer greenness"
+  ],
+  "grain_sorghum": [
+   "greenness (NDVI) in June",
+   "crop residue (NDTI) in June",
+   "bare soil (BSI) in June"
+  ],
+  "other": [
+   "bare soil (BSI) in April",
+   "bare soil (BSI) in August",
+   "spring vs. summer greenness"
+  ],
+  "small_grain": [
+   "spring vs. summer greenness",
+   "greenness (NDVI) in March",
+   "bare soil (BSI) in March"
+  ],
+  "soybeans": [
+   "greenness (NDVI) in June",
+   "spring vs. summer greenness",
+   "crop residue (NDTI) in June"
+  ],
+  "winter_wheat": [
+   "greenness (NDVI) in March",
+   "bare soil (BSI) in March",
+   "spring vs. summer greenness"
+  ]
+ },
+ "datesVsNass": {
+  "corn": {
+   "fieldYears": 1382,
+   "greenUp_minus_nassEmerged": {
+    "n": 1379,
+    "medianDays": 2.9,
+    "meanAbsDays": 21.7,
+    "within30DaysPct": 0.901
+   },
+   "greenUp_minus_nassPlanted": {
+    "n": 1379,
+    "medianDays": 23.2,
+    "meanAbsDays": 31.6,
+    "within30DaysPct": 0.697
+   },
+   "senescence_minus_nassHarvested": {
+    "n": 1325,
+    "medianDays": -55.8,
+    "meanAbsDays": 56.1,
+    "within30DaysPct": 0.091
+   }
+  },
+  "cotton": {
+   "fieldYears": 324,
+   "greenUp_minus_nassPlanted": {
+    "n": 323,
+    "medianDays": 18.0,
+    "meanAbsDays": 23.9,
+    "within30DaysPct": 0.712
+   },
+   "senescence_minus_nassHarvested": {
+    "n": 302,
+    "medianDays": -27.4,
+    "meanAbsDays": 141.4,
+    "within30DaysPct": 0.066
+   }
+  },
+  "sorghum": {
+   "fieldYears": 278,
+   "greenUp_minus_nassEmerged": {
+    "n": 26,
+    "medianDays": 20.0,
+    "meanAbsDays": 21.8,
+    "within30DaysPct": 0.808
+   },
+   "greenUp_minus_nassPlanted": {
+    "n": 278,
+    "medianDays": 35.5,
+    "meanAbsDays": 41.0,
+    "within30DaysPct": 0.345
+   },
+   "senescence_minus_nassHarvested": {
+    "n": 274,
+    "medianDays": -27.0,
+    "meanAbsDays": 31.1,
+    "within30DaysPct": 0.511
+   }
+  },
+  "soybeans": {
+   "fieldYears": 43,
+   "greenUp_minus_nassEmerged": {
+    "n": 27,
+    "medianDays": -0.2,
+    "meanAbsDays": 40.3,
+    "within30DaysPct": 0.741
+   },
+   "greenUp_minus_nassPlanted": {
+    "n": 27,
+    "medianDays": 12.9,
+    "meanAbsDays": 46.7,
+    "within30DaysPct": 0.704
+   },
+   "senescence_minus_nassHarvested": {
+    "n": 22,
+    "medianDays": -51.1,
+    "meanAbsDays": 52.3,
+    "within30DaysPct": 0.045
+   }
+  }
+ },
+ "thresholds": {
+  "greenNdvi": 0.4,
+  "bareNdvi": 0.25,
+  "residueNdti": null
+ },
+ "flags": [
+  "Double-crop years: only 17 field-years in CDL. Not a model class; shown only as 'detected by CDL' (low confidence).",
+  "Largest class is corn at 35% of field-years; a majority-class guess already scores 36% accuracy.",
+  "Labels are CDL, which is itself a satellite classification (Texas accuracy for minor crops can be well below 90%). The model learns CDL, including its mistakes.",
+  "The same fields appear in training and test (different years). Held-out years test new weather, not new places.",
+  "Green/residue/bare uses NDVI only (0.4/0.25). 'Residue' means sparse cover or residue. An NDTI residue threshold of 0.07 was tried and rejected: Blackland clays read NDTI ~0.15 even when bare, so it marked almost no day as bare. Residue detection needs field calibration.",
+  "Monthly Landsat composites: dates are about +/- 15 days at best; cloudy months are interpolated.",
+  "NASS Crop Progress is Texas-wide (includes South Texas and the High Plains), not North Texas."
+ ],
+ "landsatTable": "landsat_monthly_harmonized.csv"
+}

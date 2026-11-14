@@ -22,7 +22,7 @@ import shap
 from sklearn.ensemble import HistGradientBoostingClassifier, RandomForestClassifier
 from sklearn.metrics import accuracy_score, balanced_accuracy_score, classification_report, confusion_matrix, f1_score
 
-from common import DATA, MONTHS, MONTH_NAMES, RESULTS, SEED, daily_curve, load_cdl, load_landsat
+from common import DATA, LANDSAT_CSV, MONTHS, MONTH_NAMES, RESULTS, RESULTS_SUFFIX, SEED, daily_curve, load_cdl, load_landsat
 
 GREEN_NDVI = 0.40   # NDVI at or above: actively growing cover
 BARE_NDVI = 0.25    # NDVI below: little live cover (same as BARE_NDVI in app/src/data/loadField.js)
@@ -290,8 +290,11 @@ def main():
         "thresholds": {"greenNdvi": GREEN_NDVI, "bareNdvi": BARE_NDVI, "residueNdti": None},
         "flags": flags,
     }
-    (RESULTS / "season_crop.json").write_text(json.dumps(res, indent=1, default=str))
-    pd.DataFrame(rows).to_json(RESULTS / "season_crop_fieldyears.json", orient="records")
+    res["landsatTable"] = LANDSAT_CSV
+    (RESULTS / f"season_crop{RESULTS_SUFFIX}.json").write_text(json.dumps(res, indent=1, default=str))
+    pd.DataFrame(rows).to_json(RESULTS / f"season_crop{RESULTS_SUFFIX}_fieldyears.json", orient="records")
+    if RESULTS_SUFFIX:  # held-out predictions of both models, for side-by-side comparisons
+        pd.DataFrame({"cls": y, "gradientBoosting": p_gb, "randomForest": p_rf}).reset_index()             .to_csv(RESULTS / f"season_crop{RESULTS_SUFFIX}_heldout.csv", index=False)
     print(json.dumps({k: res[k] for k in ("perClass", "shapGlobalTop", "shapTopByClass", "datesVsNass", "flags")}, indent=1, default=str))
 
 

@@ -10,6 +10,11 @@ DATA = HERE.parent / "data"
 RESULTS = HERE / "results"
 RESULTS.mkdir(exist_ok=True)
 SEED = 0
+# Harmonization experiments (docs/landsat-harmonization-results.md): point the models at another Landsat table
+# and write results under a suffix, so the default results are never overwritten. Defaults = current behavior.
+import os  # noqa: E402
+LANDSAT_CSV = os.environ.get("GREENLINE_LANDSAT_CSV", "landsat_monthly.csv")
+RESULTS_SUFFIX = os.environ.get("GREENLINE_RESULTS_SUFFIX", "")
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August",
                "September", "October", "November", "December"]
@@ -37,7 +42,7 @@ def load_cdl():
 def load_landsat():
     """Monthly Landsat per field, gaps filled by linear interpolation along each field's
     continuous monthly series (max 2 missing months in a row). Adds `filled` flags."""
-    d = pd.read_csv(FIELDS / "landsat_monthly.csv").sort_values(["fieldId", "year", "month"])
+    d = pd.read_csv(FIELDS / LANDSAT_CSV).sort_values(["fieldId", "year", "month"])
     out = []
     for fid, g in d.groupby("fieldId"):
         g = g.copy()
