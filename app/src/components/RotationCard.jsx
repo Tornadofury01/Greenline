@@ -10,6 +10,7 @@ import { formatReason } from '../i18n.js';
 import { PRIORITIES } from '@scoring/index.js';
 import { ConfidenceBadge, Receipt } from './Small.jsx';
 import Verdict from './Verdict.jsx';
+import CoverStrip from './CoverStrip.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
 import { cropInsight, cropDriverText, stressDriverText, modelSummary } from '../si.js';
 
@@ -38,6 +39,22 @@ function IconList({ items, Icon, tone }) {
         <li key={i}><Icon size={18} className={tone} aria-hidden="true" /><Receipt src={r.src}>{formatReason(t, r)}</Receipt></li>
       ))}
     </ul>
+  );
+}
+
+// The headline number for erosion: estimated bare days a year, and how many this option removes (or adds) vs. today.
+function BareBlock({ bare, delta }) {
+  const { t } = useApp();
+  if (!bare) return null;
+  const dir = delta == null ? null : delta < 0 ? 'fewer' : delta > 0 ? 'more' : 'same';
+  return (
+    <div className="bare-block">
+      <div className="bare-big">
+        <span className="bare-num">{bare.bareDays}</span>
+        <span className="bare-unit">{t('bareUi.unit')} <small>({t('bareUi.estimate')})</small></span>
+      </div>
+      {dir && <span className={`bare-delta ${dir}`}>{t(`bareUi.${dir}`, { n: Math.abs(delta) })}</span>}
+    </div>
   );
 }
 
@@ -132,7 +149,7 @@ function Delta({ value }) {
 }
 
 // open/onToggle are optional: pass them to control several cards together (desktop side-by-side view).
-export default function RotationCard({ result, label, name, best = false, delta = null, defaultOpen = false, open: openProp, onToggle }) {
+export default function RotationCard({ result, label, name, best = false, delta = null, bareDelta = null, defaultOpen = false, open: openProp, onToggle }) {
   const { t, replayYear } = useApp();
   const rp = replayYear != null && result.replay ? result.replay : null;
   const shown = rp ? result.replayTotal : result.total;
@@ -160,6 +177,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           </div>
         </div>
         <CropSteps crops={result.crops} />
+        <BareBlock bare={result.bareDays} delta={bareDelta} />
         <div className="badges">
           <ConfidenceBadge level={result.confidence.level} />
           {result.tags.map((tag) => {
@@ -201,6 +219,18 @@ export default function RotationCard({ result, label, name, best = false, delta 
           <section className="detail">
             <h4>{t('compare.risks')}</h4>
             <IconList items={result.risks} Icon={TriangleAlert} tone="risk" />
+          </section>
+          <section className="detail">
+            <h4>{t('bareUi.stripTitle')} <GlossaryIcon term="bareDays" /></h4>
+            <CoverStrip months={result.bareDays.bareMonths} />
+            <p className="muted small">
+              <Receipt src={['Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>
+                {result.bareDays.calibrated.length
+                  ? t('bareUi.calibrated', { crops: result.bareDays.calibrated.map((c) => t(`crops.${c.crop}`)).join(', ') })
+                  : t('bareUi.regional')}
+              </Receipt>
+            </p>
+            <p className="muted small">{t('bareUi.caveat')}</p>
           </section>
           <section className="detail">
             <h4>{t('compare.breakdown')} <GlossaryIcon term="score" /></h4>

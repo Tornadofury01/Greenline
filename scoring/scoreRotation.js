@@ -9,7 +9,8 @@
 //
 // options:     { replayYear?: number }  re-run under that past year's real weather (bad-year replay)
 //
-// Returns { total (0-100), breakdown, reasons, benefits, gaps, risks, tags, confidence, evidence }.
+// Returns { total (0-100), breakdown, reasons, benefits, gaps, risks, tags, confidence, evidence, bareDays, replay, replayTotal }.
+// bareDays = { bareDays (per year), bareMonths[12], calibrated[] }: see scoring/bareDays.js.
 // All text comes back as i18n keys + params, never as English strings.
 import { waterRule } from './rules/water.js';
 import { erosionRule } from './rules/erosion.js';
@@ -20,6 +21,7 @@ import { constraintRule } from './rules/constraints.js';
 import { confidenceFor } from './confidence.js';
 import { reason } from './rules/helpers.js';
 import { replayRule } from './rules/replay.js';
+import { estimateBareDays } from './bareDays.js';
 
 export const PRIORITIES = ['water', 'erosion', 'soil', 'income', 'cattle'];
 const RULES = { water: waterRule, erosion: erosionRule, soil: soilRule, income: incomeRule, cattle: cattleRule };
@@ -43,12 +45,15 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   const crops = rotation.crops.map((id) => byId[id]).filter(Boolean);
   if (!crops.length) throw new Error('scoreRotation: rotation has no known crops');
 
+  // 0. Days the soil sits bare under this rotation (feeds the erosion rule and is shown on the card).
+  const bareDays = estimateBareDays(crops, field);
+
   // 1. Run each priority rule.
   const breakdown = {};
   let weighted = 0;
   let weights = 0;
   for (const p of PRIORITIES) {
-    const result = RULES[p](crops, field, constraints);
+    const result = RULES[p](crops, field, constraints, { bareDays });
     const weight = priorities.includes(p) ? SELECTED_WEIGHT : OTHER_WEIGHT;
     breakdown[p] = { score: Math.round(result.score * 10) / 10, weight, selected: weight === SELECTED_WEIGHT, reasons: result.reasons };
     weighted += result.score * weight;
@@ -111,7 +116,7 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   return {
     rotationId: rotation.id,
     crops: rotation.crops,
-    total, breakdown, reasons, benefits, gaps, risks, tags, evidence, replay, replayTotal,
+    total, breakdown, reasons, benefits, gaps, risks, tags, evidence, bareDays, replay, replayTotal,
     confidence: confidenceFor(crops, field, cropLibrary.verified),
   };
 }

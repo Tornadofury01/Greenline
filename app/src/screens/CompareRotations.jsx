@@ -50,6 +50,7 @@ export default function CompareRotations() {
   const rows = [current, ...options].filter(Boolean);
   // While replaying a year, every number on the page is the replay score; otherwise the normal score.
   const shownScore = (r) => (replayYear != null && r.replayTotal != null ? r.replayTotal : r.total);
+  const bareDelta = (r) => (current ? r.bareDays.bareDays - current.result.bareDays.bareDays : null);
   const delta = (r) => (current ? shownScore(r) - shownScore(current.result) : null);
 
   return (
@@ -70,6 +71,7 @@ export default function CompareRotations() {
               <span className="glance-score">{shownScore(r.result)}</span>
               {replayYear != null && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} /></span>}
               <span className="glance-bar" aria-hidden="true"><span style={{ width: `${shownScore(r.result)}%` }} /></span>
+              <span className="glance-days">{t('bareUi.glanceDays', { n: r.result.bareDays.bareDays })}</span>
             </div>
           ))}
         </div>
@@ -88,11 +90,11 @@ export default function CompareRotations() {
 
       <div className="rot-grid">
       {options.filter((o) => o.key === bestKey).map((o) => (
-        <RotationCard key={o.key} result={o.result} label={o.label} name={o.name} best delta={delta(o.result)} {...shared} />
+        <RotationCard key={o.key} result={o.result} label={o.label} name={o.name} best delta={delta(o.result)} bareDelta={bareDelta(o.result)} {...shared} />
       ))}
       {current && <RotationCard result={current.result} label={current.label} name={current.name} {...shared} />}
       {options.filter((o) => o.key !== bestKey).map((o) => (
-        <RotationCard key={o.key} result={o.result} label={o.label} name={o.name} delta={delta(o.result)} {...shared} />
+        <RotationCard key={o.key} result={o.result} label={o.label} name={o.name} delta={delta(o.result)} bareDelta={bareDelta(o.result)} {...shared} />
       ))}
       </div>
 
@@ -110,7 +112,7 @@ export default function CompareRotations() {
         </button>
       </section>
       {customResult && (
-        <RotationCard result={customResult} label={t('compare.custom')} name={cropNames(customResult)} delta={delta(customResult)} defaultOpen />
+        <RotationCard result={customResult} label={t('compare.custom')} name={cropNames(customResult)} delta={delta(customResult)} bareDelta={bareDelta(customResult)} defaultOpen />
       )}
       </div>
     </div>

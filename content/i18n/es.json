@@ -294,10 +294,10 @@
     "cashShare": "{count} de {total} temporadas tienen un cultivo que puede vender.",
     "marketMatch": "Se ajusta a dónde vende.",
     "forageAvg": "El valor para pastoreo y heno es {value} de 5.",
-    "fieldBareHigh": "Los satélites muestran este campo desnudo unos {days} días al año, así que la cobertura importa más aquí.",
-    "fieldBareLow": "Los satélites muestran este campo desnudo unos {days} días al año.",
     "drySoilYears": "El suelo estuvo al menos 10% más seco de lo normal en {count} de {total} temporadas.",
-    "lowOrganicMatter": "La materia orgánica del suelo es baja ({om}%), así que los cultivos de cobertura y las leguminosas ayudan más."
+    "lowOrganicMatter": "La materia orgánica del suelo es baja ({om}%), así que los cultivos de cobertura y las leguminosas ayudan más.",
+    "rotationBare": "Estimamos que esta rotación deja el suelo desnudo unos {days} días al año.",
+    "bareCalibrated": "Para {crops}, la estimación usa el registro satelital de esta parcela."
   },
   "benefits": {
     "water": "Usa poca agua.",
@@ -527,5 +527,24 @@
     "glanceTitle": "Cómo aguanta cada opción en {year}",
     "see": "Ver cómo aguantan las rotaciones en {year}",
     "noYear": "No hay registro de clima de {year} para esta parcela."
+  },
+  "bareUi": {
+    "stripAlt": "Meses estimados con suelo desnudo: {months}.",
+    "stripAltNone": "Ningún mes suele estar desnudo con esta rotación.",
+    "level": {
+      "low": "Casi siempre cubierto",
+      "mid": "Parcialmente cubierto",
+      "high": "A menudo desnudo"
+    },
+    "unit": "días desnudos al año",
+    "estimate": "estimación",
+    "fewer": "{n} días desnudos menos que ahora",
+    "more": "{n} días desnudos más que ahora",
+    "same": "Los mismos días desnudos que ahora",
+    "stripTitle": "Probabilidad de suelo desnudo, por mes",
+    "calibrated": "Usa el registro satelital de esta parcela para {crops}. Patrones regionales para el resto.",
+    "regional": "Patrones regionales. Esta parcela tiene muy pocos años de estos cultivos para usar su propio registro.",
+    "caveat": "Una estimación a partir de calendarios de cultivos por satélite, no una medición. No se usan días desnudos anteriores a 2013 porque cambiaron los satélites.",
+    "glanceDays": "{n} días desnudos al año"
   }
 }

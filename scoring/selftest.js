@@ -40,4 +40,18 @@ check(plain.replay === null && plain.replayTotal === null, 'replay off: no repla
 check(plain.total === withOpt.total, 'replay on leaves the normal total unchanged');
 check(scoreRotation({ crops: ['corn'] }, real, [], {}, lib, { replayYear: 1900 }).replay === null, 'unknown replay year is ignored');
 
+// Bare days per rotation.
+const bd = (crops, f = real) => scoreRotation({ crops }, f, ['erosion'], {}, lib).bareDays;
+const cotton2 = bd(['cotton', 'cotton']);
+const covered = bd(['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye']);
+const fallow2 = bd(['fallow', 'fallow']);
+check(covered.bareDays < cotton2.bareDays, `bare days: cover-crop rotation (${covered.bareDays}) < continuous cotton (${cotton2.bareDays})`);
+check(fallow2.bareDays > cotton2.bareDays && fallow2.bareDays > covered.bareDays, `bare days: fallow is worst (${fallow2.bareDays})`);
+check(bd(['corn', 'cotton']).calibrated.length === 2, 'bare days: corn and cotton calibrated on nt-103 own record');
+check(bd(['corn', 'cotton'], field).calibrated.length === 0, 'bare days: sample field has no own record, uses regional pattern');
+check(bd(['winter_wheat', 'cereal_rye']).bareDays < bd(['winter_wheat']).bareDays, 'bare days: adding a cover crop never adds bare days');
+const eroLow = scoreRotation({ crops: ['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye'] }, real, ['erosion'], {}, lib).breakdown.erosion.score;
+const eroHigh = scoreRotation({ crops: ['cotton', 'cotton'] }, real, ['erosion'], {}, lib).breakdown.erosion.score;
+check(eroLow > eroHigh, `erosion score follows bare days (${eroLow} vs ${eroHigh})`);
+
 process.exit(failed ? 1 : 0);

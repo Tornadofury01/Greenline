@@ -294,10 +294,10 @@
     "cashShare": "{count} of {total} seasons have a crop you can sell.",
     "marketMatch": "Fits where you sell.",
     "forageAvg": "Grazing and hay value is {value} out of 5.",
-    "fieldBareHigh": "Satellites show this field bare about {days} days a year, so ground cover matters more here.",
-    "fieldBareLow": "Satellites show this field bare about {days} days a year.",
     "drySoilYears": "Soil was at least 10% drier than normal in {count} of {total} growing seasons.",
-    "lowOrganicMatter": "Topsoil organic matter is low ({om}%), so cover crops and legumes help more."
+    "lowOrganicMatter": "Topsoil organic matter is low ({om}%), so cover crops and legumes help more.",
+    "rotationBare": "We estimate this rotation leaves the soil bare about {days} days a year.",
+    "bareCalibrated": "For {crops}, the estimate uses this field's own satellite record."
   },
   "benefits": {
     "water": "Uses little water.",
@@ -527,5 +527,24 @@
     "glanceTitle": "How each option holds up in {year}",
     "see": "See how rotations hold up in {year}",
     "noYear": "No weather record for {year} on this field."
+  },
+  "bareUi": {
+    "stripAlt": "Estimated months with bare ground: {months}.",
+    "stripAltNone": "No month is usually bare under this rotation.",
+    "level": {
+      "low": "Mostly covered",
+      "mid": "Partly covered",
+      "high": "Often bare"
+    },
+    "unit": "bare days a year",
+    "estimate": "estimate",
+    "fewer": "{n} fewer bare days than now",
+    "more": "{n} more bare days than now",
+    "same": "Same bare days as now",
+    "stripTitle": "Chance the ground is bare, by month",
+    "calibrated": "Uses this field's own satellite record for {crops}. Regional patterns for the rest.",
+    "regional": "Regional patterns. This field has too few years of these crops to use its own record.",
+    "caveat": "An estimate from satellite crop calendars, not a measurement. Bare days from before 2013 aren't used because the satellites changed.",
+    "glanceDays": "{n} bare days a year"
   }
 }
