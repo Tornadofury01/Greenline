@@ -50,7 +50,9 @@ export default function CompareRotations() {
   const rows = [current, ...options].filter(Boolean);
   // While replaying a year, every number on the page is the replay score; otherwise the normal score.
   const shownScore = (r) => (replayYear != null && r.replayTotal != null ? r.replayTotal : r.total);
-  const bareDelta = (r) => (current ? r.bareDays.bareDays - current.result.bareDays.bareDays : null);
+  // While replaying a drought year, bare days count cover crops as partly established.
+  const bareOf = (r) => (replayYear != null && r.replay?.bareDays) || r.bareDays;
+  const bareDelta = (r) => (current ? bareOf(r).bareDays - bareOf(current.result).bareDays : null);
   const delta = (r) => (current ? shownScore(r) - shownScore(current.result) : null);
 
   return (
@@ -71,7 +73,7 @@ export default function CompareRotations() {
               <span className="glance-score">{shownScore(r.result)}</span>
               {replayYear != null && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} /></span>}
               <span className="glance-bar" aria-hidden="true"><span style={{ width: `${shownScore(r.result)}%` }} /></span>
-              <span className="glance-days">{t('bareUi.glanceDays', { n: r.result.bareDays.bareDays })}</span>
+              <span className="glance-days">{t('bareUi.glanceDays', { n: bareOf(r.result).bareDays })}</span>
             </div>
           ))}
         </div>

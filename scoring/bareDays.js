@@ -10,6 +10,8 @@
 //      CDL crop, 2013 on) are blended with the regional pattern. k clear field-years count k / (k + PRIOR) of the blend.
 //      Fallow and the estimated crops always use the regional/estimated pattern.
 //   5. bare days = sum over months of chance of bare x days in that month, averaged over the rotation's years.
+//   Cover crops assume they establish (coverEstablished = 1). A dry fall can stop them, so a drought replay passes
+//   0.5: a cover crop then removes only half of the bare chance it normally removes (scoreRotation does this).
 // It is an estimate, not a measurement. 2013+ is used because Landsat 5/7 and 8/9 aren't harmonized yet.
 import { avg } from './rules/helpers.js';
 
@@ -55,10 +57,14 @@ function groupYears(crops) {
 }
 
 // Returns { bareDays (per year), bareMonths: number[12] (average chance bare), calibrated: [{ crop, years }] }
-export function estimateBareDays(crops, field) {
+export function estimateBareDays(crops, field, { coverEstablished = 1 } = {}) {
   const calibrated = new Map();
   const perYear = groupYears(crops).map((group) => {
-    const shares = group.map((c) => monthsFor(c, field, calibrated));
+    const shares = group.map((c) => {
+      const s = monthsFor(c, field, calibrated);
+      // partly established cover: only a fraction of its protection happens
+      return c.coverCrop && coverEstablished < 1 ? s.map((p) => 1 - coverEstablished * (1 - p)) : s;
+    });
     return Array.from({ length: 12 }, (_, m) => shares.reduce((p, s) => p * s[m], 1)); // bare only if all are bare
   });
   const bareMonths = Array.from({ length: 12 }, (_, m) => avg(perYear.map((y) => y[m])));
@@ -67,5 +73,7 @@ export function estimateBareDays(crops, field) {
     bareDays,
     bareMonths: bareMonths.map((p) => Math.round(p * 100) / 100),
     calibrated: [...calibrated].map(([crop, years]) => ({ crop, years })),
+    // crops whose calendar is an estimate, not measured (crops.json `estimates`)
+    estimated: [...new Set(crops.filter((c) => c.estimates?.includes('bareShare')).map((c) => c.id))],
   };
 }

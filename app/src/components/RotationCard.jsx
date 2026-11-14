@@ -177,7 +177,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           </div>
         </div>
         <CropSteps crops={result.crops} />
-        <BareBlock bare={result.bareDays} delta={bareDelta} />
+        <BareBlock bare={rp?.bareDays ?? result.bareDays} delta={bareDelta} />
         <div className="badges">
           <ConfidenceBadge level={result.confidence.level} />
           {result.tags.map((tag) => {
@@ -201,6 +201,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
             <section className="detail">
               <h4>{t('replayUi.heading', { year: rp.year })}</h4>
               <IconList items={rp.reasons} Icon={Lightbulb} tone="info" />
+              {rp.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
               <p className="muted small">{t('replayUi.note')}</p>
             </section>
           )}
@@ -222,7 +223,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           </section>
           <section className="detail">
             <h4>{t('bareUi.stripTitle')} <GlossaryIcon term="bareDays" /></h4>
-            <CoverStrip months={result.bareDays.bareMonths} />
+            <CoverStrip months={(rp?.bareDays ?? result.bareDays).bareMonths} />
             <p className="muted small">
               <Receipt src={['Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>
                 {result.bareDays.calibrated.length
@@ -230,6 +231,12 @@ export default function RotationCard({ result, label, name, best = false, delta 
                   : t('bareUi.regional')}
               </Receipt>
             </p>
+            {result.bareDays.estimated.length > 0 && (
+              <p className="muted small">{t('bareUi.estimatedFor', { crops: result.bareDays.estimated.map((id) => t(`crops.${id}`)).join(', ') })}</p>
+            )}
+            {result.crops.includes('fallow') && <p className="muted small">{t('bareUi.fallowNote')}</p>}
+            {result.tags.includes('cover') && <p className="muted small">{t('bareUi.coverAssumption')}</p>}
+            {rp?.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
             <p className="muted small">{t('bareUi.caveat')}</p>
           </section>
           <section className="detail">

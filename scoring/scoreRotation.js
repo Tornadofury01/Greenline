@@ -36,6 +36,7 @@ const EVIDENCE = {
   cattle: ['Landsat 5/7/8/9'],
 };
 
+const COVER_ESTABLISHED_IN_DROUGHT = 0.5; // drought replay: cover crops count as half established (a dry fall can stop them)
 const REPLAY_WEIGHT = 3; // when replaying a year, how it held up counts like a priority the farmer picked, plus one
 const SELECTED_WEIGHT = 2; // priorities the farmer picked count double
 const OTHER_WEIGHT = 1;
@@ -52,9 +53,11 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   const breakdown = {};
   let weighted = 0;
   let weights = 0;
+  const raw = {}; // unrounded rule scores
   for (const p of PRIORITIES) {
     const result = RULES[p](crops, field, constraints, { bareDays });
     const weight = priorities.includes(p) ? SELECTED_WEIGHT : OTHER_WEIGHT;
+    raw[p] = result.score;
     breakdown[p] = { score: Math.round(result.score * 10) / 10, weight, selected: weight === SELECTED_WEIGHT, reasons: result.reasons };
     weighted += result.score * weight;
     weights += weight;
@@ -84,6 +87,11 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   const lateKill = crops.filter((c) => c.lateKillRisk);
   if (lateKill.length) risks.push(reason('risks.lateKill', { crops: [...new Set(lateKill.map((c) => c.id))] }, ['SARE']));
   if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare', {}, ['Landsat 5/7/8/9']));
+  // The bare-day estimate assumes cover crops come up. They may not in a dry fall.
+  const covers = crops.filter((c) => c.coverCrop);
+  if (covers.length) risks.push(reason('risks.coverEstablish', { crops: [...new Set(covers.map((c) => c.id))] }, ['SARE']));
+  // Bare-day numbers use 2013+ satellites only, because Landsat 5/7 and 8/9 aren't matched yet (pipeline/MODELS.md #14).
+  if (field.coverYearly) gaps.push(reason('gaps.sensorChange', {}, ['Landsat 5/7/8/9']));
   // CDL can mislabel crops, which affects crop history and the crop model. Shown as a gap so it isn't hidden.
   if (field.si) gaps.push(reason('gaps.cdlNoise', {}, ['USDA Cropland Data Layer']));
 
@@ -108,7 +116,18 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   if (options.replayYear != null) {
     replay = replayRule(crops, field, options.replayYear);
     if (replay) {
-      const blended = (weighted + replay.score * REPLAY_WEIGHT) / (weights + REPLAY_WEIGHT);
+      // Drought years only: cover crops count as partly established, so the replay doesn't oversell them.
+      replay.bareDays = bareDays;
+      replay.coverPartial = false;
+      let weightedR = weighted;
+      if (replay.yearType === 'drought' && covers.length) {
+        replay.bareDays = estimateBareDays(crops, field, { coverEstablished: COVER_ESTABLISHED_IN_DROUGHT });
+        replay.coverPartial = true;
+        const eroR = erosionRule(crops, field, constraints, { bareDays: replay.bareDays }).score;
+        weightedR += (eroR - raw.erosion) * breakdown.erosion.weight;
+        replay.reasons.push(reason('replay.coverPartial', { crops: [...new Set(covers.map((c) => c.id))] }));
+      }
+      const blended = (weightedR + replay.score * REPLAY_WEIGHT) / (weights + REPLAY_WEIGHT);
       replayTotal = Math.max(0, Math.min(100, Math.round(blended * 10 - penalty)));
     }
   }

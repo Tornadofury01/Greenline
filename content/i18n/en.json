@@ -323,14 +323,16 @@
     "weak": "Weak on \"{priority}\".",
     "equipment": "Needs equipment you didn't list: {needs}.",
     "budgetVariety": "{count} different crops may be costly to start with a low budget.",
-    "cdlNoise": "Crop history comes from USDA satellite crop maps, which are sometimes wrong, especially for smaller crops."
+    "cdlNoise": "Crop history comes from USDA satellite crop maps, which are sometimes wrong, especially for smaller crops.",
+    "sensorChange": "Bare-day numbers use satellite data from 2013 on. Older and newer satellites aren't matched yet, so treat them as estimates."
   },
   "risks": {
     "lateKill": "{crops}: killing it late in spring can use up soil moisture the next crop needs. Terminate on time.",
     "thirstyDryland": "{crops} need a lot of water for dryland.",
     "heat": "{crops} can suffer in heat. {count} of {total} years here were hot or drought years.",
     "bare": "Fallow leaves the ground bare.",
-    "contractCrop": "{crops}: grown by contract only and not a common crop in this region. Check with a buyer and your county agent."
+    "contractCrop": "{crops}: grown by contract only and not a common crop in this region. Check with a buyer and your county agent.",
+    "coverEstablish": "{crops}: the bare-day estimate assumes the cover crop establishes. In a dry fall it may not."
   },
   "confidence": {
     "longClimate": "{count} years of climate data for your field.",
@@ -518,7 +520,8 @@
     "cropsDry": "Most hurt by dry spells: {crops}.",
     "cropsHeat": "Most hurt by heat: {crops}.",
     "cropsWet": "Soil left exposed in heavy rain: {crops}.",
-    "cropsHold": "Handled it best: {crops}."
+    "cropsHold": "Handled it best: {crops}.",
+    "coverPartial": "Dry-year rule: {crops} counted as only half established, because a dry fall can stop cover crops from coming up."
   },
   "replayUi": {
     "title": "Replay a bad year",
@@ -539,7 +542,8 @@
     "note": "This is a stress check from real weather and crop traits, not a yield forecast. Local experts know your field best.",
     "glanceTitle": "How each option holds up in {year}",
     "see": "See how rotations hold up in {year}",
-    "noYear": "No weather record for {year} on this field."
+    "noYear": "No weather record for {year} on this field.",
+    "coverRule": "In drought years we count cover crops as only half established, so their bare-day savings are halved. A dry fall can stop them from coming up, and we don't want the replay to oversell them."
   },
   "bareUi": {
     "stripAlt": "Estimated months with bare ground: {months}.",
@@ -558,6 +562,10 @@
     "calibrated": "Uses this field's own satellite record for {crops}. Regional patterns for the rest.",
     "regional": "Regional patterns. This field has too few years of these crops to use its own record.",
     "caveat": "An estimate from satellite crop calendars, not a measurement. Bare days from before 2013 aren't used because the satellites changed.",
-    "glanceDays": "{n} bare days a year"
+    "glanceDays": "{n} bare days a year",
+    "coverAssumption": "Assumes the cover crop establishes. In a dry fall it may not.",
+    "estimatedFor": "Estimated, not measured, for: {crops}.",
+    "fallowNote": "Bare fallow is our estimate for a tilled field. Satellite “fallow” fields are often weedy, so they don't show it.",
+    "replayBare": "Bare days if {year} came back"
   }
 }

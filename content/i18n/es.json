@@ -323,14 +323,16 @@
     "weak": "Débil en \"{priority}\".",
     "equipment": "Necesita equipo que no indicó: {needs}.",
     "budgetVariety": "{count} cultivos diferentes pueden ser costosos con un presupuesto bajo.",
-    "cdlNoise": "El historial de cultivos viene de los mapas satelitales del USDA, que a veces se equivocan, sobre todo con cultivos menores."
+    "cdlNoise": "El historial de cultivos viene de los mapas satelitales del USDA, que a veces se equivocan, sobre todo con cultivos menores.",
+    "sensorChange": "Los días desnudos usan datos satelitales desde 2013. Los satélites anteriores y los nuevos aún no están igualados, así que tómelos como estimaciones."
   },
   "risks": {
     "lateKill": "{crops}: si se elimina tarde en primavera, puede agotar la humedad del suelo que necesita el siguiente cultivo. Termínelo a tiempo.",
     "thirstyDryland": "{crops} necesitan mucha agua para temporal.",
     "heat": "{crops} pueden sufrir con el calor. {count} de {total} años aquí fueron de calor o sequía.",
     "bare": "El barbecho deja el suelo desnudo.",
-    "contractCrop": "{crops}: se cultiva solo por contrato y no es común en esta región. Consulte con un comprador y su agente del condado."
+    "contractCrop": "{crops}: se cultiva solo por contrato y no es común en esta región. Consulte con un comprador y su agente del condado.",
+    "coverEstablish": "{crops}: la estimación de días desnudos supone que el cultivo de cobertura se establece. En un otoño seco puede que no."
   },
   "confidence": {
     "longClimate": "{count} años de datos climáticos de su parcela.",
@@ -518,7 +520,8 @@
     "cropsDry": "Los más afectados por la sequía: {crops}.",
     "cropsHeat": "Los más afectados por el calor: {crops}.",
     "cropsWet": "Suelo expuesto con lluvia fuerte: {crops}.",
-    "cropsHold": "Lo aguantaron mejor: {crops}."
+    "cropsHold": "Lo aguantaron mejor: {crops}.",
+    "coverPartial": "Regla de año seco: {crops} cuentan como solo medio establecidos, porque un otoño seco puede impedir que salgan los cultivos de cobertura."
   },
   "replayUi": {
     "title": "Repetir un mal año",
@@ -539,7 +542,8 @@
     "note": "Es una revisión de estrés con clima real y rasgos de cultivos, no un pronóstico de rendimiento. Los expertos locales conocen mejor su parcela.",
     "glanceTitle": "Cómo aguanta cada opción en {year}",
     "see": "Ver cómo aguantan las rotaciones en {year}",
-    "noYear": "No hay registro de clima de {year} para esta parcela."
+    "noYear": "No hay registro de clima de {year} para esta parcela.",
+    "coverRule": "En años de sequía contamos los cultivos de cobertura como solo medio establecidos, así que sus días desnudos ahorrados se reducen a la mitad. Un otoño seco puede impedir que salgan, y no queremos que la repetición los exagere."
   },
   "bareUi": {
     "stripAlt": "Meses estimados con suelo desnudo: {months}.",
@@ -558,6 +562,10 @@
     "calibrated": "Usa el registro satelital de esta parcela para {crops}. Patrones regionales para el resto.",
     "regional": "Patrones regionales. Esta parcela tiene muy pocos años de estos cultivos para usar su propio registro.",
     "caveat": "Una estimación a partir de calendarios de cultivos por satélite, no una medición. No se usan días desnudos anteriores a 2013 porque cambiaron los satélites.",
-    "glanceDays": "{n} días desnudos al año"
+    "glanceDays": "{n} días desnudos al año",
+    "coverAssumption": "Supone que el cultivo de cobertura se establece. En un otoño seco puede que no.",
+    "estimatedFor": "Estimado, no medido, para: {crops}.",
+    "fallowNote": "El barbecho desnudo es nuestra estimación para un campo labrado. Los campos “en barbecho” del satélite suelen tener maleza, así que no lo muestran.",
+    "replayBare": "Días desnudos si volviera {year}"
   }
 }

@@ -54,4 +54,15 @@ const eroLow = scoreRotation({ crops: ['winter_wheat', 'cowpea', 'grain_sorghum'
 const eroHigh = scoreRotation({ crops: ['cotton', 'cotton'] }, real, ['erosion'], {}, lib).breakdown.erosion.score;
 check(eroLow > eroHigh, `erosion score follows bare days (${eroLow} vs ${eroHigh})`);
 
+// Cover crops: risk line, and drought replays count them as half established.
+const withCover = ['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye'];
+const covR = (year) => scoreRotation({ crops: withCover }, real, ['erosion'], {}, lib, { replayYear: year });
+check(covR(null).risks.some((r) => r.key === 'risks.coverEstablish'), 'cover-crop rotation carries the "assumes it establishes" risk');
+check(!scoreRotation({ crops: ['corn', 'cotton'] }, real, [], {}, lib).risks.some((r) => r.key === 'risks.coverEstablish'), 'no cover crops, no cover risk');
+check(covR(2011).replay.bareDays.bareDays > covR(null).bareDays.bareDays, `drought replay: cover crops half established (${covR(2011).replay.bareDays.bareDays} vs ${covR(null).bareDays.bareDays} bare days)`);
+check(covR(2011).replay.coverPartial && !covR(2007).replay.coverPartial, 'half-established rule applies in drought years only');
+check(covR(2007).replay.bareDays.bareDays === covR(null).bareDays.bareDays, 'wet-year replay leaves bare days unchanged');
+check(scoreRotation({ crops: ['corn', 'cotton'] }, real, [], {}, lib, { replayYear: 2011 }).replay.coverPartial === false, 'no covers: nothing changes in a drought replay');
+check(plain.gaps.some((g) => g.key === 'gaps.sensorChange'), 'sensor-change gap shown with bare-day numbers');
+
 process.exit(failed ? 1 : 0);

@@ -62,6 +62,7 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] 1.1 Bad-year replay re-scores rotations (`scoring/rules/replay.js`, `scoreRotation(..., { replayYear })`, Compare screen picker).
   - [x] 1.2 Bare days per rotation (`scoring/bareDays.js`; per-crop `bareShare` calendars in `crops.json`, built by `scoring/tools/build_calendars.mjs` from the 201 fields' 2013+ Landsat + CDL; estimates marked).
   - [x] 1.3 Clearer green / residue / bare field story (cover-by-year chart with a 2013 sensor marker, typical-year strip, "partly covered" wording; headline and bare-day stats use 2013+ only because Landsat 5/7 vs 8/9 isn't harmonized).
+  - Decisions: "residue" stays "partly covered" (NDTI/BSI aren't in the per-field files and don't separate residue from bare soil on our clays; see MODELS.md #7). Bare days use 2013+ only (MODELS.md #14). Cover crops assume they establish, and count as half established in drought replays.
 - [ ] **Phase 2:** not started (fertilizer-saved estimate from `nFixLbPerAcre`).
 - [ ] **Phase 4:** not started.
 
