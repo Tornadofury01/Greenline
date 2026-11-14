@@ -48,3 +48,13 @@ New `field.market` (see `/shared/data-format.md`).
   `EVIDENCE` in `/scoring/scoreRotation.js`.
 - **i18n (en + es):** "gross per acre", "county average yield", "regional average", "Texas average",
   "not profit: costs not included".
+
+## 4. Sources metadata
+`field.sources[]` keeps `dataset`, `variable`, `resolution`, `dateRange` unchanged (strings), so the Expert
+handoff table and `<Receipt>` keep working. New optional keys: `id`, `name`, `product`, `provider`, `scale`
+(`patch` | `area` | `county` | `state` | `model`), `resolutionM`, `startYear`, `endYear`.
+- **Expert handoff / Receipt (optional):** show `scale` as "measured on your field" (`patch`) vs "regional
+  value for your area" (`area`) vs "county average". This is the honest "what's local vs regional" message.
+- New entries now in the list: `PRISM`, `NASS Quick Stats`. The SSURGO `variable` text now mentions erosion
+  factors, available water and land capability.
+- `/scoring/scoreRotation.js` `EVIDENCE`: add `PRISM` and `NASS Quick Stats` if reasons cite them.

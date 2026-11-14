@@ -26,20 +26,68 @@ PER_CLASS = json.loads((ROOT / "pipeline" / "models" / "results" / "season_crop.
 CDL_TO_CROP = {1: "corn", 2: "cotton", 4: "grain_sorghum", 24: "winter_wheat", 61: "fallow", 6: "sunflower",
                36: "alfalfa", 58: "hairy_vetch", 27: "cereal_rye"}
 
+# Datasets behind every field file. `dataset`, `variable`, `resolution`, `dateRange` are what the app shows (keep them
+# strings; `dataset` must match EVIDENCE names in /scoring). Extra keys (additive):
+#   id, name (full product name), product (catalog id / API), provider,
+#   scale: "patch" (30-70 m, read over the field itself), "area" (km-scale grid cell the field sits in, same value for
+#          the whole field), "county", "state", "model" (our own outputs),
+#   resolutionM (approx. pixel size in metres, null for county/state/model), startYear/endYear (null if not a time series).
+# Time ranges marked `per_field` are replaced with the years this field actually has data for.
 SOURCES = [
-    {"dataset": "NASA POWER", "variable": "rain, temperature, heat stress days, frost dates", "resolution": "0.5Â° Ã— 0.625Â° (~50 km)", "dateRange": "1984-2025"},
-    {"dataset": "GPM IMERG", "variable": "rain, heavy storm days (â‰¥ 25 mm)", "resolution": "0.1Â° (~11 km)", "dateRange": "2008-2025"},
-    {"dataset": "PRISM", "variable": "monthly rain and temperature, frost dates, heavy rain days (gauge-based)", "resolution": "4 km", "dateRange": "1984-2025"},
-    {"dataset": "SMAP L4", "variable": "root-zone soil moisture", "resolution": "~11 km", "dateRange": "2015-2025"},
-    {"dataset": "Landsat 5/7/8/9", "variable": "NDVI (green cover), NDTI, BSI", "resolution": "30 m", "dateRange": "1984-2025"},
-    {"dataset": "USDA Cropland Data Layer", "variable": "crop grown each year", "resolution": "30 m", "dateRange": "2008-2025"},
-    {"dataset": "USDA SSURGO", "variable": "soil series, texture, drainage, organic matter, erosion factors (K, T), available water, land capability class", "resolution": "map unit (1:24,000)", "dateRange": "current"},
-    {"dataset": "SRTM", "variable": "slope", "resolution": "30 m", "dateRange": "2000"},
-    {"dataset": "MODIS MOD16A2GF", "variable": "evapotranspiration (tested, not used in scores)", "resolution": "500 m", "dateRange": "2008-2025"},
-    {"dataset": "NASS Quick Stats", "variable": "county crop yields, Texas price received (marketing year)", "resolution": "county / state", "dateRange": "2008-2025"},
-    {"dataset": "NASS Crop Progress", "variable": "planting and harvest dates (Texas)", "resolution": "state", "dateRange": "2008-2025"},
-    {"dataset": "Greenline SI models", "variable": "crop and cover classifier, weather risk signal, year types", "resolution": "per field", "dateRange": "2008-2025"},
+    {"id": "power", "dataset": "NASA POWER", "name": "NASA POWER daily agroclimatology (MERRA-2 based)", "product": "power.larc.nasa.gov API, community AG",
+     "provider": "NASA LaRC", "variable": "rain, temperature, heat stress days, frost dates", "resolution": "0.5° × 0.625° (~50 km)",
+     "scale": "area", "resolutionM": 50000, "years": (1984, 2025), "per_field": "power"},
+    {"id": "imerg", "dataset": "GPM IMERG", "name": "GPM IMERG Final V07 (monthly + half-hourly)", "product": "NASA/GPM_L3/IMERG_MONTHLY_V07, NASA/GPM_L3/IMERG_V07",
+     "provider": "NASA GSFC", "variable": "rain, heavy storm days (≥ 25 mm)", "resolution": "0.1° (~11 km)",
+     "scale": "area", "resolutionM": 11000, "years": (2008, 2025), "per_field": "imerg"},
+    {"id": "prism", "dataset": "PRISM", "name": "PRISM daily and monthly climate (AN)", "product": "OREGONSTATE/PRISM/ANd, OREGONSTATE/PRISM/ANm",
+     "provider": "PRISM Group, Oregon State University", "variable": "monthly rain and temperature, frost dates, heavy rain days (gauge-based)", "resolution": "4 km",
+     "scale": "area", "resolutionM": 4000, "years": (1984, 2025), "per_field": "prism"},
+    {"id": "smap", "dataset": "SMAP L4", "name": "SMAP L4 Global 3-hourly Surface and Root Zone Soil Moisture v008", "product": "NASA/SMAP/SPL4SMGP/008",
+     "provider": "NASA", "variable": "root-zone soil moisture", "resolution": "~11 km",
+     "scale": "area", "resolutionM": 11000, "years": (2015, 2025), "per_field": "smap"},
+    {"id": "landsat", "dataset": "Landsat 5/7/8/9", "name": "Landsat Collection 2 Level-2 surface reflectance", "product": "LANDSAT/LT05, LE07, LC08, LC09 /C02/T1_L2",
+     "provider": "USGS / NASA", "variable": "NDVI (green cover), NDTI, BSI", "resolution": "30 m",
+     "scale": "patch", "resolutionM": 30, "years": (1984, 2025), "per_field": "landsat"},
+    {"id": "cdl", "dataset": "USDA Cropland Data Layer", "name": "USDA NASS Cropland Data Layer", "product": "USDA/NASS/CDL",
+     "provider": "USDA NASS", "variable": "crop grown each year", "resolution": "30 m",
+     "scale": "patch", "resolutionM": 30, "years": (2008, 2025), "per_field": "cdl"},
+    {"id": "ssurgo", "dataset": "USDA SSURGO", "name": "Soil Survey Geographic Database (SSURGO)", "product": "Soil Data Access (sdmdataaccess.sc.egov.usda.gov)",
+     "provider": "USDA NRCS", "variable": "soil series, texture, drainage, organic matter, erosion factors (K, T), available water, land capability class",
+     "resolution": "map unit (1:24,000)", "scale": "patch", "resolutionM": None, "years": None, "dateRange": "current"},
+    {"id": "srtm", "dataset": "SRTM", "name": "SRTM 1 arc-second elevation", "product": "USGS/SRTMGL1_003",
+     "provider": "NASA / USGS", "variable": "slope", "resolution": "30 m",
+     "scale": "patch", "resolutionM": 30, "years": (2000, 2000), "dateRange": "2000"},
+    {"id": "modis_et", "dataset": "MODIS MOD16A2GF", "name": "MODIS Terra gap-filled 8-day evapotranspiration", "product": "MODIS/061/MOD16A2GF",
+     "provider": "NASA LP DAAC", "variable": "evapotranspiration (tested, not used in scores)", "resolution": "500 m",
+     "scale": "area", "resolutionM": 500, "years": (2008, 2025)},
+    {"id": "nass_quickstats", "dataset": "NASS Quick Stats", "name": "USDA NASS Quick Stats survey yields and prices received", "product": "quickstats.nass.usda.gov API",
+     "provider": "USDA NASS", "variable": "county crop yields, Texas price received (marketing year)", "resolution": "county / state",
+     "scale": "county", "resolutionM": None, "years": (2008, 2025)},
+    {"id": "nass_progress", "dataset": "NASS Crop Progress", "name": "USDA NASS Crop Progress (weekly)", "product": "quickstats.nass.usda.gov API",
+     "provider": "USDA NASS", "variable": "planting and harvest dates (Texas)", "resolution": "state",
+     "scale": "state", "resolutionM": None, "years": (2008, 2025)},
+    {"id": "si", "dataset": "Greenline SI models", "name": "Greenline models 1-3 (see pipeline/MODELS.md)", "product": "pipeline/models",
+     "provider": "Greenline", "variable": "crop and cover classifier, weather risk signal, year types", "resolution": "per field",
+     "scale": "model", "resolutionM": None, "years": (2008, 2025)},
 ]
+
+
+def field_sources(ranges):
+    """SOURCES for one field. `ranges` = {per_field key: (first year, last year)} from this field's data."""
+    out = []
+    for s in SOURCES:
+        yrs = ranges.get(s.get("per_field")) or s["years"]
+        row = {k: v for k, v in s.items() if k not in ("years", "per_field")}
+        row["startYear"], row["endYear"] = (int(yrs[0]), int(yrs[1])) if yrs else (None, None)
+        row.setdefault("dateRange", f"{row['startYear']}-{row['endYear']}")
+        out.append(row)
+    return out
+
+
+def span(years):
+    years = [int(y) for y in years]
+    return (min(years), max(years)) if years else None
 
 
 def nn(v, nd=None):
@@ -180,6 +228,7 @@ def main():
     sm_anom = (gs / gs.groupby(level="fieldId").transform("mean") - 1).round(2)
     storms = st.groupby(["fieldId", "year"]).stormDays.sum()
     imy = im.groupby(["fieldId", "year"]).precipMm.sum()
+    imy_f = im.dropna(subset=["precipMm"]).groupby(["fieldId", "year"]).size()  # years with any IMERG month
     prism_y = pd.read_csv(F / "prism_yearly.csv").set_index(["fieldId", "year"])
     prism_m = pd.read_csv(F / "prism_monthly.csv").sort_values(["fieldId", "year", "month"])
     nass_y = pd.read_csv(ROOT / "pipeline" / "data" / "nass_yields.csv")
@@ -283,7 +332,14 @@ def main():
             "market": market_cache.setdefault((f.state, f.county), market(f.state, f.county, nass_y, nass_p)),
             "si": {"models": {**si["models"], "seasonCrop": {**si["models"]["seasonCrop"], "perClass": PER_CLASS}},
                    "years": si["years"], "replayPresets": si["replayPresets"]},
-            "sources": SOURCES,
+            "sources": field_sources({
+                "power": span(x["year"] for x in climate),
+                "imerg": span(y for (i, y), v in imy_f.items() if i == fid and v > 0),
+                "prism": span(y for (i, y) in prism_y.index if i == fid),
+                "smap": span(sm[(sm.fieldId == fid) & sm.sm_rootzone.notna()].year.unique()),
+                "landsat": span(L[L.ndvi.notna()].year.unique()),
+                "cdl": span(x["year"] for x in crop_hist),
+            }),
         }
         (OUT / f"{fid}.json").write_text(json.dumps(out, separators=(",", ":"), ensure_ascii=False, allow_nan=False), encoding="utf-8")
         index.append({"id": fid, "county": f.county, "state": f.state, "lat": round(f.lat, 5), "lon": round(f.lon, 5)})

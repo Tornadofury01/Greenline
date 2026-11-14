@@ -68,6 +68,19 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 
 ## `sources[]`
 `{ dataset, variable, resolution, dateRange }`. These are shown on the expert handoff page. Dataset names should match the `EVIDENCE` names in `/scoring/scoreRotation.js`.
+These four stay **strings** (the app calls `dateRange.replace(...)`). `dateRange` is `"YYYY-YYYY"`, a single year, or `"current"`.
+
+Added (optional, additive; present in real field files and the sample):
+
+| Key | Type | Notes |
+|---|---|---|
+| `id` | string | Stable short id: `power`, `imerg`, `prism`, `smap`, `landsat`, `cdl`, `ssurgo`, `srtm`, `modis_et`, `nass_quickstats`, `nass_progress`, `si` |
+| `name` | string | Full product name, e.g. `SMAP L4 Global 3-hourly Surface and Root Zone Soil Moisture v008` (real fields only) |
+| `product` | string | Catalog id or API, e.g. `NASA/SMAP/SPL4SMGP/008` (real fields only) |
+| `provider` | string | e.g. `NASA GSFC`, `USDA NRCS` (real fields only) |
+| `scale` | string | `patch` (30–70 m, read over the field itself), `area` (a km-scale grid cell; one value for the whole field), `county`, `state`, `model`. See `/docs/data-harmonization.md` |
+| `resolutionM` | number \| null | Approximate pixel size in metres. `null` for map units, county, state and model |
+| `startYear`, `endYear` | number \| null | The years this field actually has data for (`null` for SSURGO) |
 
 ## Pipeline CSV outputs (`/pipeline/data/`)
 Intermediate, monthly files from `pipeline/greenline_pipeline.py`. A later step turns them into the field JSON above
