@@ -11,7 +11,7 @@ Status: **Used** = in the field files or models today. **Partly** = used in a na
 
 | Dataset | Status | What it feeds in Greenline | Resolution | Years | Why / notes |
 |---|---|---|---|---|---|
-| Landsat 5/7/8/9 C2 L2 | Used | NDVI, NDTI, BSI → model 1 (crop & cover), green/residue/bare timeline, bare days | 30 m (45 m buffer) | 1984–2025 | Only free 30 m record that goes back 40 years. L5/7 vs L8/9 not harmonized yet |
+| Landsat 5/7/8/9 C2 L2 | Used | NDVI, NDTI, BSI → model 1 (crop & cover), green/residue/bare timeline, bare days | 30 m (45 m buffer) | 1984–2025 | Only free 30 m record that goes back 40 years. L7 reads NDVI ~0.05 below L8, so bare days now use **Landsat 8/9 only from April 2013** (`*L89` keys). Earlier years are flagged low confidence. See "Tried and rejected" |
 | USDA Cropland Data Layer | Used | Crop history, model 1 labels, field sampling | 30 m | 2008–2025 | Labels have noise for minor crops |
 | NASA POWER | Used | Yearly rain, heat days, frost-free days; models 2 and 3 | ~50 km | 1984–2025 | Long record but coarse; smooths storms |
 | GPM IMERG V07 | Used | Rain, storm days ≥ 25 mm; model 2 | ~11 km | 2008–2025 | May overcount storm days (checked against PRISM in `data-validation.md`) |
@@ -61,6 +61,18 @@ Status: **Used** = in the field files or models today. **Partly** = used in a na
 - **USDA AMS Market News:** daily cash prices; NASS yearly price received is enough for rotation planning.
 - **STATSGO2:** coarse version of SSURGO, which we already use.
 - **USDA Ag Data Commons:** a catalog, not a dataset; search it case by case.
+
+## Tried and rejected
+
+- **Landsat 5/7 → 8/9 cross-sensor correction (Roy et al. 2016, RSE 185: 57–70, Table 2 OLS)**, tested on branch
+  `landsat-harmonize` (kept for the record, not merged). Results: [`landsat-harmonization-results.md`](landsat-harmonization-results.md).
+  - **The offset is real.** For the same field and month (2013–2021), Landsat 7 reads NDVI **0.05 below** Landsat 8.
+  - **The correction overshoots.** It cut the average bias to −0.013, which still misses our 0.01 rule. It also overshoots
+    right at the 0.25 bare cutoff (+0.023 for bare fields), so pre-2013 cotton went from 198 bare days a year to 0.
+  - **Model 1 got slightly worse:** accuracy −0.008, balanced accuracy −0.016, sorghum F1 −0.05.
+  - **The coefficients don't fit our data.** They were fit on Collection 1 data, and Google now advises against them for Collection 2.
+  - **What we did instead:** bare days and cover from **Landsat 8/9 only** (April 2013 on), with pre-2013 values flagged low
+    confidence. See [`landsat89-cover-results.md`](landsat89-cover-results.md).
 
 ## NASA
 - SMAP Soil Moisture Active Passive: https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/smap (surface soil moisture and freeze/thaw every 2–3 days; drought stress, infiltration, early crop stress)
