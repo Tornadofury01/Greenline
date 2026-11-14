@@ -73,7 +73,7 @@ npm run deploy     # selftest + i18n + build, then publish to production on Verc
 - Before sharing a new build, check: the live link opens in an incognito window, `sw.js` precaches `assets/fields/<demo id>-*.js`, a made-up `/assets/x.js` returns 404 (not index.html), and the deploy output contains no `.env` values.
 
 ## Build status
-**Checkpoint `v1.0-checkpoint` (tag on `main`, Nov 14 2026): everything through Phase 4 is done, merged into `main` and live at https://greenline-psi.vercel.app.**
+**Latest checkpoint `v1.1-checkpoint` (tag on `main` at `59d7504`, Nov 14 2026): everything through Phase 4 plus the field picking fixes, merged into `main` and live at https://greenline-psi.vercel.app.** Earlier: `v1.0-checkpoint` (`a66239f`, through Phase 4).
 `main` contains `app-build`, `datasets`, `landsat89-cover` (and the older `connect-data`, `data-pipeline`, `si-models`, `ui-polish`); only `landsat-harmonize` stays unmerged on purpose (tried, rejected, MODELS.md #14).
 **Next:** optional `ui-polish-2` and `models-v2` branches, then submission prep.
 
@@ -110,7 +110,7 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] Full Spanish pass (plain *usted*, "suelo desnudo", verdicts "Aguanta / Batalla un poco / Batalla / Batalla mucho", "Revivir un mal año"); grammar fixes in both languages (`yearTypeYear.*`, `replayUi.vsNormalSame`); dataset descriptions translated (`sources.*`).
   - [x] Checked in Chrome (playwright-core) at 375 / 768 / 1280 px, en + es, along the demo path (demo field → farm → story → replay 2011 → compare → what-if at −50 % / +40 days → build my own → handoff → How we know): no horizontal scroll, overflow, text < 12 px or console errors. Fixed: rain axis cut off "pulg", Landsat 8 marker, "Struggles badly" note placement, receipt touch area.
   - [x] Demo field is one setting (see Key code paths); tested with `VITE_DEMO_FIELD_ID=nt-141` (only nt-141 precached).
-- [x] **Field picking fixes** (after v1.0-checkpoint). Why: testers saw "Showing sample data" because a failed field load (old tab after a deploy, or offline) silently swapped in the fake sample, and any tap (lake, town) loaded the nearest field with no comment.
+- [x] **Field picking fixes** (after v1.0-checkpoint, tagged `v1.1-checkpoint`). Why: testers saw "Showing sample data" because a failed field load (old tab after a deploy, or offline) silently swapped in the fake sample, and any tap (lake, town) loaded the nearest field with no comment.
   - No fake data in production; reload-once on a failed import; error + Retry; Vercel returns 404 for missing `/assets/*`.
   - Map dots for the 201 sampled fields (tap = exact field). Not-cropland warning for taps and GPS (CDL mask, cell or a neighbour counts). Far-away rule unchanged (load nearest + warning), by decision.
 - [ ] **Next (optional):** `ui-polish-2`, `models-v2`. Then submission prep.
