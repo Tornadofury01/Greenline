@@ -63,4 +63,5 @@ pipeline\.venv\Scripts\python pipeline\validate_rain.py                         
 pipeline\.venv\Scripts\python pipeline\sample_fields.py landsat_l89               # Landsat 8/9 only, Apr 2013+ (~3 min)
 pipeline\.venv\Scripts\python pipeline\build_fields.py                            # rebuilds shared/fields/*.json + shared/crop-calendars-l89.json
 pipeline\.venv\Scripts\python pipeline\compare_l89.py                             # old vs L8/9 tables for docs/landsat89-cover-results.md
+pipeline\.venv\Scripts\python pipeline\build_cropland_mask.py                      # shared/cropland-mask.json: "is this spot cropland?" for map taps / GPS
 ```

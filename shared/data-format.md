@@ -231,3 +231,22 @@ but from `coverYearlyL89` for 2014–2025:
 
 `cdlClass` is the model group: `corn`, `cotton`, `grain_sorghum`, `soybeans`, `winter_wheat`, `small_grain`, `fallow`,
 `other`, `double_crop`. Only the 200 sampled fields (`nt-*`); `demo-ellis-001` is pasture and is left out, as in `build_calendars.mjs`.
+
+## `/shared/cropland-mask.json` (is this spot cropland?)
+Built by `pipeline/build_cropland_mask.py`. Read by `croplandAt(lat, lon)` in `app/src/data/loadField.js` to warn when a
+map tap or GPS fix is not on cropland. Same cropland rule as the field sample: USDA CDL cropland in 2024 and in at least
+half of 2008–2025.
+
+| Key | Type | Meaning |
+|---|---|---|
+| `schemaVersion` | number | 1 |
+| `source` | string | Dataset and rule |
+| `years` | [from, to] | CDL years used |
+| `bbox` | [west, south, east, north] | Degrees (WGS84), same box as the field sample |
+| `cellDeg` | number | Cell size in degrees (0.004, ~400 m) |
+| `threshold` | number | A cell is cropland when at least this share of its 30 m pixels is cropland |
+| `cols`, `rows` | number | Grid size |
+| `bits` | string | Base64 bitset, row-major from the north-west corner, most significant bit first (numpy `packbits`). 1 = cropland |
+
+Cell for a point: `row = floor((north - lat) / cellDeg)`, `col = floor((lon - west) / cellDeg)`, bit `row * cols + col`.
+The app also accepts a cropland cell next to the point (tap imprecision). Outside `bbox` the answer is "unknown".

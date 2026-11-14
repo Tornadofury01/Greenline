@@ -2,7 +2,7 @@
 // Answers are saved in localStorage as a convenience only (it can be empty or blocked).
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { makeT } from '../i18n.js';
-import { loadFieldAt, loadDemoField, guessCurrentRotation } from '../data/loadField.js';
+import { loadFieldAt, loadFieldById, loadDemoField, guessCurrentRotation } from '../data/loadField.js';
 
 const AppContext = createContext(null);
 const STORAGE_KEY = 'greenline:v1';
@@ -43,11 +43,15 @@ export function AppProvider({ children }) {
   }, [lang, farm]);
 
   const [loading, setLoading] = useState(false);
+  // A field file that couldn't be loaded: { reason: 'network' | 'missing', id }. The previous field stays on screen.
+  const [loadError, setLoadError] = useState(null);
 
   async function loadInto(load) {
     setLoading(true);
+    setLoadError(null);
     try {
       const f = await load();
+      if (f.error) { setLoadError({ reason: f.error, id: f.id }); return; }
       setField(f);
       setReplayYearRaw(null);
       setWhatIfRaw(null);
@@ -58,12 +62,15 @@ export function AppProvider({ children }) {
   }
   // The tap position is only passed to loadFieldAt to find the nearest sampled field. It is not kept.
   const pickField = (lat, lon) => loadInto(() => loadFieldAt(lat, lon));
+  const pickFieldById = (id) => loadInto(() => loadFieldById(id));
   const pickDemo = () => loadInto(loadDemoField);
+  // Retry by field id (no coordinates are kept for this).
+  const retryLoad = () => loadError?.id && pickFieldById(loadError.id);
 
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickDemo, loading, farm, updateFarm };
+  const value = { lang, setLang, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, retryLoad, loadError, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

@@ -1,11 +1,12 @@
 // The ONE place the app gets field data.
 //
 // Real data: /shared/fields/<id>.json (built by pipeline/build_fields.py, format in /shared/data-format.md v2),
-// one file per sampled North Texas field, loaded on demand. If a file is missing or broken, the app falls back
-// to the fake /shared/sample-field.json and shows the "Sample data" badge.
+// one file per sampled North Texas field, loaded on demand. If a file can't be loaded, the result is
+// { error: 'network' | 'missing' } and the app says so. The fake /shared/sample-field.json is only used in development
+// (npm run dev), never in a production build: a farmer must never see fake data in place of their field.
 //
-// Privacy: a map tap is only used here, in the browser, to find the nearest sampled field. It is never stored or sent.
-import sampleField from '@shared/sample-field.json';
+// Privacy: a map tap or GPS point is only used here, in the browser, to find the nearest sampled field and look it up
+// in the cropland mask. It is never stored or sent.
 import cropLibrary from '@content/crops.json';
 import rotationLibrary from '@content/rotations.json';
 import { DEMO_FIELD_ID } from '../config.js';
@@ -46,19 +47,36 @@ function withDerived(field) {
   };
 }
 
-function fallback(reason) {
-  return { ...withDerived(sampleField), fallbackReason: reason };
+// Development only: the fake sample, so the screens still work while a field file is being rebuilt.
+async function fallback(reason, id) {
+  if (!import.meta.env.DEV) return { error: reason, id };
+  const sample = (await import('@shared/sample-field.json')).default;
+  return { ...withDerived(sample), fallbackReason: reason };
+}
+
+// A failed import usually means this tab runs an older build whose field files were replaced by a new deploy.
+// Reload once (per tab session) to get the current build; after that, report the error.
+const RELOAD_FLAG = 'greenline:reloaded';
+function reloadOnce() {
+  try {
+    if (import.meta.env.DEV || !navigator.onLine || sessionStorage.getItem(RELOAD_FLAG)) return false;
+    sessionStorage.setItem(RELOAD_FLAG, '1');
+  } catch { return false; }
+  window.location.reload();
+  return true;
 }
 
 export async function loadFieldById(id) {
   const load = FIELD_FILES[pathFor(id)];
-  if (!load) return fallback('missing');
+  if (!load) return fallback('missing', id);
   try {
     const f = (await load()).default;
-    if (!f?.field || !Array.isArray(f.climateYearly)) return fallback('broken');
+    if (!f?.field || !Array.isArray(f.climateYearly)) return fallback('missing', id);
+    try { sessionStorage.removeItem(RELOAD_FLAG); } catch { /* ignore */ }
     return withDerived(f);
   } catch {
-    return fallback('broken');
+    if (reloadOnce()) return new Promise(() => {}); // the page is reloading
+    return fallback('network', id);
   }
 }
 
@@ -66,6 +84,41 @@ export const loadDemoField = () => loadFieldById(DEMO_FIELD_ID);
 
 function loadIndex() {
   return INDEX_FILE['../../../shared/fields/index.json']?.fields || [];
+}
+// The sampled fields (id, county, lat, lon) for the map dots.
+export const fieldIndex = loadIndex;
+
+// ---- Cropland mask (shared/cropland-mask.json, built by pipeline/build_cropland_mask.py): ~400 m cells over North
+// Texas, 1 = USDA CDL cropland. Lazy chunk (precached by the service worker, so it works offline).
+let maskPromise = null;
+async function loadMask() {
+  maskPromise ||= import('@shared/cropland-mask.json').then((m) => {
+    const mask = m.default;
+    const bin = atob(mask.bits);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return { ...mask, bytes };
+  }).catch(() => null);
+  return maskPromise;
+}
+
+// Is this point cropland? true / false, or null when we can't tell (outside the mask box or mask not loaded).
+// A cropland cell next to the point also counts, so a tap a little off the field edge isn't flagged.
+export async function croplandAt(lat, lon) {
+  const m = await loadMask();
+  if (!m) return null;
+  const [west, south, east, north] = m.bbox;
+  if (lat < south || lat > north || lon < west || lon > east) return null;
+  const row = Math.floor((north - lat) / m.cellDeg);
+  const col = Math.floor((lon - west) / m.cellDeg);
+  for (let r = row - 1; r <= row + 1; r++) {
+    for (let c = col - 1; c <= col + 1; c++) {
+      if (r < 0 || c < 0 || r >= m.rows || c >= m.cols) continue;
+      const i = r * m.cols + c;
+      if (m.bytes[i >> 3] & (0x80 >> (i & 7))) return true; // numpy packbits: most significant bit first
+    }
+  }
+  return false;
 }
 
 // Distance in km between two points (haversine).
@@ -86,8 +139,10 @@ export async function loadFieldAt(lat, lon) {
     const d = km(lat, lon, f.lat, f.lon);
     if (d < bestKm) { best = f; bestKm = d; }
   }
-  const field = await loadFieldById(best.id);
-  return field.fallbackReason ? field : { ...field, nearestKm: Math.round(bestKm * 10) / 10 };
+  const [field, cropland] = await Promise.all([loadFieldById(best.id), croplandAt(lat, lon)]);
+  if (field.error || field.fallbackReason) return field;
+  // Within 500 m of a sampled field counts as cropland (small fields can fall under the mask's 25 % cell rule).
+  return { ...field, nearestKm: Math.round(bestKm * 10) / 10, notCropland: cropland === false && bestKm > 0.5 };
 }
 
 // Default "current rotation" guess: distinct library crops from the last 4 years, oldest first.

@@ -6,7 +6,7 @@ It helps North Texas farmers compare crop rotations using NASA Earth observation
 
 Current stage: running on **real data for 201 North Texas fields** (NASA POWER, IMERG, SMAP, Landsat, SRTM, SSURGO, CDL)
 and three trained SI models (season/crop classifier, vegetation stress signal, year patterns; see `pipeline/MODELS.md`).
-The fake `shared/sample-field.json` is only a fallback when a field file is missing.
+The fake `shared/sample-field.json` is only used in development (`npm run dev`) when a field file is missing; production never shows it.
 
 ## Stack
 - Vite + React (JavaScript, no TypeScript), Leaflet (react-leaflet 4), Recharts, vite-plugin-pwa
@@ -25,7 +25,12 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 
 ## Key code paths
 - Field data enters the app in **one place**: `app/src/data/loadField.js`. Real fields: `/shared/fields/<id>.json`
-  (built by `pipeline/build_fields.py`); falls back to the fake `sample-field.json` if a file is missing.
+  (built by `pipeline/build_fields.py`). A failed load returns `{ error, id }` (AppContext `loadError`, Retry button on the
+  map); a failed import first reloads the tab once (stale build after a deploy). The fake `sample-field.json` is DEV only.
+- Picking a field (`PickField.jsx`): green dots = the 201 sampled fields (`fieldIndex()`, tap = that exact field,
+  `pickFieldById`); a tap elsewhere or GPS = nearest sampled field (`loadFieldAt`), with a far-away warning (> 25 km) and
+  a not-cropland warning from `croplandAt()` (`shared/cropland-mask.json`, ~400 m USDA CDL grid built by
+  `pipeline/build_cropland_mask.py`). The point is never stored or sent.
 - **Demo field: one setting**, `DEFAULT_DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local` / the shell). Default `nt-103`. `vite.config.js` imports it, so the precached field always matches.
 - Bare days and cover: **Landsat 8/9 only** (`*L89` keys, 2014+) via `bareRows()` / `coverRows()` in `app/src/display.js`; pre-2013 years shown muted with `<LowConfTag>`, never averaged or scored. Dataset text in receipts is translated by source id (`sourceText()` in `app/src/i18n.js`, i18n `sources.*`).
 - SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
@@ -65,7 +70,7 @@ npm run deploy     # selftest + i18n + build, then publish to production on Verc
 - Vercel CLI from this laptop (`vercel` is a pinned devDependency). The project is **not connected to GitHub** (a teammate owns the repo). Don't run `vercel git connect`.
 - Build locally, upload only static files: `predeploy` runs selftest + i18n, `deploy` runs `vite build` → `scripts/vercel-output.mjs` (copies `dist/` into `.vercel/output/` with cache headers + SPA fallback) → `vercel deploy --prebuilt --prod`. Why: Vercel can't build remotely (the app imports `../content`, `../shared`, `../scoring`), and `vercel build` fails on Windows without symlink rights.
 - First time on a new machine: `npx vercel login`, then `npx vercel link --yes --project greenline` from `app/`. `.vercel/` and the `.env.local` it writes are gitignored.
-- Before sharing a new build, check: the live link opens in an incognito window, `sw.js` precaches `assets/fields/<demo id>-*.js`, and the deploy output contains no `.env` values.
+- Before sharing a new build, check: the live link opens in an incognito window, `sw.js` precaches `assets/fields/<demo id>-*.js`, a made-up `/assets/x.js` returns 404 (not index.html), and the deploy output contains no `.env` values.
 
 ## Build status
 **Checkpoint `v1.0-checkpoint` (tag on `main`, Nov 14 2026): everything through Phase 4 is done, merged into `main` and live at https://greenline-psi.vercel.app.**
@@ -105,6 +110,9 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] Full Spanish pass (plain *usted*, "suelo desnudo", verdicts "Aguanta / Batalla un poco / Batalla / Batalla mucho", "Revivir un mal año"); grammar fixes in both languages (`yearTypeYear.*`, `replayUi.vsNormalSame`); dataset descriptions translated (`sources.*`).
   - [x] Checked in Chrome (playwright-core) at 375 / 768 / 1280 px, en + es, along the demo path (demo field → farm → story → replay 2011 → compare → what-if at −50 % / +40 days → build my own → handoff → How we know): no horizontal scroll, overflow, text < 12 px or console errors. Fixed: rain axis cut off "pulg", Landsat 8 marker, "Struggles badly" note placement, receipt touch area.
   - [x] Demo field is one setting (see Key code paths); tested with `VITE_DEMO_FIELD_ID=nt-141` (only nt-141 precached).
+- [x] **Field picking fixes** (after v1.0-checkpoint). Why: testers saw "Showing sample data" because a failed field load (old tab after a deploy, or offline) silently swapped in the fake sample, and any tap (lake, town) loaded the nearest field with no comment.
+  - No fake data in production; reload-once on a failed import; error + Retry; Vercel returns 404 for missing `/assets/*`.
+  - Map dots for the 201 sampled fields (tap = exact field). Not-cropland warning for taps and GPS (CDL mask, cell or a neighbour counts). Far-away rule unchanged (load nearest + warning), by decision.
 - [ ] **Next (optional):** `ui-polish-2`, `models-v2`. Then submission prep.
 
 ## Roadmap

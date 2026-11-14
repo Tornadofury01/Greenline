@@ -18,6 +18,9 @@ writeFileSync(`${out}/config.json`, JSON.stringify({
     // Hashed build files never change.
     { src: '/assets/(.*)', headers: { 'cache-control': 'public, max-age=31536000, immutable' }, continue: true },
     { handle: 'filesystem' },
+    // A build file that doesn't exist (an old tab asking for a file a newer deploy replaced) is a real 404, not
+    // index.html: then the app knows the load failed and can reload instead of trying to run HTML as code.
+    { src: '/assets/(.*)', status: 404 },
     // Single-page app: anything else gets index.html.
     { src: '/(.*)', dest: '/index.html' },
   ],

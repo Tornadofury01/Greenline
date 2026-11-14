@@ -1,12 +1,13 @@
 // Screen 1: tap the map to load a field, then see the field at a glance.
 import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Rectangle, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Rectangle, CircleMarker, Tooltip, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Hand, Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert } from 'lucide-react';
+import { Hand, Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
 import { PageHead, Source } from '../components/Small.jsx';
 import { slopeWord } from '../display.js';
+import { fieldIndex } from '../data/loadField.js';
 // import FieldWalkMode from '../components/future/FieldWalkMode.jsx';  // FUTURE
 // import MemoryPins from '../components/future/MemoryPins.jsx';        // FUTURE
 
@@ -16,6 +17,21 @@ const FAR_KM = 25; // beyond this the nearest sampled field is probably not like
 
 // GPS error code -> which message to show (1 denied, 2 unavailable, 3 timeout).
 const GEO_ERROR = { 1: 'denied', 2: 'unavailable', 3: 'timeout' };
+const SAMPLED = fieldIndex();
+// Dot look: small visible dot plus an invisible stroke so the tap target is ~24 px. Kept modest because the 201 dots
+// sit ~4 km apart: a bigger target would swallow most map taps at the starting zoom. Tapping the map works too.
+const DOT = { radius: 6, color: '#1f5130', weight: 12, opacity: 0, fillColor: '#2f7a46', fillOpacity: 0.85 };
+const DOT_ON = { ...DOT, fillColor: '#f2b33d', fillOpacity: 1 };
+
+// The 201 sampled fields we have data for. Tapping one loads exactly that field.
+function SampledDots({ selectedId, onPick, label }) {
+  return SAMPLED.map((f) => (
+    <CircleMarker key={f.id} center={[f.lat, f.lon]} pathOptions={f.id === selectedId ? DOT_ON : DOT}
+      bubblingMouseEvents={false} eventHandlers={{ click: () => onPick(f.id) }}>
+      <Tooltip>{label(f)}</Tooltip>
+    </CircleMarker>
+  ));
+}
 
 function ClickToPick({ onPick }) {
   useMapEvents({ click: (e) => onPick(e.latlng.lat, e.latlng.lng) });
@@ -93,12 +109,14 @@ export function FieldFacts({ field }) {
 }
 
 export default function PickField() {
-  const { t, field, pickField, pickDemo, loading, setScreen } = useApp();
+  const { t, field, pickField, pickFieldById, pickDemo, retryLoad, loadError, loading, setScreen } = useApp();
   const online = useOnline();
-  // How the current field was picked ('tap' | 'gps') and the state of the GPS button. No coordinates are kept here.
+  // How the current field was picked ('tap' | 'gps' | 'dot') and the state of the GPS button. No coordinates are kept here.
   const [via, setVia] = useState('tap');
   const [geo, setGeo] = useState(null); // null | 'locating' | 'denied' | 'unavailable' | 'timeout' | 'unsupported'
   const tapPick = (lat, lon) => { setVia('tap'); setGeo(null); pickField(lat, lon); };
+  const dotPick = (id) => { setVia('dot'); setGeo(null); pickFieldById(id); };
+  const dotLabel = (f) => t('pick.dotLabel', { id: f.id, county: f.county });
 
   // Privacy: the GPS point exists only inside this callback. It goes to pickField() to find the nearest sampled
   // field and is never put in state, storage, a URL or a request. Low accuracy is enough (nearest of 201 fields).
@@ -131,6 +149,7 @@ export default function PickField() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickToPick onPick={tapPick} />
+            <SampledDots selectedId={field?.field?.id} onPick={dotPick} label={dotLabel} />
             <FlyToField field={field} />
             {cell && <Rectangle bounds={cell} pathOptions={{ color: '#1f5130', weight: 4, fillOpacity: 0.3 }} />}
           </MapContainer>
@@ -147,6 +166,17 @@ export default function PickField() {
           </button>
           {geo && geo !== 'locating' && (
             <p className="locate-error" role="alert"><TriangleAlert size={18} aria-hidden="true" /><span>{t(`pick.geo.${geo}`)}</span></p>
+          )}
+          {loadError && !loading && (
+            <div className="locate-error" role="alert">
+              <TriangleAlert size={18} aria-hidden="true" />
+              <span>{t(loadError.reason === 'missing' ? 'pick.loadMissing' : 'pick.loadError')}</span>
+            </div>
+          )}
+          {loadError?.id && !loading && (
+            <button type="button" className="btn btn-block" onClick={retryLoad}>
+              <RotateCw size={20} aria-hidden="true" />{t('pick.retry')}
+            </button>
           )}
         </div>
       </section>
@@ -166,7 +196,9 @@ export default function PickField() {
         <>
           <section className="card">
             <h2>{t('pick.summaryTitle')}</h2>
+            {via === 'dot' && field.nearestKm == null && <p className="notice-inline">{t('pick.sampledField', { id: field.field.id })}</p>}
             {field.nearestKm != null && <p className="notice-inline">{t(via === 'gps' ? 'pick.nearestGps' : 'pick.nearest', { km: field.nearestKm, id: field.field.id })}</p>}
+            {field.notCropland && field.nearestKm <= FAR_KM && <p className="notice-inline notice-warn">{t(via === 'gps' ? 'pick.notCroplandGps' : 'pick.notCropland')}</p>}
             {field.nearestKm > FAR_KM && <p className="notice-inline notice-warn">{t('pick.farAway', { km: field.nearestKm })}</p>}
             {field.fallbackReason && <p className="notice-inline">{t('pick.fallback')}</p>}
             <FieldFacts field={field} />
