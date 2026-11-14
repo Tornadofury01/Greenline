@@ -1,0 +1,27 @@
+{
+  "model": "Gradient boosting, trained on fields with >=70% label purity, plus soil",
+  "accuracy_unseen_years_clean_fields": 0.915,
+  "accuracy_unseen_years_all_fields": 0.833,
+  "accuracy_clean_fields_conf>=0.7": {
+    "coverage": 0.95,
+    "accuracy": 0.941
+  },
+  "cv_accuracy_training_years_clean": 0.889,
+  "test_years": [
+    2023,
+    2024,
+    2025
+  ],
+  "per_class_f1_clean": {
+    "cotton": 0.86,
+    "fallow": 0.0,
+    "grass_hay": 0.94,
+    "summer_grain": 0.94,
+    "winter_grain": 0.89
+  },
+  "thresholds": {
+    "NDVI_GREEN": 0.35,
+    "NDVI_BARE": 0.25,
+    "NDTI_RESIDUE": 0.165
+  }
+}

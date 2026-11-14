@@ -1,0 +1,27 @@
+{
+  "n_train": 93808,
+  "cv_r2": 0.562,
+  "cv_mae": 0.0542,
+  "cv_stress_auc": 0.897,
+  "cv_stress_bal_acc": 0.801,
+  "cv_stress_acc": 0.851,
+  "threshold": 0.7,
+  "cv_stress_acc_at_thr": 0.864,
+  "cv_stress_bal_acc_at_thr": 0.759,
+  "n_test": 10800,
+  "test_r2": 0.655,
+  "test_mae": 0.0546,
+  "test_stress_auc": 0.936,
+  "test_stress_bal_acc": 0.832,
+  "test_stress_acc": 0.909,
+  "top_drivers": {
+    "ndvi_normal": 0.0624,
+    "crop_code": 0.0197,
+    "anom_last": 0.0141,
+    "momentum": 0.0125,
+    "anom_prev1": 0.01,
+    "gap_to_nbr_prev1": 0.0081,
+    "month": 0.0072,
+    "field_month_std": 0.007
+  }
+}

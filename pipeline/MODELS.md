@@ -185,6 +185,15 @@ drought, wet, heat, normal.
 **Replay presets:** 2011 drought (by far the most extreme), 2023 drought, 2007 and 2004 wet, 2018 and 2000 heat.
 Drought years: 1984, 1988, 1998, 1999, 2005, 2006, 2011, 2022, 2023.
 
+## Field Shift study models (Space Apps, separate field set)
+
+A second set of models, built in the Space Apps chats on 300 **Ellis County** fields (ids 0–299, not the 201 `nt-*`
+fields above), lives in `pipeline/fieldshift/` with its own README. Crop classifier: **91.5%** on unseen years 2023–2025
+for clean-label fields (83.3% all fields). Leak-free stress model: **AUC 0.936**, 90.9% accuracy on 2023–2025. Year types:
+k-means, 4 groups (drought 2000 and 2011). Plus a season replay and a rotation recommender, which are simulations built on
+published agronomy, not trained models. The app shows them as one Ellis County study card (`shared/fieldshift/ellis-study.json`).
+They don't replace the models above, which are the ones matched to the app's fields.
+
 ## Suspicious or weak, not hidden
 
 1. **CDL label noise.** Model 1 learns CDL, including CDL's mistakes. Texas CDL accuracy for minor crops can be well below 90%. The app shows this as a data gap.

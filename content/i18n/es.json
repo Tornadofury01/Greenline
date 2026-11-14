@@ -534,6 +534,14 @@
     "grossRevenue": {
       "title": "Ingreso bruto (estimación en dólares)",
       "text": "Rendimiento del condado × precio de Texas, promedio de 2021–2025, de la encuesta USDA NASS Quick Stats. Es el dinero que entra antes de cualquier costo (semilla, fertilizante, combustible, renta), así que no es ganancia. Cuando NASS no publica el rendimiento de su condado, usamos el promedio regional o de Texas y lo decimos. Los promedios de Texas incluyen granjas con riego de las High Plains y pueden ser altos para el norte de Texas de temporal. Los dólares nunca cambian el puntaje ni el orden de las opciones."
+    },
+    "fieldShiftModels": {
+      "title": "Modelos del estudio Field Shift",
+      "text": "Tres modelos entrenados con 300 campos del condado de Ellis. El clasificador de cultivos lee la curva de verdor del satélite de cada año y dice qué cultivo era. Aprendió solo de campos donde casi todo el campo tenía la misma etiqueta de cultivo del USDA, y se probó en 2023–2025, años que nunca vio. El modelo de estrés predice si un campo estará más café que lo normal para él el mes siguiente, con el clima, la humedad del suelo y lo que pasó en el campo hace poco. Usa solo observaciones anteriores, así que no puede ver la respuesta. El buscador de tipos de año agrupa las temporadas pasadas por lluvia, calor y humedad del suelo. Con solo 41 temporadas, los grupos se traslapan."
+    },
+    "seasonReplay": {
+      "title": "Repaso de temporadas",
+      "text": "Sembramos cada rotación en papel y la pasamos día por día por cada temporada real desde 1985, con el clima de la NASA. Un balance de agua diario sigue el agua del suelo, factores de cultivo publicados convierten la falta de agua en rendimiento, y la fórmula RUSLE estima la pérdida de suelo. Para 2040 movemos esas temporadas reales según el cambio que proyectan ocho modelos de clima de la NASA. Luego cada rotación se califica en cobertura del suelo, erosión, ganancia, aguante en años malos, nitrógeno y plagas. Es una simulación basada en ciencia agrícola publicada, no un modelo entrenado, y es un punto de partida para hablar con su agente de Extensión, no una receta."
     }
   },
   "si": {
@@ -814,5 +822,54 @@
       "mapUnit": "unidad del mapa de suelos (1:24,000)"
     },
     "current": "actual"
+  },
+  "fieldShift": {
+    "title": "Repaso de temporadas en el condado de Ellis",
+    "intro": "Un estudio en {n} campos del condado de Ellis: siete rotaciones repasadas día por día en cada temporada de 1985 a 2025 y con las proyecciones del clima de 2040, y luego calificadas en seis metas. Usa un campo típico y un solo punto de clima, así que no cambia los puntajes de su campo de arriba.",
+    "priorityLabel": "Lo que más le importa",
+    "preset": {
+      "balanced": "Equilibrado",
+      "income_first": "Primero el ingreso",
+      "soil_first": "Primero el suelo",
+      "low_risk": "Poco riesgo"
+    },
+    "currentLabel": "Rotación común hoy",
+    "recommendedLabel": "La mejor en este estudio",
+    "keepLabel": "La mejor en este estudio: manténgala",
+    "scoreRank": "{score} de 100 con el clima de hoy · lugar {rank} de {of}",
+    "scoreWins": "{score} de 100 con el clima de hoy · la mejor en {wins} de {of} escenarios",
+    "closeCall": "Muy parejo: {other} queda solo {gap} puntos atrás.",
+    "tableCaption": "La rotación común de hoy comparada con la mejor rotación del estudio",
+    "metric": "Por acre, por año",
+    "colCurrent": "Hoy",
+    "colRecommended": "La mejor",
+    "m": {
+      "bareDays": "Días con el suelo desnudo",
+      "soilLoss": "Pérdida de suelo (toneladas/acre)",
+      "returnTypical": "Ganancia sobre costos variables, año típico",
+      "returnWorst": "Ganancia sobre costos variables, el peor año de cada 10",
+      "nBought": "Nitrógeno comprado (lb)",
+      "pest": "Presión de plagas y enfermedades (0–100, menos es mejor)"
+    },
+    "eqip": "Podría recibir unos ${usd}/acre al año de NRCS EQIP por 3 años. No cuenta en la calificación; las solicitudes son competidas.",
+    "rankingTitle": "Las siete rotaciones",
+    "rot": {
+      "current": "Trigo, verano desnudo",
+      "wheat_soy": "Trigo + soya de segunda siembra",
+      "wheat_cowpea": "Trigo + caupí de cobertura",
+      "sorghum_rye": "Sorgo + centeno de invierno de cobertura",
+      "corn_wheat_soy": "Maíz, trigo, soya de segunda siembra",
+      "sorghum_clover": "Sorgo + trébol encarnado de cobertura",
+      "sorghum_wheat_cowpea": "Sorgo, trigo, caupí de cobertura (2 años)"
+    },
+    "modelsTitle": "Los modelos detrás",
+    "m1Title": "Clasificador de cultivos:",
+    "m1Line": "acertó {clean}% de las veces en años que nunca vio (2023–2025) en campos con una sola etiqueta clara del USDA, y {all}% en todos los campos.",
+    "m2Title": "Modelo de estrés del cultivo:",
+    "m2Line": "acertó {acc}% de las veces en los años no vistos 2023–2025 (AUC {auc}), usando solo observaciones pasadas.",
+    "m3Title": "Tipos de año:",
+    "m3Line": "Las temporadas de 1985–2025 agrupadas en {drought} años de sequía, {hot} calurosos, {normal} normales y {wet} húmedos. Grupos aproximados, solo como guía.",
+    "notYourField": "El repaso es una simulación basada en agronomía publicada (balance de agua FAO-56, respuesta del rendimiento FAO-33, pérdida de suelo RUSLE), no aprendizaje automático. Los precios, presupuestos y pagos de apoyo son estimados que debe confirmar con su oficina de Extensión del condado y la del NRCS.",
+    "rankingHint": "Puntaje promedio en {n} escenarios (5 climas × 2 juegos de precios). Esto decide el orden."
   }
 }

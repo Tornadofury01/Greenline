@@ -7,6 +7,7 @@ import { useScores } from '../state/useScores.js';
 import RotationCard from '../components/RotationCard.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
 import ReplayBar from '../components/ReplayBar.jsx';
+import FieldShiftStudy from '../components/FieldShiftStudy.jsx';
 import Verdict from '../components/Verdict.jsx';
 import { HypotheticalBanner } from '../components/WhatIfSliders.jsx';
 import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
@@ -109,6 +110,8 @@ export default function CompareRotations() {
         <RotationCard key={o.key} result={o.result} label={o.label} name={o.name} delta={delta(o.result)} bareDelta={bareDelta(o.result)} {...shared} />
       ))}
       </div>
+
+      <FieldShiftStudy />
 
       <JudgmentNote />
 

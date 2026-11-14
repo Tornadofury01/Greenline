@@ -1,0 +1,54 @@
+{
+  "kmeans": {
+    "silhouette": 0.258
+  },
+  "em_gmm": {
+    "silhouette": 0.181
+  },
+  "e_means": {
+    "silhouette": 0.212
+  },
+  "agreement_ARI": {
+    "kmeans_vs_em": 0.43,
+    "kmeans_vs_e_means": 0.42
+  },
+  "year_type_summary": {
+    "drought": {
+      "years": 2,
+      "rain_mm": 485.86,
+      "heat_days": 95.5,
+      "root_wetness": 0.62,
+      "field_ndvi_anom": -0.07
+    },
+    "hot": {
+      "years": 13,
+      "rain_mm": 536.35,
+      "heat_days": 77.54,
+      "root_wetness": 0.64,
+      "field_ndvi_anom": -0.01
+    },
+    "normal": {
+      "years": 19,
+      "rain_mm": 706.55,
+      "heat_days": 56.68,
+      "root_wetness": 0.68,
+      "field_ndvi_anom": 0.0
+    },
+    "wet": {
+      "years": 7,
+      "rain_mm": 933.95,
+      "heat_days": 37.71,
+      "root_wetness": 0.7,
+      "field_ndvi_anom": 0.02
+    }
+  },
+  "notable": {
+    "1998": "hot",
+    "2006": "hot",
+    "2011": "drought",
+    "2015": "wet",
+    "2018": "normal",
+    "2022": "hot",
+    "2023": "hot"
+  }
+}

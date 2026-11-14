@@ -1,0 +1,2554 @@
+{
+ "location": "ellis_county_tx",
+ "how_scored": {
+  "dimensions": {
+   "soil_cover": "Soil cover",
+   "erosion": "Erosion",
+   "profit": "Profit",
+   "resilience": "Bad-year resilience",
+   "nitrogen": "Nitrogen",
+   "pest": "Pest & disease"
+  },
+  "anchors": {
+   "soil_cover": [
+    180,
+    0
+   ],
+   "erosion": [
+    12.0,
+    1.0
+   ],
+   "profit": [
+    -100,
+    150
+   ],
+   "resilience": [
+    -250,
+    0
+   ],
+   "nitrogen": [
+    120,
+    0
+   ],
+   "pest": [
+    80,
+    10
+   ]
+  },
+  "grades": "A>=80, B>=65, C>=50, D>=35, F<35",
+  "pick_rule": "Best average score across 5 climate views x 2 price scenarios under the farmer's priorities",
+  "profit_basis": "Return above variable costs (land and machinery cost the same whichever rotation is planted); cost-share shown separately, not scored"
+ },
+ "priority_presets": {
+  "balanced": {
+   "soil_cover": 1,
+   "erosion": 1,
+   "profit": 1,
+   "resilience": 1,
+   "nitrogen": 0.5,
+   "pest": 0.5
+  },
+  "income_first": {
+   "soil_cover": 0.5,
+   "erosion": 0.5,
+   "profit": 2,
+   "resilience": 1,
+   "nitrogen": 0.5,
+   "pest": 0.5
+  },
+  "soil_first": {
+   "soil_cover": 2,
+   "erosion": 2,
+   "profit": 0.5,
+   "resilience": 0.5,
+   "nitrogen": 1,
+   "pest": 0.5
+  },
+  "low_risk": {
+   "soil_cover": 0.5,
+   "erosion": 1,
+   "profit": 0.5,
+   "resilience": 2,
+   "nitrogen": 0.5,
+   "pest": 1
+  }
+ },
+ "recommendations": {
+  "balanced": {
+   "priority": "balanced",
+   "weights": {
+    "soil_cover": 1,
+    "erosion": 1,
+    "profit": 1,
+    "resilience": 1,
+    "nitrogen": 0.5,
+    "pest": 0.5
+   },
+   "view": "today",
+   "price": "high",
+   "current": {
+    "label": "Current: wheat, bare summer",
+    "key": "current",
+    "overall": 31,
+    "grade": "F",
+    "score_across_scenarios": 25,
+    "rank": 7,
+    "wins_share": 0.0,
+    "worst_rank": 7,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 6,
+      "grade": "F"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 4,
+      "grade": "F"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 56,
+      "grade": "C"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 67,
+      "grade": "B"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 40,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 1,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 170,
+     "soil_loss_t_ha": 11.6,
+     "return_above_var_typical": 40,
+     "return_above_var_worst10": -83,
+     "return_above_var_drought": -74,
+     "net_after_fixed_and_rent": -7,
+     "loss_years_pct": 32,
+     "fertilizer_n_lb": 72,
+     "n_credit_lb": 0,
+     "eqip_per_year": 0.0,
+     "pest_index": 79
+    }
+   },
+   "current_verdict": "Your current rotation scores lowest of the options we tested.",
+   "current_strengths": [
+    "Bad-year resilience"
+   ],
+   "current_weaknesses": [
+    "Winter wheat every year keeps its pests and diseases cycling; every crop is a grass, so there is no broadleaf break",
+    "Soil loss of about 11.6 t/ha/yr",
+    "Soil sits bare about 170 days a year",
+    "Buys about 72 lb fertilizer N per acre a year with no legume credit"
+   ],
+   "recommended_watch_outs": [
+    "Grain sorghum every year keeps its pests and diseases cycling; watch sugarcane aphid after mild winters",
+    "Buys about 60 lb fertilizer N per acre a year"
+   ],
+   "recommended": {
+    "label": "Sorghum + crimson clover cover",
+    "key": "sorghum_clover",
+    "overall": 67,
+    "grade": "B",
+    "score_across_scenarios": 61,
+    "rank": 1,
+    "wins_share": 1.0,
+    "worst_rank": 1,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 64,
+      "grade": "C"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 79,
+      "grade": "B"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 58,
+      "grade": "C"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 50,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 19,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 4.9,
+     "return_above_var_typical": 97,
+     "return_above_var_worst10": -105,
+     "return_above_var_drought": -43,
+     "net_after_fixed_and_rent": 48,
+     "loss_years_pct": 20,
+     "fertilizer_n_lb": 60,
+     "n_credit_lb": 29,
+     "eqip_per_year": 103.17,
+     "pest_index": 67
+    }
+   },
+   "runner_up": {
+    "label": "Sorghum + winter rye cover",
+    "key": "sorghum_rye",
+    "overall": 61,
+    "grade": "C",
+    "score_across_scenarios": 55,
+    "rank": 2,
+    "wins_share": 0.0,
+    "worst_rank": 3,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 79,
+      "grade": "B"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 63,
+      "grade": "C"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 49,
+      "grade": "D"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 25,
+      "grade": "F"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 0,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 3.4,
+     "return_above_var_typical": 58,
+     "return_above_var_worst10": -129,
+     "return_above_var_drought": -72,
+     "net_after_fixed_and_rent": 10,
+     "loss_years_pct": 29,
+     "fertilizer_n_lb": 90,
+     "n_credit_lb": 0,
+     "eqip_per_year": 103.17,
+     "pest_index": 87
+    }
+   },
+   "keep_current": false,
+   "reasons": [
+    "170 bare days a year (170 -> 0)",
+    "soil loss 11.6 -> 4.9 t/ha/yr",
+    "typical return above variable costs $40 -> $97/acre",
+    "pest & disease index 79 -> 67"
+   ],
+   "tradeoffs": [],
+   "close_call": false,
+   "cost_share_note": "May qualify for about $103/acre/yr from NRCS EQIP for 3 years (not counted in the score; applications are competitive)",
+   "ranking": [
+    {
+     "label": "Sorghum + crimson clover cover",
+     "key": "sorghum_clover",
+     "overall": 67,
+     "grade": "B",
+     "score_across_scenarios": 61,
+     "rank": 1,
+     "wins_share": 1.0,
+     "worst_rank": 1,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 64,
+       "grade": "C"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 79,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 58,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 50,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 19,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.9,
+      "return_above_var_typical": 97,
+      "return_above_var_worst10": -105,
+      "return_above_var_drought": -43,
+      "net_after_fixed_and_rent": 48,
+      "loss_years_pct": 20,
+      "fertilizer_n_lb": 60,
+      "n_credit_lb": 29,
+      "eqip_per_year": 103.17,
+      "pest_index": 67
+     }
+    },
+    {
+     "label": "Sorghum + winter rye cover",
+     "key": "sorghum_rye",
+     "overall": 61,
+     "grade": "C",
+     "score_across_scenarios": 55,
+     "rank": 2,
+     "wins_share": 0.0,
+     "worst_rank": 3,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 79,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 63,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 49,
+       "grade": "D"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 25,
+       "grade": "F"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 0,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 3.4,
+      "return_above_var_typical": 58,
+      "return_above_var_worst10": -129,
+      "return_above_var_drought": -72,
+      "net_after_fixed_and_rent": 10,
+      "loss_years_pct": 29,
+      "fertilizer_n_lb": 90,
+      "n_credit_lb": 0,
+      "eqip_per_year": 103.17,
+      "pest_index": 87
+     }
+    },
+    {
+     "label": "Wheat + double-crop soybean",
+     "key": "wheat_soy",
+     "overall": 62,
+     "grade": "C",
+     "score_across_scenarios": 51,
+     "rank": 3,
+     "wins_share": 0.0,
+     "worst_rank": 4,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 65,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 80,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 27,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 56,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 15,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.8,
+      "return_above_var_typical": 99,
+      "return_above_var_worst10": -181,
+      "return_above_var_drought": -136,
+      "net_after_fixed_and_rent": 37,
+      "loss_years_pct": 37,
+      "fertilizer_n_lb": 52,
+      "n_credit_lb": 20,
+      "eqip_per_year": 30.98,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Wheat + summer cowpea cover",
+     "key": "wheat_cowpea",
+     "overall": 53,
+     "grade": "C",
+     "score_across_scenarios": 47,
+     "rank": 4,
+     "wins_share": 0.0,
+     "worst_rank": 5,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 67,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 28,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 34,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 55,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 16,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.6,
+      "return_above_var_typical": -30,
+      "return_above_var_worst10": -164,
+      "return_above_var_drought": -160,
+      "net_after_fixed_and_rent": -76,
+      "loss_years_pct": 76,
+      "fertilizer_n_lb": 53,
+      "n_credit_lb": 19,
+      "eqip_per_year": 103.17,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Sorghum, wheat, cowpea cover (2 yr)",
+     "key": "sorghum_wheat_cowpea",
+     "overall": 49,
+     "grade": "D",
+     "score_across_scenarios": 44,
+     "rank": 5,
+     "wins_share": 0.0,
+     "worst_rank": 5,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 66,
+       "grade": "B"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 42,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 40,
+       "grade": "D"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 51,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 56,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 61,
+      "soil_loss_t_ha": 7.4,
+      "return_above_var_typical": -1,
+      "return_above_var_worst10": -122,
+      "return_above_var_drought": -127,
+      "net_after_fixed_and_rent": -47,
+      "loss_years_pct": 50,
+      "fertilizer_n_lb": 71,
+      "n_credit_lb": 9,
+      "eqip_per_year": 103.17,
+      "pest_index": 41
+     }
+    },
+    {
+     "label": "Corn, wheat, double-crop soybean (2 yr)",
+     "key": "corn_wheat_soy",
+     "overall": 31,
+     "grade": "F",
+     "score_across_scenarios": 30,
+     "rank": 6,
+     "wins_share": 0.0,
+     "worst_rank": 6,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 49,
+       "grade": "D"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 47,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 10,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 0,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 47,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 53,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 92,
+      "soil_loss_t_ha": 6.8,
+      "return_above_var_typical": -74,
+      "return_above_var_worst10": -280,
+      "return_above_var_drought": -216,
+      "net_after_fixed_and_rent": -140,
+      "loss_years_pct": 62,
+      "fertilizer_n_lb": 63,
+      "n_credit_lb": 10,
+      "eqip_per_year": 30.98,
+      "pest_index": 43
+     }
+    },
+    {
+     "label": "Current: wheat, bare summer",
+     "key": "current",
+     "overall": 31,
+     "grade": "F",
+     "score_across_scenarios": 25,
+     "rank": 7,
+     "wins_share": 0.0,
+     "worst_rank": 7,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 6,
+       "grade": "F"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 4,
+       "grade": "F"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 56,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 67,
+       "grade": "B"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 1,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 170,
+      "soil_loss_t_ha": 11.6,
+      "return_above_var_typical": 40,
+      "return_above_var_worst10": -83,
+      "return_above_var_drought": -74,
+      "net_after_fixed_and_rent": -7,
+      "loss_years_pct": 32,
+      "fertilizer_n_lb": 72,
+      "n_credit_lb": 0,
+      "eqip_per_year": 0.0,
+      "pest_index": 79
+     }
+    }
+   ],
+   "confidence": "high",
+   "robustness": {
+    "scenarios_checked": 10,
+    "top_wins_share": 1.0,
+    "gap_points": 5.9,
+    "pick_by_priority": {
+     "balanced": "sorghum_clover",
+     "income_first": "sorghum_clover",
+     "soil_first": "sorghum_clover",
+     "low_risk": "sorghum_clover"
+    }
+   }
+  },
+  "income_first": {
+   "priority": "income_first",
+   "weights": {
+    "soil_cover": 0.5,
+    "erosion": 0.5,
+    "profit": 2,
+    "resilience": 1,
+    "nitrogen": 0.5,
+    "pest": 0.5
+   },
+   "view": "today",
+   "price": "high",
+   "current": {
+    "label": "Current: wheat, bare summer",
+    "key": "current",
+    "overall": 41,
+    "grade": "D",
+    "score_across_scenarios": 32,
+    "rank": 6,
+    "wins_share": 0.0,
+    "worst_rank": 6,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 6,
+      "grade": "F"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 4,
+      "grade": "F"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 56,
+      "grade": "C"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 67,
+      "grade": "B"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 40,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 1,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 170,
+     "soil_loss_t_ha": 11.6,
+     "return_above_var_typical": 40,
+     "return_above_var_worst10": -83,
+     "return_above_var_drought": -74,
+     "net_after_fixed_and_rent": -7,
+     "loss_years_pct": 32,
+     "fertilizer_n_lb": 72,
+     "n_credit_lb": 0,
+     "eqip_per_year": 0.0,
+     "pest_index": 79
+    }
+   },
+   "current_verdict": "Your current rotation ranks 6 of 7 options we tested.",
+   "current_strengths": [
+    "Bad-year resilience"
+   ],
+   "current_weaknesses": [
+    "Winter wheat every year keeps its pests and diseases cycling; every crop is a grass, so there is no broadleaf break",
+    "Soil loss of about 11.6 t/ha/yr",
+    "Soil sits bare about 170 days a year",
+    "Buys about 72 lb fertilizer N per acre a year with no legume credit"
+   ],
+   "recommended_watch_outs": [
+    "Grain sorghum every year keeps its pests and diseases cycling; watch sugarcane aphid after mild winters",
+    "Buys about 60 lb fertilizer N per acre a year"
+   ],
+   "recommended": {
+    "label": "Sorghum + crimson clover cover",
+    "key": "sorghum_clover",
+    "overall": 66,
+    "grade": "B",
+    "score_across_scenarios": 56,
+    "rank": 1,
+    "wins_share": 1.0,
+    "worst_rank": 1,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 64,
+      "grade": "C"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 79,
+      "grade": "B"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 58,
+      "grade": "C"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 50,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 19,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 4.9,
+     "return_above_var_typical": 97,
+     "return_above_var_worst10": -105,
+     "return_above_var_drought": -43,
+     "net_after_fixed_and_rent": 48,
+     "loss_years_pct": 20,
+     "fertilizer_n_lb": 60,
+     "n_credit_lb": 29,
+     "eqip_per_year": 103.17,
+     "pest_index": 67
+    }
+   },
+   "runner_up": {
+    "label": "Wheat + double-crop soybean",
+    "key": "wheat_soy",
+    "overall": 61,
+    "grade": "C",
+    "score_across_scenarios": 47,
+    "rank": 2,
+    "wins_share": 0.0,
+    "worst_rank": 3,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 65,
+      "grade": "B"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 80,
+      "grade": "B"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 27,
+      "grade": "F"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 56,
+      "grade": "C"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 15,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 4.8,
+     "return_above_var_typical": 99,
+     "return_above_var_worst10": -181,
+     "return_above_var_drought": -136,
+     "net_after_fixed_and_rent": 37,
+     "loss_years_pct": 37,
+     "fertilizer_n_lb": 52,
+     "n_credit_lb": 20,
+     "eqip_per_year": 30.98,
+     "pest_index": 69
+    }
+   },
+   "keep_current": false,
+   "reasons": [
+    "170 bare days a year (170 -> 0)",
+    "soil loss 11.6 -> 4.9 t/ha/yr",
+    "typical return above variable costs $40 -> $97/acre",
+    "pest & disease index 79 -> 67"
+   ],
+   "tradeoffs": [],
+   "close_call": false,
+   "cost_share_note": "May qualify for about $103/acre/yr from NRCS EQIP for 3 years (not counted in the score; applications are competitive)",
+   "ranking": [
+    {
+     "label": "Sorghum + crimson clover cover",
+     "key": "sorghum_clover",
+     "overall": 66,
+     "grade": "B",
+     "score_across_scenarios": 56,
+     "rank": 1,
+     "wins_share": 1.0,
+     "worst_rank": 1,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 64,
+       "grade": "C"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 79,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 58,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 50,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 19,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.9,
+      "return_above_var_typical": 97,
+      "return_above_var_worst10": -105,
+      "return_above_var_drought": -43,
+      "net_after_fixed_and_rent": 48,
+      "loss_years_pct": 20,
+      "fertilizer_n_lb": 60,
+      "n_credit_lb": 29,
+      "eqip_per_year": 103.17,
+      "pest_index": 67
+     }
+    },
+    {
+     "label": "Wheat + double-crop soybean",
+     "key": "wheat_soy",
+     "overall": 61,
+     "grade": "C",
+     "score_across_scenarios": 47,
+     "rank": 2,
+     "wins_share": 0.0,
+     "worst_rank": 3,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 65,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 80,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 27,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 56,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 15,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.8,
+      "return_above_var_typical": 99,
+      "return_above_var_worst10": -181,
+      "return_above_var_drought": -136,
+      "net_after_fixed_and_rent": 37,
+      "loss_years_pct": 37,
+      "fertilizer_n_lb": 52,
+      "n_credit_lb": 20,
+      "eqip_per_year": 30.98,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Sorghum + winter rye cover",
+     "key": "sorghum_rye",
+     "overall": 55,
+     "grade": "C",
+     "score_across_scenarios": 46,
+     "rank": 3,
+     "wins_share": 0.0,
+     "worst_rank": 3,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 79,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 63,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 49,
+       "grade": "D"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 25,
+       "grade": "F"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 0,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 3.4,
+      "return_above_var_typical": 58,
+      "return_above_var_worst10": -129,
+      "return_above_var_drought": -72,
+      "net_after_fixed_and_rent": 10,
+      "loss_years_pct": 29,
+      "fertilizer_n_lb": 90,
+      "n_credit_lb": 0,
+      "eqip_per_year": 103.17,
+      "pest_index": 87
+     }
+    },
+    {
+     "label": "Sorghum, wheat, cowpea cover (2 yr)",
+     "key": "sorghum_wheat_cowpea",
+     "overall": 47,
+     "grade": "D",
+     "score_across_scenarios": 38,
+     "rank": 4,
+     "wins_share": 0.0,
+     "worst_rank": 4,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 66,
+       "grade": "B"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 42,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 40,
+       "grade": "D"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 51,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 56,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 61,
+      "soil_loss_t_ha": 7.4,
+      "return_above_var_typical": -1,
+      "return_above_var_worst10": -122,
+      "return_above_var_drought": -127,
+      "net_after_fixed_and_rent": -47,
+      "loss_years_pct": 50,
+      "fertilizer_n_lb": 71,
+      "n_credit_lb": 9,
+      "eqip_per_year": 103.17,
+      "pest_index": 41
+     }
+    },
+    {
+     "label": "Wheat + summer cowpea cover",
+     "key": "wheat_cowpea",
+     "overall": 42,
+     "grade": "D",
+     "score_across_scenarios": 33,
+     "rank": 5,
+     "wins_share": 0.0,
+     "worst_rank": 6,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 67,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 28,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 34,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 55,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 16,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.6,
+      "return_above_var_typical": -30,
+      "return_above_var_worst10": -164,
+      "return_above_var_drought": -160,
+      "net_after_fixed_and_rent": -76,
+      "loss_years_pct": 76,
+      "fertilizer_n_lb": 53,
+      "n_credit_lb": 19,
+      "eqip_per_year": 103.17,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Current: wheat, bare summer",
+     "key": "current",
+     "overall": 41,
+     "grade": "D",
+     "score_across_scenarios": 32,
+     "rank": 6,
+     "wins_share": 0.0,
+     "worst_rank": 6,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 6,
+       "grade": "F"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 4,
+       "grade": "F"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 56,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 67,
+       "grade": "B"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 1,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 170,
+      "soil_loss_t_ha": 11.6,
+      "return_above_var_typical": 40,
+      "return_above_var_worst10": -83,
+      "return_above_var_drought": -74,
+      "net_after_fixed_and_rent": -7,
+      "loss_years_pct": 32,
+      "fertilizer_n_lb": 72,
+      "n_credit_lb": 0,
+      "eqip_per_year": 0.0,
+      "pest_index": 79
+     }
+    },
+    {
+     "label": "Corn, wheat, double-crop soybean (2 yr)",
+     "key": "corn_wheat_soy",
+     "overall": 24,
+     "grade": "F",
+     "score_across_scenarios": 21,
+     "rank": 7,
+     "wins_share": 0.0,
+     "worst_rank": 7,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 49,
+       "grade": "D"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 47,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 10,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 0,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 47,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 53,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 92,
+      "soil_loss_t_ha": 6.8,
+      "return_above_var_typical": -74,
+      "return_above_var_worst10": -280,
+      "return_above_var_drought": -216,
+      "net_after_fixed_and_rent": -140,
+      "loss_years_pct": 62,
+      "fertilizer_n_lb": 63,
+      "n_credit_lb": 10,
+      "eqip_per_year": 30.98,
+      "pest_index": 43
+     }
+    }
+   ],
+   "confidence": "high",
+   "robustness": {
+    "scenarios_checked": 10,
+    "top_wins_share": 1.0,
+    "gap_points": 9.4,
+    "pick_by_priority": {
+     "balanced": "sorghum_clover",
+     "income_first": "sorghum_clover",
+     "soil_first": "sorghum_clover",
+     "low_risk": "sorghum_clover"
+    }
+   }
+  },
+  "soil_first": {
+   "priority": "soil_first",
+   "weights": {
+    "soil_cover": 2,
+    "erosion": 2,
+    "profit": 0.5,
+    "resilience": 0.5,
+    "nitrogen": 1,
+    "pest": 0.5
+   },
+   "view": "today",
+   "price": "high",
+   "current": {
+    "label": "Current: wheat, bare summer",
+    "key": "current",
+    "overall": 19,
+    "grade": "F",
+    "score_across_scenarios": 16,
+    "rank": 7,
+    "wins_share": 0.0,
+    "worst_rank": 7,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 6,
+      "grade": "F"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 4,
+      "grade": "F"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 56,
+      "grade": "C"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 67,
+      "grade": "B"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 40,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 1,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 170,
+     "soil_loss_t_ha": 11.6,
+     "return_above_var_typical": 40,
+     "return_above_var_worst10": -83,
+     "return_above_var_drought": -74,
+     "net_after_fixed_and_rent": -7,
+     "loss_years_pct": 32,
+     "fertilizer_n_lb": 72,
+     "n_credit_lb": 0,
+     "eqip_per_year": 0.0,
+     "pest_index": 79
+    }
+   },
+   "current_verdict": "Your current rotation scores lowest of the options we tested.",
+   "current_strengths": [
+    "Bad-year resilience"
+   ],
+   "current_weaknesses": [
+    "Winter wheat every year keeps its pests and diseases cycling; every crop is a grass, so there is no broadleaf break",
+    "Soil loss of about 11.6 t/ha/yr",
+    "Soil sits bare about 170 days a year",
+    "Buys about 72 lb fertilizer N per acre a year with no legume credit"
+   ],
+   "recommended_watch_outs": [
+    "Grain sorghum every year keeps its pests and diseases cycling; watch sugarcane aphid after mild winters",
+    "Buys about 60 lb fertilizer N per acre a year"
+   ],
+   "recommended": {
+    "label": "Sorghum + crimson clover cover",
+    "key": "sorghum_clover",
+    "overall": 70,
+    "grade": "B",
+    "score_across_scenarios": 67,
+    "rank": 1,
+    "wins_share": 0.8,
+    "worst_rank": 2,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 64,
+      "grade": "C"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 79,
+      "grade": "B"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 58,
+      "grade": "C"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 50,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 19,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 4.9,
+     "return_above_var_typical": 97,
+     "return_above_var_worst10": -105,
+     "return_above_var_drought": -43,
+     "net_after_fixed_and_rent": 48,
+     "loss_years_pct": 20,
+     "fertilizer_n_lb": 60,
+     "n_credit_lb": 29,
+     "eqip_per_year": 103.17,
+     "pest_index": 67
+    }
+   },
+   "runner_up": {
+    "label": "Sorghum + winter rye cover",
+    "key": "sorghum_rye",
+    "overall": 67,
+    "grade": "B",
+    "score_across_scenarios": 65,
+    "rank": 2,
+    "wins_share": 0.2,
+    "worst_rank": 3,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 79,
+      "grade": "B"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 63,
+      "grade": "C"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 49,
+      "grade": "D"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 25,
+      "grade": "F"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 0,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 3.4,
+     "return_above_var_typical": 58,
+     "return_above_var_worst10": -129,
+     "return_above_var_drought": -72,
+     "net_after_fixed_and_rent": 10,
+     "loss_years_pct": 29,
+     "fertilizer_n_lb": 90,
+     "n_credit_lb": 0,
+     "eqip_per_year": 103.17,
+     "pest_index": 87
+    }
+   },
+   "keep_current": false,
+   "reasons": [
+    "170 bare days a year (170 -> 0)",
+    "soil loss 11.6 -> 4.9 t/ha/yr",
+    "typical return above variable costs $40 -> $97/acre",
+    "pest & disease index 79 -> 67"
+   ],
+   "tradeoffs": [],
+   "close_call": true,
+   "cost_share_note": "May qualify for about $103/acre/yr from NRCS EQIP for 3 years (not counted in the score; applications are competitive)",
+   "ranking": [
+    {
+     "label": "Sorghum + crimson clover cover",
+     "key": "sorghum_clover",
+     "overall": 70,
+     "grade": "B",
+     "score_across_scenarios": 67,
+     "rank": 1,
+     "wins_share": 0.8,
+     "worst_rank": 2,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 64,
+       "grade": "C"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 79,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 58,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 50,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 19,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.9,
+      "return_above_var_typical": 97,
+      "return_above_var_worst10": -105,
+      "return_above_var_drought": -43,
+      "net_after_fixed_and_rent": 48,
+      "loss_years_pct": 20,
+      "fertilizer_n_lb": 60,
+      "n_credit_lb": 29,
+      "eqip_per_year": 103.17,
+      "pest_index": 67
+     }
+    },
+    {
+     "label": "Sorghum + winter rye cover",
+     "key": "sorghum_rye",
+     "overall": 67,
+     "grade": "B",
+     "score_across_scenarios": 65,
+     "rank": 2,
+     "wins_share": 0.2,
+     "worst_rank": 3,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 79,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 63,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 49,
+       "grade": "D"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 25,
+       "grade": "F"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 0,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 3.4,
+      "return_above_var_typical": 58,
+      "return_above_var_worst10": -129,
+      "return_above_var_drought": -72,
+      "net_after_fixed_and_rent": 10,
+      "loss_years_pct": 29,
+      "fertilizer_n_lb": 90,
+      "n_credit_lb": 0,
+      "eqip_per_year": 103.17,
+      "pest_index": 87
+     }
+    },
+    {
+     "label": "Wheat + summer cowpea cover",
+     "key": "wheat_cowpea",
+     "overall": 66,
+     "grade": "B",
+     "score_across_scenarios": 63,
+     "rank": 3,
+     "wins_share": 0.0,
+     "worst_rank": 4,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 67,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 28,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 34,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 55,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 16,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.6,
+      "return_above_var_typical": -30,
+      "return_above_var_worst10": -164,
+      "return_above_var_drought": -160,
+      "net_after_fixed_and_rent": -76,
+      "loss_years_pct": 76,
+      "fertilizer_n_lb": 53,
+      "n_credit_lb": 19,
+      "eqip_per_year": 103.17,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Wheat + double-crop soybean",
+     "key": "wheat_soy",
+     "overall": 69,
+     "grade": "B",
+     "score_across_scenarios": 61,
+     "rank": 4,
+     "wins_share": 0.0,
+     "worst_rank": 4,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 65,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 80,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 27,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 56,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 15,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.8,
+      "return_above_var_typical": 99,
+      "return_above_var_worst10": -181,
+      "return_above_var_drought": -136,
+      "net_after_fixed_and_rent": 37,
+      "loss_years_pct": 37,
+      "fertilizer_n_lb": 52,
+      "n_credit_lb": 20,
+      "eqip_per_year": 30.98,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Sorghum, wheat, cowpea cover (2 yr)",
+     "key": "sorghum_wheat_cowpea",
+     "overall": 51,
+     "grade": "C",
+     "score_across_scenarios": 48,
+     "rank": 5,
+     "wins_share": 0.0,
+     "worst_rank": 5,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 66,
+       "grade": "B"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 42,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 40,
+       "grade": "D"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 51,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 56,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 61,
+      "soil_loss_t_ha": 7.4,
+      "return_above_var_typical": -1,
+      "return_above_var_worst10": -122,
+      "return_above_var_drought": -127,
+      "net_after_fixed_and_rent": -47,
+      "loss_years_pct": 50,
+      "fertilizer_n_lb": 71,
+      "n_credit_lb": 9,
+      "eqip_per_year": 103.17,
+      "pest_index": 41
+     }
+    },
+    {
+     "label": "Corn, wheat, double-crop soybean (2 yr)",
+     "key": "corn_wheat_soy",
+     "overall": 42,
+     "grade": "D",
+     "score_across_scenarios": 41,
+     "rank": 6,
+     "wins_share": 0.0,
+     "worst_rank": 6,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 49,
+       "grade": "D"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 47,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 10,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 0,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 47,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 53,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 92,
+      "soil_loss_t_ha": 6.8,
+      "return_above_var_typical": -74,
+      "return_above_var_worst10": -280,
+      "return_above_var_drought": -216,
+      "net_after_fixed_and_rent": -140,
+      "loss_years_pct": 62,
+      "fertilizer_n_lb": 63,
+      "n_credit_lb": 10,
+      "eqip_per_year": 30.98,
+      "pest_index": 43
+     }
+    },
+    {
+     "label": "Current: wheat, bare summer",
+     "key": "current",
+     "overall": 19,
+     "grade": "F",
+     "score_across_scenarios": 16,
+     "rank": 7,
+     "wins_share": 0.0,
+     "worst_rank": 7,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 6,
+       "grade": "F"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 4,
+       "grade": "F"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 56,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 67,
+       "grade": "B"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 1,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 170,
+      "soil_loss_t_ha": 11.6,
+      "return_above_var_typical": 40,
+      "return_above_var_worst10": -83,
+      "return_above_var_drought": -74,
+      "net_after_fixed_and_rent": -7,
+      "loss_years_pct": 32,
+      "fertilizer_n_lb": 72,
+      "n_credit_lb": 0,
+      "eqip_per_year": 0.0,
+      "pest_index": 79
+     }
+    }
+   ],
+   "confidence": "medium",
+   "robustness": {
+    "scenarios_checked": 10,
+    "top_wins_share": 0.8,
+    "gap_points": 2.1,
+    "pick_by_priority": {
+     "balanced": "sorghum_clover",
+     "income_first": "sorghum_clover",
+     "soil_first": "sorghum_clover",
+     "low_risk": "sorghum_clover"
+    }
+   }
+  },
+  "low_risk": {
+   "priority": "low_risk",
+   "weights": {
+    "soil_cover": 0.5,
+    "erosion": 1,
+    "profit": 0.5,
+    "resilience": 2,
+    "nitrogen": 0.5,
+    "pest": 1
+   },
+   "view": "today",
+   "price": "high",
+   "current": {
+    "label": "Current: wheat, bare summer",
+    "key": "current",
+    "overall": 34,
+    "grade": "F",
+    "score_across_scenarios": 28,
+    "rank": 6,
+    "wins_share": 0.0,
+    "worst_rank": 7,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 6,
+      "grade": "F"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 4,
+      "grade": "F"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 56,
+      "grade": "C"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 67,
+      "grade": "B"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 40,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 1,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 170,
+     "soil_loss_t_ha": 11.6,
+     "return_above_var_typical": 40,
+     "return_above_var_worst10": -83,
+     "return_above_var_drought": -74,
+     "net_after_fixed_and_rent": -7,
+     "loss_years_pct": 32,
+     "fertilizer_n_lb": 72,
+     "n_credit_lb": 0,
+     "eqip_per_year": 0.0,
+     "pest_index": 79
+    }
+   },
+   "current_verdict": "Your current rotation ranks 6 of 7 options we tested.",
+   "current_strengths": [
+    "Bad-year resilience"
+   ],
+   "current_weaknesses": [
+    "Winter wheat every year keeps its pests and diseases cycling; every crop is a grass, so there is no broadleaf break",
+    "Soil loss of about 11.6 t/ha/yr",
+    "Soil sits bare about 170 days a year",
+    "Buys about 72 lb fertilizer N per acre a year with no legume credit"
+   ],
+   "recommended_watch_outs": [
+    "Grain sorghum every year keeps its pests and diseases cycling; watch sugarcane aphid after mild winters",
+    "Buys about 60 lb fertilizer N per acre a year"
+   ],
+   "recommended": {
+    "label": "Sorghum + crimson clover cover",
+    "key": "sorghum_clover",
+    "overall": 57,
+    "grade": "C",
+    "score_across_scenarios": 52,
+    "rank": 1,
+    "wins_share": 1.0,
+    "worst_rank": 1,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 100,
+      "grade": "A"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 64,
+      "grade": "C"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 79,
+      "grade": "B"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 58,
+      "grade": "C"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 50,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 19,
+      "grade": "F"
+     }
+    },
+    "metrics": {
+     "bare_days": 0,
+     "soil_loss_t_ha": 4.9,
+     "return_above_var_typical": 97,
+     "return_above_var_worst10": -105,
+     "return_above_var_drought": -43,
+     "net_after_fixed_and_rent": 48,
+     "loss_years_pct": 20,
+     "fertilizer_n_lb": 60,
+     "n_credit_lb": 29,
+     "eqip_per_year": 103.17,
+     "pest_index": 67
+    }
+   },
+   "runner_up": {
+    "label": "Sorghum, wheat, cowpea cover (2 yr)",
+    "key": "sorghum_wheat_cowpea",
+    "overall": 50,
+    "grade": "D",
+    "score_across_scenarios": 44,
+    "rank": 2,
+    "wins_share": 0.0,
+    "worst_rank": 3,
+    "dimensions": {
+     "soil_cover": {
+      "label": "Soil cover",
+      "score": 66,
+      "grade": "B"
+     },
+     "erosion": {
+      "label": "Erosion",
+      "score": 42,
+      "grade": "D"
+     },
+     "profit": {
+      "label": "Profit",
+      "score": 40,
+      "grade": "D"
+     },
+     "resilience": {
+      "label": "Bad-year resilience",
+      "score": 51,
+      "grade": "C"
+     },
+     "nitrogen": {
+      "label": "Nitrogen",
+      "score": 40,
+      "grade": "D"
+     },
+     "pest": {
+      "label": "Pest & disease",
+      "score": 56,
+      "grade": "C"
+     }
+    },
+    "metrics": {
+     "bare_days": 61,
+     "soil_loss_t_ha": 7.4,
+     "return_above_var_typical": -1,
+     "return_above_var_worst10": -122,
+     "return_above_var_drought": -127,
+     "net_after_fixed_and_rent": -47,
+     "loss_years_pct": 50,
+     "fertilizer_n_lb": 71,
+     "n_credit_lb": 9,
+     "eqip_per_year": 103.17,
+     "pest_index": 41
+    }
+   },
+   "keep_current": false,
+   "reasons": [
+    "170 bare days a year (170 -> 0)",
+    "soil loss 11.6 -> 4.9 t/ha/yr",
+    "typical return above variable costs $40 -> $97/acre",
+    "pest & disease index 79 -> 67"
+   ],
+   "tradeoffs": [],
+   "close_call": false,
+   "cost_share_note": "May qualify for about $103/acre/yr from NRCS EQIP for 3 years (not counted in the score; applications are competitive)",
+   "ranking": [
+    {
+     "label": "Sorghum + crimson clover cover",
+     "key": "sorghum_clover",
+     "overall": 57,
+     "grade": "C",
+     "score_across_scenarios": 52,
+     "rank": 1,
+     "wins_share": 1.0,
+     "worst_rank": 1,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 64,
+       "grade": "C"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 79,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 58,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 50,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 19,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.9,
+      "return_above_var_typical": 97,
+      "return_above_var_worst10": -105,
+      "return_above_var_drought": -43,
+      "net_after_fixed_and_rent": 48,
+      "loss_years_pct": 20,
+      "fertilizer_n_lb": 60,
+      "n_credit_lb": 29,
+      "eqip_per_year": 103.17,
+      "pest_index": 67
+     }
+    },
+    {
+     "label": "Sorghum, wheat, cowpea cover (2 yr)",
+     "key": "sorghum_wheat_cowpea",
+     "overall": 50,
+     "grade": "D",
+     "score_across_scenarios": 44,
+     "rank": 2,
+     "wins_share": 0.0,
+     "worst_rank": 3,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 66,
+       "grade": "B"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 42,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 40,
+       "grade": "D"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 51,
+       "grade": "C"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 56,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 61,
+      "soil_loss_t_ha": 7.4,
+      "return_above_var_typical": -1,
+      "return_above_var_worst10": -122,
+      "return_above_var_drought": -127,
+      "net_after_fixed_and_rent": -47,
+      "loss_years_pct": 50,
+      "fertilizer_n_lb": 71,
+      "n_credit_lb": 9,
+      "eqip_per_year": 103.17,
+      "pest_index": 41
+     }
+    },
+    {
+     "label": "Sorghum + winter rye cover",
+     "key": "sorghum_rye",
+     "overall": 49,
+     "grade": "D",
+     "score_across_scenarios": 44,
+     "rank": 3,
+     "wins_share": 0.0,
+     "worst_rank": 3,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 79,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 63,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 49,
+       "grade": "D"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 25,
+       "grade": "F"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 0,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 3.4,
+      "return_above_var_typical": 58,
+      "return_above_var_worst10": -129,
+      "return_above_var_drought": -72,
+      "net_after_fixed_and_rent": 10,
+      "loss_years_pct": 29,
+      "fertilizer_n_lb": 90,
+      "n_credit_lb": 0,
+      "eqip_per_year": 103.17,
+      "pest_index": 87
+     }
+    },
+    {
+     "label": "Wheat + summer cowpea cover",
+     "key": "wheat_cowpea",
+     "overall": 44,
+     "grade": "D",
+     "score_across_scenarios": 38,
+     "rank": 4,
+     "wins_share": 0.0,
+     "worst_rank": 5,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 67,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 28,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 34,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 55,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 16,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.6,
+      "return_above_var_typical": -30,
+      "return_above_var_worst10": -164,
+      "return_above_var_drought": -160,
+      "net_after_fixed_and_rent": -76,
+      "loss_years_pct": 76,
+      "fertilizer_n_lb": 53,
+      "n_credit_lb": 19,
+      "eqip_per_year": 103.17,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Wheat + double-crop soybean",
+     "key": "wheat_soy",
+     "overall": 46,
+     "grade": "D",
+     "score_across_scenarios": 37,
+     "rank": 5,
+     "wins_share": 0.0,
+     "worst_rank": 5,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 100,
+       "grade": "A"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 65,
+       "grade": "B"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 80,
+       "grade": "B"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 27,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 56,
+       "grade": "C"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 15,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 0,
+      "soil_loss_t_ha": 4.8,
+      "return_above_var_typical": 99,
+      "return_above_var_worst10": -181,
+      "return_above_var_drought": -136,
+      "net_after_fixed_and_rent": 37,
+      "loss_years_pct": 37,
+      "fertilizer_n_lb": 52,
+      "n_credit_lb": 20,
+      "eqip_per_year": 30.98,
+      "pest_index": 69
+     }
+    },
+    {
+     "label": "Current: wheat, bare summer",
+     "key": "current",
+     "overall": 34,
+     "grade": "F",
+     "score_across_scenarios": 28,
+     "rank": 6,
+     "wins_share": 0.0,
+     "worst_rank": 7,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 6,
+       "grade": "F"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 4,
+       "grade": "F"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 56,
+       "grade": "C"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 67,
+       "grade": "B"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 40,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 1,
+       "grade": "F"
+      }
+     },
+     "metrics": {
+      "bare_days": 170,
+      "soil_loss_t_ha": 11.6,
+      "return_above_var_typical": 40,
+      "return_above_var_worst10": -83,
+      "return_above_var_drought": -74,
+      "net_after_fixed_and_rent": -7,
+      "loss_years_pct": 32,
+      "fertilizer_n_lb": 72,
+      "n_credit_lb": 0,
+      "eqip_per_year": 0.0,
+      "pest_index": 79
+     }
+    },
+    {
+     "label": "Corn, wheat, double-crop soybean (2 yr)",
+     "key": "corn_wheat_soy",
+     "overall": 28,
+     "grade": "F",
+     "score_across_scenarios": 27,
+     "rank": 7,
+     "wins_share": 0.0,
+     "worst_rank": 7,
+     "dimensions": {
+      "soil_cover": {
+       "label": "Soil cover",
+       "score": 49,
+       "grade": "D"
+      },
+      "erosion": {
+       "label": "Erosion",
+       "score": 47,
+       "grade": "D"
+      },
+      "profit": {
+       "label": "Profit",
+       "score": 10,
+       "grade": "F"
+      },
+      "resilience": {
+       "label": "Bad-year resilience",
+       "score": 0,
+       "grade": "F"
+      },
+      "nitrogen": {
+       "label": "Nitrogen",
+       "score": 47,
+       "grade": "D"
+      },
+      "pest": {
+       "label": "Pest & disease",
+       "score": 53,
+       "grade": "C"
+      }
+     },
+     "metrics": {
+      "bare_days": 92,
+      "soil_loss_t_ha": 6.8,
+      "return_above_var_typical": -74,
+      "return_above_var_worst10": -280,
+      "return_above_var_drought": -216,
+      "net_after_fixed_and_rent": -140,
+      "loss_years_pct": 62,
+      "fertilizer_n_lb": 63,
+      "n_credit_lb": 10,
+      "eqip_per_year": 30.98,
+      "pest_index": 43
+     }
+    }
+   ],
+   "confidence": "high",
+   "robustness": {
+    "scenarios_checked": 10,
+    "top_wins_share": 1.0,
+    "gap_points": 7.9,
+    "pick_by_priority": {
+     "balanced": "sorghum_clover",
+     "income_first": "sorghum_clover",
+     "soil_first": "sorghum_clover",
+     "low_risk": "sorghum_clover"
+    }
+   }
+  }
+ },
+ "cost_share": [
+  {
+   "rotation": "current",
+   "practices": "none",
+   "eqip_per_year": 0.0,
+   "eqip_contract_total": 0.0
+  },
+  {
+   "rotation": "wheat_cowpea",
+   "practices": "340 Cover Crop, 329 No-Till, 328 Conservation Crop Rotation",
+   "eqip_per_year": 103.17,
+   "eqip_contract_total": 309.51
+  },
+  {
+   "rotation": "wheat_soy",
+   "practices": "329 No-Till, 328 Conservation Crop Rotation",
+   "eqip_per_year": 30.98,
+   "eqip_contract_total": 92.94
+  },
+  {
+   "rotation": "corn_wheat_soy",
+   "practices": "329 No-Till, 328 Conservation Crop Rotation",
+   "eqip_per_year": 30.98,
+   "eqip_contract_total": 92.94
+  },
+  {
+   "rotation": "sorghum_rye",
+   "practices": "340 Cover Crop, 329 No-Till, 328 Conservation Crop Rotation",
+   "eqip_per_year": 103.17,
+   "eqip_contract_total": 309.51
+  },
+  {
+   "rotation": "sorghum_clover",
+   "practices": "340 Cover Crop, 329 No-Till, 328 Conservation Crop Rotation",
+   "eqip_per_year": 103.17,
+   "eqip_contract_total": 309.51
+  },
+  {
+   "rotation": "sorghum_wheat_cowpea",
+   "practices": "340 Cover Crop, 329 No-Till, 328 Conservation Crop Rotation",
+   "eqip_per_year": 103.17,
+   "eqip_contract_total": 309.51
+  }
+ ],
+ "sources": {
+  "economics": {
+   "winter_wheat": "Texas A&M AgriLife 2024 District 8 HRW wheat budget (48 bu); Ellis Co. NASS 2021-23 avg 48 bu",
+   "corn": "AgriLife 2024 District 8 reduced-till corn budget; yield = Ellis Co. NASS 2021-23 avg (71, 60, 92)",
+   "sorghum": "AgriLife 2024 District 8 grain sorghum budget (45 cwt = 80 bu). Ellis Co. NASS shows one undated year at 48 bu, likely a dry year",
+   "soybean_dc": "AgriLife 2025 District 11 dryland soybean budget (30 bu, $6.89/bu variable); ASSUMPTION: 25 bu double-crop yield, $15 fixed"
+  },
+  "prices": "USDA WASDE / ERS: 2025/26 final or latest (wheat $5.06, corn $4.15, sorghum $3.55, soybean $10.20); 2026/27 forecasts (wheat $6.20, corn $4.60, sorghum $4.30, soybean $11.40)",
+  "eqip": "EQIP rates listed by the Texas Climate Smart Initiative (tcsi.tamu.edu); confirm with the Ellis County NRCS office",
+  "nitrogen": "Texas A&M AgriLife N rates (1.5 lb/bu wheat, ~1 lb/bu corn under 100 bu, 2 lb/100 lb sorghum); urea $0.72/lb N (DTN, Nov 2026)",
+  "pests": {
+   "wheat_leaf_rust": "Leaf rust: infection best at 59-77 F with rain or heavy dew (Texas A&M AgriLife). Index = spring days in that range with moisture.",
+   "wheat_continuity": "Wheat every year keeps residue-borne diseases and pests (Hessian fly, tan spot) and the summer 'green bridge' for wheat curl mite and wheat streak mosaic going. A non-host summer crop or prompt volunteer control breaks it.",
+   "sugarcane_aphid": "Sugarcane aphid: thrives in warm, dry weather; mild winters let it overwinter as far north as Central Texas; very high summer heat suppresses it.",
+   "aflatoxin": "Aflatoxin in corn: drought and heat (especially hot nights) around silking and grain fill.",
+   "charcoal_rot": "Charcoal rot in soybean: hot, dry weather during flowering and pod fill.",
+   "cotton_root_rot": "Not in these rotations. If cotton is added: Blackland soils favor cotton root rot; rotating with grass crops (wheat, corn, sorghum) reduces it."
+  }
+ },
+ "assumptions": [
+  "Double-crop soybean yield 25 bu and $15 fixed cost",
+  "Half of legume cover N available to next crop",
+  "20 lb N credit after soybean",
+  "EQIP paid 3 years; not guaranteed",
+  "Cover seed prices 2014-16 (ARS)",
+  "Rain erosivity R=300",
+  "Year types from Model 3 (k-means on 1985-2025 NASA POWER seasons; soft groups, 41 years)"
+ ]
+}

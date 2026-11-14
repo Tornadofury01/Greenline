@@ -250,3 +250,31 @@ half of 2008–2025.
 
 Cell for a point: `row = floor((north - lat) / cellDeg)`, `col = floor((lon - west) / cellDeg)`, bit `row * cols + col`.
 The app also accepts a cropland cell next to the point (tap imprecision). Outside `bbox` the answer is "unknown".
+
+## `/shared/fieldshift/ellis-study.json` (Field Shift study: season replay + recommender)
+Built by `pipeline/fieldshift/export_app.py` from the Field Shift models and season replay (see
+`pipeline/fieldshift/README.md`). Read by `app/src/components/FieldShiftStudy.jsx` (Compare screen, Ellis County fields
+only). It describes **one typical Ellis County field at one NASA POWER point** (32.25 °N, 96.75 °W), not a sampled `nt-*`
+field, and never changes field scores. Numbers, keys and grades only; all words are in i18n `fieldShift.*`.
+
+| Key | Type | Meaning |
+|---|---|---|
+| `schemaVersion` | number | 1 |
+| `generated` | date | Export date |
+| `area` | object | `county`, `state`, `lat`, `lon`, `nFields` (300 study fields, ids 0–299, no geometry) |
+| `models.seasonCrop` | object | Model 1: `accCleanFields`, `accAllFields` (unseen years `testYears`), `cvAccClean`, per-class `f1` |
+| `models.vegStress` | object | Model 2 (leak-free `_causal` version): `testAuc`, `testAcc`, `testBalAcc`, `testR2`, `cvAuc`, `cvAcc`, `cvR2` |
+| `models.yearPatterns` | object | Model 3: `k`, `silhouette`, `silhouetteEm`, `ariKmeansVsEm`, `groups` (years per type), `droughtNdviAnom` |
+| `yearTypes[]` | `{ year, type, p }` | Model 3 label per season 1985–2025 (`drought` / `hot` / `normal` / `wet`), `p` = EM probability of that label |
+| `recommender.anchors` | object | Per goal `[score 0 value, score 100 value]` |
+| `recommender.presets.<preset>` | object | `balanced`, `income_first`, `soil_first`, `low_risk` (below) |
+
+Each preset: `weights`, `current` and `recommended` cards, `runnerUp` (rotation key), `keepCurrent`, `confidence`
+(`high`/`medium`/`low`), `closeCall`, `scenarios` (10), `gapPoints`, `ranking[]` (`{ key, overall, grade, avg }`, ordered by
+`avg` = average score over the 10 scenarios). A card: `key`, `overall` (0–100, today's climate, high prices), `grade`
+(A ≥ 80, B ≥ 65, C ≥ 50, D ≥ 35, F), `rank`, `winsShare`, `dims.<goal>.{score, grade}`, and `metrics`: `bare_days`,
+`soil_loss_t_ha` (t/ha/yr; the app shows US tons/acre), `return_above_var_typical`, `return_above_var_worst10`,
+`return_above_var_drought` ($/acre), `loss_years_pct`, `fertilizer_n_lb`, `n_credit_lb`, `eqip_per_year` ($/acre, shown,
+never scored), `pest_index` (0–100, lower is better).
+Rotation keys: `current` (wheat, bare summer), `wheat_soy`, `wheat_cowpea`, `sorghum_rye`, `corn_wheat_soy`,
+`sorghum_clover`, `sorghum_wheat_cowpea`.

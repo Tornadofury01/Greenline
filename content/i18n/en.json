@@ -534,6 +534,14 @@
     "grossRevenue": {
       "title": "Gross revenue (dollar estimate)",
       "text": "County yield × Texas price, averaged over 2021–2025, from the USDA NASS Quick Stats survey. It's money in before any costs (seed, fertilizer, fuel, rent), so it is not profit. When NASS doesn't publish your county's yield, we use the regional or Texas average and say so. Texas averages include irrigated High Plains farms and may run high for dryland North Texas. Dollars never change the score or the order of options."
+    },
+    "fieldShiftModels": {
+      "title": "Field Shift study models",
+      "text": "Three models trained on 300 Ellis County fields. The crop classifier reads each year's satellite greenness curve and names the crop. It learned only from fields where most of the field had the same USDA crop label, and was tested on 2023–2025, years it never saw. The crop stress model predicts whether a field will be browner than its own normal next month, from weather, soil moisture and the field's recent past. It uses only earlier observations, so it can't peek at the answer. The year-type finder groups past seasons by rain, heat and soil wetness. With only 41 seasons, the groups overlap."
+    },
+    "seasonReplay": {
+      "title": "Season replay",
+      "text": "We plant each rotation on paper and run it day by day through every real season since 1985, using NASA weather. A daily water balance tracks soil water, published crop factors turn water stress into yield, and the RUSLE formula estimates soil loss. For 2040 we shift those real seasons by the change that eight NASA climate models project. Each rotation is then graded on soil cover, erosion, profit, bad-year resilience, nitrogen and pests. It is a simulation built on published farm science, not a trained model, and a starting point for a talk with your Extension agent, not a prescription."
     }
   },
   "si": {
@@ -814,5 +822,54 @@
       "mapUnit": "soil map unit (1:24,000)"
     },
     "current": "current"
+  },
+  "fieldShift": {
+    "title": "Ellis County season replay",
+    "intro": "A study on {n} Ellis County fields: seven rotations replayed day by day through every season from 1985 to 2025 and through 2040 climate projections, then graded on six goals. It uses one typical field and one weather point, so it doesn't change your field's scores above.",
+    "priorityLabel": "What matters most",
+    "preset": {
+      "balanced": "Balanced",
+      "income_first": "Income first",
+      "soil_first": "Soil first",
+      "low_risk": "Low risk"
+    },
+    "currentLabel": "Today's common rotation",
+    "recommendedLabel": "Best in this study",
+    "keepLabel": "Best in this study: keep it",
+    "scoreRank": "{score} of 100 in today's climate · ranks {rank} of {of}",
+    "scoreWins": "{score} of 100 in today's climate · best in {wins} of {of} scenarios",
+    "closeCall": "Close call: {other} is only {gap} points behind.",
+    "tableCaption": "Today's common rotation compared with the best rotation in the study",
+    "metric": "Per acre, per year",
+    "colCurrent": "Today",
+    "colRecommended": "Best",
+    "m": {
+      "bareDays": "Days the soil sits bare",
+      "soilLoss": "Soil loss (tons/acre)",
+      "returnTypical": "Return above variable costs, typical year",
+      "returnWorst": "Return above variable costs, worst 1 in 10 years",
+      "nBought": "Fertilizer N bought (lb)",
+      "pest": "Pest and disease pressure (0–100, lower is better)"
+    },
+    "eqip": "May qualify for about ${usd}/acre a year from NRCS EQIP for 3 years. Not counted in the grade; applications are competitive.",
+    "rankingTitle": "All seven rotations",
+    "rot": {
+      "current": "Wheat, bare summer",
+      "wheat_soy": "Wheat + double-crop soybean",
+      "wheat_cowpea": "Wheat + cowpea cover",
+      "sorghum_rye": "Sorghum + winter rye cover",
+      "corn_wheat_soy": "Corn, wheat, double-crop soybean",
+      "sorghum_clover": "Sorghum + crimson clover cover",
+      "sorghum_wheat_cowpea": "Sorghum, wheat, cowpea cover (2 years)"
+    },
+    "modelsTitle": "Models behind it",
+    "m1Title": "Crop classifier:",
+    "m1Line": "right {clean}% of the time on years it never saw (2023–2025) for fields with one clear USDA crop label, {all}% on all fields.",
+    "m2Title": "Crop stress model:",
+    "m2Line": "right {acc}% of the time on unseen years 2023–2025 (AUC {auc}), using only past observations.",
+    "m3Title": "Year types:",
+    "m3Line": "1985–2025 seasons sorted into {drought} drought, {hot} hot, {normal} normal and {wet} wet years. Soft groups, a guide only.",
+    "notYourField": "The replay is a simulation built on published agronomy (FAO-56 water balance, FAO-33 yield response, RUSLE soil loss), not machine learning. Prices, budgets and cost-share rates are estimates to check with your county Extension and NRCS office.",
+    "rankingHint": "Average score over {n} scenarios (5 climate views × 2 price sets). This sets the order."
   }
 }

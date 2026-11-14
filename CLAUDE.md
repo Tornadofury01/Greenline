@@ -34,6 +34,7 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 - **Demo field: one setting**, `DEFAULT_DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local` / the shell). Default `nt-103`. `vite.config.js` imports it, so the precached field always matches.
 - Bare days and cover: **Landsat 8/9 only** (`*L89` keys, 2014+) via `bareRows()` / `coverRows()` in `app/src/display.js`; pre-2013 years shown muted with `<LowConfTag>`, never averaged or scored. Dataset text in receipts is translated by source id (`sourceText()` in `app/src/i18n.js`, i18n `sources.*`).
 - SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
+- Field Shift study (Space Apps models: crop classifier, leak-free stress model, year types, season replay + recommender on 300 Ellis County fields, a separate field set): `/pipeline/fieldshift/` (README there). `export_app.py` → `shared/fieldshift/ellis-study.json` → `components/FieldShiftStudy.jsx` on the Compare screen, Ellis County fields only, text in i18n `fieldShift.*`. Model 2: use only the `_causal` files.
 - Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them, with `sources[].scale` (your field vs regional).
 - Dollars: `scoring/economics.js` (display only, from `field.market`), N price in `content/economics.json` (USDA AMS Illinois Production Cost Report, national, not Texas). What-if: `whatIfHazards()` in `scoring/rules/replay.js`.
 - Scoring: `scoring/scoreRotation.js` → `scoreRotation(rotation, field, priorities, constraints, cropLibrary)`.
@@ -113,7 +114,8 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
 - [x] **Field picking fixes** (after v1.0-checkpoint, tagged `v1.1-checkpoint`). Why: testers saw "Showing sample data" because a failed field load (old tab after a deploy, or offline) silently swapped in the fake sample, and any tap (lake, town) loaded the nearest field with no comment.
   - No fake data in production; reload-once on a failed import; error + Retry; Vercel returns 404 for missing `/assets/*`.
   - Map dots for the 201 sampled fields (tap = exact field). Not-cropland warning for taps and GPS (CDL mask, cell or a neighbour counts). Far-away rule unchanged (load nearest + warning), by decision.
-- [ ] **Next (optional):** `ui-polish-2`, `models-v2`. Then submission prep.
+- [x] **`models-v2`: Field Shift study models** (branch `models-v2`). Space Apps bundles in `pipeline/fieldshift/` (Model 1 v2, Model 2 `_causal`, Model 3, replay + recommender); Model 3 year types wired into the replay (grades and picks unchanged); everything rerun and reproduced. App: Ellis County season replay card on Compare (4 priority presets, today vs best, all 7 rotations, models behind it) + "Season replay" and "Field Shift study models" in How we know, en + es. Checked at 375 px in en and es.
+- [ ] **Next (optional):** `ui-polish-2`. Then submission prep.
 
 ## Roadmap
 - [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields
