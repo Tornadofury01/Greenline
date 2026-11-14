@@ -7,6 +7,8 @@
 // constraints: { water: 'dryland'|'irrigated', equipment: [...], budget: 'low'|'medium'|'high', market: ... }
 // cropLibrary: the parsed /content/crops.json
 //
+// options:     { replayYear?: number }  re-run under that past year's real weather (bad-year replay)
+//
 // Returns { total (0-100), breakdown, reasons, benefits, gaps, risks, tags, confidence, evidence }.
 // All text comes back as i18n keys + params, never as English strings.
 import { waterRule } from './rules/water.js';
@@ -17,6 +19,7 @@ import { cattleRule } from './rules/cattle.js';
 import { constraintRule } from './rules/constraints.js';
 import { confidenceFor } from './confidence.js';
 import { reason } from './rules/helpers.js';
+import { replayRule } from './rules/replay.js';
 
 export const PRIORITIES = ['water', 'erosion', 'soil', 'income', 'cattle'];
 const RULES = { water: waterRule, erosion: erosionRule, soil: soilRule, income: incomeRule, cattle: cattleRule };
@@ -31,10 +34,11 @@ const EVIDENCE = {
   cattle: ['Landsat 5/7/8/9'],
 };
 
+const REPLAY_WEIGHT = 3; // when replaying a year, how it held up counts like a priority the farmer picked, plus one
 const SELECTED_WEIGHT = 2; // priorities the farmer picked count double
 const OTHER_WEIGHT = 1;
 
-export function scoreRotation(rotation, field, priorities = [], constraints = {}, cropLibrary) {
+export function scoreRotation(rotation, field, priorities = [], constraints = {}, cropLibrary, options = {}) {
   const byId = Object.fromEntries(cropLibrary.crops.map((c) => [c.id, c]));
   const crops = rotation.crops.map((id) => byId[id]).filter(Boolean);
   if (!crops.length) throw new Error('scoreRotation: rotation has no known crops');
@@ -93,21 +97,32 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   if (crops.some((c) => c.dryYearEvidence)) reasons.push(reason('reasons.ryeDryYear', {}, ['Southern SARE / Texas Tech']));
   const evidence = [...new Set(focus.flatMap((p) => EVIDENCE[p] || []))];
 
+  // 7. Bad-year replay (only when asked): same rules, blended with how the crops hold up in that year.
+  let replay = null;
+  let replayTotal = null;
+  if (options.replayYear != null) {
+    replay = replayRule(crops, field, options.replayYear);
+    if (replay) {
+      const blended = (weighted + replay.score * REPLAY_WEIGHT) / (weights + REPLAY_WEIGHT);
+      replayTotal = Math.max(0, Math.min(100, Math.round(blended * 10 - penalty)));
+    }
+  }
+
   return {
     rotationId: rotation.id,
     crops: rotation.crops,
-    total, breakdown, reasons, benefits, gaps, risks, tags, evidence,
+    total, breakdown, reasons, benefits, gaps, risks, tags, evidence, replay, replayTotal,
     confidence: confidenceFor(crops, field, cropLibrary.verified),
   };
 }
 
 // Score all candidates and return the best N that differ from the current rotation.
-export function suggestRotations(candidates, current, field, priorities, constraints, cropLibrary, n = 2) {
+export function suggestRotations(candidates, current, field, priorities, constraints, cropLibrary, n = 2, options = {}) {
   const key = (crops) => [...crops].sort().join(',');
   const currentKey = key(current.crops);
   return candidates
     .filter((r) => key(r.crops) !== currentKey)
-    .map((r) => scoreRotation(r, field, priorities, constraints, cropLibrary))
+    .map((r) => scoreRotation(r, field, priorities, constraints, cropLibrary, options))
     .sort((a, b) => b.total - a.total)
     .slice(0, n);
 }

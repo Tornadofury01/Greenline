@@ -26,6 +26,8 @@ export function AppProvider({ children }) {
   const [lang, setLang] = useState(saved.lang || 'en');
   const [screen, setScreen] = useState('field');
   const [field, setField] = useState(null);
+  // The bad year being replayed on the Compare screen (null = normal years). Shared so Field story can open it.
+  const [replayYear, setReplayYear] = useState(null);
   const [farm, setFarm] = useState({ ...DEFAULT_FARM, ...saved.farm });
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export function AppProvider({ children }) {
     try {
       const f = await load();
       setField(f);
+      setReplayYear(null);
       setFarm((prev) => (prev.currentRotation.length ? prev : { ...prev, currentRotation: guessCurrentRotation(f) }));
     } finally {
       setLoading(false);
@@ -52,7 +55,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, t, screen, setScreen, field, pickField, pickDemo, loading, farm, updateFarm };
+  const value = { lang, setLang, t, screen, setScreen, field, replayYear, setReplayYear, pickField, pickDemo, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

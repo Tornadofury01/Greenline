@@ -15,18 +15,19 @@ export function farmToConstraints(farm) {
 }
 
 export function useScores() {
-  const { field, farm } = useApp();
+  const { field, farm, replayYear } = useApp();
+  const options = { replayYear };
   return useMemo(() => {
     if (!field) return null;
     const constraints = farmToConstraints(farm);
     const current = farm.currentRotation.length
-      ? scoreRotation({ id: 'current', crops: farm.currentRotation }, field, farm.priorities, constraints, crops)
+      ? scoreRotation({ id: 'current', crops: farm.currentRotation }, field, farm.priorities, constraints, crops, options)
       : null;
     const suggested = suggestRotations(
-      candidateRotations, { crops: farm.currentRotation }, field, farm.priorities, constraints, crops,
+      candidateRotations, { crops: farm.currentRotation }, field, farm.priorities, constraints, crops, 2, options,
     );
     const scoreCustom = (cropIds) =>
-      scoreRotation({ id: 'custom', crops: cropIds }, field, farm.priorities, constraints, crops);
+      scoreRotation({ id: 'custom', crops: cropIds }, field, farm.priorities, constraints, crops, options);
     return { current, suggested, scoreCustom };
-  }, [field, farm]);
+  }, [field, farm, replayYear]);
 }

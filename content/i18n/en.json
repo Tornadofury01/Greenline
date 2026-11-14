@@ -495,5 +495,37 @@
         "high": "Wet soil before {month} mattered most"
       }
     }
+  },
+  "replay": {
+    "dry": "In {year}, rain was {pct}% below this field's normal.",
+    "drySoil": "Soil moisture in {year} was {pct}% drier than normal.",
+    "hot": "{year} had {days} days of 95 °F or hotter here (normal is about {avg}).",
+    "wetYear": "{year} was {pct}% wetter than normal, so heavy rain could wash bare soil away.",
+    "mild": "{year} was close to normal weather for this field.",
+    "cropsDry": "Most hurt by dry spells: {crops}.",
+    "cropsHeat": "Most hurt by heat: {crops}.",
+    "cropsWet": "Soil left exposed in heavy rain: {crops}.",
+    "cropsHold": "Handled it best: {crops}."
+  },
+  "replayUi": {
+    "title": "Replay a bad year",
+    "caption": "Pick a real past year. We re-score every option under that year's actual weather on your field.",
+    "off": "Normal years",
+    "pickLabel": "Replay year",
+    "verdict": {
+      "holds": "Holds up",
+      "strained": "Under strain",
+      "struggles": "Struggles"
+    },
+    "scoreLine": "{year} replay score: {score} out of 10",
+    "vsNormal": "{n} points {dir} than in a normal year",
+    "dirUp": "higher",
+    "dirDown": "lower",
+    "dirSame": "same",
+    "heading": "If {year} came back",
+    "note": "This is a stress check from real weather and crop traits, not a yield forecast. Local experts know your field best.",
+    "glanceTitle": "How each option holds up in {year}",
+    "see": "See how rotations hold up in {year}",
+    "noYear": "No weather record for {year} on this field."
   }
 }

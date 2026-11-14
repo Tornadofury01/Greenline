@@ -1,11 +1,13 @@
 // Screen 4: compare at a glance, then one card per rotation. The best match is clearly marked.
 // "Build my own" is scored by the same scoreRotation() function.
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Award, Tractor } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useScores } from '../state/useScores.js';
 import RotationCard from '../components/RotationCard.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
+import ReplayBar from '../components/ReplayBar.jsx';
+import Verdict from '../components/Verdict.jsx';
 import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
 // import WhatIfSliders from '../components/future/WhatIfSliders.jsx'; // FUTURE
 
@@ -22,10 +24,12 @@ function useWide(query = '(min-width: 1024px)') {
 }
 
 export default function CompareRotations() {
-  const { t, field, setScreen } = useApp();
+  const { t, field, setScreen, replayYear } = useApp();
   const scores = useScores();
   const [custom, setCustom] = useState([]);
-  const [customResult, setCustomResult] = useState(null);
+  const [scored, setScored] = useState(null); // crops the farmer asked us to score
+  // Recomputed when the replay year changes, so the custom card follows the same replay as the others.
+  const customResult = useMemo(() => (scored && scores ? scores.scoreCustom(scored) : null), [scored, scores]);
   // Desktop: one toggle opens all side-by-side cards so details line up for comparison.
   const wide = useWide();
   const [allOpen, setAllOpen] = useState(false);
@@ -44,14 +48,18 @@ export default function CompareRotations() {
   // "Best match" = top suggestion, only if it beats what the farmer grows now.
   const bestKey = options[0] && (!current || options[0].result.total > current.result.total) ? options[0].key : null;
   const rows = [current, ...options].filter(Boolean);
-  const delta = (r) => (current ? r.total - current.result.total : null);
+  // While replaying a year, every number on the page is the replay score; otherwise the normal score.
+  const shownScore = (r) => (replayYear != null && r.replayTotal != null ? r.replayTotal : r.total);
+  const delta = (r) => (current ? shownScore(r) - shownScore(current.result) : null);
 
   return (
     <div className="screen">
       <PageHead title={t('compare.title')} intro={t('compare.intro')} />
 
+      <ReplayBar />
+
       <section className="card" aria-labelledby="glance-title">
-        <h2 id="glance-title">{t('compare.glance')}</h2>
+        <h2 id="glance-title">{replayYear != null ? t('replayUi.glanceTitle', { year: replayYear }) : t('compare.glance')}</h2>
         <div className="glance">
           {rows.map((r) => (
             <div key={r.key} className={`glance-row ${r.key === bestKey ? 'is-best' : ''}`}>
@@ -59,8 +67,9 @@ export default function CompareRotations() {
                 {r.key === bestKey && <Award size={18} color="var(--color-primary)" aria-label={t('compare.bestMatch')} />}
                 {r.label}
               </span>
-              <span className="glance-score">{r.result.total}</span>
-              <span className="glance-bar" aria-hidden="true"><span style={{ width: `${r.result.total}%` }} /></span>
+              <span className="glance-score">{shownScore(r.result)}</span>
+              {replayYear != null && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} /></span>}
+              <span className="glance-bar" aria-hidden="true"><span style={{ width: `${shownScore(r.result)}%` }} /></span>
             </div>
           ))}
         </div>
@@ -95,8 +104,8 @@ export default function CompareRotations() {
           <h2>{t('compare.buildOwn')}</h2>
           <p className="hint">{t('compare.buildHint')}</p>
         </div>
-        <RotationPicker label={t('compare.buildOwn')} value={custom} onChange={(v) => { setCustom(v); setCustomResult(null); }} />
-        <button type="button" className="btn btn-primary btn-block" disabled={!custom.length} onClick={() => setCustomResult(scores.scoreCustom(custom))}>
+        <RotationPicker label={t('compare.buildOwn')} value={custom} onChange={(v) => { setCustom(v); setScored(null); }} />
+        <button type="button" className="btn btn-primary btn-block" disabled={!custom.length} onClick={() => setScored(custom)}>
           {t('compare.scoreIt')}
         </button>
       </section>

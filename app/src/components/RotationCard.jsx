@@ -9,6 +9,7 @@ import { useApp } from '../state/AppContext.jsx';
 import { formatReason } from '../i18n.js';
 import { PRIORITIES } from '@scoring/index.js';
 import { ConfidenceBadge, Receipt } from './Small.jsx';
+import Verdict from './Verdict.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
 import { cropInsight, cropDriverText, stressDriverText, modelSummary } from '../si.js';
 
@@ -103,6 +104,20 @@ function ModelInsights({ crops }) {
   );
 }
 
+// On the card face during a replay: verdict, the year's score and how it differs from a normal year.
+function ReplaySummary({ replay, normal, shown }) {
+  const { t } = useApp();
+  const diff = shown - normal;
+  const dir = diff > 0 ? 'Up' : diff < 0 ? 'Down' : 'Same';
+  return (
+    <div className="replay-sum">
+      <Verdict verdict={replay.verdict} />
+      <span>{t('replayUi.scoreLine', { year: replay.year, score: Math.round(replay.score * 10) / 10 })}</span>
+      <span className="muted">{t('replayUi.vsNormal', { n: Math.abs(diff), dir: t(`replayUi.dir${dir}`) })}</span>
+    </div>
+  );
+}
+
 function Delta({ value }) {
   const { t } = useApp();
   if (value == null) return null;
@@ -118,7 +133,9 @@ function Delta({ value }) {
 
 // open/onToggle are optional: pass them to control several cards together (desktop side-by-side view).
 export default function RotationCard({ result, label, name, best = false, delta = null, defaultOpen = false, open: openProp, onToggle }) {
-  const { t } = useApp();
+  const { t, replayYear } = useApp();
+  const rp = replayYear != null && result.replay ? result.replay : null;
+  const shown = rp ? result.replayTotal : result.total;
   const [openOwn, setOpenOwn] = useState(defaultOpen);
   const open = openProp ?? openOwn;
   const setOpen = onToggle ?? setOpenOwn;
@@ -138,8 +155,8 @@ export default function RotationCard({ result, label, name, best = false, delta 
             <h3>{name}</h3>
           </div>
           <div className="rot-score">
-            <div className="rot-score-num">{result.total}</div>
-            <div className="rot-score-of">{t('compare.outOf')}</div>
+            <div className="rot-score-num">{shown}</div>
+            <div className="rot-score-of">{rp ? t('replayUi.heading', { year: rp.year }) : t('compare.outOf')}</div>
           </div>
         </div>
         <CropSteps crops={result.crops} />
@@ -151,6 +168,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           })}
         </div>
         <Delta value={delta} />
+        {rp && <ReplaySummary replay={rp} normal={result.total} shown={shown} />}
         <TopReason crops={result.crops} />
       </div>
 
@@ -161,6 +179,13 @@ export default function RotationCard({ result, label, name, best = false, delta 
 
       {open && (
         <div className="rot-details" id={detailsId}>
+          {rp && (
+            <section className="detail">
+              <h4>{t('replayUi.heading', { year: rp.year })}</h4>
+              <IconList items={rp.reasons} Icon={Lightbulb} tone="info" />
+              <p className="muted small">{t('replayUi.note')}</p>
+            </section>
+          )}
           <section className="detail">
             <h4>{t('compare.why')}</h4>
             <IconList items={result.reasons} Icon={Lightbulb} tone="info" />

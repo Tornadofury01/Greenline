@@ -17,7 +17,7 @@ const joinYears = (ys, t) => (ys.length > 1 ? `${ys.slice(0, -1).join(', ')} ${t
 
 // What happened on this field in one past year (a "bad-year replay").
 function Replay({ year }) {
-  const { t, field } = useApp();
+  const { t, field, setScreen, setReplayYear } = useApp();
   const c = field.climateYearly.find((y) => y.year === year);
   const cover = field.coverYearly.find((y) => y.year === year);
   const bare = field.bareDaysPerYear.find((y) => y.year === year);
@@ -53,6 +53,9 @@ function Replay({ year }) {
         )}
       </ul>
       {cover && <CoverRow row={cover} label={String(year)} />}
+      <button type="button" className="btn btn-block" onClick={() => { setReplayYear(year); setScreen('compare'); }}>
+        {t('replayUi.see', { year })}<ArrowRight size={20} aria-hidden="true" />
+      </button>
     </div>
   );
 }

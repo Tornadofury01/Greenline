@@ -495,5 +495,37 @@
         "high": "Lo que más pesó: suelo húmedo antes de {month}"
       }
     }
+  },
+  "replay": {
+    "dry": "En {year}, la lluvia fue {pct}% menor que lo normal en esta parcela.",
+    "drySoil": "La humedad del suelo en {year} fue {pct}% más seca que lo normal.",
+    "hot": "{year} tuvo {days} días de 95 °F o más aquí (lo normal son unos {avg}).",
+    "wetYear": "{year} fue {pct}% más húmedo que lo normal, así que la lluvia fuerte pudo arrastrar el suelo desnudo.",
+    "mild": "{year} tuvo un clima cercano a lo normal para esta parcela.",
+    "cropsDry": "Los más afectados por la sequía: {crops}.",
+    "cropsHeat": "Los más afectados por el calor: {crops}.",
+    "cropsWet": "Suelo expuesto con lluvia fuerte: {crops}.",
+    "cropsHold": "Lo aguantaron mejor: {crops}."
+  },
+  "replayUi": {
+    "title": "Repetir un mal año",
+    "caption": "Elija un año pasado real. Volvemos a calificar cada opción con el clima real de ese año en su parcela.",
+    "off": "Años normales",
+    "pickLabel": "Año a repetir",
+    "verdict": {
+      "holds": "Aguanta",
+      "strained": "Con presión",
+      "struggles": "Le cuesta"
+    },
+    "scoreLine": "Puntaje de {year}: {score} de 10",
+    "vsNormal": "{n} puntos {dir} que en un año normal",
+    "dirUp": "más",
+    "dirDown": "menos",
+    "dirSame": "igual",
+    "heading": "Si volviera {year}",
+    "note": "Es una revisión de estrés con clima real y rasgos de cultivos, no un pronóstico de rendimiento. Los expertos locales conocen mejor su parcela.",
+    "glanceTitle": "Cómo aguanta cada opción en {year}",
+    "see": "Ver cómo aguantan las rotaciones en {year}",
+    "noYear": "No hay registro de clima de {year} para esta parcela."
   }
 }

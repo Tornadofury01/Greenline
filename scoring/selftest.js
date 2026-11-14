@@ -26,4 +26,18 @@ check(soilB.breakdown.soil.score > soilA.breakdown.soil.score, 'cover/legume mix
 const sugg = suggestRotations(rotations, current, field, ['water', 'erosion'], { water: 'dryland' }, lib);
 check(sugg.length === 2, `two suggestions: ${sugg.map((s) => `${s.rotationId}=${s.total}`).join(', ')}`);
 
+// Bad-year replay on a real field (nt-103) in the 2011 drought.
+const real = load('../shared/fields/nt-103.json');
+const dry = { water: 'dryland' };
+const replayOf = (crops, year = 2011) => scoreRotation({ crops }, real, ['water'], dry, lib, { replayYear: year });
+const cornHeavy = replayOf(['corn', 'corn', 'winter_wheat']);
+const hardy = replayOf(['grain_sorghum', 'sesame', 'cowpea']);
+check(hardy.replay.score > cornHeavy.replay.score, `2011 replay: sorghum/sesame/cowpea (${hardy.replay.score.toFixed(1)}) holds up better than corn-heavy (${cornHeavy.replay.score.toFixed(1)})`);
+check(hardy.replayTotal > cornHeavy.replayTotal, `2011 replay totals: ${hardy.replayTotal} vs ${cornHeavy.replayTotal}`);
+const plain = scoreRotation({ crops: ['corn', 'cotton'] }, real, ['water'], dry, lib);
+const withOpt = replayOf(['corn', 'cotton']);
+check(plain.replay === null && plain.replayTotal === null, 'replay off: no replay fields');
+check(plain.total === withOpt.total, 'replay on leaves the normal total unchanged');
+check(scoreRotation({ crops: ['corn'] }, real, [], {}, lib, { replayYear: 1900 }).replay === null, 'unknown replay year is ignored');
+
 process.exit(failed ? 1 : 0);
