@@ -92,7 +92,7 @@ export function FieldFacts({ field }) {
     <div className="facts">
       <Fact icon={MapPin} label={t('pick.location')}
         value={t('pick.countyValue', { county: field.field.county, state: field.field.state })}
-        detail={t('pick.cellDetail', { cell: field.field.gridCell })} />
+        detail={t('pick.cellDetail')} />
       <Fact icon={Layers} tone="soil" label={t('pick.soil')} term="hydrologicGroup"
         value={soil.texture
           ? t('pick.soilValue', { texture: t(`soil.texture.${soil.texture}`), drainage: soil.drainageClass ? t(`soil.drainage.${soil.drainageClass}`) : t('common.unknown') })
@@ -196,7 +196,7 @@ export default function PickField() {
         <>
           <section className="card">
             <h2>{t('pick.summaryTitle')}</h2>
-            {via === 'dot' && field.nearestKm == null && <p className="notice-inline">{t('pick.sampledField', { id: field.field.id })}</p>}
+            {via === 'dot' && field.nearestKm == null && <p className="notice-inline">{t('pick.sampledField')}</p>}
             {field.nearestKm != null && <p className="notice-inline">{t(via === 'gps' ? 'pick.nearestGps' : 'pick.nearest', { km: field.nearestKm, id: field.field.id })}</p>}
             {field.notCropland && field.nearestKm <= FAR_KM && <p className="notice-inline notice-warn">{t(via === 'gps' ? 'pick.notCroplandGps' : 'pick.notCropland')}</p>}
             {field.nearestKm > FAR_KM && <p className="notice-inline notice-warn">{t('pick.farAway', { km: field.nearestKm })}</p>}
