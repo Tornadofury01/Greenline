@@ -48,3 +48,6 @@ pipeline/data/*
 Thumbs.db
 .vscode/
 .idea/
+
+# Vercel (project link + pulled settings, per machine)
+.vercel/

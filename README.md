@@ -4,7 +4,9 @@ Compare crop rotations for North Texas fields using NASA Earth observation data.
 Built for NASA Space Apps, "Field Shift: Adapting Farms with NASA Data".
 
 > Greenline supports farmer judgment and local experts. It doesn't replace them.
-> **Current version uses fake sample data.**
+> Uses real NASA and USDA data for 201 sampled North Texas fields. Crop traits and model results are still being checked with local experts.
+
+**Try it: https://greenline-psi.vercel.app** (works on a phone; add it to your home screen, and the demo field works offline).
 
 ## Run it
 
@@ -25,6 +27,8 @@ Other commands (from `/app`):
 | `npm run build` | Production build into `app/dist`, including the service worker |
 | `npm run preview` | Serve the build (test install and offline here) |
 | `npm run selftest` | Sanity checks for the scoring rules |
+| `npm run i18n` | English and Spanish text files have the same keys |
+| `npm run deploy` | Checks, builds and publishes to the live link on Vercel (needs `npx vercel login` once; see CLAUDE.md) |
 
 ## How it works
 

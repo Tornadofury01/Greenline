@@ -55,7 +55,15 @@ npm run build      # production build + service worker
 npm run preview    # test the built PWA
 npm run selftest   # scoring sanity checks
 npm run i18n       # en.json and es.json have the same keys and placeholders
+npm run deploy     # selftest + i18n + build, then publish to production on Vercel
 ```
+
+## Deploy
+**Live: https://greenline-psi.vercel.app** (public, no login). **Rerun `npm run deploy` from `app/` after each phase.**
+- Vercel CLI from this laptop (`vercel` is a pinned devDependency). The project is **not connected to GitHub** (a teammate owns the repo). Don't run `vercel git connect`.
+- Build locally, upload only static files: `predeploy` runs selftest + i18n, `deploy` runs `vite build` → `scripts/vercel-output.mjs` (copies `dist/` into `.vercel/output/` with cache headers + SPA fallback) → `vercel deploy --prebuilt --prod`. Why: Vercel can't build remotely (the app imports `../content`, `../shared`, `../scoring`), and `vercel build` fails on Windows without symlink rights.
+- First time on a new machine: `npx vercel login`, then `npx vercel link --yes --project greenline` from `app/`. `.vercel/` and the `.env.local` it writes are gitignored.
+- Before sharing a new build, check: the live link opens in an incognito window, `sw.js` precaches `assets/fields/<demo id>-*.js`, and the deploy output contains no `.env` values.
 
 ## Build status
 Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-data`) only touches `/pipeline`, `/shared`, `/docs`.
