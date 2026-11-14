@@ -10,7 +10,7 @@
 //   6. Crop traits: a crop whose scored trait (drought sensitivity, water need, nitrogen fixed) is an
 //      unsourced estimate, or unknown, costs -1.
 // Data resolution never adds a point. It is always stated so nobody over-reads coarse weather.
-// PRISM (ground-station rain, from the datasets session) is shown when field.quality.rainVsPrism exists. It adds no points.
+// PRISM (ground-station rain) agreement is shown for POWER and IMERG when field.quality.rainVsPrism exists. It adds no points.
 import { reason } from './rules/helpers.js';
 
 // crops.json id -> crop-model class. Crops without a class have no satellite model yet.
@@ -68,13 +68,17 @@ export function confidenceFor(crops, field, cropLibraryVerified, bareDays = null
       reasons.push(tone('down', 'confidence.datasetsDisagree', { corr: ra.corr, pct: ra.imergVsPowerPct }, ['NASA POWER', 'GPM IMERG']));
     }
 
-    // Ground-station check (PRISM). Only when the data session has delivered it; adds no points.
+    // Ground-station check (PRISM, 4 km, gauge-based). One line per NASA rain dataset, with this field's own
+    // numbers (quality.rainVsPrism). Adds no points: POWER and IMERG are both adjusted with gauge data, so
+    // agreement is consistency evidence, not proof from a separate source (docs/data-validation.md).
     const rp = q?.rainVsPrism;
-    const vs = rp?.power || rp?.imerg;
-    if (vs) {
+    for (const [k, name] of [['power', 'NASA POWER'], ['imerg', 'GPM IMERG']]) {
+      const vs = rp?.[k];
+      if (!vs) continue;
       const ok = vs.corr >= 0.8 && Math.abs(vs.pct) <= 15;
-      reasons.push(tone(ok ? 'up' : 'down', ok ? 'confidence.prismAgrees' : 'confidence.prismDisagrees',
-        { corr: vs.corr, pct: Math.abs(vs.pct) }, ['PRISM', rp.power ? 'NASA POWER' : 'GPM IMERG']));
+      const dir = vs.pct < 0 ? 'Lower' : 'Higher';
+      reasons.push(tone(ok ? 'up' : 'down', `confidence.prism.${ok ? 'agrees' : 'differs'}${dir}`,
+        { name, corr: vs.corr, pct: Math.abs(vs.pct), years: vs.years }, ['PRISM', name]));
     }
     reasons.push(tone('note', 'confidence.cdlNoise', {}, ['USDA Cropland Data Layer']));
   }

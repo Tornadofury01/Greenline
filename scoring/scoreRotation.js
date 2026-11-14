@@ -8,8 +8,12 @@
 // cropLibrary: the parsed /content/crops.json
 //
 // options:     { replayYear?: number }  re-run under that past year's real weather (bad-year replay)
+//              { whatIf?: { rainPct, heatDays } }  re-run under a pretend year (what-if sliders). Same path as replayYear;
+//                                                  if both are given, replayYear wins. replay.hypothetical = true.
+//              { economics?: object }  parsed /content/economics.json. Adds `dollars` (display only, never in the score).
 //
-// Returns { total (0-100), breakdown, reasons, benefits, gaps, risks, tags, confidence, evidence, bareDays, replay, replayTotal }.
+// Returns { total (0-100), breakdown, reasons, benefits, gaps, risks, tags, confidence, evidence, bareDays, replay, replayTotal, dollars }.
+// dollars = estimateDollars() (scoring/economics.js) or null. It is computed after the score and never feeds it.
 // bareDays = { bareDays (per year), bareMonths[12], calibrated[] }: see scoring/bareDays.js.
 // All text comes back as i18n keys + params, never as English strings.
 import { waterRule } from './rules/water.js';
@@ -20,7 +24,8 @@ import { cattleRule } from './rules/cattle.js';
 import { constraintRule } from './rules/constraints.js';
 import { confidenceFor } from './confidence.js';
 import { reason } from './rules/helpers.js';
-import { replayRule } from './rules/replay.js';
+import { replayRule, yearHazards, whatIfHazards } from './rules/replay.js';
+import { estimateDollars } from './economics.js';
 import { estimateBareDays } from './bareDays.js';
 
 export const PRIORITIES = ['water', 'erosion', 'soil', 'income', 'cattle'];
@@ -29,15 +34,15 @@ const RULES = { water: waterRule, erosion: erosionRule, soil: soilRule, income: 
 // Which datasets back each priority (shown as "Evidence").
 // Names match field.sources[].dataset so the app can show each one's resolution and dates.
 const EVIDENCE = {
-  water: ['NASA POWER', 'GPM IMERG', 'SMAP L4'],
-  erosion: ['SRTM', 'GPM IMERG', 'Landsat 5/7/8/9'],
+  water: ['NASA POWER', 'GPM IMERG', 'PRISM', 'SMAP L4', 'USDA SSURGO'],
+  erosion: ['SRTM', 'USDA SSURGO', 'GPM IMERG', 'Landsat 5/7/8/9'],
   soil: ['USDA SSURGO', 'USDA Cropland Data Layer'],
-  income: ['USDA Cropland Data Layer'],
+  income: ['USDA Cropland Data Layer', 'NASS Quick Stats'],
   cattle: ['Landsat 5/7/8/9'],
 };
 
 const COVER_ESTABLISHED_IN_DROUGHT = 0.5; // drought replay: cover crops count as half established (a dry fall can stop them)
-const REPLAY_WEIGHT = 3; // when replaying a year, how it held up counts like a priority the farmer picked, plus one
+const REPLAY_WEIGHT = 3; // when replaying a year, how it held up counts like a priority the farmer picked, plus one (sets how much a bad year pulls the score down)
 const SELECTED_WEIGHT = 2; // priorities the farmer picked count double
 const OTHER_WEIGHT = 1;
 
@@ -123,11 +128,14 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   if (crops.some((c) => c.dryYearEvidence)) reasons.push(reason('reasons.ryeDryYear', {}, ['Southern SARE / Texas Tech']));
   const evidence = [...new Set(focus.flatMap((p) => EVIDENCE[p] || []))];
 
-  // 7. Bad-year replay (only when asked): same rules, blended with how the crops hold up in that year.
+  // 7. Bad-year replay or what-if (only when asked): same rules, blended with how the crops hold up in that year.
+  //    A what-if is a pretend year built from the field's averages; it goes through exactly the same path.
   let replay = null;
   let replayTotal = null;
-  if (options.replayYear != null) {
-    replay = replayRule(crops, field, options.replayYear);
+  const hazards = options.replayYear != null ? yearHazards(field, options.replayYear)
+    : options.whatIf ? whatIfHazards(field, options.whatIf) : null;
+  if (hazards) {
+    replay = replayRule(crops, field, hazards);
     if (replay) {
       // Drought years only: cover crops count as partly established, so the replay doesn't oversell them.
       replay.bareDays = bareDays;
@@ -140,8 +148,12 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
         weightedR += (eroR - raw.erosion) * breakdown.erosion.weight;
         replay.reasons.push(reason('replay.coverPartial', { crops: [...new Set(covers.map((c) => c.id))] }));
       }
-      const blended = (weightedR + replay.score * REPLAY_WEIGHT) / (weights + REPLAY_WEIGHT);
-      replayTotal = Math.max(0, Math.min(100, Math.round(blended * 10 - penalty)));
+      // The scenario can only pull the normal score down: we subtract how far the blend falls below the same blend
+      // in a stress-free year (replay score 10). A what-if at 0 % rain / 0 extra hot days equals the normal total.
+      // (Blending the 0-10 replay score in directly let a weak rotation score HIGHER in a drought than normally.)
+      const blend = (w, s) => (w + s * REPLAY_WEIGHT) / (weights + REPLAY_WEIGHT);
+      const drop = blend(weighted, 10) - blend(weightedR, replay.score);
+      replayTotal = Math.max(0, Math.min(100, Math.round((weighted / weights - drop) * 10 - penalty)));
     }
   }
 
@@ -150,6 +162,8 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
     crops: rotation.crops,
     total, breakdown, reasons, benefits, gaps, risks, tags, evidence, bareDays, replay, replayTotal,
     confidence: confidenceFor(crops, field, cropLibrary.verified, bareDays),
+    // 8. Dollars: display only, after the score is final.
+    dollars: options.economics ? estimateDollars(crops, field, options.economics) : null,
   };
 }
 

@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs';
 import { scoreRotation, suggestRotations } from './index.js';
 import { topReasons, estimatedTraits } from './confidence.js';
+import { yearHazards, hazardsFromRow } from './rules/replay.js';
 
 const load = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
 const field = load('../shared/sample-field.json');
@@ -90,8 +91,60 @@ check(estimatedTraits(lib.crops.find((c) => c.id === 'alfalfa')).includes('nFixL
 check(topReasons(basic).length === 2 && topReasons(basic).every((r) => r.tone), 'confidence: two top reasons for the card face');
 check(topReasons({ reasons: [{ tone: 'up', key: 'a' }, { tone: 'down', key: 'b' }, { tone: 'up', key: 'c' }] }).map((r) => r.key).join() === 'b,a', 'confidence: top reasons = one lowering, one adding');
 check(confOf(['corn'], field).reasons.every((r) => r.tone), 'confidence: sample field (no SI) also has tones');
-const withPrism = { ...real, quality: { ...real.quality, rainVsPrism: { power: { years: 18, corr: 0.95, pct: 6 }, imerg: null } } };
-check(confOf(['corn'], withPrism).reasons.some((r) => r.key === 'confidence.prismAgrees'), 'confidence: PRISM agreement shows when the data exists');
-check(!basic.reasons.some((r) => r.key.startsWith('confidence.prism')), 'confidence: no PRISM reason when the data is absent');
+check(basic.reasons.some((r) => r.key === 'confidence.prism.agreesLower' && r.params.name === 'NASA POWER'), 'confidence: nt-103 shows POWER vs PRISM agreement (real data)');
+check(basic.reasons.some((r) => r.key.startsWith('confidence.prism.') && r.params.name === 'GPM IMERG'), 'confidence: nt-103 shows IMERG vs PRISM agreement');
+const noPrism = { ...real, quality: { ...real.quality, rainVsPrism: null } };
+check(!confOf(['corn'], noPrism).reasons.some((r) => r.key.startsWith('confidence.prism')), 'confidence: no PRISM reason when the data is absent');
+check(confOf(['corn'], noPrism).points === confOf(['corn']).points, 'confidence: PRISM adds no points');
+
+// Dollars: display only, from real NASS data.
+const econ = load('../content/economics.json');
+const dollarsOf = (crops, f = real) => scoreRotation({ crops }, f, ['water'], dry, lib, { economics: econ });
+for (const crops of [['corn', 'cotton'], ['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye'], ['sesame', 'winter_wheat', 'cowpea']]) {
+  const a = scoreRotation({ crops }, real, ['water'], dry, lib);
+  const b = dollarsOf(crops);
+  check(a.total === b.total && JSON.stringify(a.breakdown) === JSON.stringify(b.breakdown), `dollars never change the score (${crops.join('/')})`);
+}
+check(plain.dollars === null, 'dollars: off unless economics is passed');
+const cc = dollarsOf(['corn', 'cotton']).dollars;
+check(cc.grossPerAcreYear === Math.round((451 + 444) / 2), `dollars: corn/cotton gross per acre-year from Ellis County NASS (${cc.grossPerAcreYear})`);
+check(cc.fertilizer === null, 'dollars: no fertilizer value without nitrogen fixers (corn/cotton)');
+check(dollarsOf(['winter_wheat', 'grain_sorghum']).dollars.fertilizer === null, 'dollars: no fertilizer value for wheat/sorghum');
+const cow = dollarsOf(['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye']).dollars;
+check(cow.fertilizer?.lo > 0 && cow.fertilizer.hi >= cow.fertilizer.lo, `dollars: cowpea adds fertilizer value (${cow.fertilizer?.lo}-${cow.fertilizer?.hi} $/acre/yr)`);
+check(dollarsOf(['hairy_vetch', 'cotton']).dollars.fertilizer?.lo > 0, 'dollars: hairy vetch adds fertilizer value');
+check(cow.byCrop.find((d) => d.crop === 'cereal_rye').status === 'cover' && cow.years === 2, 'dollars: cover crops are not sold and ride along with a cash-crop year');
+check(cow.byCrop.find((d) => d.crop === 'grain_sorghum').yieldLevel === 'state' && cow.levels.includes('state'), 'dollars: state-level sorghum yield is flagged');
+const alf = dollarsOf(['alfalfa']).dollars;
+check(alf.nUnknown.includes('alfalfa') && alf.fertilizer === null && alf.byCrop[0].status === 'priceOnly', 'dollars: alfalfa nitrogen "not known yet", hay price only');
+const ses = dollarsOf(['sesame', 'winter_wheat', 'cowpea']).dollars;
+check(ses.byCrop.find((d) => d.crop === 'sesame').status === 'noData' && ses.pricedYears === 1 && ses.years === 2, 'dollars: sesame has no NASS data, only priced years are averaged');
+check(dollarsOf(['corn'], field).dollars === null, 'dollars: sample field without market data shows none');
+
+// What-if sliders: the same replay path with a pretend year.
+const wi = (crops, whatIf) => scoreRotation({ crops }, real, ['water'], dry, lib, { whatIf });
+const rot = ['winter_wheat', 'grain_sorghum', 'cotton'];
+const normal = scoreRotation({ crops: rot }, real, ['water'], dry, lib);
+const dry40 = wi(rot, { rainPct: -0.4, heatDays: 0 });
+check(dry40.replay.hypothetical && dry40.replayTotal <= normal.total, `what-if -40% rain scores <= normal (${dry40.replayTotal} vs ${normal.total})`);
+check(dry40.replay.yearType === 'drought', 'what-if -40% rain counts as a drought year (cover-crop rule applies)');
+const zero = wi(rot, { rainPct: 0, heatDays: 0 });
+const mildYear = real.climateYearly.filter((y) => y.year >= 2008).map((y) => ({ y, h: yearHazards(real, y.year) }))
+  .sort((a, b) => (a.h.drought + a.h.heat + a.h.wet) - (b.h.drought + b.h.heat + b.h.wet))[0].y.year;
+const mild = replayOf(rot, mildYear);
+check(Math.abs(zero.replay.score - mild.replay.score) <= 1, `what-if 0/0 (${zero.replay.score.toFixed(1)}) is close to the mildest year ${mildYear} (${mild.replay.score.toFixed(1)})`);
+check(wi(rot, { rainPct: 0, heatDays: 30 }).replayTotal < zero.replayTotal, 'what-if: +30 hot days scores lower than 0/0');
+check(JSON.stringify(hazardsFromRow(real, real.climateYearly.find((y) => y.year === 2011))) === JSON.stringify(yearHazards(real, 2011)), 'hazardsFromRow is what yearHazards uses');
+const both = scoreRotation({ crops: rot }, real, ['water'], dry, lib, { replayYear: 2011, whatIf: { rainPct: 0.5, heatDays: 0 } });
+check(both.replay.year === 2011 && !both.replay.hypothetical, 'replay year wins if both are passed (one scenario at a time)');
+check(dry40.total === normal.total, 'what-if leaves the normal total unchanged');
+check(zero.replayTotal === normal.total, `what-if 0/0 total equals the normal total (${zero.replayTotal})`);
+check(rotations.every((r) => { const x = scoreRotation(r, real, ['water'], dry, lib, { replayYear: 2011 }); return x.replayTotal <= x.total; }),
+  'no rotation scores higher in the 2011 drought than in a normal year');
+
+// Soil: K x slope and soil water storage show up as reasons.
+check(normal.breakdown.water.reasons.some((r) => r.key === 'reasons.soilStore.high'), 'water rule: nt-103 Houston Black clay holds a lot of water');
+const ero = scoreRotation({ crops: rot }, real, ['erosion'], dry, lib).breakdown.erosion.reasons;
+check(ero.some((r) => r.key === 'reasons.erodible' && r.params.k === 0.24), 'erosion rule: K x slope reason on nt-103');
 
 process.exit(failed ? 1 : 0);

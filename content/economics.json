@@ -1,0 +1,8 @@
+{
+  "_note": "Dollar settings for scoring/economics.js. Crop yields and prices are NOT here: they come from each field's real USDA NASS data (field.market.recent, 2021-2025). Only the nitrogen price is a placeholder, because NASS Quick Stats has no fertilizer price series for Texas.",
+  "nPricePerLb": 0.6,
+  "nPricePlaceholder": true,
+  "nPriceSource": "Placeholder: rough 2024 U.S. retail price of nitrogen fertilizer (anhydrous ammonia or urea, per pound of N). Check with your dealer.",
+  "nCreditShare": 0.5,
+  "nCreditSource": "Cover crops don't hand over all the nitrogen they fix to the next crop. We count half (planning rule of thumb, still to be checked with AgriLife / NRCS)."
+}
