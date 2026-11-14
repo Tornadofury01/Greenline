@@ -25,6 +25,8 @@ venv/
 # Large data files
 pipeline/data/*
 !pipeline/data/*.csv
+!pipeline/data/fields/
+!pipeline/data/fields/*.csv
 *.tif
 *.tiff
 *.nc
