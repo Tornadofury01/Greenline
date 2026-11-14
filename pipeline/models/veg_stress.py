@@ -99,8 +99,9 @@ def scores(p):
     return out
 
 
-def driver_text(feat, month, value):
-    low = value < 0
+def driver_text(feat, month, value, typical):
+    """`typical` = the feature's median over all rows; 'low'/'high' is relative to it (raw signs mean nothing for rain)."""
+    low = value < typical
     w = WORDS[feat]
     if feat in ("smRootzoneZ", "smRootzonePrevZ", "powerPrecipMm", "powerPrecipPrev2", "imergPrecipMm", "etRatio"):
         adj = "Low" if low else "High"
@@ -213,6 +214,7 @@ def main():
     coefs = dict(zip(feats, np.round(lin_all[-1].coef_, 3).tolist()))
 
     # Per field-year: worst month, and the driver that pushed NDVI down the most that season
+    typical = full[feats].median()
     full = full.assign(**{f"shap_{f}": sv[:, i] for i, f in enumerate(feats)})
     hold = p.set_index(["fieldId", "year", "month"])
     recs = []
@@ -229,7 +231,8 @@ def main():
             "predictedStressMonths": [int(m) for m, v in held_rows.pred.items() if v < BELOW] if held_rows is not None else [],
             "minNdviZ": round(float(g.z.min()), 2),
             "topDriver": {"feature": f, "month": mo, "value": round(float(g.loc[row_i, f]), 2),
-                          "shap": round(float(flat.min()), 3), "text": driver_text(f, mo, float(g.loc[row_i, f]))},
+                          "typical": round(float(typical[f]), 2),
+                          "shap": round(float(flat.min()), 3), "text": driver_text(f, mo, float(g.loc[row_i, f]), float(typical[f]))},
         })
 
     n_fy = d.groupby(["fieldId", "year"]).ngroups

@@ -67,15 +67,13 @@ def run_fields():
     demo = pd.DataFrame([{"fieldId": FIELD["id"], "lon": FIELD["lon"], "lat": FIELD["lat"]}])
     df = pd.concat([demo, df], ignore_index=True)
     # County name, for reporting
-    counties = ee.FeatureCollection("TIGER/2018/Counties").filter(ee.Filter.eq("STATEFP", "48"))
-    names = []
-    for r in df.itertuples():
-        names.append(None)
+    # All states: the box touches the Red River, so a few points fall in Oklahoma (STATEFP 40).
+    counties = ee.FeatureCollection("TIGER/2018/Counties")
     fc = ee.FeatureCollection([ee.Feature(ee.Geometry.Point([r.lon, r.lat]), {"fieldId": r.fieldId}) for r in df.itertuples()])
     joined = ee.Join.saveFirst("c").apply(fc, counties, ee.Filter.intersects(".geo", None, ".geo"))
-    cmap = {f["properties"]["fieldId"]: f["properties"]["c"]["properties"]["NAME"]
-            for f in joined.getInfo()["features"]}
-    df["county"] = df.fieldId.map(cmap)
+    got = {f["properties"]["fieldId"]: f["properties"]["c"]["properties"] for f in joined.getInfo()["features"]}
+    df["county"] = df.fieldId.map(lambda i: got[i]["NAME"])
+    df["state"] = df.fieldId.map(lambda i: {"48": "TX", "40": "OK"}.get(got[i]["STATEFP"], got[i]["STATEFP"]))
     save(df, "fields")
 
 
@@ -131,6 +129,93 @@ def landsat_collection_all(ee):
         return landsat_collection(ee)
     finally:
         gp.region = old
+
+
+def run_landsat_early():
+    """Landsat 1984-2007 for the 40-year cover timeline (no CDL labels before 2008)."""
+    print("Landsat 1984-2007 per field ...")
+    ee = ee_init()
+    df = per_month_sample(ee, landsat_collection_all(ee), ["ndvi", "ndti", "bsi"], 1984, Y0 - 1, 30, name="landsat")
+    save(df.rename(columns={"n": "scenes"}).round(4), "landsat_monthly_1984_2007")
+
+
+def run_terrain():
+    print("SRTM slope per field ...")
+    ee = ee_init()
+    dem = ee.Image("USGS/SRTMGL1_003")
+    slope = ee.Terrain.slope(dem).multiply(3.14159265 / 180).tan().multiply(100).rename("slopePct")
+    img = dem.rename("elevationM").addBands(slope)
+    r = img.reduceRegions(fields_fc(ee), ee.Reducer.mean(), 30).map(lambda f: f.setGeometry(None))
+    df = pd.DataFrame([g["properties"] for g in r.getInfo()["features"]])
+    save(df[["fieldId", "elevationM", "slopePct"]].round(2), "terrain")
+
+
+def run_soil():
+    """USDA SSURGO via Soil Data Access (public REST, no key): dominant component at each point."""
+    print("SSURGO soil per field (Soil Data Access) ...")
+    f = pd.read_csv(OUT / "fields.csv")
+    rows = []
+    for r in f.itertuples():
+        q = f"""SELECT TOP 1 mu.mukey, c.compname, c.drainagecl, c.hydgrp, c.comppct_r,
+                  (SELECT TOP 1 ch.om_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS om,
+                  (SELECT TOP 1 ch.claytotal_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS clay,
+                  (SELECT TOP 1 ch.sandtotal_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS sand
+                FROM SDA_Get_Mukey_from_intersection_with_WktWgs84('point({r.lon} {r.lat})') AS m
+                JOIN mapunit mu ON mu.mukey = m.mukey JOIN component c ON c.mukey = mu.mukey
+                WHERE c.majcompflag = 'Yes' ORDER BY c.comppct_r DESC"""
+        for attempt in range(3):
+            try:
+                js = requests.post("https://sdmdataaccess.sc.egov.usda.gov/tabular/post.rest",
+                                   json={"query": q, "format": "JSON+COLUMNNAME"}, timeout=60).json()
+                break
+            except Exception as e:
+                print(f"  soil {r.fieldId} retry ({e})")
+                time.sleep(5)
+        else:
+            js = {}
+        t = js.get("Table")
+        if t and len(t) > 1:
+            rows.append({"fieldId": r.fieldId, **dict(zip(t[0], t[1]))})
+        else:
+            rows.append({"fieldId": r.fieldId})
+    save(pd.DataFrame(rows), "ssurgo")
+
+
+def run_power_long():
+    """POWER daily 1984-2025 per POWER cell -> yearly climate per field (rain, heat days, frost-free days)."""
+    print("NASA POWER 1984-2025 yearly per field ...")
+    f = pd.read_csv(OUT / "fields.csv")
+    f["cell"] = (f.lat / 0.5).round().astype(int).astype(str) + "_" + (f.lon / 0.625).round().astype(int).astype(str)
+    out = []
+    for cell, grp in f.groupby("cell"):
+        lat, lon = grp.lat.mean(), grp.lon.mean()
+        parts = []
+        for y0 in (1984, 2005):
+            y1 = 2004 if y0 == 1984 else Y1
+            url = ("https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M_MAX,T2M_MIN,PRECTOTCORR"
+                   f"&community=AG&latitude={lat:.3f}&longitude={lon:.3f}&start={y0}0101&end={y1}1231&format=JSON")
+            for attempt in range(3):
+                try:
+                    parts.append(pd.DataFrame(requests.get(url, timeout=240).json()["properties"]["parameter"]))
+                    break
+                except Exception as e:
+                    print(f"  power {cell} retry ({e})")
+                    time.sleep(10)
+        d = pd.concat(parts).replace(-999, pd.NA).astype(float)
+        d.index = pd.to_datetime(d.index, format="%Y%m%d")
+        yrs = []
+        for y, g in d.groupby(d.index.year):
+            frost = g.T2M_MIN <= 0
+            spring = g[(g.index.month < 7) & frost]
+            fall = g[(g.index.month >= 7) & frost]
+            last, first = (spring.index.max() if len(spring) else None), (fall.index.min() if len(fall) else None)
+            yrs.append({"year": y, "precipMm": round(g.PRECTOTCORR.sum(), 1), "heatStressDays": int((g.T2M_MAX >= 35).sum()),
+                        "frostFreeDays": int((first - last).days) if last is not None and first is not None else None,
+                        "completeYear": len(g) >= 365})
+        for fid in grp.fieldId:
+            out += [{"fieldId": fid, "powerCell": cell, **r} for r in yrs]
+        print(f"  power cell {cell}")
+    save(pd.DataFrame(out), "power_yearly")
 
 
 def run_cdl():
@@ -237,7 +322,8 @@ def run_power():
     save(df[["fieldId", "powerCell", "year", "month", "tMaxC", "tMinC", "precipMm", "heatStressDays"]].round(2), "power_monthly")
 
 
-STEPS = {"fields": run_fields, "cdl": run_cdl, "landsat": run_landsat, "smap": run_smap, "imerg": run_imerg,
+STEPS = {"landsat_early": run_landsat_early, "terrain": run_terrain, "soil": run_soil, "power_long": run_power_long,
+         "fields": run_fields, "cdl": run_cdl, "landsat": run_landsat, "smap": run_smap, "imerg": run_imerg,
          "storms": run_storms, "et": run_et, "power": run_power}
 
 if __name__ == "__main__":

@@ -5,6 +5,9 @@ import { fileURLToPath } from 'node:url';
 
 const root = (p) => fileURLToPath(new URL(p, import.meta.url));
 
+// Same default as src/config.js. Only this field is precached for offline use; the other 200 are cached when opened.
+const DEMO_FIELD_ID = process.env.VITE_DEMO_FIELD_ID || 'nt-103';
+
 export default defineConfig({
   resolve: {
     // Shared folders live outside /app so the pipeline and scoring can use them too.
@@ -15,6 +18,14 @@ export default defineConfig({
     },
   },
   server: { fs: { allow: ['..'] } },
+  build: {
+    rollupOptions: {
+      output: {
+        // Field files go to assets/fields/<id>-<hash>.js so the service worker can treat them separately.
+        chunkFileNames: (c) => (c.facadeModuleId?.includes('/shared/fields/') ? 'assets/fields/[name]-[hash].js' : 'assets/[name]-[hash].js'),
+      },
+    },
+  },
   plugins: [
     react(),
     VitePWA({
@@ -37,7 +48,13 @@ export default defineConfig({
       workbox: {
         // App shell + bundled JSON are precached; map tiles are NOT (they need a connection).
         globPatterns: ['**/*.{js,css,html,svg,png,json}'],
+        globIgnores: ['**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js'],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
+        runtimeCaching: [{
+          urlPattern: ({ url }) => url.pathname.includes('/assets/fields/'),
+          handler: 'CacheFirst',
+          options: { cacheName: 'greenline-fields', expiration: { maxEntries: 60 } },
+        }],
       },
     }),
   ],

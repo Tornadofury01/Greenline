@@ -30,7 +30,11 @@
     "explain": "What is {term}?",
     "source": "Source",
     "sampleValues": "sample values",
-    "and": "and"
+    "and": "and",
+    "receiptOpen": "Show the data behind this",
+    "receiptTitle": "Where this comes from",
+    "receiptLine": "{resolution} · {dates}",
+    "unknown": "Unknown"
   },
   "units": {
     "in": "in"
@@ -45,8 +49,8 @@
     "title": "Pick your field",
     "intro": "Find your field on the map and tap it.",
     "mapLabel": "Map of North Texas",
-    "mapHint": "For this demo, any tap loads a sample field near Denton.",
-    "mapOffline": "The map needs internet. You can still load the sample field.",
+    "mapHint": "Tap anywhere in North Texas. We load the nearest of 201 sampled crop fields.",
+    "mapOffline": "The map needs internet. You can still load the demo field.",
     "loadSample": "Load the sample field",
     "summaryTitle": "Your field at a glance",
     "location": "Location",
@@ -66,7 +70,11 @@
     "recentCrops": "Last 3 crops",
     "privacy": "We save a 30 m map square, never your exact location.",
     "continue": "Next: your farm",
-    "emptySummary": "Tap your field on the map, or load the sample field to try the app."
+    "emptySummary": "Tap your field on the map, or load the demo field (real NASA data) to try the app.",
+    "loadDemo": "Load the demo field",
+    "loading": "Loading…",
+    "nearest": "Nearest sampled field ({id}), {km} km from your tap. Real data for every field is coming.",
+    "fallback": "We couldn’t load real data for this field, so this is the fake sample field."
   },
   "farm": {
     "title": "Your farm",
@@ -94,12 +102,12 @@
     "heatDetail": "Average per year",
     "statBare": "Bare days",
     "bareDetail": "Average per year",
-    "chartTitle": "Rain each year since 2005",
-    "chartCaption": "Each bar is one year. Red bars are drought years: {years}.",
-    "chartAlt": "Bar chart of yearly rain from 2005 to 2025. Average about {avg} inches. Drought years: {years}.",
+    "chartTitle": "Rain each year since {from}",
+    "chartCaption": "Each bar is one year, colored by year type. Recent drought years: {years}.",
+    "chartAlt": "Bar chart of yearly rain from {from} to {to}. Average about {avg} inches. Drought years: {years}.",
     "tooltipRain": "Rain",
-    "bareTitle": "When was the ground bare?",
-    "bareCaption": "Each row is a year, each square a month. Brown striped squares mean little or no plant cover.",
+    "bareTitle": "Green, residue or bare: 40 years from space",
+    "bareCaption": "Each row is a year (newest on top), each square a month. The number is that year’s ground cover score.",
     "legendBare": "Bare ground",
     "legendCovered": "Plants growing",
     "year": "Year",
@@ -131,7 +139,32 @@
       "November",
       "December"
     ],
-    "next": "See rotation options"
+    "next": "See rotation options",
+    "droughtDetail": "Years {from}–{to}",
+    "statScore": "Ground cover score",
+    "scoreDetail": "Last 10 years. 100 = never bare",
+    "cover": {
+      "green": "Growing (green)",
+      "residue": "Sparse cover or residue",
+      "bare": "Bare ground",
+      "none": "No clear picture (clouds)"
+    },
+    "scoreCol": "Score",
+    "cropCol": "Crop",
+    "doubleCrop": "CDL: 2 crops",
+    "doubleCropNote": "The crop map says two crops this year. Low confidence: too few examples to check.",
+    "timelineNote": "Crop names start in 2008 (USDA crop maps). Satellites changed in 2013 (Landsat 8), which reads a bit greener, so recent years may look less bare than they were.",
+    "replayTitle": "Replay a bad year",
+    "replayCaption": "The worst years in 40 years of NASA weather, picked by our year-pattern model. Tap one to see what happened on this field.",
+    "replayHeading": "{year}: a {type} year",
+    "replayRain": "{inches} in of rain ({pct}% vs. normal)",
+    "replayHeat": "{n} days over 95°F (normal: {avg})",
+    "replayStorms": "{n} days with heavy rain (over 1 inch)",
+    "replaySoil": "Soil moisture {pct}% vs. this field’s normal",
+    "replayCrop": "Crop that year: {crop}",
+    "replayBare": "{days} bare days (score {score}/100)",
+    "replayStress": "Greenness below normal in: {months}",
+    "replayNoStress": "Greenness stayed near normal all season"
   },
   "compare": {
     "title": "Compare rotations",
@@ -177,7 +210,7 @@
     "intro": "Print this page or save it as a PDF. Bring it to your county AgriLife Extension office.",
     "print": "Print or save as PDF",
     "fieldSection": "The field",
-    "climateSection": "Weather history, 2005–2025",
+    "climateSection": "Weather history, {from}–{to}",
     "farmSection": "The farm and goals",
     "growNow": "Grows now",
     "goals": "Goals",
@@ -251,7 +284,7 @@
   },
   "reasons": {
     "waterAvg": "Average water need is {value} out of 5.",
-    "droughtHistory": "Your field had {count} drought years since 2005.",
+    "droughtHistory": "{count} of the last {total} years were drought years on this field.",
     "erosionAvg": "Soil protection is {value} out of 5 on average.",
     "slopeBare": "Your {slope}% slope makes bare seasons riskier.",
     "nitrogen": "{count} season(s) with a crop that adds nitrogen.",
@@ -259,7 +292,11 @@
     "variety": "{count} different crops in the rotation.",
     "cashShare": "{count} of {total} seasons have a crop you can sell.",
     "marketMatch": "Fits where you sell.",
-    "forageAvg": "Grazing and hay value is {value} out of 5."
+    "forageAvg": "Grazing and hay value is {value} out of 5.",
+    "fieldBareHigh": "Satellites show this field bare about {days} days a year, so ground cover matters more here.",
+    "fieldBareLow": "Satellites show this field bare about {days} days a year.",
+    "drySoilYears": "Soil was at least 10% drier than normal in {count} of {total} growing seasons.",
+    "lowOrganicMatter": "Topsoil organic matter is low ({om}%), so cover crops and legumes help more."
   },
   "benefits": {
     "water": "Uses little water.",
@@ -271,11 +308,12 @@
   "gaps": {
     "weak": "Weak on \"{priority}\".",
     "equipment": "Needs equipment you didn't list: {needs}.",
-    "budgetVariety": "{count} different crops may be costly to start with a low budget."
+    "budgetVariety": "{count} different crops may be costly to start with a low budget.",
+    "cdlNoise": "Crop history comes from USDA satellite crop maps, which are sometimes wrong, especially for smaller crops."
   },
   "risks": {
     "thirstyDryland": "{crops} need a lot of water for dryland.",
-    "heat": "{crops} can suffer in heat. Your field had {count} hot or drought years.",
+    "heat": "{crops} can suffer in heat. {count} of {total} years here were hot or drought years.",
     "bare": "Fallow leaves the ground bare."
   },
   "confidence": {
@@ -285,7 +323,14 @@
     "familiarCrops": "Most crops have been grown on this field before.",
     "someNewCrops": "Some crops are new to this field.",
     "newCrops": "Most crops are new to this field.",
-    "placeholderTraits": "Crop trait values are early estimates and still being checked."
+    "placeholderTraits": "Crop trait values are early estimates and still being checked.",
+    "modelStrong": "The crop model was right {acc}% of the time on years it never saw ({bal}% balanced across crops).",
+    "modelMixed": "The crop model was right {acc}% of the time on years it never saw, but only {bal}% balanced across crops.",
+    "cropHardToSee": "Satellites have trouble recognizing {crops}.",
+    "datasetsAgree": "Two rain datasets agree for this field (correlation {corr}, {pct}% apart).",
+    "datasetsDisagree": "Two rain datasets disagree for this field (correlation {corr}, {pct}% apart).",
+    "coarseWeather": "Weather data covers a wide area (about 30 miles), not just your field.",
+    "cdlNoise": "Crop maps are sometimes wrong."
   },
   "crops": {
     "winter_wheat": "Winter wheat",
@@ -358,6 +403,94 @@
     "bareDays": {
       "title": "Bare days",
       "text": "Days when satellites saw little or no plant cover, so the soil was open to wind and rain."
+    },
+    "heldOut": {
+      "title": "Tested on unseen years",
+      "text": "We hid one year at a time from the model, trained it on the others, and checked its answer for the hidden year. This shows how it does on a year it has never seen, like next year."
+    },
+    "bareScore": {
+      "title": "Ground cover score",
+      "text": "100 minus the share of the year the ground was bare. 100 means plants or residue all year. Lower means more bare days, when soil can wash or blow away."
+    }
+  },
+  "si": {
+    "title": "How sure are the models?",
+    "intro": "Each model was tested only on years it never saw while learning.",
+    "cropTitle": "Crop and cover model:",
+    "cropLine": "right {acc}% of the time ({bal}% balanced across crops). Guessing “same as last year” is right {base}%.",
+    "fieldAgree": "On this field: matched the crop map in {pct}% of years.",
+    "stressTitle": "Weather risk signal:",
+    "stressLine": "low confidence. Weather explains only a small part of crop stress (R² {r2}).",
+    "stressCrops": "Shown only for crops where it beat “assume a normal year”: {crops}.",
+    "yearTitle": "Year types:",
+    "yearLine": "the same drought / wet / heat / normal label {pct}% of the time ({from}–{to}).",
+    "cardTitle": "What the models saw on this field",
+    "cardAccuracy": "Crop model on unseen years: {acc}% right, {bal}% balanced across crops.",
+    "noModel": "{crop}: no satellite model for this crop yet.",
+    "recognized": "{crop}: recognized from space in {n} of {of} years it was grown here.",
+    "neverGrown": "{crop}: not grown on this field since 2008.",
+    "whyCrop": "In {year}: {why}.",
+    "hardToSee": "Hard crop to recognize: only {pct}% found on unseen years.",
+    "riskSignal": "Weather risk signal (low confidence): flagged {n} of {of} seasons.",
+    "whyStress": "In {year}: {why}.",
+    "riskNoSeasons": "Weather risk signal: no seasons since 2015 to check.",
+    "riskNotForCrop": "Weather alone doesn’t predict stress well for this crop.",
+    "topReason": "{crop}: {why}",
+    "lowConfidence": "low confidence",
+    "cls": {
+      "corn": "Corn",
+      "cotton": "Cotton",
+      "grain_sorghum": "Grain sorghum",
+      "soybeans": "Soybeans",
+      "winter_wheat": "Winter wheat",
+      "small_grain": "Oats or other small grain",
+      "fallow": "Fallow",
+      "double_crop": "Two crops (double crop)",
+      "other": "Grass, hay or other"
+    },
+    "driver": {
+      "ndviMonth": "Greenness (NDVI) in {month} mattered most",
+      "ndtiMonth": "Crop residue (NDTI) in {month} mattered most",
+      "bsiMonth": "Bare soil (BSI) in {month} mattered most",
+      "ndvi_max": "Peak greenness mattered most",
+      "ndvi_min": "Lowest greenness mattered most",
+      "ndvi_peak_month": "The month of peak greenness mattered most",
+      "green_months": "The number of green months mattered most",
+      "ndvi_spring_minus_summer": "Spring vs. summer greenness mattered most"
+    },
+    "stress": {
+      "tMaxC": {
+        "low": "Cooler days in {month} mattered most",
+        "high": "Hotter days in {month} mattered most"
+      },
+      "heatStressDays": {
+        "low": "Fewer days over 95°F in {month} mattered most",
+        "high": "More days over 95°F in {month} mattered most"
+      },
+      "powerPrecipMm": {
+        "low": "Little rain in {month} mattered most",
+        "high": "Heavy rain in {month} mattered most"
+      },
+      "powerPrecipPrev2": {
+        "low": "Little rain in the 2 months before {month} mattered most",
+        "high": "Heavy rain in the 2 months before {month} mattered most"
+      },
+      "imergPrecipMm": {
+        "low": "Little rain in {month} (satellite) mattered most",
+        "high": "Heavy rain in {month} (satellite) mattered most"
+      },
+      "stormDays": {
+        "low": "Few storm days in {month} mattered most",
+        "high": "Storm days in {month} mattered most"
+      },
+      "smRootzoneZ": {
+        "low": "Low soil moisture in {month} mattered most",
+        "high": "Wet soil in {month} mattered most"
+      },
+      "smRootzonePrevZ": {
+        "low": "Low soil moisture before {month} mattered most",
+        "high": "Wet soil before {month} mattered most"
+      }
     }
   }
 }

@@ -29,6 +29,15 @@ function FitOnResize() {
   return null;
 }
 
+// When a field loads, zoom to it so its 30 m square is visible.
+function FlyToField({ field }) {
+  const map = useMap();
+  useEffect(() => {
+    if (field) map.flyTo([field.field.lat, field.field.lon], 15, { duration: 0.8 });
+  }, [field, map]);
+  return null;
+}
+
 function useOnline() {
   const [online, setOnline] = useState(typeof navigator === 'undefined' ? true : navigator.onLine);
   useEffect(() => {
@@ -65,20 +74,22 @@ export function FieldFacts({ field }) {
         value={t('pick.countyValue', { county: field.field.county, state: field.field.state })}
         detail={t('pick.cellDetail', { cell: field.field.gridCell })} />
       <Fact icon={Layers} tone="soil" label={t('pick.soil')} term="hydrologicGroup"
-        value={t('pick.soilValue', { texture: t(`soil.texture.${soil.texture}`), drainage: t(`soil.drainage.${soil.drainageClass}`) })}
-        detail={t('pick.soilDetail', { series: soil.seriesName, om: soil.organicMatterPct, group: soil.hydrologicGroup })} />
+        value={soil.texture
+          ? t('pick.soilValue', { texture: t(`soil.texture.${soil.texture}`), drainage: soil.drainageClass ? t(`soil.drainage.${soil.drainageClass}`) : t('common.unknown') })
+          : t('common.unknown')}
+        detail={t('pick.soilDetail', { series: soil.seriesName ?? '–', om: soil.organicMatterPct ?? '–', group: soil.hydrologicGroup ?? '–' })} />
       <Fact icon={Mountain} label={t('pick.slope')} term="slope"
         value={t(`pick.slopeWord.${slopeWord(terrain.slopePct)}`)}
         detail={t('pick.slopeDetail', { pct: terrain.slopePct })} />
       <Fact icon={Wheat} tone="green" label={t('pick.recentCrops')}
-        value={recent.map((h) => t(`crops.${h.crop}`)).join(', ')}
+        value={recent.map((h) => (h.crop === 'other' ? t(`si.cls.${h.cdlClass || 'other'}`) : t(`crops.${h.crop}`))).join(', ')}
         detail={recent.map((h) => h.year).join(', ')} />
     </div>
   );
 }
 
 export default function PickField() {
-  const { t, field, pickField, setScreen } = useApp();
+  const { t, field, pickField, pickDemo, loading, setScreen } = useApp();
   const online = useOnline();
   const cell = field && [
     [field.field.lat - CELL_HALF_DEG, field.field.lon - CELL_HALF_DEG],
@@ -99,6 +110,7 @@ export default function PickField() {
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickToPick onPick={pickField} />
+            <FlyToField field={field} />
             {cell && <Rectangle bounds={cell} pathOptions={{ color: '#1f5130', weight: 4, fillOpacity: 0.3 }} />}
           </MapContainer>
         ) : (
@@ -114,8 +126,8 @@ export default function PickField() {
         <section className="card">
           <h2>{t('pick.summaryTitle')}</h2>
           <p className="muted">{t('pick.emptySummary')}</p>
-          <button type="button" className="btn btn-primary btn-block" onClick={() => pickField(NORTH_TEXAS[0], NORTH_TEXAS[1])}>
-            {t('pick.loadSample')}
+          <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={pickDemo}>
+            {loading ? t('pick.loading') : t('pick.loadDemo')}
           </button>
         </section>
       )}
@@ -124,6 +136,8 @@ export default function PickField() {
         <>
           <section className="card">
             <h2>{t('pick.summaryTitle')}</h2>
+            {field.nearestKm != null && <p className="notice-inline">{t('pick.nearest', { km: field.nearestKm, id: field.field.id })}</p>}
+            {field.fallbackReason && <p className="notice-inline">{t('pick.fallback')}</p>}
             <FieldFacts field={field} />
             <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('pick.privacy')}</span></p>
             <Source datasets={['USDA SSURGO', 'SRTM', 'USDA Cropland Data Layer']} />

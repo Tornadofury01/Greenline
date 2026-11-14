@@ -76,3 +76,10 @@
 
   color-scheme: light;
 }
+
+/* Ground cover states (field story timeline). Bare keeps the existing striped soil pattern. */
+:root {
+  --chart-green: #4f8a55;
+  --chart-residue: #d9c79a;
+  --chart-none: #ebe9e2;
+}

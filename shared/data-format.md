@@ -1,4 +1,8 @@
-# Field data format (v1)
+# Field data format (v2)
+
+The app loads real fields from `/shared/fields/<fieldId>.json` (v2, built by `pipeline/build_fields.py`) and falls back to
+`/shared/sample-field.json` (v1, fake) when a file is missing. v2 = everything in v1 below, plus the
+"v2 additions" section. `/shared/fields/index.json` lists `{ id, county, state, lat, lon }` for every field.
 
 Every field file the app loads (today `sample-field.json`, later the pipeline outputs) **must** follow this format.
 If you change it, bump `schemaVersion`, update this doc, and update `/shared/sample-field.json`.
@@ -7,7 +11,7 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 
 | Key | Type | Notes |
 |---|---|---|
-| `schemaVersion` | number | Currently `1` |
+| `schemaVersion` | number | `2` for real fields, `1` for the fake sample |
 | `isSampleData` | boolean | `true` for fake data. The app shows a "Sample data" badge |
 | `field` | object | See below |
 | `soil` | object | See below |
@@ -140,3 +144,21 @@ How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVer
 | `stressMonths` | number[] \| null | Months (Apr–Sep, 2015–) where NDVI was below normal (z < −0.5) |
 | `predictedStressMonths` | number[] \| null | Months the weather risk signal flagged (held-out). Show only if `cdlClass` is in `models.vegStress.showSignalFor`; otherwise show "Weather alone doesn't predict stress well for this crop" |
 | `stressDriver` | object \| null | SHAP: the input that pushed greenness down most that season. `{ key: "si.driver.<feature>", params: { month, direction: "low" \| "high" }, text }` |
+
+## v2 additions (`/shared/fields/<fieldId>.json`)
+| Key | Type | Notes |
+|---|---|---|
+| `field.gridCell` | string | `L30-<fieldId>` for sampled fields (real per-cell ids are on the roadmap) |
+| `field.state` | string | `TX`, or `OK` for 3 sample fields just across the Red River |
+| `soil` | object | Real SSURGO (Soil Data Access), dominant component. Any value can be `null`. Adds `clayPct`. `texture` is from topsoil clay/sand |
+| `terrain.elevationM` | number | SRTM |
+| `cropHistory[]` | | Adds `cdlCode` and `cdlClass` (model group). `crop` is `"other"` when the CDL crop isn't in `crops.json` |
+| `climateYearly[]` | | 1984–2025 from NASA POWER (`precipMm` is POWER, not IMERG). Adds `precipMmImerg` (2008–). `soilMoistureAnomaly` (2015–) and `heavyStormDays` (IMERG, 2008–) are `null` before their records start. `yearType` from the k-means model |
+| `ndviMonthly[]` | | Landsat 5/7/8/9, 1984–2025. Cloudy months are left out |
+| `coverYearly[]` | array | `{ year, months[12], cloudyMonths }`. `months` = `green` / `residue` / `bare` / `null` (no clear image). 2008+ come from model 1 |
+| `bareDaysPerYear[]` | | Adds `greenDays` and `score` (0–100). Years with fewer than 9 clear months are left out |
+| `quality` | object | `rainAgreement { years, corr, imergVsPowerPct }`, `modelAgreesWithCdlPct`, `cloudyMonthsPct`, `climateYears`, `cropYears`. Used by the confidence score |
+| `si` | object | `{ models, years, replayPresets }`, the same as `/shared/si/<fieldId>.json` (below). `models.seasonCrop.perClass` adds held-out recall/precision per crop |
+
+Known data caveat: Landsat 8 (2013–) reads NDVI slightly higher than Landsat 5/7 and the sensors are not harmonized yet,
+so bare days after ~2015 may be undercounted.

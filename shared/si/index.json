@@ -104,6 +104,7 @@
   {
    "fieldId": "demo-ellis-001",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.182,
    "lon": -96.835,
    "nYears": 18
@@ -111,6 +112,7 @@
   {
    "fieldId": "nt-001",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.37093,
    "lon": -97.1417,
    "nYears": 18
@@ -118,6 +120,7 @@
   {
    "fieldId": "nt-002",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.50638,
    "lon": -95.98311,
    "nYears": 18
@@ -125,6 +128,7 @@
   {
    "fieldId": "nt-003",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.24257,
    "lon": -96.39269,
    "nYears": 18
@@ -132,6 +136,7 @@
   {
    "fieldId": "nt-004",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.92206,
    "lon": -96.9032,
    "nYears": 18
@@ -139,6 +144,7 @@
   {
    "fieldId": "nt-005",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.32056,
    "lon": -96.36333,
    "nYears": 18
@@ -146,6 +152,7 @@
   {
    "fieldId": "nt-006",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.09701,
    "lon": -96.16926,
    "nYears": 18
@@ -153,6 +160,7 @@
   {
    "fieldId": "nt-007",
    "county": "Hamilton",
+   "state": "TX",
    "lat": 31.60652,
    "lon": -98.01983,
    "nYears": 18
@@ -160,6 +168,7 @@
   {
    "fieldId": "nt-008",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.85981,
    "lon": -96.90231,
    "nYears": 18
@@ -167,6 +176,7 @@
   {
    "fieldId": "nt-009",
    "county": "Coryell",
+   "state": "TX",
    "lat": 31.55183,
    "lon": -97.69883,
    "nYears": 18
@@ -174,6 +184,7 @@
   {
    "fieldId": "nt-010",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.83696,
    "lon": -96.91283,
    "nYears": 18
@@ -181,6 +192,7 @@
   {
    "fieldId": "nt-011",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.7539,
    "lon": -96.76837,
    "nYears": 18
@@ -188,6 +200,7 @@
   {
    "fieldId": "nt-012",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.60539,
    "lon": -96.80574,
    "nYears": 18
@@ -195,6 +208,7 @@
   {
    "fieldId": "nt-013",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.94053,
    "lon": -98.33796,
    "nYears": 18
@@ -202,6 +216,7 @@
   {
    "fieldId": "nt-014",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.88107,
    "lon": -97.11476,
    "nYears": 18
@@ -209,6 +224,7 @@
   {
    "fieldId": "nt-015",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.39432,
    "lon": -96.79036,
    "nYears": 18
@@ -216,6 +232,7 @@
   {
    "fieldId": "nt-016",
    "county": "Lamar",
+   "state": "TX",
    "lat": 33.51481,
    "lon": -95.50168,
    "nYears": 18
@@ -223,6 +240,7 @@
   {
    "fieldId": "nt-017",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.60715,
    "lon": -96.8417,
    "nYears": 18
@@ -230,6 +248,7 @@
   {
    "fieldId": "nt-018",
    "county": "Hamilton",
+   "state": "TX",
    "lat": 31.60598,
    "lon": -97.97137,
    "nYears": 18
@@ -237,6 +256,7 @@
   {
    "fieldId": "nt-019",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.37318,
    "lon": -96.6149,
    "nYears": 18
@@ -244,6 +264,7 @@
   {
    "fieldId": "nt-020",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.31001,
    "lon": -96.82622,
    "nYears": 18
@@ -251,6 +272,7 @@
   {
    "fieldId": "nt-021",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.05309,
    "lon": -96.95122,
    "nYears": 18
@@ -258,6 +280,7 @@
   {
    "fieldId": "nt-022",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.33514,
    "lon": -96.86213,
    "nYears": 18
@@ -265,6 +288,7 @@
   {
    "fieldId": "nt-023",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.24101,
    "lon": -96.74624,
    "nYears": 18
@@ -272,6 +296,7 @@
   {
    "fieldId": "nt-024",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.62538,
    "lon": -96.90036,
    "nYears": 18
@@ -279,6 +304,7 @@
   {
    "fieldId": "nt-025",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.409,
    "lon": -96.31764,
    "nYears": 18
@@ -286,6 +312,7 @@
   {
    "fieldId": "nt-026",
    "county": "Anderson",
+   "state": "TX",
    "lat": 31.89338,
    "lon": -95.98351,
    "nYears": 18
@@ -293,6 +320,7 @@
   {
    "fieldId": "nt-027",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.33458,
    "lon": -96.72063,
    "nYears": 18
@@ -300,6 +328,7 @@
   {
    "fieldId": "nt-028",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.06267,
    "lon": -97.16769,
    "nYears": 18
@@ -307,6 +336,7 @@
   {
    "fieldId": "nt-029",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.5184,
    "lon": -96.51552,
    "nYears": 18
@@ -314,6 +344,7 @@
   {
    "fieldId": "nt-030",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.11284,
    "lon": -96.32047,
    "nYears": 18
@@ -321,6 +352,7 @@
   {
    "fieldId": "nt-031",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.36918,
    "lon": -96.17993,
    "nYears": 18
@@ -328,6 +360,7 @@
   {
    "fieldId": "nt-032",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.34811,
    "lon": -95.87293,
    "nYears": 18
@@ -335,6 +368,7 @@
   {
    "fieldId": "nt-033",
    "county": "Archer",
+   "state": "TX",
    "lat": 33.58253,
    "lon": -98.44488,
    "nYears": 18
@@ -342,6 +376,7 @@
   {
    "fieldId": "nt-034",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.80545,
    "lon": -96.91952,
    "nYears": 18
@@ -349,6 +384,7 @@
   {
    "fieldId": "nt-035",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.08554,
    "lon": -96.92937,
    "nYears": 18
@@ -356,6 +392,7 @@
   {
    "fieldId": "nt-036",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.862,
    "lon": -97.04287,
    "nYears": 18
@@ -363,6 +400,7 @@
   {
    "fieldId": "nt-037",
    "county": "Bosque",
+   "state": "TX",
    "lat": 32.07927,
    "lon": -97.51603,
    "nYears": 18
@@ -370,6 +408,7 @@
   {
    "fieldId": "nt-038",
    "county": "Wise",
+   "state": "TX",
    "lat": 33.20507,
    "lon": -97.78817,
    "nYears": 18
@@ -377,6 +416,7 @@
   {
    "fieldId": "nt-039",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.95682,
    "lon": -97.31331,
    "nYears": 18
@@ -384,6 +424,7 @@
   {
    "fieldId": "nt-040",
    "county": "Delta",
+   "state": "TX",
    "lat": 33.39035,
    "lon": -95.83416,
    "nYears": 18
@@ -391,6 +432,7 @@
   {
    "fieldId": "nt-041",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.26806,
    "lon": -97.14882,
    "nYears": 18
@@ -398,6 +440,7 @@
   {
    "fieldId": "nt-042",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.68232,
    "lon": -96.96047,
    "nYears": 18
@@ -405,6 +448,7 @@
   {
    "fieldId": "nt-043",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.53527,
    "lon": -96.8097,
    "nYears": 18
@@ -412,6 +456,7 @@
   {
    "fieldId": "nt-044",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.07088,
    "lon": -96.90223,
    "nYears": 18
@@ -419,6 +464,7 @@
   {
    "fieldId": "nt-045",
    "county": "Hamilton",
+   "state": "TX",
    "lat": 31.66738,
    "lon": -98.15648,
    "nYears": 18
@@ -426,6 +472,7 @@
   {
    "fieldId": "nt-046",
    "county": "Young",
+   "state": "TX",
    "lat": 33.15695,
    "lon": -98.4928,
    "nYears": 18
@@ -433,6 +480,7 @@
   {
    "fieldId": "nt-047",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.23398,
    "lon": -97.0988,
    "nYears": 18
@@ -440,6 +488,7 @@
   {
    "fieldId": "nt-048",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.10653,
    "lon": -96.88655,
    "nYears": 18
@@ -447,6 +496,7 @@
   {
    "fieldId": "nt-049",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.76497,
    "lon": -97.01604,
    "nYears": 18
@@ -454,6 +504,7 @@
   {
    "fieldId": "nt-050",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.48518,
    "lon": -96.58553,
    "nYears": 18
@@ -461,6 +512,7 @@
   {
    "fieldId": "nt-051",
    "county": "Bosque",
+   "state": "TX",
    "lat": 31.68117,
    "lon": -97.76713,
    "nYears": 18
@@ -468,6 +520,7 @@
   {
    "fieldId": "nt-052",
    "county": "Coryell",
+   "state": "TX",
    "lat": 31.54616,
    "lon": -97.64342,
    "nYears": 18
@@ -475,6 +528,7 @@
   {
    "fieldId": "nt-053",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.97405,
    "lon": -97.02467,
    "nYears": 18
@@ -482,6 +536,7 @@
   {
    "fieldId": "nt-054",
    "county": "Dallas",
+   "state": "TX",
    "lat": 32.58542,
    "lon": -96.57701,
    "nYears": 18
@@ -489,13 +544,15 @@
   {
    "fieldId": "nt-055",
    "county": "Kaufman",
+   "state": "TX",
    "lat": 32.7706,
    "lon": -96.35266,
    "nYears": 18
   },
   {
    "fieldId": "nt-056",
-   "county": NaN,
+   "county": "Bryan",
+   "state": "OK",
    "lat": 33.85072,
    "lon": -96.45323,
    "nYears": 18
@@ -503,6 +560,7 @@
   {
    "fieldId": "nt-057",
    "county": "Henderson",
+   "state": "TX",
    "lat": 32.02188,
    "lon": -96.03822,
    "nYears": 18
@@ -510,6 +568,7 @@
   {
    "fieldId": "nt-058",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.2787,
    "lon": -96.00055,
    "nYears": 18
@@ -517,6 +576,7 @@
   {
    "fieldId": "nt-059",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.83203,
    "lon": -97.03121,
    "nYears": 18
@@ -524,6 +584,7 @@
   {
    "fieldId": "nt-060",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.28447,
    "lon": -96.08453,
    "nYears": 18
@@ -531,6 +592,7 @@
   {
    "fieldId": "nt-061",
    "county": "Kaufman",
+   "state": "TX",
    "lat": 32.61496,
    "lon": -96.41195,
    "nYears": 18
@@ -538,6 +600,7 @@
   {
    "fieldId": "nt-062",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.90665,
    "lon": -97.17825,
    "nYears": 18
@@ -545,6 +608,7 @@
   {
    "fieldId": "nt-063",
    "county": "Navarro",
+   "state": "TX",
    "lat": 31.8706,
    "lon": -96.66763,
    "nYears": 18
@@ -552,6 +616,7 @@
   {
    "fieldId": "nt-064",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.44052,
    "lon": -97.1653,
    "nYears": 18
@@ -559,6 +624,7 @@
   {
    "fieldId": "nt-065",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.59424,
    "lon": -96.8066,
    "nYears": 18
@@ -566,6 +632,7 @@
   {
    "fieldId": "nt-066",
    "county": "Lamar",
+   "state": "TX",
    "lat": 33.557,
    "lon": -95.54063,
    "nYears": 18
@@ -573,6 +640,7 @@
   {
    "fieldId": "nt-067",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.61682,
    "lon": -96.80834,
    "nYears": 18
@@ -580,6 +648,7 @@
   {
    "fieldId": "nt-068",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.97369,
    "lon": -97.1536,
    "nYears": 18
@@ -587,6 +656,7 @@
   {
    "fieldId": "nt-069",
    "county": "Navarro",
+   "state": "TX",
    "lat": 31.83957,
    "lon": -96.66746,
    "nYears": 18
@@ -594,6 +664,7 @@
   {
    "fieldId": "nt-070",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.62268,
    "lon": -96.80704,
    "nYears": 18
@@ -601,6 +672,7 @@
   {
    "fieldId": "nt-071",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.92757,
    "lon": -98.36041,
    "nYears": 18
@@ -608,6 +680,7 @@
   {
    "fieldId": "nt-072",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.35806,
    "lon": -96.58664,
    "nYears": 18
@@ -615,6 +688,7 @@
   {
    "fieldId": "nt-073",
    "county": "Archer",
+   "state": "TX",
    "lat": 33.57033,
    "lon": -98.45777,
    "nYears": 18
@@ -622,6 +696,7 @@
   {
    "fieldId": "nt-074",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.45846,
    "lon": -96.13098,
    "nYears": 18
@@ -629,6 +704,7 @@
   {
    "fieldId": "nt-075",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.79577,
    "lon": -97.16852,
    "nYears": 18
@@ -636,6 +712,7 @@
   {
    "fieldId": "nt-076",
    "county": "Henderson",
+   "state": "TX",
    "lat": 32.01936,
    "lon": -96.04096,
    "nYears": 18
@@ -643,6 +720,7 @@
   {
    "fieldId": "nt-077",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.55977,
    "lon": -97.04436,
    "nYears": 18
@@ -650,6 +728,7 @@
   {
    "fieldId": "nt-078",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.08316,
    "lon": -96.85379,
    "nYears": 18
@@ -657,6 +736,7 @@
   {
    "fieldId": "nt-079",
    "county": "Delta",
+   "state": "TX",
    "lat": 33.38483,
    "lon": -95.82322,
    "nYears": 18
@@ -664,13 +744,15 @@
   {
    "fieldId": "nt-080",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.53783,
    "lon": -97.38896,
    "nYears": 18
   },
   {
    "fieldId": "nt-081",
-   "county": NaN,
+   "county": "Bryan",
+   "state": "OK",
    "lat": 33.85533,
    "lon": -96.12586,
    "nYears": 18
@@ -678,6 +760,7 @@
   {
    "fieldId": "nt-082",
    "county": "Dallas",
+   "state": "TX",
    "lat": 32.54928,
    "lon": -96.73167,
    "nYears": 18
@@ -685,6 +768,7 @@
   {
    "fieldId": "nt-083",
    "county": "Wise",
+   "state": "TX",
    "lat": 33.36509,
    "lon": -97.40132,
    "nYears": 18
@@ -692,6 +776,7 @@
   {
    "fieldId": "nt-084",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.45987,
    "lon": -97.50552,
    "nYears": 18
@@ -699,6 +784,7 @@
   {
    "fieldId": "nt-085",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.49685,
    "lon": -96.39704,
    "nYears": 18
@@ -706,6 +792,7 @@
   {
    "fieldId": "nt-086",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.60134,
    "lon": -96.77598,
    "nYears": 18
@@ -713,6 +800,7 @@
   {
    "fieldId": "nt-087",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.58109,
    "lon": -96.77731,
    "nYears": 18
@@ -720,6 +808,7 @@
   {
    "fieldId": "nt-088",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.86534,
    "lon": -97.09522,
    "nYears": 18
@@ -727,6 +816,7 @@
   {
    "fieldId": "nt-089",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.24303,
    "lon": -97.24156,
    "nYears": 18
@@ -734,6 +824,7 @@
   {
    "fieldId": "nt-090",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.51798,
    "lon": -96.78998,
    "nYears": 18
@@ -741,6 +832,7 @@
   {
    "fieldId": "nt-091",
    "county": "Cooke",
+   "state": "TX",
    "lat": 33.51227,
    "lon": -97.27788,
    "nYears": 18
@@ -748,6 +840,7 @@
   {
    "fieldId": "nt-092",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.43348,
    "lon": -96.12464,
    "nYears": 18
@@ -755,6 +848,7 @@
   {
    "fieldId": "nt-093",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.61077,
    "lon": -98.27026,
    "nYears": 18
@@ -762,6 +856,7 @@
   {
    "fieldId": "nt-094",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.19769,
    "lon": -96.63518,
    "nYears": 18
@@ -769,6 +864,7 @@
   {
    "fieldId": "nt-095",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.93337,
    "lon": -97.09278,
    "nYears": 18
@@ -776,6 +872,7 @@
   {
    "fieldId": "nt-096",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.09948,
    "lon": -96.57067,
    "nYears": 18
@@ -783,6 +880,7 @@
   {
    "fieldId": "nt-097",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.66536,
    "lon": -96.86249,
    "nYears": 18
@@ -790,6 +888,7 @@
   {
    "fieldId": "nt-098",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.2729,
    "lon": -96.44235,
    "nYears": 18
@@ -797,6 +896,7 @@
   {
    "fieldId": "nt-099",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.09696,
    "lon": -96.29419,
    "nYears": 18
@@ -804,6 +904,7 @@
   {
    "fieldId": "nt-100",
    "county": "Henderson",
+   "state": "TX",
    "lat": 32.01032,
    "lon": -96.0379,
    "nYears": 18
@@ -811,6 +912,7 @@
   {
    "fieldId": "nt-101",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.38364,
    "lon": -96.83183,
    "nYears": 18
@@ -818,6 +920,7 @@
   {
    "fieldId": "nt-102",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.77014,
    "lon": -96.9536,
    "nYears": 18
@@ -825,6 +928,7 @@
   {
    "fieldId": "nt-103",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.20732,
    "lon": -96.75332,
    "nYears": 18
@@ -832,6 +936,7 @@
   {
    "fieldId": "nt-104",
    "county": "Navarro",
+   "state": "TX",
    "lat": 31.96094,
    "lon": -96.81508,
    "nYears": 18
@@ -839,6 +944,7 @@
   {
    "fieldId": "nt-105",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.0245,
    "lon": -96.9454,
    "nYears": 18
@@ -846,6 +952,7 @@
   {
    "fieldId": "nt-106",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.23835,
    "lon": -97.1966,
    "nYears": 18
@@ -853,6 +960,7 @@
   {
    "fieldId": "nt-107",
    "county": "Montague",
+   "state": "TX",
    "lat": 33.90198,
    "lon": -97.76017,
    "nYears": 18
@@ -860,6 +968,7 @@
   {
    "fieldId": "nt-108",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.48411,
    "lon": -96.66034,
    "nYears": 18
@@ -867,6 +976,7 @@
   {
    "fieldId": "nt-109",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.92551,
    "lon": -97.11246,
    "nYears": 18
@@ -874,6 +984,7 @@
   {
    "fieldId": "nt-110",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.11603,
    "lon": -96.18503,
    "nYears": 18
@@ -881,6 +992,7 @@
   {
    "fieldId": "nt-111",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.57275,
    "lon": -95.89066,
    "nYears": 18
@@ -888,6 +1000,7 @@
   {
    "fieldId": "nt-112",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.2173,
    "lon": -96.63853,
    "nYears": 18
@@ -895,6 +1008,7 @@
   {
    "fieldId": "nt-113",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.53519,
    "lon": -97.27278,
    "nYears": 18
@@ -902,6 +1016,7 @@
   {
    "fieldId": "nt-114",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.98208,
    "lon": -97.11638,
    "nYears": 18
@@ -909,6 +1024,7 @@
   {
    "fieldId": "nt-115",
    "county": "Denton",
+   "state": "TX",
    "lat": 33.27391,
    "lon": -96.87214,
    "nYears": 18
@@ -916,6 +1032,7 @@
   {
    "fieldId": "nt-116",
    "county": "Cooke",
+   "state": "TX",
    "lat": 33.42516,
    "lon": -97.16526,
    "nYears": 18
@@ -923,6 +1040,7 @@
   {
    "fieldId": "nt-117",
    "county": "Cooke",
+   "state": "TX",
    "lat": 33.59311,
    "lon": -97.17898,
    "nYears": 18
@@ -930,6 +1048,7 @@
   {
    "fieldId": "nt-118",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.3139,
    "lon": -96.21098,
    "nYears": 18
@@ -937,6 +1056,7 @@
   {
    "fieldId": "nt-119",
    "county": "Lamar",
+   "state": "TX",
    "lat": 33.62116,
    "lon": -95.54077,
    "nYears": 18
@@ -944,6 +1064,7 @@
   {
    "fieldId": "nt-120",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.76687,
    "lon": -96.87388,
    "nYears": 18
@@ -951,6 +1072,7 @@
   {
    "fieldId": "nt-121",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.95196,
    "lon": -98.30197,
    "nYears": 18
@@ -958,6 +1080,7 @@
   {
    "fieldId": "nt-122",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.55581,
    "lon": -96.77509,
    "nYears": 18
@@ -965,6 +1088,7 @@
   {
    "fieldId": "nt-123",
    "county": "Montague",
+   "state": "TX",
    "lat": 33.70476,
    "lon": -97.92149,
    "nYears": 18
@@ -972,6 +1096,7 @@
   {
    "fieldId": "nt-124",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.39751,
    "lon": -96.25625,
    "nYears": 18
@@ -979,6 +1104,7 @@
   {
    "fieldId": "nt-125",
    "county": "Navarro",
+   "state": "TX",
    "lat": 31.83609,
    "lon": -96.70108,
    "nYears": 18
@@ -986,6 +1112,7 @@
   {
    "fieldId": "nt-126",
    "county": "Coryell",
+   "state": "TX",
    "lat": 31.54323,
    "lon": -97.6424,
    "nYears": 18
@@ -993,6 +1120,7 @@
   {
    "fieldId": "nt-127",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.29487,
    "lon": -96.43786,
    "nYears": 18
@@ -1000,6 +1128,7 @@
   {
    "fieldId": "nt-128",
    "county": "Denton",
+   "state": "TX",
    "lat": 33.37535,
    "lon": -97.17249,
    "nYears": 18
@@ -1007,6 +1136,7 @@
   {
    "fieldId": "nt-129",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.42942,
    "lon": -97.18677,
    "nYears": 18
@@ -1014,6 +1144,7 @@
   {
    "fieldId": "nt-130",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.53349,
    "lon": -96.68904,
    "nYears": 18
@@ -1021,6 +1152,7 @@
   {
    "fieldId": "nt-131",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.29298,
    "lon": -96.43976,
    "nYears": 18
@@ -1028,6 +1160,7 @@
   {
    "fieldId": "nt-132",
    "county": "Denton",
+   "state": "TX",
    "lat": 33.28159,
    "lon": -97.19766,
    "nYears": 18
@@ -1035,6 +1168,7 @@
   {
    "fieldId": "nt-133",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.54313,
    "lon": -97.57277,
    "nYears": 18
@@ -1042,6 +1176,7 @@
   {
    "fieldId": "nt-134",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.15135,
    "lon": -96.83294,
    "nYears": 18
@@ -1049,6 +1184,7 @@
   {
    "fieldId": "nt-135",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.39513,
    "lon": -96.23888,
    "nYears": 18
@@ -1056,6 +1192,7 @@
   {
    "fieldId": "nt-136",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.52243,
    "lon": -96.67458,
    "nYears": 18
@@ -1063,6 +1200,7 @@
   {
    "fieldId": "nt-137",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.87132,
    "lon": -98.40562,
    "nYears": 18
@@ -1070,6 +1208,7 @@
   {
    "fieldId": "nt-138",
    "county": "Bosque",
+   "state": "TX",
    "lat": 31.82626,
    "lon": -97.53152,
    "nYears": 18
@@ -1077,6 +1216,7 @@
   {
    "fieldId": "nt-139",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.99447,
    "lon": -96.93807,
    "nYears": 18
@@ -1084,6 +1224,7 @@
   {
    "fieldId": "nt-140",
    "county": "Dallas",
+   "state": "TX",
    "lat": 32.57708,
    "lon": -96.65947,
    "nYears": 18
@@ -1091,6 +1232,7 @@
   {
    "fieldId": "nt-141",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.16973,
    "lon": -96.7885,
    "nYears": 18
@@ -1098,6 +1240,7 @@
   {
    "fieldId": "nt-142",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.19684,
    "lon": -97.12311,
    "nYears": 18
@@ -1105,6 +1248,7 @@
   {
    "fieldId": "nt-143",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.96577,
    "lon": -98.06651,
    "nYears": 18
@@ -1112,6 +1256,7 @@
   {
    "fieldId": "nt-144",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.6128,
    "lon": -96.80427,
    "nYears": 18
@@ -1119,6 +1264,7 @@
   {
    "fieldId": "nt-145",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.17413,
    "lon": -97.19195,
    "nYears": 18
@@ -1126,6 +1272,7 @@
   {
    "fieldId": "nt-146",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.60157,
    "lon": -96.69819,
    "nYears": 18
@@ -1133,13 +1280,15 @@
   {
    "fieldId": "nt-147",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.98274,
    "lon": -96.83499,
    "nYears": 18
   },
   {
    "fieldId": "nt-148",
-   "county": NaN,
+   "county": "Jefferson",
+   "state": "OK",
    "lat": 33.91375,
    "lon": -97.88435,
    "nYears": 18
@@ -1147,6 +1296,7 @@
   {
    "fieldId": "nt-149",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.52418,
    "lon": -96.29704,
    "nYears": 18
@@ -1154,6 +1304,7 @@
   {
    "fieldId": "nt-150",
    "county": "Coryell",
+   "state": "TX",
    "lat": 31.52042,
    "lon": -97.55792,
    "nYears": 18
@@ -1161,6 +1312,7 @@
   {
    "fieldId": "nt-151",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.55682,
    "lon": -96.3427,
    "nYears": 18
@@ -1168,6 +1320,7 @@
   {
    "fieldId": "nt-152",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.52268,
    "lon": -96.79548,
    "nYears": 18
@@ -1175,6 +1328,7 @@
   {
    "fieldId": "nt-153",
    "county": "Delta",
+   "state": "TX",
    "lat": 33.47322,
    "lon": -95.65893,
    "nYears": 18
@@ -1182,6 +1336,7 @@
   {
    "fieldId": "nt-154",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.40922,
    "lon": -97.12174,
    "nYears": 18
@@ -1189,6 +1344,7 @@
   {
    "fieldId": "nt-155",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.09701,
    "lon": -96.21519,
    "nYears": 18
@@ -1196,6 +1352,7 @@
   {
    "fieldId": "nt-156",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.76892,
    "lon": -97.03099,
    "nYears": 18
@@ -1203,6 +1360,7 @@
   {
    "fieldId": "nt-157",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.45498,
    "lon": -97.13103,
    "nYears": 18
@@ -1210,6 +1368,7 @@
   {
    "fieldId": "nt-158",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.2349,
    "lon": -97.19391,
    "nYears": 18
@@ -1217,6 +1376,7 @@
   {
    "fieldId": "nt-159",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.50026,
    "lon": -96.67776,
    "nYears": 18
@@ -1224,6 +1384,7 @@
   {
    "fieldId": "nt-160",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.82998,
    "lon": -96.93647,
    "nYears": 18
@@ -1231,6 +1392,7 @@
   {
    "fieldId": "nt-161",
    "county": "Kaufman",
+   "state": "TX",
    "lat": 32.48377,
    "lon": -96.41969,
    "nYears": 18
@@ -1238,6 +1400,7 @@
   {
    "fieldId": "nt-162",
    "county": "Johnson",
+   "state": "TX",
    "lat": 32.2701,
    "lon": -97.10754,
    "nYears": 18
@@ -1245,6 +1408,7 @@
   {
    "fieldId": "nt-163",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.54557,
    "lon": -97.31887,
    "nYears": 18
@@ -1252,6 +1416,7 @@
   {
    "fieldId": "nt-164",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.20508,
    "lon": -96.67821,
    "nYears": 18
@@ -1259,6 +1424,7 @@
   {
    "fieldId": "nt-165",
    "county": "Cooke",
+   "state": "TX",
    "lat": 33.57307,
    "lon": -97.11492,
    "nYears": 18
@@ -1266,6 +1432,7 @@
   {
    "fieldId": "nt-166",
    "county": "Denton",
+   "state": "TX",
    "lat": 33.06981,
    "lon": -97.23858,
    "nYears": 18
@@ -1273,6 +1440,7 @@
   {
    "fieldId": "nt-167",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.98814,
    "lon": -97.21601,
    "nYears": 18
@@ -1280,6 +1448,7 @@
   {
    "fieldId": "nt-168",
    "county": "Grayson",
+   "state": "TX",
    "lat": 33.50354,
    "lon": -96.74567,
    "nYears": 18
@@ -1287,6 +1456,7 @@
   {
    "fieldId": "nt-169",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.57275,
    "lon": -97.34708,
    "nYears": 18
@@ -1294,6 +1464,7 @@
   {
    "fieldId": "nt-170",
    "county": "Comanche",
+   "state": "TX",
    "lat": 31.79629,
    "lon": -98.47191,
    "nYears": 18
@@ -1301,6 +1472,7 @@
   {
    "fieldId": "nt-171",
    "county": "Collin",
+   "state": "TX",
    "lat": 33.26817,
    "lon": -96.64215,
    "nYears": 18
@@ -1308,6 +1480,7 @@
   {
    "fieldId": "nt-172",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.08998,
    "lon": -96.8841,
    "nYears": 18
@@ -1315,6 +1488,7 @@
   {
    "fieldId": "nt-173",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.83062,
    "lon": -96.03436,
    "nYears": 18
@@ -1322,6 +1496,7 @@
   {
    "fieldId": "nt-174",
    "county": "Lamar",
+   "state": "TX",
    "lat": 33.54044,
    "lon": -95.79095,
    "nYears": 18
@@ -1329,6 +1504,7 @@
   {
    "fieldId": "nt-175",
    "county": "Navarro",
+   "state": "TX",
    "lat": 32.11273,
    "lon": -96.30634,
    "nYears": 18
@@ -1336,6 +1512,7 @@
   {
    "fieldId": "nt-176",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.52949,
    "lon": -97.03864,
    "nYears": 18
@@ -1343,6 +1520,7 @@
   {
    "fieldId": "nt-177",
    "county": "Hunt",
+   "state": "TX",
    "lat": 33.07253,
    "lon": -96.27413,
    "nYears": 18
@@ -1350,6 +1528,7 @@
   {
    "fieldId": "nt-178",
    "county": "Limestone",
+   "state": "TX",
    "lat": 31.57955,
    "lon": -96.79924,
    "nYears": 18
@@ -1357,6 +1536,7 @@
   {
    "fieldId": "nt-179",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.98018,
    "lon": -97.19487,
    "nYears": 18
@@ -1364,6 +1544,7 @@
   {
    "fieldId": "nt-180",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.1665,
    "lon": -97.19461,
    "nYears": 18
@@ -1371,6 +1552,7 @@
   {
    "fieldId": "nt-181",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.01914,
    "lon": -96.9672,
    "nYears": 18
@@ -1378,6 +1560,7 @@
   {
    "fieldId": "nt-182",
    "county": "Cooke",
+   "state": "TX",
    "lat": 33.63972,
    "lon": -97.21244,
    "nYears": 18
@@ -1385,6 +1568,7 @@
   {
    "fieldId": "nt-183",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.31073,
    "lon": -96.72804,
    "nYears": 18
@@ -1392,6 +1576,7 @@
   {
    "fieldId": "nt-184",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.89783,
    "lon": -97.02542,
    "nYears": 18
@@ -1399,6 +1584,7 @@
   {
    "fieldId": "nt-185",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.83343,
    "lon": -96.93395,
    "nYears": 18
@@ -1406,6 +1592,7 @@
   {
    "fieldId": "nt-186",
    "county": "Navarro",
+   "state": "TX",
    "lat": 31.83698,
    "lon": -96.6617,
    "nYears": 18
@@ -1413,6 +1600,7 @@
   {
    "fieldId": "nt-187",
    "county": "Lamar",
+   "state": "TX",
    "lat": 33.55942,
    "lon": -95.79506,
    "nYears": 18
@@ -1420,6 +1608,7 @@
   {
    "fieldId": "nt-188",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.31652,
    "lon": -96.69639,
    "nYears": 18
@@ -1427,6 +1616,7 @@
   {
    "fieldId": "nt-189",
    "county": "Hill",
+   "state": "TX",
    "lat": 32.06661,
    "lon": -97.11774,
    "nYears": 18
@@ -1434,6 +1624,7 @@
   {
    "fieldId": "nt-190",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.40926,
    "lon": -96.77682,
    "nYears": 18
@@ -1441,6 +1632,7 @@
   {
    "fieldId": "nt-191",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.86623,
    "lon": -96.93954,
    "nYears": 18
@@ -1448,6 +1640,7 @@
   {
    "fieldId": "nt-192",
    "county": "Fannin",
+   "state": "TX",
    "lat": 33.48237,
    "lon": -96.12837,
    "nYears": 18
@@ -1455,6 +1648,7 @@
   {
    "fieldId": "nt-193",
    "county": "Ellis",
+   "state": "TX",
    "lat": 32.10622,
    "lon": -96.89455,
    "nYears": 18
@@ -1462,6 +1656,7 @@
   {
    "fieldId": "nt-194",
    "county": "Hill",
+   "state": "TX",
    "lat": 31.9258,
    "lon": -96.84005,
    "nYears": 18
@@ -1469,6 +1664,7 @@
   {
    "fieldId": "nt-195",
    "county": "Kaufman",
+   "state": "TX",
    "lat": 32.53349,
    "lon": -96.45104,
    "nYears": 18
@@ -1476,6 +1672,7 @@
   {
    "fieldId": "nt-196",
    "county": "Cooke",
+   "state": "TX",
    "lat": 33.56187,
    "lon": -97.11931,
    "nYears": 18
@@ -1483,6 +1680,7 @@
   {
    "fieldId": "nt-197",
    "county": "Clay",
+   "state": "TX",
    "lat": 33.62715,
    "lon": -98.11703,
    "nYears": 18
@@ -1490,6 +1688,7 @@
   {
    "fieldId": "nt-198",
    "county": "Kaufman",
+   "state": "TX",
    "lat": 32.78681,
    "lon": -96.36044,
    "nYears": 18
@@ -1497,6 +1696,7 @@
   {
    "fieldId": "nt-199",
    "county": "Delta",
+   "state": "TX",
    "lat": 33.45789,
    "lon": -95.61047,
    "nYears": 18
@@ -1504,6 +1704,7 @@
   {
    "fieldId": "nt-200",
    "county": "McLennan",
+   "state": "TX",
    "lat": 31.51375,
    "lon": -97.36535,
    "nYears": 18

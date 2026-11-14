@@ -2,7 +2,7 @@
 // Answers are saved in localStorage as a convenience only (it can be empty or blocked).
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { makeT } from '../i18n.js';
-import { loadFieldAt, guessCurrentRotation } from '../data/loadField.js';
+import { loadFieldAt, loadDemoField, guessCurrentRotation } from '../data/loadField.js';
 
 const AppContext = createContext(null);
 const STORAGE_KEY = 'greenline:v1';
@@ -33,16 +33,26 @@ export function AppProvider({ children }) {
     document.documentElement.lang = lang;
   }, [lang, farm]);
 
-  async function pickField(lat, lon) {
-    const f = await loadFieldAt(lat, lon);
-    setField(f);
-    setFarm((prev) => (prev.currentRotation.length ? prev : { ...prev, currentRotation: guessCurrentRotation(f) }));
+  const [loading, setLoading] = useState(false);
+
+  async function loadInto(load) {
+    setLoading(true);
+    try {
+      const f = await load();
+      setField(f);
+      setFarm((prev) => (prev.currentRotation.length ? prev : { ...prev, currentRotation: guessCurrentRotation(f) }));
+    } finally {
+      setLoading(false);
+    }
   }
+  // The tap position is only passed to loadFieldAt to find the nearest sampled field. It is not kept.
+  const pickField = (lat, lon) => loadInto(() => loadFieldAt(lat, lon));
+  const pickDemo = () => loadInto(loadDemoField);
 
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, t, screen, setScreen, field, pickField, farm, updateFarm };
+  const value = { lang, setLang, t, screen, setScreen, field, pickField, pickDemo, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

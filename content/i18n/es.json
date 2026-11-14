@@ -30,7 +30,11 @@
     "explain": "¿Qué es {term}?",
     "source": "Fuente",
     "sampleValues": "valores de ejemplo",
-    "and": "y"
+    "and": "y",
+    "receiptOpen": "Ver los datos detrás de esto",
+    "receiptTitle": "De dónde viene esto",
+    "receiptLine": "{resolution} · {dates}",
+    "unknown": "Desconocido"
   },
   "units": {
     "in": "pulg"
@@ -45,8 +49,8 @@
     "title": "Elija su parcela",
     "intro": "Busque su parcela en el mapa y tóquela.",
     "mapLabel": "Mapa del norte de Texas",
-    "mapHint": "En esta demostración, cualquier toque carga una parcela de ejemplo cerca de Denton.",
-    "mapOffline": "El mapa necesita internet. Aún puede cargar la parcela de ejemplo.",
+    "mapHint": "Toque cualquier lugar del norte de Texas. Cargamos el más cercano de 201 campos de cultivo de muestra.",
+    "mapOffline": "El mapa necesita internet. Aún puede cargar el campo de demostración.",
     "loadSample": "Cargar la parcela de ejemplo",
     "summaryTitle": "Su parcela de un vistazo",
     "location": "Ubicación",
@@ -66,7 +70,11 @@
     "recentCrops": "Últimos 3 cultivos",
     "privacy": "Guardamos un cuadro de 30 m, nunca su ubicación exacta.",
     "continue": "Siguiente: su granja",
-    "emptySummary": "Toque su parcela en el mapa, o cargue la parcela de ejemplo para probar la aplicación."
+    "emptySummary": "Toque su campo en el mapa o cargue el campo de demostración (datos reales de la NASA) para probar la app.",
+    "loadDemo": "Cargar el campo de demostración",
+    "loading": "Cargando…",
+    "nearest": "Campo de muestra más cercano ({id}), a {km} km de donde tocó. Pronto habrá datos reales para cada campo.",
+    "fallback": "No pudimos cargar datos reales para este campo, así que este es el campo de muestra ficticio."
   },
   "farm": {
     "title": "Su granja",
@@ -94,12 +102,12 @@
     "heatDetail": "Promedio por año",
     "statBare": "Días sin cubierta",
     "bareDetail": "Promedio por año",
-    "chartTitle": "Lluvia de cada año desde 2005",
-    "chartCaption": "Cada barra es un año. Las barras rojas son años de sequía: {years}.",
-    "chartAlt": "Gráfica de barras de la lluvia anual de 2005 a 2025. Promedio de unas {avg} pulgadas. Años de sequía: {years}.",
+    "chartTitle": "Lluvia de cada año desde {from}",
+    "chartCaption": "Cada barra es un año, con el color del tipo de año. Sequías recientes: {years}.",
+    "chartAlt": "Gráfica de barras de la lluvia anual de {from} a {to}. Promedio de unas {avg} pulgadas. Años de sequía: {years}.",
     "tooltipRain": "Lluvia",
-    "bareTitle": "¿Cuándo estuvo el suelo desnudo?",
-    "bareCaption": "Cada fila es un año y cada cuadro un mes. Los cuadros cafés con rayas indican poca o ninguna cubierta vegetal.",
+    "bareTitle": "Verde, rastrojo o desnudo: 40 años desde el espacio",
+    "bareCaption": "Cada fila es un año (el más reciente arriba), cada cuadro un mes. El número es el puntaje de cobertura de ese año.",
     "legendBare": "Suelo desnudo",
     "legendCovered": "Con plantas",
     "year": "Año",
@@ -131,7 +139,32 @@
       "noviembre",
       "diciembre"
     ],
-    "next": "Ver opciones de rotación"
+    "next": "Ver opciones de rotación",
+    "droughtDetail": "Años {from}–{to}",
+    "statScore": "Puntaje de cobertura",
+    "scoreDetail": "Últimos 10 años. 100 = nunca desnudo",
+    "cover": {
+      "green": "Creciendo (verde)",
+      "residue": "Poca cobertura o rastrojo",
+      "bare": "Suelo desnudo",
+      "none": "Sin imagen clara (nubes)"
+    },
+    "scoreCol": "Puntaje",
+    "cropCol": "Cultivo",
+    "doubleCrop": "CDL: 2 cultivos",
+    "doubleCropNote": "El mapa de cultivos dice dos cultivos este año. Confianza baja: hay muy pocos ejemplos para comprobarlo.",
+    "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). Los satélites cambiaron en 2013 (Landsat 8), que se ve un poco más verde, así que los años recientes pueden parecer menos desnudos de lo que fueron.",
+    "replayTitle": "Revivir un mal año",
+    "replayCaption": "Los peores años en 40 años de clima de la NASA, elegidos por nuestro modelo de tipos de año. Toque uno para ver qué pasó en este campo.",
+    "replayHeading": "{year}: un año de {type}",
+    "replayRain": "{inches} pulg. de lluvia ({pct}% frente a lo normal)",
+    "replayHeat": "{n} días de más de 95°F (normal: {avg})",
+    "replayStorms": "{n} días de lluvia fuerte (más de 1 pulgada)",
+    "replaySoil": "Humedad del suelo {pct}% frente a lo normal de este campo",
+    "replayCrop": "Cultivo de ese año: {crop}",
+    "replayBare": "{days} días desnudo (puntaje {score}/100)",
+    "replayStress": "Verdor por debajo de lo normal en: {months}",
+    "replayNoStress": "El verdor se mantuvo cerca de lo normal toda la temporada"
   },
   "compare": {
     "title": "Comparar rotaciones",
@@ -177,7 +210,7 @@
     "intro": "Imprima esta página o guárdela como PDF. Llévela a su oficina de AgriLife Extension del condado.",
     "print": "Imprimir o guardar como PDF",
     "fieldSection": "La parcela",
-    "climateSection": "Historial del clima, 2005–2025",
+    "climateSection": "Historial del clima, {from}–{to}",
     "farmSection": "La granja y sus metas",
     "growNow": "Siembra ahora",
     "goals": "Metas",
@@ -193,7 +226,7 @@
     ],
     "notesSection": "Notas",
     "sources": "Fuentes de datos",
-    "sampleNote": "Este resumen usa datos de ejemplo, no mediciones de esta parcela.",
+    "sampleNote": "Este resumen usa datos de muestra, no medidas de este campo.",
     "generated": "Hecho con Greenline el {date}"
   },
   "priorities": {
@@ -251,7 +284,7 @@
   },
   "reasons": {
     "waterAvg": "La necesidad promedio de agua es {value} de 5.",
-    "droughtHistory": "Su parcela tuvo {count} años de sequía desde 2005.",
+    "droughtHistory": "{count} de los últimos {total} años fueron de sequía en este campo.",
     "erosionAvg": "La protección del suelo es {value} de 5 en promedio.",
     "slopeBare": "Su pendiente de {slope}% hace más riesgosas las temporadas sin cubierta.",
     "nitrogen": "{count} temporada(s) con un cultivo que aporta nitrógeno.",
@@ -259,7 +292,11 @@
     "variety": "{count} cultivos diferentes en la rotación.",
     "cashShare": "{count} de {total} temporadas tienen un cultivo que puede vender.",
     "marketMatch": "Se ajusta a dónde vende.",
-    "forageAvg": "El valor para pastoreo y heno es {value} de 5."
+    "forageAvg": "El valor para pastoreo y heno es {value} de 5.",
+    "fieldBareHigh": "Los satélites muestran este campo desnudo unos {days} días al año, así que la cobertura importa más aquí.",
+    "fieldBareLow": "Los satélites muestran este campo desnudo unos {days} días al año.",
+    "drySoilYears": "El suelo estuvo al menos 10% más seco de lo normal en {count} de {total} temporadas.",
+    "lowOrganicMatter": "La materia orgánica del suelo es baja ({om}%), así que los cultivos de cobertura y las leguminosas ayudan más."
   },
   "benefits": {
     "water": "Usa poca agua.",
@@ -271,11 +308,12 @@
   "gaps": {
     "weak": "Débil en \"{priority}\".",
     "equipment": "Necesita equipo que no indicó: {needs}.",
-    "budgetVariety": "{count} cultivos diferentes pueden ser costosos con un presupuesto bajo."
+    "budgetVariety": "{count} cultivos diferentes pueden ser costosos con un presupuesto bajo.",
+    "cdlNoise": "El historial de cultivos viene de los mapas satelitales del USDA, que a veces se equivocan, sobre todo con cultivos menores."
   },
   "risks": {
     "thirstyDryland": "{crops} necesitan mucha agua para temporal.",
-    "heat": "{crops} pueden sufrir con el calor. Su parcela tuvo {count} años de calor o sequía.",
+    "heat": "{crops} pueden sufrir con el calor. {count} de {total} años aquí fueron de calor o sequía.",
     "bare": "El barbecho deja el suelo desnudo."
   },
   "confidence": {
@@ -285,7 +323,14 @@
     "familiarCrops": "La mayoría de los cultivos ya se sembraron en esta parcela.",
     "someNewCrops": "Algunos cultivos son nuevos en esta parcela.",
     "newCrops": "La mayoría de los cultivos son nuevos en esta parcela.",
-    "placeholderTraits": "Los valores de los cultivos son estimaciones iniciales y aún se revisan."
+    "placeholderTraits": "Los valores de los cultivos son estimaciones iniciales y aún se revisan.",
+    "modelStrong": "El modelo de cultivos acertó el {acc}% de las veces en años que nunca vio ({bal}% equilibrado entre cultivos).",
+    "modelMixed": "El modelo de cultivos acertó el {acc}% de las veces en años que nunca vio, pero solo {bal}% equilibrado entre cultivos.",
+    "cropHardToSee": "A los satélites les cuesta reconocer {crops}.",
+    "datasetsAgree": "Dos fuentes de lluvia coinciden para este campo (correlación {corr}, {pct}% de diferencia).",
+    "datasetsDisagree": "Dos fuentes de lluvia no coinciden para este campo (correlación {corr}, {pct}% de diferencia).",
+    "coarseWeather": "Los datos del clima cubren un área amplia (unas 30 millas), no solo su campo.",
+    "cdlNoise": "Los mapas de cultivos a veces se equivocan."
   },
   "crops": {
     "winter_wheat": "Trigo de invierno",
@@ -358,6 +403,94 @@
     "bareDays": {
       "title": "Días sin cubierta",
       "text": "Días en que los satélites vieron poca o ninguna cubierta vegetal, así que el suelo quedó expuesto al viento y la lluvia."
+    },
+    "heldOut": {
+      "title": "Probado en años no vistos",
+      "text": "Escondimos un año a la vez del modelo, lo entrenamos con los demás y revisamos su respuesta para el año escondido. Así se ve cómo le va en un año que nunca ha visto, como el próximo."
+    },
+    "bareScore": {
+      "title": "Puntaje de cobertura",
+      "text": "100 menos la parte del año en que el suelo estuvo desnudo. 100 significa plantas o rastrojo todo el año. Más bajo significa más días desnudo, cuando el suelo se puede lavar o volar."
+    }
+  },
+  "si": {
+    "title": "¿Qué tan seguros están los modelos?",
+    "intro": "Cada modelo se probó solo en años que nunca vio al aprender.",
+    "cropTitle": "Modelo de cultivos y cobertura:",
+    "cropLine": "acierta el {acc}% de las veces ({bal}% equilibrado entre cultivos). Suponer “lo mismo que el año pasado” acierta el {base}%.",
+    "fieldAgree": "En este campo: coincidió con el mapa de cultivos en el {pct}% de los años.",
+    "stressTitle": "Señal de riesgo por clima:",
+    "stressLine": "confianza baja. El clima explica solo una pequeña parte del estrés del cultivo (R² {r2}).",
+    "stressCrops": "Se muestra solo para cultivos donde superó a “suponer un año normal”: {crops}.",
+    "yearTitle": "Tipos de año:",
+    "yearLine": "la misma etiqueta de sequía / húmedo / calor / normal el {pct}% de las veces ({from}–{to}).",
+    "cardTitle": "Lo que vieron los modelos en este campo",
+    "cardAccuracy": "Modelo de cultivos en años no vistos: {acc}% de aciertos, {bal}% equilibrado entre cultivos.",
+    "noModel": "{crop}: todavía no hay modelo satelital para este cultivo.",
+    "recognized": "{crop}: reconocido desde el espacio en {n} de {of} años en que se sembró aquí.",
+    "neverGrown": "{crop}: no se ha sembrado en este campo desde 2008.",
+    "whyCrop": "En {year}: {why}.",
+    "hardToSee": "Cultivo difícil de reconocer: solo {pct}% encontrado en años no vistos.",
+    "riskSignal": "Señal de riesgo por clima (confianza baja): marcó {n} de {of} temporadas.",
+    "whyStress": "En {year}: {why}.",
+    "riskNoSeasons": "Señal de riesgo por clima: no hay temporadas desde 2015 para revisar.",
+    "riskNotForCrop": "El clima por sí solo no predice bien el estrés para este cultivo.",
+    "topReason": "{crop}: {why}",
+    "lowConfidence": "confianza baja",
+    "cls": {
+      "corn": "Maíz",
+      "cotton": "Algodón",
+      "grain_sorghum": "Sorgo de grano",
+      "soybeans": "Soya",
+      "winter_wheat": "Trigo de invierno",
+      "small_grain": "Avena u otro cereal menor",
+      "fallow": "Barbecho",
+      "double_crop": "Dos cultivos (doble cultivo)",
+      "other": "Pasto, heno u otro"
+    },
+    "driver": {
+      "ndviMonth": "Lo que más pesó: el verdor (NDVI) en {month}",
+      "ndtiMonth": "Lo que más pesó: el rastrojo (NDTI) en {month}",
+      "bsiMonth": "Lo que más pesó: el suelo desnudo (BSI) en {month}",
+      "ndvi_max": "Lo que más pesó: el verdor máximo",
+      "ndvi_min": "Lo que más pesó: el verdor mínimo",
+      "ndvi_peak_month": "Lo que más pesó: el mes de mayor verdor",
+      "green_months": "Lo que más pesó: el número de meses verdes",
+      "ndvi_spring_minus_summer": "Lo que más pesó: el verdor de primavera frente al de verano"
+    },
+    "stress": {
+      "tMaxC": {
+        "low": "Lo que más pesó: días más frescos en {month}",
+        "high": "Lo que más pesó: días más calurosos en {month}"
+      },
+      "heatStressDays": {
+        "low": "Lo que más pesó: menos días de más de 95°F en {month}",
+        "high": "Lo que más pesó: más días de más de 95°F en {month}"
+      },
+      "powerPrecipMm": {
+        "low": "Lo que más pesó: poca lluvia en {month}",
+        "high": "Lo que más pesó: mucha lluvia en {month}"
+      },
+      "powerPrecipPrev2": {
+        "low": "Lo que más pesó: poca lluvia en los 2 meses antes de {month}",
+        "high": "Lo que más pesó: mucha lluvia en los 2 meses antes de {month}"
+      },
+      "imergPrecipMm": {
+        "low": "Lo que más pesó: poca lluvia en {month} (satélite)",
+        "high": "Lo que más pesó: mucha lluvia en {month} (satélite)"
+      },
+      "stormDays": {
+        "low": "Lo que más pesó: pocas tormentas en {month}",
+        "high": "Lo que más pesó: días de tormenta en {month}"
+      },
+      "smRootzoneZ": {
+        "low": "Lo que más pesó: poca humedad del suelo en {month}",
+        "high": "Lo que más pesó: suelo húmedo en {month}"
+      },
+      "smRootzonePrevZ": {
+        "low": "Lo que más pesó: poca humedad del suelo antes de {month}",
+        "high": "Lo que más pesó: suelo húmedo antes de {month}"
+      }
     }
   }
 }

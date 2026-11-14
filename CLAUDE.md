@@ -16,13 +16,17 @@ Current stage: a skeleton running on **fake sample data**. Real data, AI and adv
 | `/app` | The React PWA. `npm` commands run from here |
 | `/scoring` | Rotation scoring as plain JS functions with no React and no DOM. Imported by the app as `@scoring` |
 | `/content` | `crops.json`, `rotations.json`, `i18n/en.json`, `i18n/es.json` (all user-facing text, including the glossary) |
-| `/shared` | `sample-field.json` and `data-format.md` (the field data contract) |
-| `/pipeline` | Future Python / Earth Engine processing. Outputs files in the `/shared` format |
+| `/shared` | `fields/` (real per-field JSON), `si/` (model results), `sample-field.json` (fake fallback), `data-format.md` (the contract) |
+| `/pipeline` | Python / Earth Engine downloads and SI models (`MODELS.md`). Outputs files in the `/shared` format |
 
 Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 
 ## Key code paths
-- Field data enters the app in **one place**: `app/src/data/loadField.js`. Swap the sample for real pipeline output there.
+- Field data enters the app in **one place**: `app/src/data/loadField.js`. Real fields: `/shared/fields/<id>.json`
+  (built by `pipeline/build_fields.py`); falls back to the fake `sample-field.json` if a file is missing.
+- **Demo field: one setting**, `DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local`). Default `nt-103`.
+- SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
+- Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them.
 - Scoring: `scoring/scoreRotation.js` → `scoreRotation(rotation, field, priorities, constraints, cropLibrary)`.
   One rule per file in `scoring/rules/`. The same function scores current, suggested and custom rotations.
   Rules return **i18n keys and params**, never English text.
@@ -50,8 +54,9 @@ npm run selftest   # scoring sanity checks
 ```
 
 ## Roadmap
-- [ ] Pipeline: real NASA POWER / IMERG / SMAP / HLS / SRTM / SSURGO / CDL outputs per 30 m cell
-- [ ] `loadFieldAt(lat, lon)`: tap → grid cell → fetch that cell's JSON
+- [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields
+- [ ] Real data for every 30 m cell (today a tap loads the nearest sampled field)
+- [ ] Harmonize Landsat 5/7 with Landsat 8/9 NDVI (see MODELS.md)
 - [ ] Verify crop traits with Texas A&M AgriLife and NRCS. Agree on the `yearType` classification rule
 - [ ] What-if sliders (rain, heat, prices) → `app/src/components/future/WhatIfSliders.jsx`
 - [ ] Field walk mode (live GPS → cell, kept on device) → `FieldWalkMode.jsx`

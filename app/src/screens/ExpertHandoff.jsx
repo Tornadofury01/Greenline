@@ -3,7 +3,7 @@ import { Printer } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useScores } from '../state/useScores.js';
 import { formatReason } from '../i18n.js';
-import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
+import { NeedField, JudgmentNote, PageHead, ModelCard } from '../components/Small.jsx';
 import { FieldFacts } from './PickField.jsx';
 import { climateStats } from '../display.js';
 
@@ -43,7 +43,7 @@ export default function ExpertHandoff() {
       </section>
 
       <section className="card doc-section">
-        <h2>{t('handoff.climateSection')}</h2>
+        <h2>{t('handoff.climateSection', { from: field.climateYearly[0]?.year, to: field.climateYearly.at(-1)?.year })}</h2>
         <Table rows={[
           [t('story.statDrought'), `${s.droughtYears.length} (${s.droughtYears.join(', ')})`],
           [t('story.statRain'), `${s.avgRainIn} ${t('units.in')} (${s.avgRainMm} mm)`],
@@ -51,6 +51,8 @@ export default function ExpertHandoff() {
           [t('story.statBare'), `${s.avgBareDays}`],
         ]} />
       </section>
+
+      <ModelCard />
 
       <section className="card doc-section">
         <h2>{t('handoff.farmSection')}</h2>

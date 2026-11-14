@@ -3,13 +3,14 @@
 import { useId, useState } from 'react';
 import {
   Award, ChevronDown, ArrowUp, ArrowDown, Minus, ArrowRight, CircleCheck, CircleMinus,
-  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database,
+  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { formatReason } from '../i18n.js';
 import { PRIORITIES } from '@scoring/index.js';
-import { ConfidenceBadge } from './Small.jsx';
+import { ConfidenceBadge, Receipt } from './Small.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
+import { cropInsight, cropDriverText, stressDriverText, modelSummary } from '../si.js';
 
 const TAG_ICON = { nitrogen: Sprout, cover: Layers, deepRoots: ArrowDownToLine, diverse: Shuffle };
 
@@ -33,9 +34,72 @@ function IconList({ items, Icon, tone }) {
   return (
     <ul className="icon-list">
       {items.map((r, i) => (
-        <li key={i}><Icon size={18} className={tone} aria-hidden="true" /><span>{formatReason(t, r)}</span></li>
+        <li key={i}><Icon size={18} className={tone} aria-hidden="true" /><Receipt src={r.src}>{formatReason(t, r)}</Receipt></li>
       ))}
     </ul>
+  );
+}
+
+// One glanceable SHAP line on the card face: the first crop in the rotation the model has seen on this field.
+function TopReason({ crops }) {
+  const { t, field } = useApp();
+  if (!field?.si) return null;
+  const x = [...new Set(crops)].map((id) => cropInsight(field, id)).find((i) => i?.driver);
+  if (!x) return null;
+  return (
+    <p className="si-top">
+      <BrainCircuit size={16} aria-hidden="true" />
+      <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9']}>
+        {t('si.topReason', { crop: t(`crops.${x.cropId}`), why: cropDriverText(t, x.driver) })}
+      </Receipt>
+    </p>
+  );
+}
+
+// SI, visible: for each crop, how well the crop model recognised it on this field in years it never saw,
+// the SHAP "what mattered most", and the weather risk signal only where it beat "always normal".
+function ModelInsights({ crops }) {
+  const { t, field } = useApp();
+  const m = modelSummary(field);
+  if (!m) return null;
+  const ids = [...new Set(crops)].filter((id) => id !== 'fallow');
+  return (
+    <section className="detail">
+      <h4><BrainCircuit size={18} aria-hidden="true" /> {t('si.cardTitle')} <GlossaryIcon term="heldOut" /></h4>
+      <p className="muted small">
+        <Receipt src={['Greenline SI models']}>{t('si.cardAccuracy', { acc: m.cropAcc, bal: m.cropBal })}</Receipt>
+      </p>
+      <ul className="icon-list">
+        {ids.map((id) => {
+          const x = cropInsight(field, id);
+          const name = t(`crops.${id}`);
+          if (!x?.hasModel) return <li key={id}><Lightbulb size={18} className="info" aria-hidden="true" /><span>{t('si.noModel', { crop: name })}</span></li>;
+          return (
+            <li key={id} className="si-crop">
+              <Lightbulb size={18} className="info" aria-hidden="true" />
+              <span>
+                {x.years > 0
+                  ? <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>{t('si.recognized', { crop: name, n: x.recognized, of: x.years })}</Receipt>
+                  : t('si.neverGrown', { crop: name })}
+                {x.driver && <span className="si-why">{t('si.whyCrop', { year: x.driverYear, why: cropDriverText(t, x.driver) })}</span>}
+                {x.recall != null && x.recall < 0.5 && <span className="si-warn">{t('si.hardToSee', { pct: Math.round(x.recall * 100) })}</span>}
+                <span className="si-risk">
+                  <CloudSun size={16} aria-hidden="true" />
+                  {x.signalAllowed
+                    ? (x.seasons > 0
+                      ? <Receipt src={['Greenline SI models', 'SMAP L4', 'NASA POWER', 'GPM IMERG']}>
+                          {t('si.riskSignal', { n: x.flagged, of: x.seasons })}
+                          {x.stressDriver && ` ${t('si.whyStress', { year: x.stressYear, why: stressDriverText(t, x.stressDriver) })}`}
+                        </Receipt>
+                      : t('si.riskNoSeasons'))
+                    : t('si.riskNotForCrop')}
+                </span>
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 
@@ -87,6 +151,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           })}
         </div>
         <Delta value={delta} />
+        <TopReason crops={result.crops} />
       </div>
 
       <button type="button" className="rot-toggle" aria-expanded={open} aria-controls={detailsId} onClick={() => setOpen(!open)}>
@@ -134,10 +199,16 @@ export default function RotationCard({ result, label, name, best = false, delta 
             <h4>{t('compare.confidenceWhy')} <GlossaryIcon term="confidence" /></h4>
             <IconList items={result.confidence.reasons} Icon={CircleCheck} tone="info" />
           </section>
-          <p className="source">
+          <ModelInsights crops={result.crops} />
+          <div className="source">
             <Database size={14} aria-hidden="true" />
-            <span>{t('compare.evidence')}: {result.evidence.join(', ')}</span>
-          </p>
+            <span>
+              {t('compare.evidence')}:{' '}
+              {result.evidence.map((d, i) => (
+                <span key={d}>{i > 0 && ', '}<Receipt src={[d]}>{d}</Receipt></span>
+              ))}
+            </span>
+          </div>
         </div>
       )}
     </article>

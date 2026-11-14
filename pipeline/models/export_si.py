@@ -48,7 +48,7 @@ def driver(d, kind):
         if len(p) == 2 and p[1].isdigit():
             out = {"key": f"si.driver.{p[0]}Month", "params": {"month": int(p[1])}, "text": d.get("text")}
     else:
-        out["params"] = {"month": d["month"], "direction": "low" if d["value"] < 0 else "high"}
+        out["params"] = {"month": d["month"], "direction": "low" if d["value"] < d.get("typical", 0) else "high"}
     return out
 
 
@@ -81,13 +81,13 @@ def main():
                 "predictedStressMonths": list(st.predictedStressMonths) if st is not None else None,
                 "stressDriver": driver(st.topDriver, "stress") if st is not None else None,
             }.items()})
-        out = {"schemaVersion": SCHEMA, "fieldId": f.fieldId, "county": f.county, "state": "TX",
+        out = {"schemaVersion": SCHEMA, "fieldId": f.fieldId, "county": f.county, "state": f.state,
                "lat": f.lat, "lon": f.lon, "generated": date.today().isoformat(),
                "models": summary, "years": years,
                "yearTypes": [{"year": int(y), "yearType": t} for y, t in sorted(year_type.items())],
                "replayPresets": yp["replayPresets"]}
-        (SHARED / f"{f.fieldId}.json").write_text(json.dumps(out, separators=(",", ":")))
-        index.append({"fieldId": f.fieldId, "county": f.county, "lat": f.lat, "lon": f.lon, "nYears": len(years)})
+        (SHARED / f"{f.fieldId}.json").write_text(json.dumps(out, separators=(",", ":"), allow_nan=False))
+        index.append({"fieldId": f.fieldId, "county": f.county, "state": f.state, "lat": f.lat, "lon": f.lon, "nYears": len(years)})
     (SHARED / "index.json").write_text(json.dumps({"schemaVersion": SCHEMA, "models": summary, "fields": index}, indent=1))
     print(f"wrote {len(index)} field files to shared/si/")
 

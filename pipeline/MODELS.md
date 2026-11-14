@@ -14,6 +14,7 @@ year. No random splits and no tuning on test years. "Held-out" below always mean
 | Model 2: vegetation stress → weather risk signal | `pipeline/models/veg_stress.py` | `pipeline/models/results/veg_stress*.json` |
 | Model 3: year patterns | `pipeline/models/year_patterns.py` | `pipeline/models/results/year_patterns.json` |
 | Per-field export for the app | `pipeline/models/export_si.py` | `shared/si/<fieldId>.json`, `shared/si/index.json` |
+| App field files (data + SI) | `pipeline/build_fields.py` | `shared/fields/<fieldId>.json`, `shared/fields/index.json` |
 
 Run order (repo root):
 ```
@@ -197,8 +198,11 @@ Drought years: 1984, 1988, 1998, 1999, 2005, 2006, 2011, 2022, 2023.
 9. **NASS Crop Progress is Texas-wide,** not North Texas.
 10. **Model 3 clusters are weak.** k = 4 doesn't score best on silhouette (k = 2 does). It's one POWER cell (~50 km) for every field, and 2024 had no fall frost, so its frost-free days were filled with the median.
 11. **IMERG storm days may run about 20% high.** Check against a gauge.
-12. **The Ellis County demo field is not cropland.** CDL labels it grassland/pasture (176) every year from 2008 to 2024 (wetland in 2025), and its NDVI never drops below 0.18. The pipeline comment claiming it was confirmed cropland was wrong. Nearby real cropland samples: `nt-141` (4.6 km; corn, cotton, wheat, soybeans, fallow) and `nt-103` (8.2 km; corn, cotton, wheat, sorghum). The team should pick a new demo field.
-13. **Not suspicious:** no model scored implausibly high. The highest is model 1 at 77% accuracy, which matches the per-class table.
+12. **The original Ellis County demo point is not cropland.** The app's demo field is now **nt-103** (Ellis County, Houston Black clay; corn/cotton/sorghum/wheat, with the clearest wheat-then-bare-summer year in 2012). Change it in `app/src/config.js`. CDL labels it grassland/pasture (176) every year from 2008 to 2024 (wetland in 2025), and its NDVI never drops below 0.18. The pipeline comment claiming it was confirmed cropland was wrong. Nearby real cropland samples: `nt-141` (4.6 km; corn, cotton, wheat, soybeans, fallow) and `nt-103` (8.2 km; corn, cotton, wheat, sorghum). The team should pick a new demo field.
+13. **3 of the 201 fields are in Oklahoma** (nt-056 and nt-081 in Bryan County, nt-148 in Jefferson County). The sampling box crossed the Red River. They stay in the training data (same farming conditions) and are labeled `OK`.
+14. **Landsat sensor change.** Median bare days drop from 140–190 a year before 2015 to 54–122 after. Some of that may be real, but Landsat 8 (2013–) reads NDVI slightly higher than Landsat 5/7, and with a fixed 0.25 cutoff that alone lowers bare days. Fix: harmonize TM/ETM+ to OLI (Roy et al. 2016 coefficients) and re-download (~1.5 h).
+15. **Stress-driver wording bug (fixed).** "Low" vs. "high" was first taken from the sign of the raw value, which is only meaningful for soil-moisture z-scores. It's now relative to each input's median.
+16. **Not suspicious:** no model scored implausibly high. The highest is model 1 at 77% accuracy, which matches the per-class table.
 
 ## Pitch summary (3 sentences)
 

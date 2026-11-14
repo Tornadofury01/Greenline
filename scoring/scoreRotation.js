@@ -22,12 +22,13 @@ export const PRIORITIES = ['water', 'erosion', 'soil', 'income', 'cattle'];
 const RULES = { water: waterRule, erosion: erosionRule, soil: soilRule, income: incomeRule, cattle: cattleRule };
 
 // Which datasets back each priority (shown as "Evidence").
+// Names match field.sources[].dataset so the app can show each one's resolution and dates.
 const EVIDENCE = {
   water: ['NASA POWER', 'GPM IMERG', 'SMAP L4'],
-  erosion: ['SRTM', 'GPM IMERG', 'Landsat 8/9 (HLS)'],
+  erosion: ['SRTM', 'GPM IMERG', 'Landsat 5/7/8/9'],
   soil: ['USDA SSURGO', 'USDA Cropland Data Layer'],
   income: ['USDA Cropland Data Layer'],
-  cattle: ['Landsat 8/9 (HLS)'],
+  cattle: ['Landsat 5/7/8/9'],
 };
 
 const SELECTED_WEIGHT = 2; // priorities the farmer picked count double
@@ -59,10 +60,17 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   for (const p of priorities) if (breakdown[p]?.score < 4) gaps.push(reason('gaps.weak', { priority: p }));
 
   // 4. Risks from the field's climate history.
+  // Hot or drought years in at least 20% of this field's record (k-means year types on real data).
+  const nYears = field.climateYearly.length;
   const hotYears = field.climateYearly.filter((y) => y.yearType === 'heat' || y.yearType === 'drought').length;
   const heatSensitive = crops.filter((c) => c.heatTolerance <= 2 && c.season === 'warm');
-  if (heatSensitive.length && hotYears >= 4) risks.push(reason('risks.heat', { crops: [...new Set(heatSensitive.map((c) => c.id))], count: hotYears }));
-  if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare'));
+  if (heatSensitive.length && hotYears >= Math.max(4, 0.2 * nYears)) {
+    risks.push(reason('risks.heat', { crops: [...new Set(heatSensitive.map((c) => c.id))], count: hotYears, total: nYears },
+      ['NASA POWER', 'Greenline SI models']));
+  }
+  if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare', {}, ['Landsat 5/7/8/9']));
+  // CDL can mislabel crops, which affects crop history and the crop model. Shown as a gap so it isn't hidden.
+  if (field.si) gaps.push(reason('gaps.cdlNoise', {}, ['USDA Cropland Data Layer']));
 
   // 5. Soil-health tags for the card.
   const tags = [];

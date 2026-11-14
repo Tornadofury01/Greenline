@@ -1,7 +1,9 @@
 // Small presentational pieces shared by several screens.
-import { ShieldCheck, Shield, ShieldQuestion, Database, Handshake, MapPin } from 'lucide-react';
+import { useId, useState } from 'react';
+import { ShieldCheck, Shield, ShieldQuestion, Database, Handshake, MapPin, Receipt as ReceiptIcon, BrainCircuit } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
+import { modelSummary } from '../si.js';
 
 export function JudgmentNote() {
   const { t } = useApp();
@@ -22,8 +24,72 @@ export function PageHead({ title, intro }) {
   );
 }
 
-// Big number + simple label. `detail` is a short plain line under the label.
-export function StatCard({ icon: Icon, label, value, unit, detail, term }) {
+// Evidence receipt: tap a claim to see which datasets back it, with resolution and dates.
+// `src` is a list of dataset names matching field.sources[].dataset. Without matches it renders plain text.
+export function Receipt({ src, children }) {
+  const { t, field } = useApp();
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  const rows = (src || []).map((d) => field?.sources.find((s) => s.dataset === d)).filter(Boolean);
+  if (!rows.length) return <span>{children}</span>;
+  return (
+    <span className="receipt-wrap">
+      <button type="button" className="receipt" aria-expanded={open} aria-controls={id} onClick={() => setOpen(!open)}>
+        <span>{children}</span>
+        <ReceiptIcon size={14} className="receipt-icon" aria-label={t('common.receiptOpen')} />
+      </button>
+      {open && (
+        <span className="receipt-card" id={id} role="note">
+          <span className="receipt-title">{t('common.receiptTitle')}</span>
+          {rows.map((s) => (
+            <span key={s.dataset} className="receipt-row">
+              <strong>{s.dataset}</strong>
+              <span>{s.variable}</span>
+              <span className="muted">{t('common.receiptLine', { resolution: s.resolution, dates: s.dateRange.replace('-', '–') })}</span>
+            </span>
+          ))}
+          {field.isSampleData && <span className="muted">{t('common.sampleValues')}</span>}
+        </span>
+      )}
+    </span>
+  );
+}
+
+// "How sure are the models": accuracy on years each model never saw.
+export function ModelCard() {
+  const { t, field } = useApp();
+  const m = modelSummary(field);
+  if (!m) return null;
+  const crops = m.stressCrops.map((c) => t(`si.cls.${c}`)).join(', ');
+  return (
+    <section className="card si-card">
+      <h2 className="section-title"><BrainCircuit size={20} aria-hidden="true" />{t('si.title')} <GlossaryIcon term="heldOut" /></h2>
+      <p className="muted">{t('si.intro')}</p>
+      <ul className="si-list">
+        <li>
+          <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>
+            <strong>{t('si.cropTitle')}</strong> {t('si.cropLine', { acc: m.cropAcc, bal: m.cropBal, base: m.cropBase })}
+          </Receipt>
+          {m.fieldAgree != null && <span className="si-sub">{t('si.fieldAgree', { pct: m.fieldAgree })}</span>}
+        </li>
+        <li>
+          <Receipt src={['Greenline SI models', 'NASA POWER', 'SMAP L4', 'GPM IMERG']}>
+            <strong>{t('si.stressTitle')}</strong> {t('si.stressLine', { r2: m.stressR2 })}
+          </Receipt>
+          <span className="si-sub">{t('si.stressCrops', { crops })}</span>
+        </li>
+        <li>
+          <Receipt src={['Greenline SI models', 'NASA POWER']}>
+            <strong>{t('si.yearTitle')}</strong> {t('si.yearLine', { pct: m.yearStability, from: m.yearYears[0], to: m.yearYears[1] })}
+          </Receipt>
+        </li>
+      </ul>
+    </section>
+  );
+}
+
+// Big number + simple label. `detail` is a short plain line under the label. `src` makes the label a receipt.
+export function StatCard({ icon: Icon, label, value, unit, detail, term, src }) {
   return (
     <div className="stat">
       <div className="stat-top">
@@ -31,7 +97,7 @@ export function StatCard({ icon: Icon, label, value, unit, detail, term }) {
         {term && <GlossaryIcon term={term} />}
       </div>
       <div className="stat-value">{value}{unit && <span className="stat-unit">{unit}</span>}</div>
-      <div className="stat-label">{label}</div>
+      <div className="stat-label">{src ? <Receipt src={src}>{label}</Receipt> : label}</div>
       {detail && <div className="stat-detail">{detail}</div>}
     </div>
   );
