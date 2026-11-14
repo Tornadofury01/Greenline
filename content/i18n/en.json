@@ -313,7 +313,7 @@
       "deepRoots": "Two or more deep-rooted crops open up the subsoil so water and roots can go deeper.",
       "diverse": "Three or more different crops, so no single pest, disease or bad season hits everything.",
       "droughtTolerant": "Every crop grown here handles dry spells well (low drought sensitivity).",
-      "pestBreak": "Grass crops and broadleaf crops take turns, which interrupts pests and diseases that build up on one plant family. Cover crops and fallow are not counted."
+      "pestBreak": "Grass crops and broadleaf crops take turns, which can interrupt pests and diseases that build up on one plant family. This is a rough family-level check, not a guarantee against pests. Cover crops and fallow are not counted."
     }
   },
   "reasons": {
