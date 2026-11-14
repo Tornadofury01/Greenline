@@ -283,6 +283,7 @@
     "diverse": "Diversa"
   },
   "reasons": {
+    "ryeDryYear": "Investigación de Texas Tech en el oeste de Texas con sequía: el centeno fue el cultivo de cobertura de invierno más confiable. Produjo incluso en un año seco y no redujo el agua del suelo para el siguiente cultivo de verano.",
     "waterAvg": "La necesidad promedio de agua es {value} de 5.",
     "droughtHistory": "{count} de los últimos {total} años fueron de sequía en este campo.",
     "erosionAvg": "La protección del suelo es {value} de 5 en promedio.",
@@ -312,6 +313,7 @@
     "cdlNoise": "El historial de cultivos viene de los mapas satelitales del USDA, que a veces se equivocan, sobre todo con cultivos menores."
   },
   "risks": {
+    "lateKill": "{crops}: si se elimina tarde en primavera, puede agotar la humedad del suelo que necesita el siguiente cultivo. Termínelo a tiempo.",
     "thirstyDryland": "{crops} necesitan mucha agua para temporal.",
     "heat": "{crops} pueden sufrir con el calor. {count} de {total} años aquí fueron de calor o sequía.",
     "bare": "El barbecho deja el suelo desnudo.",

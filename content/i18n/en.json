@@ -283,6 +283,7 @@
     "diverse": "Diverse"
   },
   "reasons": {
+    "ryeDryYear": "Texas Tech research in drought-hit West Texas: rye was the most reliable winter cover crop. It yielded even in a dry year and didn't reduce soil water for the next summer crop.",
     "waterAvg": "Average water need is {value} out of 5.",
     "droughtHistory": "{count} of the last {total} years were drought years on this field.",
     "erosionAvg": "Soil protection is {value} out of 5 on average.",
@@ -312,6 +313,7 @@
     "cdlNoise": "Crop history comes from USDA satellite crop maps, which are sometimes wrong, especially for smaller crops."
   },
   "risks": {
+    "lateKill": "{crops}: killing it late in spring can use up soil moisture the next crop needs. Terminate on time.",
     "thirstyDryland": "{crops} need a lot of water for dryland.",
     "heat": "{crops} can suffer in heat. {count} of {total} years here were hot or drought years.",
     "bare": "Fallow leaves the ground bare.",

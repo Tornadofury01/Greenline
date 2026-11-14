@@ -71,6 +71,9 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   // Contract-only or regionally uncommon crops (e.g. sesame in the Blackland Prairie, per AgriLife).
   const contract = crops.filter((c) => c.contractOnly || c.regionalFit === 'uncommon');
   if (contract.length) risks.push(reason('risks.contractCrop', { crops: [...new Set(contract.map((c) => c.id))] }, ['Texas A&M AgriLife']));
+  // Cover crops killed late can use up the soil water the next crop needs (SARE, cereal rye).
+  const lateKill = crops.filter((c) => c.lateKillRisk);
+  if (lateKill.length) risks.push(reason('risks.lateKill', { crops: [...new Set(lateKill.map((c) => c.id))] }, ['SARE']));
   if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare', {}, ['Landsat 5/7/8/9']));
   // CDL can mislabel crops, which affects crop history and the crop model. Shown as a gap so it isn't hidden.
   if (field.si) gaps.push(reason('gaps.cdlNoise', {}, ['USDA Cropland Data Layer']));
@@ -85,6 +88,9 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   // 6. "Why" = reasons from the farmer's priorities (or all, if none picked).
   const focus = priorities.length ? priorities : PRIORITIES;
   const reasons = focus.flatMap((p) => breakdown[p]?.reasons || []);
+  // Field evidence: Texas Tech (Southern SARE GS15-152) found rye yielded steadily in a dry West Texas year
+  // without reducing soil water for the next summer crop.
+  if (crops.some((c) => c.dryYearEvidence)) reasons.push(reason('reasons.ryeDryYear', {}, ['Southern SARE / Texas Tech']));
   const evidence = [...new Set(focus.flatMap((p) => EVIDENCE[p] || []))];
 
   return {
