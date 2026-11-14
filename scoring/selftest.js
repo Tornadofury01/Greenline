@@ -66,6 +66,13 @@ check(covR(2011).replay.coverPartial && !covR(2007).replay.coverPartial, 'half-e
 check(covR(2007).replay.bareDays.bareDays === covR(null).bareDays.bareDays, 'wet-year replay leaves bare days unchanged');
 check(scoreRotation({ crops: ['corn', 'cotton'] }, real, [], {}, lib, { replayYear: 2011 }).replay.coverPartial === false, 'no covers: nothing changes in a drought replay');
 check(plain.gaps.some((g) => g.key === 'gaps.sensorChange'), 'sensor-change gap shown with bare-day numbers');
+// Landsat 8/9 only: field calibration reads coverYearlyL89 when the file has it (Landsat 7 reads NDVI lower).
+{
+  const noL89 = { ...real, coverYearlyL89: real.coverYearlyL89.map((r) => ({ ...r, months: r.months.map(() => 'bare') })) };
+  check(bd(['corn', 'cotton'], noL89).bareDays > bd(['corn', 'cotton']).bareDays, 'bare days: field calibration reads coverYearlyL89');
+  const lib89 = load('../shared/crop-calendars-l89.json');
+  check(lib.crops.find((c) => c.id === 'corn').bareShare.every((p, m) => Math.abs(p - lib89.crops.corn.bareShare[m]) < 0.006), 'corn calendar = shared/crop-calendars-l89.json');
+}
 
 // Soil-health tags: drought-tolerant and pest-cycle break.
 const tagsOf = (crops) => scoreRotation({ crops }, real, [], {}, lib).tags;

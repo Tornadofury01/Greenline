@@ -14,7 +14,7 @@ const TERMS = [
   { id: 'frost', data: ['NASA POWER', 'PRISM'] },
   { id: 'prism', data: ['PRISM', 'NASA POWER', 'GPM IMERG'] },
   { id: 'waterBalance', data: ['NASA POWER', 'GPM IMERG', 'FAO'] },
-  { id: 'bareDays', data: ['Landsat 5/7/8/9', 'USDA Cropland Data Layer'] },
+  { id: 'bareDays', data: ['Landsat 8/9', 'USDA Cropland Data Layer'] },
   { id: 'kFactor', data: ['USDA SSURGO', 'SRTM'] },
   { id: 'tFactor', data: ['USDA SSURGO'] },
   { id: 'waterStorage', data: ['USDA SSURGO'] },
@@ -23,7 +23,7 @@ const TERMS = [
   { id: 'confidence', data: [] },
   { id: 'heldOut', data: ['Greenline SI models'] },
 ];
-const NOTES = [{ id: 'satVsGround' }, { id: 'sensor2013', data: ['Landsat 5/7/8/9'] }];
+const NOTES = [{ id: 'satVsGround' }, { id: 'sensor2013', data: ['Landsat 8/9', 'Landsat 5/7/8/9'] }];
 
 function Entry({ id, data = [] }) {
   const { t } = useApp();

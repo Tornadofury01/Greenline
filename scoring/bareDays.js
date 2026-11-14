@@ -6,25 +6,28 @@
 //   2. A cover crop joins the year of the cash crop just before it (or just after, if it comes first).
 //      The ground is bare only if BOTH are bare, so the chance is bareShare(cash) x bareShare(cover).
 //   3. If a rotation is only cover crops, each one is its own year.
-//   4. Field calibration: for corn, cotton, sorghum and wheat, the field's own satellite months (Landsat cover +
-//      CDL crop, 2013 on) are blended with the regional pattern. k clear field-years count k / (k + PRIOR) of the blend.
+//   4. Field calibration: for corn, cotton, sorghum and wheat, the field's own satellite months (Landsat 8/9 cover +
+//      CDL crop, 2014 on) are blended with the regional pattern. k clear field-years count k / (k + PRIOR) of the blend.
 //      Fallow and the estimated crops always use the regional/estimated pattern.
 //   5. bare days = sum over months of chance of bare x days in that month, averaged over the rotation's years.
 //   Cover crops assume they establish (coverEstablished = 1). A dry fall can stop them, so a drought replay passes
 //   0.5: a cover crop then removes only half of the bare chance it normally removes (scoreRotation does this).
-// It is an estimate, not a measurement. 2013+ is used because Landsat 5/7 and 8/9 aren't harmonized yet.
+// It is an estimate, not a measurement. Only Landsat 8/9 is used (coverYearlyL89, 2014 on): Landsat 7 reads NDVI ~0.05
+// lower and was mixed into the older record until ~2023 (docs/landsat89-cover-results.md). Files without L89 keys
+// (the fake sample) fall back to the mixed record.
 import { avg } from './rules/helpers.js';
 
 const DAYS = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 const PRIOR = 2;         // the regional pattern counts like 2 field-years
 const MIN_YEARS = 2;     // need at least this many clear years of the crop on the field to use its own record
-const FROM_YEAR = 2013;  // Landsat 8/9 era (see above)
+const FROM_YEAR = 2014;  // first full Landsat 8 year (see above)
 const CAL_CROPS = ['corn', 'cotton', 'grain_sorghum', 'winter_wheat']; // crops the CDL history can calibrate
 
 // The field's own bare share per month for one crop: { share: number[12|null], years } or null.
 export function fieldBareShare(field, cropId) {
-  if (!CAL_CROPS.includes(cropId) || !field?.coverYearly || !field.cropHistory) return null;
-  const cover = Object.fromEntries(field.coverYearly.map((c) => [c.year, c.months]));
+  const rows = field?.coverYearlyL89 || field?.coverYearly;
+  if (!CAL_CROPS.includes(cropId) || !rows || !field.cropHistory) return null;
+  const cover = Object.fromEntries(rows.map((c) => [c.year, c.months]));
   const grown = field.cropHistory.filter((h) => h.crop === cropId && h.year >= FROM_YEAR && cover[h.year]);
   if (grown.length < MIN_YEARS) return null;
   const share = Array.from({ length: 12 }, (_, m) => {

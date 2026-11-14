@@ -14,14 +14,42 @@ export function slopeWord(pct) {
 
 const avg = (xs) => xs.reduce((a, b) => a + b, 0) / xs.length;
 
-// Landsat 8/9 era. Before this, Landsat 5/7 read NDVI lower, so older years look barer (pipeline/MODELS.md #14).
+// Bare days and cover come from Landsat 8/9 only (the `*L89` keys, docs/app-changes-needed.md section 5).
+// Landsat 7 reads NDVI about 0.05 lower and was mixed into the older record until ~2023, so the mixed keys are used only
+// for years before 2013 (shown as low confidence, never averaged) and as a fallback for files without L89 keys.
+// SENSOR_YEAR is the visual line on the charts; bare-day numbers start in 2014 (first full Landsat 8 year).
 export const SENSOR_YEAR = 2013;
-// Rows from SENSOR_YEAR on; falls back to all rows if the field has none (the fake sample).
-const modern = (rows) => { const r = rows.filter((x) => x.year >= SENSOR_YEAR); return r.length ? r : rows; };
+
+// Bare-day rows used for numbers: L89 (2014+). Fallback: mixed rows from SENSOR_YEAR on (files without L89 keys).
+export function bareRows(field) {
+  if (field.bareDaysPerYearL89?.length) return field.bareDaysPerYearL89;
+  const r = (field.bareDaysPerYear || []).filter((x) => x.year >= SENSOR_YEAR);
+  return r.length ? r : field.bareDaysPerYear || [];
+}
+
+// One bare-day row per year for display: L89 when it has the year, the old record before 2013 (low confidence).
+// Years from 2013 on with no L89 number (too cloudy) are left out on purpose: callers show "too cloudy".
+export function bareRowFor(field, year) {
+  if (year < SENSOR_YEAR) {
+    const b = field.bareDaysPerYear?.find((y) => y.year === year);
+    return b ? { ...b, lowConfidence: true } : null;
+  }
+  return bareRows(field).find((y) => y.year === year) || null;
+}
+
+// Cover rows for the timeline: L89 for 2013+, the old record before 2013 (flagged lowConfidence).
+export function coverRows(field) {
+  const l89 = field.coverYearlyL89;
+  if (!l89?.length) return field.coverYearly.map((r) => ({ ...r, lowConfidence: r.year < SENSOR_YEAR || !!r.lowConfidence }));
+  const old = field.coverYearly.filter((r) => r.year < SENSOR_YEAR).map((r) => ({ ...r, lowConfidence: true }));
+  return [...old, ...l89.map((r) => ({ ...r, lowConfidence: false }))];
+}
+// Rows that may go into averages: never the low-confidence ones (fallback: all, for the fake sample).
+const trusted = (rows) => { const r = rows.filter((x) => !x.lowConfidence && x.year >= SENSOR_YEAR); return r.length ? r : rows; };
 
 export function climateStats(field) {
   const c = field.climateYearly;
-  const avgBareDays = Math.round(avg(modern(field.bareDaysPerYear).map((b) => b.days)));
+  const avgBareDays = Math.round(avg(bareRows(field).map((b) => b.days)));
   return {
     droughtYears: c.filter((y) => y.yearType === 'drought').map((y) => y.year),
     hotYears: c.filter((y) => y.yearType === 'heat').map((y) => y.year),
@@ -33,32 +61,34 @@ export function climateStats(field) {
   };
 }
 
-// Months (1-12) that were bare in more than half of all years, in calendar order.
+// Months (1-12) that were bare in more than half of the years (Landsat 8/9 NDVI), in calendar order.
 export function usuallyBareMonths(field) {
-  const rows = modern(field.ndviMonthly);
+  const rows = field.ndviMonthlyL89?.length ? field.ndviMonthlyL89 : field.ndviMonthly.filter((n) => n.year >= SENSOR_YEAR);
   const years = new Set(rows.map((n) => n.year)).size;
   const counts = Array(12).fill(0);
   for (const n of rows) if (n.ndvi < BARE_NDVI) counts[n.month - 1]++;
   return counts.map((c, i) => (c > years / 2 ? i + 1 : null)).filter(Boolean);
 }
 
-// Cover share per year, as % of the clear months: [{ year, green, partly, bare }]. Years with < 9 clear months are left out.
+// Cover share per year, as % of the clear months: [{ year, green, partly, bare, lowConfidence }].
+// Years with < 9 clear months are left out (2013 has only Apr-Dec from Landsat 8, so it is left out too).
 export function coverShares(field) {
-  return field.coverYearly
+  return coverRows(field)
     .map((row) => {
       const clear = row.months.filter(Boolean);
       if (clear.length < 9) return null;
       const pct = (st) => Math.round((100 * clear.filter((m) => m === st).length) / clear.length);
       const bare = pct('bare');
       const green = pct('green');
-      return { year: row.year, green, partly: 100 - bare - green, bare };
+      return { year: row.year, green, partly: 100 - bare - green, bare, lowConfidence: row.lowConfidence };
     })
     .filter(Boolean);
 }
+export const trustedShares = (shares) => trusted(shares);
 
-// Chance (0-1) the ground is bare in each month, over the years from SENSOR_YEAR on.
+// Chance (0-1) the ground is bare in each month, over the Landsat 8/9 years.
 export function typicalBareMonths(field) {
-  const rows = modern(field.coverYearly);
+  const rows = trusted(coverRows(field));
   return Array.from({ length: 12 }, (_, m) => {
     const seen = rows.map((r) => r.months[m]).filter(Boolean);
     return seen.length ? Math.round((100 * seen.filter((s) => s === 'bare').length) / seen.length) / 100 : 0;

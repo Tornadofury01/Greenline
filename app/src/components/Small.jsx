@@ -93,6 +93,16 @@ export function ModelCard() {
   );
 }
 
+// "Low confidence: older satellite" tag for years before 2013 (Landsat 5/7). Opens "Why 2013 matters".
+export function LowConfTag() {
+  const { t, openHow } = useApp();
+  return (
+    <button type="button" className="lowconf-tag" onClick={() => openHow('sensor2013')}>
+      {t('story.lowConfTag')}
+    </button>
+  );
+}
+
 // Big number + simple label. `detail` is a short plain line under the label. `src` makes the label a receipt.
 export function StatCard({ icon: Icon, label, value, unit, detail, term, src }) {
   return (

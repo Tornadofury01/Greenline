@@ -5,35 +5,24 @@
 // calendar year where this crop is the main crop.  For cover crops it is the chance of bare ground WITH the cover
 // crop in place; 1 means "the cover crop adds nothing that month".
 //
-// 1. Data-driven (basis "data"): corn, cotton, grain sorghum and winter wheat. We count how often each month was
-//    "bare" in the Landsat cover data (shared/fields/*.json, coverYearly) for field-years where the Cropland Data Layer says
-//    that crop. Only 2013-2025 is used: Landsat 8/9 era, current practice. 2008-2012 is Landsat 5/7, which reads
-//    NDVI lower, so it shows almost twice the bare days (MODELS.md #14). Not harmonized yet.
+// 1. Data-driven (basis "data"): corn, cotton, grain sorghum and winter wheat, from /shared/crop-calendars-l89.json
+//    (built by pipeline/build_fields.py): how often each month was "bare" in the Landsat 8/9-only cover data
+//    (coverYearlyL89) for field-years where the Cropland Data Layer says that crop, 2014-2025. Landsat 7 is left out
+//    because it reads NDVI ~0.05 lower and was mixed into the older record until ~2023 (docs/landsat89-cover-results.md).
 // 2. Estimates: everything the CDL history can't tell us (cover crops, sunflower, sesame, alfalfa, bare fallow).
 //    Marked in crops.json as `estimates`, with the reference that backs the timing. Cereal rye uses the CDL
 //    "other small grains" months Nov-May as a proxy for its growing window.
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 
 const root = new URL('../../', import.meta.url);
-const FROM = 2013;
-const TO = 2025;
 const DATA_CROPS = { corn: 'corn', cotton: 'cotton', grain_sorghum: 'grain_sorghum', winter_wheat: 'winter_wheat' };
 const r2 = (x) => Math.round(x * 100) / 100;
 
-// ---- 1. measured from the 201 fields
-const dir = new URL('shared/fields/', root);
-const acc = {};
-for (const f of readdirSync(dir).filter((x) => x.startsWith('nt-'))) {
-  const d = JSON.parse(readFileSync(new URL(f, dir)));
-  const cover = Object.fromEntries(d.coverYearly.map((c) => [c.year, c.months]));
-  for (const h of d.cropHistory) {
-    if (h.year < FROM || h.year > TO || !cover[h.year]) continue;
-    const a = (acc[h.cdlClass] ||= Array.from({ length: 12 }, () => ({ bare: 0, n: 0 })));
-    cover[h.year].forEach((st, i) => { if (st) { a[i].n++; if (st === 'bare') a[i].bare++; } });
-  }
-}
-const measured = (cls) => acc[cls].map((m) => r2(m.bare / m.n));
-const nYears = (cls) => acc[cls][5].n; // field-years with a clear June image
+// ---- 1. measured: Landsat 8/9 + CDL calendars for the 200 sampled fields
+const cal = JSON.parse(readFileSync(new URL('shared/crop-calendars-l89.json', root)));
+const [FROM, TO] = cal.years;
+const measured = (cls) => cal.crops[cls].bareShare.map((p) => (p == null ? null : r2(p)));
+const nYears = (cls) => cal.crops[cls].clearFieldYears[5]; // field-years with a clear June image
 
 // ---- 2. estimates (Jan..Dec)
 const ESTIMATES = {
@@ -55,7 +44,7 @@ const ESTIMATES = {
 // ---- write into crops.json (same layout as before: one line per crop)
 const path = new URL('content/crops.json', root);
 const lib = JSON.parse(readFileSync(path, 'utf8'));
-lib.sourceRefs['gl-landsat-cdl'] = `Greenline: monthly Landsat cover (NDVI < 0.25 = bare) for 201 North Texas fields joined to USDA CDL crop history, ${FROM}-${TO}. Built by scoring/tools/build_calendars.mjs.`;
+lib.sourceRefs['gl-landsat-cdl'] = `Greenline: monthly Landsat 8/9 cover (NDVI < 0.25 = bare, no Landsat 7) for 200 North Texas fields joined to USDA CDL crop history, ${FROM}-${TO}. From shared/crop-calendars-l89.json. Built by scoring/tools/build_calendars.mjs.`;
 lib._fields.bareShare = '12 numbers Jan-Dec: chance the ground is bare that month when this crop is the main crop (cover crops: with the cover in place, 1 = adds nothing). Basis: measured from satellite (see sources) or an estimate (see estimates).';
 for (const c of lib.crops) {
   const est = ESTIMATES[c.id];

@@ -604,3 +604,20 @@ dialog.sheet::backdrop { background: rgb(27 31 28 / 0.45); }
 .receipt-scale.scale-patch { color: var(--color-primary); }
 .receipt-scale.scale-area, .receipt-scale.scale-county, .receipt-scale.scale-state { color: var(--color-text-muted); }
 .facts + .facts .fact:first-child { border-top: var(--border); padding-top: var(--s-2); }
+
+/* Landsat 8/9 cover: pre-2013 years are low confidence (older satellites), Jan-Mar 2013 had no Landsat 8 image yet. */
+.bare-rowgroup { display: contents; }
+.bare-sep { padding: var(--s-1) 0 2px; }
+.row-lowconf .bare-cell { opacity: 0.4; }
+.row-lowconf .bare-year, .row-lowconf .bare-score { font-style: italic; }
+.bare-cell.cover-noImage, .swatch.cover-noImage {
+  background-color: transparent;
+  background-image: repeating-linear-gradient(135deg, var(--color-border) 0 1px, transparent 1px 4px);
+  border: 1px solid var(--color-border);
+}
+.lowconf-tag {
+  display: inline-flex; align-items: center; min-height: 32px; padding: 2px var(--s-1);
+  border: 1px dashed var(--color-warn); border-radius: var(--radius-sm); background: var(--color-warn-soft);
+  color: var(--color-warn); font: inherit; font-size: var(--text-xs); font-weight: var(--weight-medium); cursor: pointer;
+}
+.lowconf-tag:hover { text-decoration: underline; }

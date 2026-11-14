@@ -7,9 +7,9 @@ export const round1 = (x) => Math.round(x * 10) / 10;
 export const reason = (key, params = {}, src) => (src ? { key, params, src } : { key, params });
 
 // Field facts the rules share. All optional: the fake sample field (v1) has fewer of them.
-// Average bare days per year over the most recent 10 years with data.
+// Average bare days per year over the most recent 10 years with data (Landsat 8/9 only when the file has it).
 export function recentBareDays(field) {
-  const b = (field.bareDaysPerYear || []).slice(-10);
+  const b = (field.bareDaysPerYearL89 || field.bareDaysPerYear || []).slice(-10);
   return b.length ? Math.round(avg(b.map((x) => x.days))) : null;
 }
 export const droughtYears = (field) => field.climateYearly.filter((y) => y.yearType === 'drought').length;

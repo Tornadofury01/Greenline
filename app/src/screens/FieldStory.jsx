@@ -4,10 +4,13 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer, Cartes
 import CoverStrip from '../components/CoverStrip.jsx';
 import { Sun, CloudRain, Thermometer, CalendarX, ArrowRight, History, Gauge, TriangleAlert } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
-import { StatCard, NeedField, JudgmentNote, PageHead, Source, ModelCard, Receipt } from '../components/Small.jsx';
+import { StatCard, NeedField, JudgmentNote, PageHead, Source, ModelCard, Receipt, LowConfTag } from '../components/Small.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
 import SoilAndFrost from '../components/SoilFacts.jsx';
-import { climateStats, usuallyBareMonths, mmToIn, coverShares, typicalBareMonths, SENSOR_YEAR } from '../display.js';
+import {
+  climateStats, usuallyBareMonths, mmToIn, coverShares, trustedShares, typicalBareMonths, bareRows, bareRowFor,
+  coverRows as allCoverRows, SENSOR_YEAR,
+} from '../display.js';
 import { stressDriverText, modelClassFor } from '../si.js';
 // import VulnerabilityZonesMap from '../components/future/VulnerabilityZonesMap.jsx'; // FUTURE
 
@@ -21,8 +24,8 @@ const joinYears = (ys, t) => (ys.length > 1 ? `${ys.slice(0, -1).join(', ')} ${t
 function Replay({ year }) {
   const { t, field, setScreen, setReplayYear } = useApp();
   const c = field.climateYearly.find((y) => y.year === year);
-  const cover = field.coverYearly.find((y) => y.year === year);
-  const bare = field.bareDaysPerYear.find((y) => y.year === year);
+  const cover = allCoverRows(field).find((y) => y.year === year);
+  const bare = bareRowFor(field, year);
   const si = field.si?.years.find((y) => y.year === year);
   const crop = field.cropHistory.find((h) => h.year === year);
   const s = climateStats(field);
@@ -41,7 +44,12 @@ function Replay({ year }) {
           <li><Receipt src={['SMAP L4']}>{t('story.replaySoil', { pct: Math.round(c.soilMoistureAnomaly * 100) })}</Receipt></li>
         )}
         {crop && <li><Receipt src={['USDA Cropland Data Layer']}>{t('story.replayCrop', { crop: crop.crop === 'other' ? t(`si.cls.${crop.cdlClass || 'other'}`) : t(`crops.${crop.crop}`) })}</Receipt></li>}
-        {bare && <li><Receipt src={['Landsat 5/7/8/9']}>{t('story.replayBare', { days: bare.days, score: bare.score })}</Receipt></li>}
+        {bare ? (
+          <li>
+            <Receipt src={[bare.lowConfidence ? 'Landsat 5/7/8/9' : 'Landsat 8/9']}>{t('story.replayBare', { days: bare.days, score: bare.score })}</Receipt>
+            {bare.lowConfidence && <> <LowConfTag /></>}
+          </li>
+        ) : year > SENSOR_YEAR && <li className="muted">{t('story.noBareNumber')}</li>}
         {si?.stressMonths && (
           <li>
             <Receipt src={['Landsat 5/7/8/9', 'Greenline SI models']}>
@@ -62,18 +70,24 @@ function Replay({ year }) {
   );
 }
 
+// Landsat 8 started imaging in April 2013: Jan-Mar 2013 have no image (not "cloudy").
+const cellState = (row, i, st) => st || (!row.lowConfidence && row.year === SENSOR_YEAR && i < 3 ? 'noImage' : 'none');
+
 function CoverRow({ row, label, extra }) {
   const { t } = useApp();
   const monthsLong = t('story.monthsLong');
   return (
-    <div className="bare-row" role="row">
+    <div className={`bare-row${row.lowConfidence ? ' row-lowconf' : ''}`} role="row">
       <span className="bare-year" role="rowheader">{label}</span>
-      {row.months.map((st, i) => (
-        <span key={i} role="cell" className={`bare-cell cover-${st || 'none'}`}
-          title={`${monthsLong[i]} ${row.year}: ${t(`story.cover.${st || 'none'}`)}`}>
-          <span className="sr-only">{t(`story.cover.${st || 'none'}`)}</span>
-        </span>
-      ))}
+      {row.months.map((st, i) => {
+        const c = cellState(row, i, st);
+        return (
+          <span key={i} role="cell" className={`bare-cell cover-${c}`}
+            title={`${monthsLong[i]} ${row.year}: ${t(`story.cover.${c}`)}`}>
+            <span className="sr-only">{t(`story.cover.${c}`)}</span>
+          </span>
+        );
+      })}
       {extra}
     </div>
   );
@@ -90,7 +104,8 @@ export default function FieldStory() {
   const monthsLong = t('story.monthsLong');
   const bareMonths = usuallyBareMonths(field);
   const yearType = Object.fromEntries(field.climateYearly.map((y) => [y.year, y.yearType]));
-  const bareBy = Object.fromEntries(field.bareDaysPerYear.map((b) => [b.year, b]));
+  const bareBy = Object.fromEntries(bareRows(field).map((b) => [b.year, b]));
+  const oldBareBy = Object.fromEntries(field.bareDaysPerYear.filter((b) => b.year < SENSOR_YEAR).map((b) => [b.year, b]));
   const cropBy = Object.fromEntries(field.cropHistory.map((h) => [h.year, h]));
   const siBy = Object.fromEntries((field.si?.years || []).map((y) => [y.year, y]));
   const chartData = field.climateYearly.map((y) => ({ ...y, rainIn: mmToIn(y.precipMm) }));
@@ -98,16 +113,17 @@ export default function FieldStory() {
   const last = chartData.at(-1)?.year;
   const presets = field.si?.replayPresets || field.climateYearly.filter((y) => y.yearType === 'drought').slice(-3)
     .map((y) => ({ year: y.year, yearType: y.yearType }));
-  const recentScore = Math.round(field.bareDaysPerYear.slice(-10).reduce((a, b) => a + b.score, 0) / Math.max(1, Math.min(10, field.bareDaysPerYear.length)));
+  const recent = bareRows(field).slice(-10);
+  const recentScore = Math.round(recent.reduce((a, b) => a + b.score, 0) / Math.max(1, recent.length));
   const cropLabel = (h) => (h.crop === 'other' ? t(`si.cls.${h.cdlClass || 'other'}`) : t(`crops.${h.crop}`));
   const climateSrc = ['NASA POWER', 'Greenline SI models'];
   const shares = coverShares(field);
   const typical = typicalBareMonths(field);
-  const modernShares = shares.filter((x) => x.year >= SENSOR_YEAR);
-  const sinceShares = modernShares.length ? modernShares : shares;
+  const sinceShares = trustedShares(shares);
   const avgBarePct = sinceShares.length ? Math.round(sinceShares.reduce((a, b) => a + b.bare, 0) / sinceShares.length) : 0;
   const typicalBare = typical.map((p, i) => (p >= 0.5 ? monthsLong[i] : null)).filter(Boolean);
-  const coverRows = [...field.coverYearly].reverse();
+  const coverRows = [...allCoverRows(field)].reverse();
+  const hasLowConf = coverRows.some((x) => x.lowConfidence);
   const shownRows = allYears ? coverRows : coverRows.slice(0, 10);
 
   return (
@@ -127,8 +143,8 @@ export default function FieldStory() {
           detail={t('story.droughtDetail', { from: first, to: last })} />
         <StatCard icon={CloudRain} label={t('story.statRain')} value={s.avgRainIn} unit={t('units.in')} src={['NASA POWER']} detail={t('story.rainDetail', { mm: s.avgRainMm })} />
         <StatCard icon={Thermometer} label={t('story.statHeat')} value={s.avgHeatDays} src={['NASA POWER']} detail={t('story.heatDetail')} />
-        <StatCard icon={Sun} label={t('story.statBare')} value={s.avgBareDays} term="bareDays" src={['Landsat 5/7/8/9']} detail={t('story.bareDetail')} />
-        <StatCard icon={Gauge} label={t('story.statScore')} value={recentScore} unit="/100" term="bareScore" src={['Landsat 5/7/8/9', 'Greenline SI models']} detail={t('story.scoreDetail')} />
+        <StatCard icon={Sun} label={t('story.statBare')} value={s.avgBareDays} term="bareDays" src={['Landsat 8/9']} detail={t('story.bareDetail')} />
+        <StatCard icon={Gauge} label={t('story.statScore')} value={recentScore} unit="/100" term="bareScore" src={['Landsat 8/9']} detail={t('story.scoreDetail')} />
       </div>
 
       <SoilAndFrost field={field} />
@@ -162,15 +178,17 @@ export default function FieldStory() {
                 labelFormatter={(y) => `${y}${yearType[y] ? ` · ${t(`yearType.${yearType[y]}`)}` : ''}`}
               />
               <ReferenceLine x={SENSOR_YEAR} stroke="#4b544d" strokeDasharray="3 3" label={{ value: t('story.sensorChange'), position: 'top', fontSize: 12, fill: '#4b544d' }} />
-              <Bar dataKey="green" stackId="c" fill="var(--chart-green)" isAnimationActive={false} />
-              <Bar dataKey="partly" stackId="c" fill="var(--chart-residue)" isAnimationActive={false} />
-              <Bar dataKey="bare" stackId="c" fill="url(#bareHatch)" isAnimationActive={false} />
+              {[['green', 'var(--chart-green)'], ['partly', 'var(--chart-residue)'], ['bare', 'url(#bareHatch)']].map(([k, fill]) => (
+                <Bar key={k} dataKey={k} stackId="c" fill={fill} isAnimationActive={false}>
+                  {shares.map((row) => <Cell key={row.year} fillOpacity={row.lowConfidence ? 0.35 : 1} />)}
+                </Bar>
+              ))}
             </BarChart>
           </ResponsiveContainer>
         </div>
         <p className="hint">{t('story.partlyNote')}</p>
-        <p className="gap-note"><TriangleAlert size={16} aria-hidden="true" />{t('story.sensorNote')}</p>
-        <Source datasets={['Landsat 5/7/8/9', 'Greenline SI models']} />
+        {hasLowConf && <p className="gap-note"><TriangleAlert size={16} aria-hidden="true" /><span>{t('story.sensorNote')} <LowConfTag /></span></p>}
+        <Source datasets={['Landsat 8/9', 'Landsat 5/7/8/9']} />
       </section>
 
       <section className="card">
@@ -180,7 +198,7 @@ export default function FieldStory() {
         </div>
         <CoverStrip months={typical} />
         <p className="muted">{typicalBare.length ? t('story.typicalBare', { months: typicalBare.join(', ') }) : t('story.typicalNone')}</p>
-        <Source datasets={['Landsat 5/7/8/9']} />
+        <Source datasets={['Landsat 8/9']} />
       </section>
 
       <section className="card">
@@ -237,6 +255,7 @@ export default function FieldStory() {
         <div className="legend">
           {COVER.map((c) => <span key={c} className="legend-item"><span className={`swatch cover-${c}`} />{t(`story.cover.${c}`)}</span>)}
           <span className="legend-item"><span className="swatch cover-none" />{t('story.cover.none')}</span>
+          <span className="legend-item"><span className="swatch cover-noImage" />{t('story.cover.noImage')}</span>
         </div>
         <div className="bare-grid timeline" role="table" aria-label={t('story.bareTitle')}>
           <div className="bare-row" role="row">
@@ -245,22 +264,27 @@ export default function FieldStory() {
             <span className="bare-score bare-head" role="columnheader">{t('story.scoreCol')}</span>
             <span className="bare-crop bare-head" role="columnheader">{t('story.cropCol')}</span>
           </div>
-          {shownRows.map((row) => {
+          {shownRows.map((row, idx) => {
             const ty = yearType[row.year];
+            const b = row.year < SENSOR_YEAR ? oldBareBy[row.year] : bareBy[row.year];
+            const firstOld = row.lowConfidence && !shownRows[idx - 1]?.lowConfidence;
             const h = cropBy[row.year];
             const si = siBy[row.year];
             return (
-              <CoverRow key={row.year} row={row}
+              <div key={row.year} className="bare-rowgroup" role="presentation">
+              {firstOld && <div className="bare-sep" role="presentation"><LowConfTag /></div>}
+              <CoverRow row={row}
                 label={<><span className="type-dot" style={{ background: YEAR_COLORS[ty] || 'transparent' }} title={ty ? t(`yearType.${ty}`) : ''} aria-label={ty ? t(`yearType.${ty}`) : undefined} />{row.year}</>}
                 extra={(
                   <>
-                    <span className="bare-score" role="cell">{bareBy[row.year]?.score ?? '–'}</span>
+                    <span className="bare-score" role="cell" title={!b && row.year > SENSOR_YEAR ? t('story.noBareNumber') : undefined}>{b?.score ?? '–'}</span>
                     <span className="bare-crop" role="cell">
                       {h ? cropLabel(h) : ''}
                       {si?.doubleCropCdl && <span className="mini-badge" title={t('story.doubleCropNote')}>{t('story.doubleCrop')}</span>}
                     </span>
                   </>
                 )} />
+              </div>
             );
           })}
         </div>
@@ -271,7 +295,7 @@ export default function FieldStory() {
         )}
         <p className="hint">{t('story.timelineNote')}</p>
         <p className="gap-note"><TriangleAlert size={16} aria-hidden="true" /><Receipt src={['USDA Cropland Data Layer']}>{t('gaps.cdlNoise')}</Receipt></p>
-        <Source datasets={['Landsat 5/7/8/9', 'USDA Cropland Data Layer']} />
+        <Source datasets={['Landsat 8/9', 'Landsat 5/7/8/9', 'USDA Cropland Data Layer']} />
       </section>
       </div>
 

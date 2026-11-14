@@ -119,7 +119,7 @@
     "statHeat": "Días de más de 95°F",
     "heatDetail": "Promedio por año",
     "statBare": "Días sin cubierta",
-    "bareDetail": "Promedio por año",
+    "bareDetail": "Promedio por año, desde 2014",
     "chartTitle": "Lluvia de cada año desde {from}",
     "chartCaption": "Cada barra es un año, con el color del tipo de año. Sequías recientes: {years}.",
     "chartAlt": "Gráfica de barras de la lluvia anual de {from} a {to}. Promedio de unas {avg} pulgadas. Años de sequía: {years}.",
@@ -160,18 +160,19 @@
     "next": "Ver opciones de rotación",
     "droughtDetail": "Años {from}–{to}",
     "statScore": "Puntaje de cobertura",
-    "scoreDetail": "Últimos 10 años. 100 = nunca desnudo",
+    "scoreDetail": "Últimos 10 años con datos claros. 100 = nunca desnudo",
     "cover": {
       "green": "Creciendo (verde)",
       "residue": "Parcialmente cubierto",
       "bare": "Suelo desnudo",
-      "none": "Sin imagen clara (nubes)"
+      "none": "Sin imagen clara (nubes)",
+      "noImage": "Sin imagen (antes de Landsat 8)"
     },
     "scoreCol": "Puntaje",
     "cropCol": "Cultivo",
     "doubleCrop": "CDL: 2 cultivos",
     "doubleCropNote": "El mapa de cultivos dice dos cultivos este año. Confianza baja: hay muy pocos ejemplos para comprobarlo.",
-    "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). Los satélites cambiaron en 2013 (Landsat 8), que se ve un poco más verde, así que los años recientes pueden parecer menos desnudos de lo que fueron.",
+    "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). El tiempo desnudo y verde antes de 2013 viene de satélites antiguos y es de baja confianza.",
     "replayTitle": "Revivir un mal año",
     "replayCaption": "Los peores años en 40 años de clima de la NASA, elegidos por nuestro modelo de tipos de año. Toque uno para ver qué pasó en este campo.",
     "replayHeading": "{year}: un año de {type}",
@@ -186,8 +187,8 @@
     "coverChartTitle": "La cobertura de su suelo, año por año",
     "coverChartCaption": "Cada barra es un año. El verde es el tiempo con plantas creciendo, el beige es cobertura parcial y la parte café con rayas es suelo desnudo.",
     "coverChartAlt": "Gráfica de barras de la cobertura del suelo de {from} a {to}. El suelo desnudo promedió {bare}% de los meses despejados desde {since}.",
-    "sensorChange": "Satélites nuevos",
-    "sensorNote": "En 2013 cambió el satélite, y el nuevo se ve un poco más verde. El tiempo desnudo antes de 2013 puede verse mayor de lo que fue, así que compare con cuidado a ambos lados de esa línea.",
+    "sensorChange": "Landsat 8",
+    "sensorNote": "Antes de 2013 solo había satélites antiguos. Ven las parcelas menos verdes, así que el tiempo desnudo parece mayor de lo que fue. Tome esos años como aproximados.",
     "typicalTitle": "Un año típico en su parcela",
     "typicalCaption": "Probabilidad de suelo desnudo en cada mes, según los años desde {since}.",
     "typicalBare": "Casi siempre desnudo: {months}.",
@@ -195,7 +196,9 @@
     "partlyNote": "“Parcialmente cubierto” significa plantas dispersas, rastrojo o residuos del cultivo. Los satélites todavía no pueden distinguirlos.",
     "showAll": "Ver los {n} años",
     "showRecent": "Ver los últimos 10 años",
-    "coverShare": "{green}% creciendo, {partly}% parcialmente cubierto, {bare}% desnudo"
+    "coverShare": "{green}% creciendo, {partly}% parcialmente cubierto, {bare}% desnudo",
+    "lowConfTag": "Baja confianza: satélite antiguo",
+    "noBareNumber": "Ese año hubo demasiadas nubes para contar los días desnudos."
   },
   "compare": {
     "title": "Comparar rotaciones",
@@ -360,7 +363,7 @@
     "equipment": "Necesita equipo que no indicó: {needs}.",
     "budgetVariety": "{count} cultivos diferentes pueden ser costosos con un presupuesto bajo.",
     "cdlNoise": "El historial de cultivos viene de los mapas satelitales del USDA, que a veces se equivocan, sobre todo con cultivos menores.",
-    "sensorChange": "Los días desnudos usan datos satelitales desde 2013. Los satélites anteriores y los nuevos aún no están igualados, así que tómelos como estimaciones."
+    "sensorChange": "Los días desnudos usan solo Landsat 8 y 9, desde 2014, así que todos los años se miden igual."
   },
   "risks": {
     "lateKill": "{crops}: si se elimina tarde en primavera, puede agotar la humedad del suelo que necesita el siguiente cultivo. Termínelo a tiempo.",
@@ -467,7 +470,7 @@
     },
     "bareDays": {
       "title": "Días de suelo desnudo",
-      "text": "Días estimados al año en que los satélites verían poca o ninguna cobertura vegetal, y el suelo queda expuesto al viento y la lluvia. Se basa en años de satélite desde 2013 (vea “Por qué importa 2013”), el historial de cultivos de su campo donde lo tenemos y patrones regionales para el resto."
+      "text": "Días estimados al año en que los satélites verían poca o ninguna cobertura de plantas, y el suelo queda expuesto al viento y la lluvia. Se basa en los años de Landsat 8 y 9 desde 2014 (vea “Por qué importa 2013”), el historial de cultivos de su parcela donde lo tenemos y patrones de la región para lo demás."
     },
     "heldOut": {
       "title": "Probado en años no vistos",
@@ -499,7 +502,7 @@
     },
     "sensor2013": {
       "title": "Por qué importa 2013",
-      "text": "Landsat 8 se lanzó en 2013 y ve el verdor de las plantas un poco más alto que los antiguos Landsat 5 y 7. Con un límite fijo para “desnudo”, eso solo hace que los años recientes parezcan menos desnudos. Todavía no igualamos los dos sensores, así que todos los números de días desnudos usan solo 2013 en adelante. Los años anteriores se siguen usando para el historial de lluvia y calor."
+      "text": "Landsat 7 ve el verdor de las plantas más bajo que Landsat 8 y 9, unos 0,05 de NDVI en la misma parcela y mes. Con un límite fijo para “desnudo”, eso solo suma días desnudos. Por eso todos los días desnudos aquí usan solo Landsat 8 y 9, desde 2014. Los años antes de 2013 solo tenían los satélites antiguos. Los mostramos marcados como de baja confianza, pero no los usamos en los puntajes. Los años anteriores se siguen usando para el historial de lluvia y calor."
     },
     "prism": {
       "title": "Lluvia de estaciones en tierra (PRISM)",
@@ -661,7 +664,7 @@
     "stripTitle": "Probabilidad de suelo desnudo, por mes",
     "calibrated": "Usa el registro satelital de esta parcela para {crops}. Patrones regionales para el resto.",
     "regional": "Patrones regionales. Esta parcela tiene muy pocos años de estos cultivos para usar su propio registro.",
-    "caveat": "Una estimación a partir de calendarios de cultivos por satélite, no una medición. No se usan días desnudos anteriores a 2013 porque cambiaron los satélites.",
+    "caveat": "Una estimación con calendarios de cultivos por satélite (Landsat 8 y 9, desde 2014), no una medición. No se usan los años de satélites antiguos.",
     "glanceDays": "{n} días desnudos al año",
     "coverAssumption": "Supone que el cultivo de cobertura se establece. En un otoño seco puede que no.",
     "estimatedFor": "Estimado, no medido, para: {crops}.",

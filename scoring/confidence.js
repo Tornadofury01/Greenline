@@ -97,7 +97,7 @@ export function confidenceFor(crops, field, cropLibraryVerified, bareDays = null
   if (estimated.length) { points--; reasons.push(tone('down', 'confidence.traitsEstimated', { crops: estimated })); }
   if (!cropLibraryVerified) reasons.push(tone('note', 'confidence.placeholderTraits'));
   // Bare-day shapes for these crops are estimates (no measured record for them on this field).
-  if (bareDays?.estimated?.length) reasons.push(tone('note', 'confidence.bareEstimated', { crops: bareDays.estimated }, ['Landsat 5/7/8/9']));
+  if (bareDays?.estimated?.length) reasons.push(tone('note', 'confidence.bareEstimated', { crops: bareDays.estimated }, ['Landsat 8/9']));
 
   // 5 possible points with SI data, 3 with the old sample format.
   const [hi, medium] = si ? [4, 2] : [3, 2];

@@ -35,7 +35,7 @@ const RULES = { water: waterRule, erosion: erosionRule, soil: soilRule, income: 
 // Names match field.sources[].dataset so the app can show each one's resolution and dates.
 const EVIDENCE = {
   water: ['NASA POWER', 'GPM IMERG', 'PRISM', 'SMAP L4', 'USDA SSURGO'],
-  erosion: ['SRTM', 'USDA SSURGO', 'GPM IMERG', 'Landsat 5/7/8/9'],
+  erosion: ['SRTM', 'USDA SSURGO', 'GPM IMERG', 'Landsat 8/9'],
   soil: ['USDA SSURGO', 'USDA Cropland Data Layer'],
   income: ['USDA Cropland Data Layer', 'NASS Quick Stats'],
   cattle: ['Landsat 5/7/8/9'],
@@ -100,12 +100,12 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   // Cover crops killed late can use up the soil water the next crop needs (SARE, cereal rye).
   const lateKill = crops.filter((c) => c.lateKillRisk);
   if (lateKill.length) risks.push(reason('risks.lateKill', { crops: [...new Set(lateKill.map((c) => c.id))] }, ['SARE']));
-  if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare', {}, ['Landsat 5/7/8/9']));
+  if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare', {}, ['Landsat 8/9']));
   // The bare-day estimate assumes cover crops come up. They may not in a dry fall.
   const covers = crops.filter((c) => c.coverCrop);
   if (covers.length) risks.push(reason('risks.coverEstablish', { crops: [...new Set(covers.map((c) => c.id))] }, ['SARE']));
-  // Bare-day numbers use 2013+ satellites only, because Landsat 5/7 and 8/9 aren't matched yet (pipeline/MODELS.md #14).
-  if (field.coverYearly) gaps.push(reason('gaps.sensorChange', {}, ['Landsat 5/7/8/9']));
+  // Bare-day numbers use Landsat 8/9 only, 2014 on: Landsat 7 reads NDVI ~0.05 lower (pipeline/MODELS.md #14).
+  if (field.coverYearly) gaps.push(reason('gaps.sensorChange', {}, ['Landsat 8/9']));
   // CDL can mislabel crops, which affects crop history and the crop model. Shown as a gap so it isn't hidden.
   if (field.si) gaps.push(reason('gaps.cdlNoise', {}, ['USDA Cropland Data Layer']));
 

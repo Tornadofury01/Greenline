@@ -119,7 +119,7 @@
     "statHeat": "Days over 95°F",
     "heatDetail": "Average per year",
     "statBare": "Bare days",
-    "bareDetail": "Average per year",
+    "bareDetail": "Average per year, 2014 on",
     "chartTitle": "Rain each year since {from}",
     "chartCaption": "Each bar is one year, colored by year type. Recent drought years: {years}.",
     "chartAlt": "Bar chart of yearly rain from {from} to {to}. Average about {avg} inches. Drought years: {years}.",
@@ -160,18 +160,19 @@
     "next": "See rotation options",
     "droughtDetail": "Years {from}–{to}",
     "statScore": "Ground cover score",
-    "scoreDetail": "Last 10 years. 100 = never bare",
+    "scoreDetail": "Last 10 years with a clear count. 100 = never bare",
     "cover": {
       "green": "Growing (green)",
       "residue": "Partly covered",
       "bare": "Bare ground",
-      "none": "No clear picture (clouds)"
+      "none": "No clear picture (clouds)",
+      "noImage": "No image yet (before Landsat 8)"
     },
     "scoreCol": "Score",
     "cropCol": "Crop",
     "doubleCrop": "CDL: 2 crops",
     "doubleCropNote": "The crop map says two crops this year. Low confidence: too few examples to check.",
-    "timelineNote": "Crop names start in 2008 (USDA crop maps). Satellites changed in 2013 (Landsat 8), which reads a bit greener, so recent years may look less bare than they were.",
+    "timelineNote": "Crop names start in 2008 (USDA crop maps). Bare and green time before 2013 comes from older satellites and is low confidence.",
     "replayTitle": "Replay a bad year",
     "replayCaption": "The worst years in 40 years of NASA weather, picked by our year-pattern model. Tap one to see what happened on this field.",
     "replayHeading": "{year}: a {type} year",
@@ -186,8 +187,8 @@
     "coverChartTitle": "Your ground cover, year by year",
     "coverChartCaption": "Each bar is one year. Green is time with plants growing, tan is partly covered, and the brown striped part is bare ground.",
     "coverChartAlt": "Bar chart of ground cover from {from} to {to}. Bare ground averaged {bare}% of the clear months since {since}.",
-    "sensorChange": "New satellites",
-    "sensorNote": "In 2013 the satellite changed, and the newer one reads a bit greener. Bare time before 2013 may look higher than it was, so compare across that line with care.",
+    "sensorChange": "Landsat 8",
+    "sensorNote": "Before 2013 only older satellites were flying. They read fields as less green, so bare time looks higher than it was. Treat those years as rough.",
     "typicalTitle": "A typical year on your field",
     "typicalCaption": "Chance the ground is bare in each month, from the years since {since}.",
     "typicalBare": "Usually bare: {months}.",
@@ -195,7 +196,9 @@
     "partlyNote": "“Partly covered” means sparse plants, stubble or crop residue. Satellites can’t yet tell these apart.",
     "showAll": "Show all {n} years",
     "showRecent": "Show the latest 10 years",
-    "coverShare": "{green}% growing, {partly}% partly covered, {bare}% bare"
+    "coverShare": "{green}% growing, {partly}% partly covered, {bare}% bare",
+    "lowConfTag": "Low confidence: older satellite",
+    "noBareNumber": "Too cloudy that year to count bare days."
   },
   "compare": {
     "title": "Compare rotations",
@@ -360,7 +363,7 @@
     "equipment": "Needs equipment you didn't list: {needs}.",
     "budgetVariety": "{count} different crops may be costly to start with a low budget.",
     "cdlNoise": "Crop history comes from USDA satellite crop maps, which are sometimes wrong, especially for smaller crops.",
-    "sensorChange": "Bare-day numbers use satellite data from 2013 on. Older and newer satellites aren't matched yet, so treat them as estimates."
+    "sensorChange": "Bare-day numbers use Landsat 8 and 9 only, from 2014 on, so all years are measured the same way."
   },
   "risks": {
     "lateKill": "{crops}: killing it late in spring can use up soil moisture the next crop needs. Terminate on time.",
@@ -467,7 +470,7 @@
     },
     "bareDays": {
       "title": "Bare days",
-      "text": "Estimated days a year when satellites would see little or no plant cover, so the soil is open to wind and rain. Based on satellite years from 2013 on (see “Why 2013 matters”), your field’s own crop history where we have it, and regional patterns for the rest."
+      "text": "Estimated days a year when satellites would see little or no plant cover, so the soil is open to wind and rain. Based on Landsat 8 and 9 years from 2014 on (see “Why 2013 matters”), your field’s own crop history where we have it, and regional patterns for the rest."
     },
     "heldOut": {
       "title": "Tested on unseen years",
@@ -499,7 +502,7 @@
     },
     "sensor2013": {
       "title": "Why 2013 matters",
-      "text": "Landsat 8 launched in 2013 and sees plant greenness a little higher than the older Landsat 5 and 7. With a fixed cutoff for “bare”, that alone makes later years look less bare. We have not matched the two sensors yet, so every bare-day number uses 2013 and later only. Older years are still used for rain and heat history."
+      "text": "Landsat 7 sees plant greenness lower than Landsat 8 and 9, by about 0.05 NDVI on the same field and month. With a fixed cutoff for “bare”, that alone adds bare days. So every bare-day number here uses Landsat 8 and 9 only, from 2014 on. Years before 2013 had only the older satellites. We show them, marked low confidence, but don't use them in scores. Older years are still used for rain and heat history."
     },
     "prism": {
       "title": "Ground-station rain (PRISM)",
@@ -661,7 +664,7 @@
     "stripTitle": "Chance the ground is bare, by month",
     "calibrated": "Uses this field's own satellite record for {crops}. Regional patterns for the rest.",
     "regional": "Regional patterns. This field has too few years of these crops to use its own record.",
-    "caveat": "An estimate from satellite crop calendars, not a measurement. Bare days from before 2013 aren't used because the satellites changed.",
+    "caveat": "An estimate from satellite crop calendars (Landsat 8 and 9, 2014 on), not a measurement. Years from older satellites aren't used.",
     "glanceDays": "{n} bare days a year",
     "coverAssumption": "Assumes the cover crop establishes. In a dry fall it may not.",
     "estimatedFor": "Estimated, not measured, for: {crops}.",

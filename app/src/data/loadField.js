@@ -25,15 +25,22 @@ export const GREEN_NDVI = 0.40;
 
 const coverState = (v) => (v == null ? null : v >= GREEN_NDVI ? 'green' : v < BARE_NDVI ? 'bare' : 'residue');
 
-// v1 files (the fake sample) lack the v2 extras. Derive what we can so every screen works the same way.
+// Monthly NDVI rows -> [{ year, months[12], cloudyMonths }]
+const coverFromNdvi = (rows) => {
+  const byYear = {};
+  for (const n of rows) (byYear[n.year] ||= Array(12).fill(null))[n.month - 1] = coverState(n.ndvi);
+  return Object.entries(byYear).map(([year, months]) => ({ year: Number(year), months, cloudyMonths: months.filter((m) => !m).length }));
+};
+
+// v1 files (the fake sample) lack the v2/v3 extras. Derive what we can so every screen works the same way.
 function withDerived(field) {
   if (field.coverYearly) return field;
-  const byYear = {};
-  for (const n of field.ndviMonthly) (byYear[n.year] ||= Array(12).fill(null))[n.month - 1] = coverState(n.ndvi);
   return {
     ...field,
-    coverYearly: Object.entries(byYear).map(([year, months]) => ({ year: Number(year), months, cloudyMonths: months.filter((m) => !m).length })),
+    coverYearly: coverFromNdvi(field.ndviMonthly),
+    coverYearlyL89: field.ndviMonthlyL89 ? coverFromNdvi(field.ndviMonthlyL89) : undefined,
     bareDaysPerYear: field.bareDaysPerYear.map((b) => ({ ...b, score: Math.round(100 * (1 - b.days / 365)) })),
+    bareDaysPerYearL89: field.bareDaysPerYearL89?.map((b) => ({ ...b, score: b.score ?? Math.round(100 * (1 - b.days / 365)) })),
     quality: null,
     si: null,
   };

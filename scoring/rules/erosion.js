@@ -28,9 +28,9 @@ export function erosionRule(crops, field, _constraints, ctx = {}) {
     reasons.push(reason(steep ? 'reasons.erodible' : 'reasons.notErodible', { k, slope: field.terrain.slopePct }, ['USDA SSURGO', 'SRTM']));
   }
   if (bare) {
-    reasons.push(reason('reasons.rotationBare', { days: bare.bareDays }, ['Landsat 5/7/8/9', 'USDA Cropland Data Layer']));
+    reasons.push(reason('reasons.rotationBare', { days: bare.bareDays }, ['Landsat 8/9', 'USDA Cropland Data Layer']));
     if (bare.calibrated.length) {
-      reasons.push(reason('reasons.bareCalibrated', { crops: bare.calibrated.map((c) => c.crop) }, ['Landsat 5/7/8/9', 'USDA Cropland Data Layer']));
+      reasons.push(reason('reasons.bareCalibrated', { crops: bare.calibrated.map((c) => c.crop) }, ['Landsat 8/9', 'USDA Cropland Data Layer']));
     }
   }
   return { score, reasons };
