@@ -1,8 +1,8 @@
-# Field data format (v2)
+# Field data format (v3)
 
-The app loads real fields from `/shared/fields/<fieldId>.json` (v2, built by `pipeline/build_fields.py`) and falls back to
-`/shared/sample-field.json` (v1, fake) when a file is missing. v2 = everything in v1 below, plus the
-"v2 additions" section. `/shared/fields/index.json` lists `{ id, county, state, lat, lon }` for every field.
+The app loads real fields from `/shared/fields/<fieldId>.json` (v3, built by `pipeline/build_fields.py`) and falls back to
+`/shared/sample-field.json` (v1, fake) when a file is missing. v3 = everything in v1 below, plus the
+"v2 additions" and "v3 additions" sections. Every v3 change is **additive**: no existing key changed meaning or value. `/shared/fields/index.json` lists `{ id, county, state, lat, lon }` for every field.
 
 Every field file the app loads (today `sample-field.json`, later the pipeline outputs) **must** follow this format.
 If you change it, bump `schemaVersion`, update this doc, and update `/shared/sample-field.json`.
@@ -11,7 +11,7 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 
 | Key | Type | Notes |
 |---|---|---|
-| `schemaVersion` | number | `2` for real fields, `1` for the fake sample |
+| `schemaVersion` | number | `3` for real fields, `1` for the fake sample |
 | `isSampleData` | boolean | `true` for fake data. The app shows a "Sample data" badge |
 | `field` | object | See below |
 | `soil` | object | See below |
@@ -19,7 +19,9 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 | `cropHistory` | array | About 10 years |
 | `climateYearly` | array | One entry per year, 2005–2025 |
 | `ndviMonthly` | array | One entry per year and month |
-| `bareDaysPerYear` | array | One entry per year |
+| `bareDaysPerYear` | array | One entry per year (mixed Landsat sensors; see v3 additions) |
+| `ndviMonthlyL89` | array | Same as `ndviMonthly`, **Landsat 8/9 only**, April 2013 on |
+| `bareDaysPerYearL89` | array | Same as `bareDaysPerYear`, **Landsat 8/9 only**, 2014 on. **Use this for bare days** |
 | `sources` | array | The datasets behind this file |
 
 ## `field`
@@ -65,6 +67,8 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 
 ## `bareDaysPerYear[]`
 `{ year, days }`: estimated days per year with little or no plant cover (NDVI < 0.25, interpolated between scenes).
+Each entry also has `sensor` (`"L5/L7"` or `"L7+L8/L9"`), `lowConfidence` (`true` before 2013) and, when low,
+`lowConfidenceReason: "sensorMismatch"`. The sample marks its pre-2013 years the same way.
 
 ## `sources[]`
 `{ dataset, variable, resolution, dateRange }`. These are shown on the expert handoff page. Dataset names should match the `EVIDENCE` names in `/scoring/scoreRotation.js`.
@@ -111,6 +115,7 @@ plus a `fieldId` column. 30 m datasets are averaged over a 45 m buffer. Coarse g
 | `fields.csv` | `fieldId, lon, lat, county` | CDL pixel centers chosen by us (never farmer GPS). `nt-001`… plus `demo-ellis-001` |
 | `cdl.csv` | `fieldId, year, code` | CDL mode class, 2008–2025 |
 | `landsat_monthly.csv` | `fieldId, year, month, scenes, ndvi, ndti, bsi` | As `landsat_monthly.csv` above |
+| `landsat_monthly_l89.csv` | `fieldId, year, month, scenes, ndvi, ndti, bsi` | Same processing, **Landsat 8 and 9 only** (no Landsat 7), April 2013–2025. `sample_fields.py landsat_l89` |
 | `power_monthly.csv` | `fieldId, powerCell, year, month, tMaxC, tMinC, precipMm, heatStressDays` | POWER daily, aggregated |
 | `smap_monthly.csv` | `fieldId, year, month, days, sm_surface, sm_rootzone` | SMAP L4 v008, 2015– |
 | `imerg_monthly.csv` | `fieldId, year, month, precipMm` | IMERG V07 monthly |
@@ -189,5 +194,40 @@ How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVer
 | `market.recent[]` | | `{ crop, years, yield, yieldUnit, yieldLevel, yieldYears, price, priceUnit, grossPerAcreUsd }`: 2021–2025 averages at one level (county if ≥ 3 years, else district, else state). `grossPerAcreUsd` = yield × price after unit conversion (sorghum 56 lb/bu, sunflower lb → cwt). Gross revenue, **not profit**; costs aren't included |
 | `si` | object | `{ models, years, replayPresets }`, the same as `/shared/si/<fieldId>.json` (below). `models.seasonCrop.perClass` adds held-out recall/precision per crop |
 
-Known data caveat: Landsat 8 (2013–) reads NDVI slightly higher than Landsat 5/7 and the sensors are not harmonized yet,
-so bare days after ~2015 may be undercounted.
+## v3 additions: Landsat 8/9-only cover and sensor flags
+
+**Why:** for the same field and month, Landsat 7 reads NDVI about **0.05 lower** than Landsat 8. With a fixed 0.25 bare
+cutoff, that adds bare days. The mixed record (`ndviMonthly`, `coverYearly`, `bareDaysPerYear`) blends Landsat 7 into
+the monthly medians until ~2023, so its 2013–2023 bare days are too high too, not just pre-2013. A published cross-sensor
+correction was tried and rejected (`/docs/datasets.md`, "Tried and rejected"). The `*L89` keys use **one sensor family**.
+Results: `/docs/landsat89-cover-results.md`.
+
+| Key | Type | Notes |
+|---|---|---|
+| `ndviMonthlyL89[]` | array | `{ year, month, ndvi }`, Landsat 8/9 only, 2013-04 to 2025. Cloudy months are left out |
+| `coverYearlyL89[]` | array | `{ year, months[12], cloudyMonths }`, 2013–2025. Same states and 0.25 / 0.40 rule as `coverYearly`, computed straight from `ndviMonthlyL89` (gaps of ≤ 2 months interpolated). **2013 Jan–Mar are `null`** (before Landsat 8) and not counted in `cloudyMonths`. Months still missing after filling are `null` |
+| `bareDaysPerYearL89[]` | array | `{ year, days, greenDays, score }`, **2014–2025** (first full Landsat 8 year). Same rule as `bareDaysPerYear`: years with fewer than 9 clear months are left out |
+| `coverYearly[]`, `bareDaysPerYear[]` | | Each entry adds `sensor` (`"L5/L7"` before 2013, `"L7+L8/L9"` from 2013), `lowConfidence` (`true` before 2013) and `lowConfidenceReason: "sensorMismatch"` when low. **Values are unchanged** |
+| `quality.cloudyMonthsPctL89` | number | % of April 2013–2025 months with no clear Landsat 8/9 image |
+| `sources[]` `id: "landsat89"` | | New entry, `dataset: "Landsat 8/9"`. Cite it on bare-day reasons that use the `*L89` keys |
+
+How the two records relate:
+- **2024–2025:** almost no Landsat 7 is left, so old and new bare days agree in 100% of field-years.
+- **Model 1 (`si`, `coverYearly.months` for 2008+)** still uses the mixed record and **was not retrained**. In the few months
+  that can't be interpolated, `coverYearly` holds model 1's gap fill and `coverYearlyL89` holds `null`.
+- **Pre-2013:** there is no Landsat 8/9 data. Show those years from the old keys, marked low confidence.
+
+## `/shared/crop-calendars-l89.json` (per-crop bare-month calendars)
+One file for all fields, made by `pipeline/build_fields.py`. The same counting as `scoring/tools/build_calendars.mjs`,
+but from `coverYearlyL89` for 2014–2025:
+
+| Key | Type | Notes |
+|---|---|---|
+| `years` | [number, number] | `[2014, 2025]` |
+| `bareNdvi` | number | `0.25` |
+| `crops.<cdlClass>.bareShare` | number[12] | Jan–Dec: share of field-years with this CDL class where the month was bare (of the clear months). `null` if never clear |
+| `crops.<cdlClass>.clearFieldYears` | number[12] | Field-years with a clear (non-null) state that month |
+| `crops.<cdlClass>.fieldYears` | number | Field-years with this class, 2014–2025 |
+
+`cdlClass` is the model group: `corn`, `cotton`, `grain_sorghum`, `soybeans`, `winter_wheat`, `small_grain`, `fallow`,
+`other`, `double_crop`. Only the 200 sampled fields (`nt-*`); `demo-ellis-001` is pasture and is left out, as in `build_calendars.mjs`.

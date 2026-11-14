@@ -60,5 +60,7 @@ retrain or change a model):
 pipeline\.venv\Scripts\python pipeline\sample_fields.py soil prism prism_yearly   # SSURGO extras, PRISM monthly + frost/storm days
 pipeline\.venv\Scripts\python pipeline\nass_quickstats.py                         # county yields + Texas prices (NASS_API_KEY)
 pipeline\.venv\Scripts\python pipeline\validate_rain.py                           # writes docs/data-validation.md
-pipeline\.venv\Scripts\python pipeline\build_fields.py                            # rebuilds shared/fields/*.json
+pipeline\.venv\Scripts\python pipeline\sample_fields.py landsat_l89               # Landsat 8/9 only, Apr 2013+ (~3 min)
+pipeline\.venv\Scripts\python pipeline\build_fields.py                            # rebuilds shared/fields/*.json + shared/crop-calendars-l89.json
+pipeline\.venv\Scripts\python pipeline\compare_l89.py                             # old vs L8/9 tables for docs/landsat89-cover-results.md
 ```

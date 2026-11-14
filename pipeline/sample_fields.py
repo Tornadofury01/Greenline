@@ -7,6 +7,7 @@ Points are CDL pixel centers chosen by us, never a farmer's GPS position.
 Usage (from the repo root):
     pipeline/.venv/Scripts/python pipeline/sample_fields.py all
 Steps: fields, landsat, cdl, smap, imerg, storms, et, power, all
+    landsat_l89 (not part of "all"): Landsat 8/9 only, April 2013-2025 -> landsat_monthly_l89.csv
 """
 import argparse
 import sys
@@ -120,13 +121,13 @@ def run_landsat():
     save(df.rename(columns={"n": "scenes"}).round(4), "landsat_monthly")
 
 
-def landsat_collection_all(ee):
+def landsat_collection_all(ee, **kw):
     # Same processing as the demo field, but over the whole North Texas box.
     import greenline_pipeline as gp
     old = gp.region
     gp.region = lambda ee_: ee_.Geometry.Rectangle(BBOX)
     try:
-        return landsat_collection(ee)
+        return landsat_collection(ee, **kw)
     finally:
         gp.region = old
 
@@ -391,13 +392,29 @@ def run_prism_yearly():
              "frostFreeDays"]].round(1), "prism_yearly")
 
 
+L89_FROM = (2013, 4)  # Landsat 8 science operations start April 2013; earlier L8 scenes are commissioning orbits
+
+
+def run_landsat_l89():
+    """Landsat 8/9 only, one sensor family, so cover and bare days aren't mixed with Landsat 7 (which reads NDVI
+    ~0.05 lower here; docs/landsat-harmonization-results.md). Same masking, buffers and monthly median as run_landsat."""
+    print("Landsat 8/9-only NDVI/NDTI/BSI per field ...")
+    ee = ee_init()
+    df = per_month_sample(ee, landsat_collection_all(ee, sensors=("L8", "L9")), ["ndvi", "ndti", "bsi"],
+                          L89_FROM[0], Y1, 30, name="landsat_l89")
+    df = df[(df.year > L89_FROM[0]) | (df.month >= L89_FROM[1])]
+    save(df.rename(columns={"n": "scenes"}).round(4), "landsat_monthly_l89")
+
+
+EXTRA_STEPS = {"landsat_l89": run_landsat_l89}
+
 STEPS = {"prism": run_prism, "prism_yearly": run_prism_yearly, "landsat_early": run_landsat_early, "terrain": run_terrain, "soil": run_soil, "power_long": run_power_long,
          "fields": run_fields, "cdl": run_cdl, "landsat": run_landsat, "smap": run_smap, "imerg": run_imerg,
          "storms": run_storms, "et": run_et, "power": run_power}
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("steps", nargs="+", choices=[*STEPS, "all"])
+    ap.add_argument("steps", nargs="+", choices=[*STEPS, *EXTRA_STEPS, "all"])
     a = ap.parse_args()
     for s in (list(STEPS) if "all" in a.steps else a.steps):
-        STEPS[s]()
+        {**STEPS, **EXTRA_STEPS}[s]()
