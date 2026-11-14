@@ -1,91 +1,120 @@
-// Screen 3: 20 years of climate, colored by year type, plus bare-ground months.
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from 'recharts';
+// Screen 3: lead with the answer, then 20 years of rain and bare-ground history.
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { Sun, CloudRain, Thermometer, CalendarX, ArrowRight } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { BARE_NDVI } from '../data/loadField.js';
-import { StatCard, NeedField, JudgmentNote } from '../components/Small.jsx';
+import { StatCard, NeedField, JudgmentNote, PageHead, Source } from '../components/Small.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
+import { climateStats, usuallyBareMonths, mmToIn } from '../display.js';
 // import VulnerabilityZonesMap from '../components/future/VulnerabilityZonesMap.jsx'; // FUTURE
 
-export const YEAR_COLORS = { drought: '#c2410c', heat: '#d97706', wet: '#2563eb', normal: '#6b8f71' };
-const avg = (xs) => Math.round(xs.reduce((a, b) => a + b, 0) / xs.length);
+// Chart colors follow theme.css meaning: drought = risk red, heat = amber, wet = water blue.
+export const YEAR_COLORS = { drought: '#a3362a', heat: '#c98a1b', wet: '#2f75a8', normal: '#8e9c90' };
 
-export function climateStats(field) {
-  const c = field.climateYearly;
-  return {
-    droughtYears: c.filter((y) => y.yearType === 'drought').map((y) => y.year),
-    avgRain: avg(c.map((y) => y.precipMm)),
-    avgHeat: avg(c.map((y) => y.heatStressDays)),
-    avgBare: avg(field.bareDaysPerYear.map((b) => b.days)),
-  };
-}
+const joinYears = (ys, t) => (ys.length > 1 ? `${ys.slice(0, -1).join(', ')} ${t('common.and')} ${ys.at(-1)}` : `${ys[0] ?? ''}`);
 
 export default function FieldStory() {
-  const { t, field } = useApp();
+  const { t, field, setScreen } = useApp();
   if (!field) return <div className="screen"><NeedField /></div>;
 
-  const stats = climateStats(field);
-  const months = t('story.monthsShort');
+  const s = climateStats(field);
+  const monthsShort = t('story.monthsShort');
+  const monthsLong = t('story.monthsLong');
+  const bareMonths = usuallyBareMonths(field);
   const years = field.climateYearly.map((y) => y.year);
   const ndvi = Object.fromEntries(field.ndviMonthly.map((n) => [`${n.year}-${n.month}`, n.ndvi]));
+  const chartData = field.climateYearly.map((y) => ({ ...y, rainIn: mmToIn(y.precipMm) }));
 
   return (
     <div className="screen">
-      <h1>{t('story.title')}</h1>
+      <PageHead title={t('story.title')} />
+
+      <section className="headline">
+        <span className="headline-kicker"><Sun size={16} aria-hidden="true" />{t('story.kicker')}</span>
+        <p className="headline-text">{t('story.headline', { months: s.avgBareMonths })}</p>
+        {bareMonths.length > 0 && (
+          <p className="muted">{t('story.headlineDetail', { months: bareMonths.map((m) => monthsLong[m - 1]).join(', ') })}</p>
+        )}
+      </section>
 
       <div className="stats">
-        <StatCard label={t('story.statDrought')} value={stats.droughtYears.length} unit={`(${stats.droughtYears.join(', ')})`} />
-        <StatCard label={t('story.statRain')} value={stats.avgRain} unit={t('story.mm')} />
-        <StatCard label={t('story.statHeat')} value={stats.avgHeat} unit={t('story.days')} />
-        <StatCard label={t('story.statBare')} value={stats.avgBare} unit={t('story.days')} term="bareDays" />
+        <StatCard icon={CalendarX} label={t('story.statDrought')} value={s.droughtYears.length} detail={s.droughtYears.join(', ')} />
+        <StatCard icon={CloudRain} label={t('story.statRain')} value={s.avgRainIn} unit={t('units.in')} detail={t('story.rainDetail', { mm: s.avgRainMm })} />
+        <StatCard icon={Thermometer} label={t('story.statHeat')} value={s.avgHeatDays} detail={t('story.heatDetail')} />
+        <StatCard icon={Sun} label={t('story.statBare')} value={s.avgBareDays} term="bareDays" detail={t('story.bareDetail')} />
       </div>
 
+      <div className="split split-wide">
       <section className="card">
-        <h2>{t('story.chartTitle')}</h2>
-        <div className="legend">
+        <div className="field-group">
+          <h2>{t('story.chartTitle')}</h2>
+          <p className="chart-caption">{t('story.chartCaption', { years: joinYears(s.droughtYears, t) })}</p>
+        </div>
+        <div className="legend" aria-hidden="true">
           {Object.keys(YEAR_COLORS).map((k) => (
-            <span key={k}><i style={{ background: YEAR_COLORS[k] }} /> {t(`yearType.${k}`)}</span>
+            <span key={k} className="legend-item"><span className="swatch" style={{ background: YEAR_COLORS[k] }} />{t(`yearType.${k}`)}</span>
           ))}
         </div>
-        <div className="chart">
-          <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={field.climateYearly} margin={{ top: 8, right: 4, left: -16, bottom: 0 }}>
-              <XAxis dataKey="year" tickFormatter={(y) => `'${String(y).slice(2)}`} tick={{ fontSize: 11 }} interval={1} />
-              <YAxis tick={{ fontSize: 11 }} />
+        <div role="img" aria-label={t('story.chartAlt', { years: joinYears(s.droughtYears, t), avg: s.avgRainIn })}>
+          <ResponsiveContainer width="100%" height={240}>
+            <BarChart data={chartData} margin={{ top: 8, right: 0, left: -20, bottom: 0 }}>
+              <CartesianGrid vertical={false} stroke="#e4e1d8" />
+              <XAxis dataKey="year" tickFormatter={(y) => `'${String(y).slice(2)}`} tick={{ fontSize: 12 }} interval="preserveStartEnd" minTickGap={12} tickLine={false} axisLine={{ stroke: '#8f8b7e' }} />
+              <YAxis tick={{ fontSize: 12 }} tickLine={false} axisLine={false} unit={` ${t('units.in')}`} width={64} />
               <Tooltip
-                formatter={(v) => [`${v} ${t('story.mm')}`, t('story.chartUnit')]}
+                cursor={{ fill: 'rgb(31 81 48 / 0.08)' }}
+                formatter={(v, _n, item) => [`${v} ${t('units.in')} (${item.payload.precipMm} mm)`, t('story.tooltipRain')]}
                 labelFormatter={(y) => {
                   const row = field.climateYearly.find((r) => r.year === y);
                   return `${y} · ${t(`yearType.${row?.yearType}`)}`;
                 }}
               />
-              <Bar dataKey="precipMm" radius={[3, 3, 0, 0]} isAnimationActive={false}>
-                {field.climateYearly.map((row) => <Cell key={row.year} fill={YEAR_COLORS[row.yearType]} />)}
+              <Bar dataKey="rainIn" radius={[2, 2, 0, 0]} isAnimationActive={false}>
+                {chartData.map((row) => <Cell key={row.year} fill={YEAR_COLORS[row.yearType]} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
+        <Source datasets={['GPM IMERG', 'NASA POWER']} />
       </section>
 
       <section className="card">
-        <h2>{t('story.bareTitle')} <GlossaryIcon term="ndvi" /></h2>
-        <p className="hint">{t('story.bareHint')}</p>
-        <div className="bare-grid" role="table">
+        <div className="field-group">
+          <h2 className="section-title">{t('story.bareTitle')} <GlossaryIcon term="ndvi" /></h2>
+          <p className="chart-caption">{t('story.bareCaption')}</p>
+        </div>
+        <div className="legend">
+          <span className="legend-item"><span className="swatch hatch" style={{ backgroundColor: 'var(--chart-bare)' }} />{t('story.legendBare')}</span>
+          <span className="legend-item"><span className="swatch" style={{ background: 'var(--chart-covered)' }} />{t('story.legendCovered')}</span>
+        </div>
+        <div className="bare-grid" role="table" aria-label={t('story.bareTitle')}>
           <div className="bare-row" role="row">
-            <span className="bare-year" />
-            {months.map((m, i) => <span key={i} className="bare-head" role="columnheader">{m}</span>)}
+            <span className="bare-year" role="columnheader"><span className="sr-only">{t('story.year')}</span></span>
+            {monthsShort.map((m, i) => <span key={i} className="bare-head" role="columnheader" aria-label={monthsLong[i]}>{m}</span>)}
           </div>
           {years.map((y) => (
             <div key={y} className="bare-row" role="row">
               <span className="bare-year" role="rowheader">{y}</span>
-              {months.map((_, i) => {
+              {monthsShort.map((_, i) => {
                 const v = ndvi[`${y}-${i + 1}`];
-                return <span key={i} role="cell" className={`bare-cell ${v < BARE_NDVI ? 'bare' : ''}`} title={`NDVI ${v}`} />;
+                const bare = v < BARE_NDVI;
+                return (
+                  <span key={i} role="cell" className={`bare-cell ${bare ? 'bare' : ''}`}
+                    title={`${monthsLong[i]} ${y}: ${bare ? t('story.legendBare') : t('story.legendCovered')}`}>
+                    <span className="sr-only">{bare ? t('story.legendBare') : t('story.legendCovered')}</span>
+                  </span>
+                );
               })}
             </div>
           ))}
         </div>
+        <Source datasets={['Landsat 8/9 (HLS)']} />
       </section>
+      </div>
 
+      <button type="button" className="btn btn-primary btn-block btn-end" onClick={() => setScreen('compare')}>
+        {t('story.next')}<ArrowRight size={20} aria-hidden="true" />
+      </button>
       <JudgmentNote />
     </div>
   );

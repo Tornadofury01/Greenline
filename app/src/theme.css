@@ -1,0 +1,78 @@
+/* Greenline design tokens. The ONLY place colors, type, spacing and radii are defined.
+   Color carries meaning, never decoration:
+     primary = field green (actions, "good")      water = sky/water blue (rain, moisture data)
+     soil    = soil brown (bare ground, soil)      warn  = amber (cautions, gaps, heat)
+     risk    = muted red (real risks, drought)     neutral grays for everything else
+   All text/background pairs below meet WCAG AA (4.5:1) on --color-surface and --color-bg. */
+:root {
+  /* Neutrals */
+  --color-bg: #f6f5f1;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #efede6;
+  --color-text: #1b1f1c;          /* 16:1 on surface */
+  --color-text-muted: #4b544d;    /* 7.6:1 on surface */
+  --color-border: #d5d2c8;
+  --color-border-strong: #8f8b7e;
+
+  /* Meaningful colors (text-safe tone + soft background tone) */
+  --color-primary: #1f5130;        /* 9.6:1 on white */
+  --color-primary-hover: #163d24;
+  --color-primary-soft: #e5eee6;
+  --color-on-primary: #ffffff;
+
+  --color-soil: #7a4e2d;
+  --color-soil-soft: #f1e7dc;
+  --color-water: #1d5f8a;
+  --color-water-soft: #e2edf4;
+  --color-warn: #7d5100;           /* text tone, 6.5:1 */
+  --color-warn-fill: #c98a1b;      /* chart / swatch tone */
+  --color-warn-soft: #fbf0d9;
+  --color-risk: #a3362a;
+  --color-risk-soft: #f8e5e2;
+
+  /* Chart: one tone per year type */
+  --chart-drought: #a3362a;
+  --chart-heat: #c98a1b;
+  --chart-wet: #2f75a8;
+  --chart-normal: #8e9c90;
+  --chart-covered: #cfe0cf;
+  --chart-bare: #7a4e2d;
+
+  --color-focus: #2378c3;
+
+  /* Type */
+  --font: "Public Sans Variable", "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --text-xs: 0.875rem;   /* 14px: source lines and meta only */
+  --text-base: 1rem;     /* 16px minimum for body */
+  --text-md: 1.125rem;   /* 18px */
+  --text-lg: 1.25rem;    /* 20px section headings */
+  --text-xl: 1.75rem;    /* 28px page title */
+  --text-num: 2.25rem;   /* 36px stat numbers */
+  --leading: 1.5;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* 8px spacing grid */
+  --s-half: 4px;
+  --s-1: 8px;
+  --s-2: 16px;
+  --s-3: 24px;
+  --s-4: 32px;
+  --s-5: 48px;
+
+  /* Shape */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --border: 1px solid var(--color-border);
+
+  /* Sizes */
+  --tap: 48px;
+  --nav-h: 64px;
+  --header-h: 56px;
+  --content-w: 1200px;   /* page cap on large screens */
+  --read-w: 68ch;        /* max line length for paragraphs */
+  --sheet-w: 720px;
+
+  color-scheme: light;
+}
