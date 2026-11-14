@@ -191,9 +191,15 @@ def chunked(ee, col, bands, reducer, y0, y1, scale, step=5):
     return df[["year", "month", "scenes"] + bands]
 
 
-def landsat_collection(ee):
+LANDSAT_IDS = {"L5": "LANDSAT/LT05/C02/T1_L2", "L7": "LANDSAT/LE07/C02/T1_L2",
+               "L8": "LANDSAT/LC08/C02/T1_L2", "L9": "LANDSAT/LC09/C02/T1_L2"}
+
+
+def landsat_collection(ee, sensors=("L5", "L7", "L8", "L9")):
     """Landsat 5/7/8/9 Collection 2 L2 surface reflectance, cloud-masked, harmonized band names,
-    with NDVI, NDTI (residue) and BSI (bare soil)."""
+    with NDVI, NDTI (residue) and BSI (bare soil).
+    sensors limits the collection, e.g. ("L8", "L9") for the Landsat 8/9-only cover record: Landsat 7 reads NDVI
+    ~0.05 lower than Landsat 8 here, see docs/landsat-harmonization-results.md (branch landsat-harmonize)."""
     def prep(img, blue, green, red, nir, swir1, swir2):
         qa = img.select("QA_PIXEL")
         clear = qa.bitwiseAnd(0b11111).eq(0)  # fill, dilated cloud, cirrus, cloud, shadow
@@ -208,11 +214,11 @@ def landsat_collection(ee):
     tm = lambda i: prep(i, "SR_B1", "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B7")
     oli = lambda i: prep(i, "SR_B2", "SR_B3", "SR_B4", "SR_B5", "SR_B6", "SR_B7")
     g = region(ee)
-    c = lambda cid, f: ee.ImageCollection(cid).filterBounds(g).map(f)
-    return (c("LANDSAT/LT05/C02/T1_L2", tm)
-            .merge(c("LANDSAT/LE07/C02/T1_L2", tm))
-            .merge(c("LANDSAT/LC08/C02/T1_L2", oli))
-            .merge(c("LANDSAT/LC09/C02/T1_L2", oli)))
+    c = lambda s: ee.ImageCollection(LANDSAT_IDS[s]).filterBounds(g).map(tm if s in ("L5", "L7") else oli)
+    out = c(sensors[0])
+    for s in sensors[1:]:
+        out = out.merge(c(s))
+    return out
 
 
 def run_landsat():

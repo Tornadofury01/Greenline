@@ -1,4 +1,5 @@
-"""Build the app's field files: /shared/fields/<fieldId>.json (data-format v2) + /shared/fields/index.json.
+"""Build the app's field files: /shared/fields/<fieldId>.json (data-format v3) + /shared/fields/index.json,
+plus /shared/crop-calendars-l89.json (per-crop bare-month calendars from Landsat 8/9 only).
 
 Combines the per-field pipeline CSVs (pipeline/data/fields/) with the SI model results (shared/si/).
 Run after sample_fields.py and pipeline/models/*:
@@ -17,7 +18,12 @@ F = ROOT / "pipeline" / "data" / "fields"
 SI = ROOT / "shared" / "si"
 OUT = ROOT / "shared" / "fields"
 CROPS = {c["id"] for c in json.loads((ROOT / "content" / "crops.json").read_text())["crops"]}
-SCHEMA = 2
+SCHEMA = 3
+# Landsat 8/9-only cover (`*L89` keys). Landsat 7 reads NDVI ~0.05 below Landsat 8 here and is mixed into the monthly
+# medians until ~2023, so the mixed record over-counts bare days (docs/landsat-harmonization-results.md).
+L89_FROM = (2013, 4)        # first L8/9 month; 2013 Jan-Mar are null
+L89_BARE_FROM = 2014        # first full L8/9 year: bare days per year and calendars start here
+LOW_CONF_BEFORE = 2013      # cover / bare days before this year: Landsat 5/7 only -> low confidence (sensor mismatch)
 GREEN_NDVI, BARE_NDVI = 0.40, 0.25
 # Model 1 held-out recall/precision per crop class (the app uses it for confidence: "hard to recognise" crops).
 PER_CLASS = json.loads((ROOT / "pipeline" / "models" / "results" / "season_crop.json").read_text())["perClass"]
@@ -49,6 +55,9 @@ SOURCES = [
     {"id": "landsat", "dataset": "Landsat 5/7/8/9", "name": "Landsat Collection 2 Level-2 surface reflectance", "product": "LANDSAT/LT05, LE07, LC08, LC09 /C02/T1_L2",
      "provider": "USGS / NASA", "variable": "NDVI (green cover), NDTI, BSI", "resolution": "30 m",
      "scale": "patch", "resolutionM": 30, "years": (1984, 2025), "per_field": "landsat"},
+    {"id": "landsat89", "dataset": "Landsat 8/9", "name": "Landsat 8/9 Collection 2 Level-2 surface reflectance (OLI only, no Landsat 7)", "product": "LANDSAT/LC08, LC09 /C02/T1_L2",
+     "provider": "USGS / NASA", "variable": "bare days and green / residue / bare cover (one sensor family)", "resolution": "30 m",
+     "scale": "patch", "resolutionM": 30, "years": (2013, 2025), "per_field": "landsat89"},
     {"id": "cdl", "dataset": "USDA Cropland Data Layer", "name": "USDA NASS Cropland Data Layer", "product": "USDA/NASS/CDL",
      "provider": "USDA NASS", "variable": "crop grown each year", "resolution": "30 m",
      "scale": "patch", "resolutionM": 30, "years": (2008, 2025), "per_field": "cdl"},
@@ -210,12 +219,65 @@ def bare_days(monthly):
     return int((d < BARE_NDVI).sum()), int((d >= GREEN_NDVI).sum())
 
 
+def sensor_label(year):
+    """Which Landsat sensors are in the mixed record's monthly medians that year."""
+    return "L5/L7" if year < LOW_CONF_BEFORE else "L7+L8/L9"
+
+
+def confidence(year):
+    """Per-year flag for the mixed record: before 2013 only Landsat 5/7 exist, which read NDVI lower than Landsat 8/9."""
+    low = year < LOW_CONF_BEFORE
+    return {"sensor": sensor_label(year), "lowConfidence": low, **({"lowConfidenceReason": "sensorMismatch"} if low else {})}
+
+
+def cover_l89(L89):
+    """Cover timeline and bare days from Landsat 8/9 only. Same rules as the mixed record (0.25 / 0.40, gaps of up to
+    2 months interpolated, >= 9 clear months for bare days), computed straight from NDVI (model 1 is not rerun)."""
+    cover, bare = [], []
+    for y, g in L89.groupby("year"):
+        y = int(y)
+        vals = g.set_index("month").ndvi.reindex(range(1, 13))
+        filled = vals.interpolate(limit=2, limit_area="inside")
+        first = L89_FROM[1] if y == L89_FROM[0] else 1
+        months = [state(v) if m >= first else None for m, v in zip(range(1, 13), filled)]
+        cover.append({"year": y, "months": months, "cloudyMonths": int(vals.loc[first:].isna().sum())})
+        if y >= L89_BARE_FROM:
+            b = bare_days(filled.values)
+            if b is not None:
+                bare.append({"year": y, "days": b[0], "greenDays": b[1], "score": int(round(100 * (1 - b[0] / 365)))})
+    return cover, bare
+
+
+def crop_calendars(per_field):
+    """Per CDL class: share of field-years each month was bare (NDVI < 0.25), Landsat 8/9, 2014+.
+    Same counting as scoring/tools/build_calendars.mjs (bare / clear months), so the app can switch to it."""
+    acc = {}
+    for crop_hist, cover in per_field:
+        cov = {c["year"]: c["months"] for c in cover}
+        for h in crop_hist:
+            if h["year"] < L89_BARE_FROM or h["year"] not in cov or not h.get("cdlClass"):
+                continue
+            a = acc.setdefault(h["cdlClass"], {"bare": [0] * 12, "n": [0] * 12, "fieldYears": 0})
+            a["fieldYears"] += 1
+            for i, st in enumerate(cov[h["year"]]):
+                if st:
+                    a["n"][i] += 1
+                    a["bare"][i] += st == "bare"
+    crops = {c: {"bareShare": [round(b / n, 2) if n else None for b, n in zip(a["bare"], a["n"])],
+                 "clearFieldYears": a["n"], "fieldYears": a["fieldYears"]} for c, a in sorted(acc.items())}
+    return {"schemaVersion": 1, "source": "Landsat 8/9 Collection 2 L2 (no Landsat 7) + USDA Cropland Data Layer, 200 sampled North Texas fields (nt-*)",
+            "years": [L89_BARE_FROM, max(h["year"] for ch, _ in per_field for h in ch)], "bareNdvi": BARE_NDVI,
+            "builtBy": "pipeline/build_fields.py", "crops": crops}
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     fields = pd.read_csv(F / "fields.csv")
     cdl = pd.read_csv(F / "cdl.csv")
     ls = pd.concat([pd.read_csv(F / "landsat_monthly_1984_2007.csv"), pd.read_csv(F / "landsat_monthly.csv")])
     ls = ls.sort_values(["fieldId", "year", "month"])
+    l89 = pd.read_csv(F / "landsat_monthly_l89.csv").sort_values(["fieldId", "year", "month"])
+    calendar_input = []
     py = pd.read_csv(F / "power_yearly.csv")
     sm = pd.read_csv(F / "smap_monthly.csv")
     st = pd.read_csv(F / "imerg_storms_monthly.csv")
@@ -272,10 +334,16 @@ def main():
                 months = si_years[int(y)]["months"]
             else:
                 months = [state(v) for v in filled]
-            cover.append({"year": int(y), "months": months, "cloudyMonths": int(vals.isna().sum())})
+            cover.append({"year": int(y), "months": months, "cloudyMonths": int(vals.isna().sum()), **confidence(int(y))})
             b = bare_days(filled.values)
             if b is not None:
-                bare.append({"year": int(y), "days": b[0], "greenDays": b[1], "score": int(round(100 * (1 - b[0] / 365)))})
+                bare.append({"year": int(y), "days": b[0], "greenDays": b[1], "score": int(round(100 * (1 - b[0] / 365))),
+                             **confidence(int(y))})
+        L89 = l89[l89.fieldId == fid]
+        ndvi_l89 = [{"year": int(r.year), "month": int(r.month), "ndvi": nn(r.ndvi, 3)} for r in L89.itertuples() if not pd.isna(r.ndvi)]
+        cover89, bare89 = cover_l89(L89)
+        if fid.startswith("nt-"):  # sampled cropland only, like build_calendars.mjs (the demo point is pasture)
+            calendar_input.append((crop_hist, cover89))
 
         s = soil.loc[fid] if fid in soil.index else None
         soil_obj = {
@@ -313,6 +381,7 @@ def main():
             },
             "modelAgreesWithCdlPct": round(100 * sum(y["correct"] for y in scored) / len(scored)) if scored else None,
             "cloudyMonthsPct": round(100 * float(L.ndvi.isna().mean()), 0),
+            "cloudyMonthsPctL89": round(100 * float(L89.ndvi.isna().mean()), 0),
             "climateYears": len(climate), "cropYears": len(crop_hist),
         }
 
@@ -328,6 +397,9 @@ def main():
             "ndviMonthly": ndvi_monthly,
             "coverYearly": cover,
             "bareDaysPerYear": bare,
+            "ndviMonthlyL89": ndvi_l89,
+            "coverYearlyL89": cover89,
+            "bareDaysPerYearL89": bare89,
             "quality": quality,
             "market": market_cache.setdefault((f.state, f.county), market(f.state, f.county, nass_y, nass_p)),
             "si": {"models": {**si["models"], "seasonCrop": {**si["models"]["seasonCrop"], "perClass": PER_CLASS}},
@@ -338,6 +410,7 @@ def main():
                 "prism": span(y for (i, y) in prism_y.index if i == fid),
                 "smap": span(sm[(sm.fieldId == fid) & sm.sm_rootzone.notna()].year.unique()),
                 "landsat": span(L[L.ndvi.notna()].year.unique()),
+                "landsat89": span(L89[L89.ndvi.notna()].year.unique()),
                 "cdl": span(x["year"] for x in crop_hist),
             }),
         }
@@ -345,6 +418,9 @@ def main():
         index.append({"id": fid, "county": f.county, "state": f.state, "lat": round(f.lat, 5), "lon": round(f.lon, 5)})
     (OUT / "index.json").write_text(json.dumps({"schemaVersion": SCHEMA, "fields": index}, indent=0), encoding="utf-8")
     print(f"wrote {len(index)} field files to shared/fields/")
+    cal = crop_calendars(calendar_input)
+    (ROOT / "shared" / "crop-calendars-l89.json").write_text(json.dumps(cal, indent=1), encoding="utf-8")
+    print(f"wrote shared/crop-calendars-l89.json ({len(cal['crops'])} crop classes)")
 
 
 if __name__ == "__main__":
