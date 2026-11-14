@@ -1,10 +1,11 @@
-import { FlaskConical, BookOpen } from 'lucide-react';
+import { FlaskConical, BookOpen, Sun, Moon } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import Logo from './Logo.jsx';
 import { NavItems } from './BottomNav.jsx';
 
 export default function Header() {
-  const { t, lang, setLang, field, screen, openHow } = useApp();
+  const { t, lang, setLang, theme, setTheme, field, screen, openHow } = useApp();
+  const nextTheme = theme === 'dark' ? 'light' : 'dark';
   return (
     <>
       <header className="header">
@@ -20,7 +21,12 @@ export default function Header() {
           </nav>
           <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
             aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
-            <BookOpen size={24} aria-hidden="true" />
+            <BookOpen size={22} aria-hidden="true" />
+          </button>
+          {/* Light is easier to read in bright sun; dark is easier at dusk. The choice is saved on this device. */}
+          <button type="button" className="icon-btn theme-btn" aria-label={t(`app.theme.${nextTheme}`)} title={t(`app.theme.${nextTheme}`)}
+            onClick={() => setTheme(nextTheme)}>
+            {theme === 'dark' ? <Sun size={22} aria-hidden="true" /> : <Moon size={22} aria-hidden="true" />}
           </button>
           <div className="lang" role="group" aria-label={t('app.langGroup')}>
             {['en', 'es'].map((code) => (

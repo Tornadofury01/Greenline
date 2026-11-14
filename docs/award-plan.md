@@ -113,6 +113,35 @@ Precompute everything with one small Node script into one file (e.g. `/shared/co
 
 ---
 
+## Part E. Visual design direction (from the team's two Dribbble references)
+
+References (inspiration only; don't copy their assets, logos or photos):
+- **Map:** Flatkey fleet dashboard. Dark rounded cards, satellite basemap, lime/amber/red accents, Live/Replay toggle in the header, map controls stacked on the left, a "Copilot" alert card sliding up from the bottom, persistent bottom nav.
+- **Data:** Tennis match-stats app. A scoreboard recap, one big number with a small delta ("168 km/h, +6 vs May"), segmented controls (1st / 2nd serve), stat pills, small stat cards with a progress bar, mini bar sparklines, a weekday dot grid.
+
+How it maps to Greenline:
+| Reference element | Greenline use |
+|---|---|
+| Satellite basemap | Real imagery under the field dots. Use public-domain USGS National Map imagery tiles (or NASA GIBS); add attribution. |
+| Live / Replay toggle | Map header toggle "Normal year / Replay 2011" (recolors the 2011 view) |
+| Copilot card from the bottom | Bottom sheet for the tapped field and the "Where would a cover crop help most?" list |
+| Left map controls | Zoom, "Ellis County", "Show all North Texas", "Use my location" |
+| Big number + delta | "78 bare days a year · −59 with Option A" on Field story and the cards |
+| Match recap scoreboard | Compare screen as a scoreboard: one row per rotation with score, bare days, 2011 replay |
+| Segmented control | Current / Option A / Option B / My own; Normal year / 2011 |
+| Stat pills | Tags (nitrogen-fixing, cover crop, drought-tolerant) |
+| Small stat cards with a bar | Soil facts, confidence, dollars |
+| Mini bar sparkline | Bare days per year (2014+), with pre-2013 muted |
+| Weekday dot grid | Typical-year strip: 12 month dots (green / partly covered / bare) |
+| "Challenge Mia" button | "Send to my county agent" (Expert handoff) |
+
+Design rules:
+- **Readable in sun:** dark theme with high contrast (text at least 4.5:1, key numbers 7:1), plus a light-mode toggle. Test both in bright light on a phone.
+- **Colors:** lime is the brand accent. Map risk levels stay colorblind-safe (blue → yellow → dark orange + size/ring), never red/green alone.
+- **Sizes:** large numbers, few words, tap targets ≥ 44 px, no text under 12 px.
+- **Mobile layout:** bottom nav and the bottom sheet must not cover map controls at 375 px.
+- **Make it tokens:** one set of design tokens (colors, radius, spacing, type sizes) in one CSS file, so the look is consistent and easy to change.
+
 ## Build order
 1. Tag `v1.1-checkpoint` and redeploy (safety point).
 2. A1–A3 county map + "where to start" (Terminal A, plan mode).

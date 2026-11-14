@@ -11,7 +11,11 @@
       "en": "EN",
       "es": "ES"
     },
-    "sampleNotice": "Showing sample data for a demo field. Not real measurements yet."
+    "sampleNotice": "Showing sample data for a demo field. Not real measurements yet.",
+    "theme": {
+      "light": "Switch to light mode (easier to read in bright sun)",
+      "dark": "Switch to dark mode"
+    }
   },
   "nav": {
     "label": "Main",
@@ -56,7 +60,7 @@
   "pick": {
     "title": "Pick your field",
     "intro": "Find your field on the map and tap it.",
-    "mapLabel": "Map of North Texas",
+    "mapLabel": "Map of the Ellis County fields",
     "mapHint": "Green dots are the 300 Ellis County fields we have data for (USDA field outlines). Tap one, or tap your field and we load the nearest dot.",
     "dotLabel": "Field {id}, {county} County",
     "sampledField": "Sampled field {id}: measured data for this exact spot.",
@@ -514,7 +518,7 @@
     },
     "prism": {
       "title": "Ground-station rain (PRISM)",
-      "text": "PRISM (Oregon State University) maps rain on a 4 km grid from thousands of rain gauges and weather stations. We use it to check NASA's rain data. Across 201 North Texas fields (2008–2024), yearly rain from NASA POWER matched PRISM with a correlation of 0.92 and read about 9% low; GPM IMERG matched at 0.93 and read about 4% high. Both NASA datasets are partly adjusted with gauge data, so this shows consistency, not fully independent proof. It doesn't change the confidence points."
+      "text": "PRISM (Oregon State University) maps rain on a 4 km grid from thousands of rain gauges and weather stations. We use it to check NASA's rain data. We checked across 201 North Texas sample points, 2008–2024: yearly rain from NASA POWER matched PRISM with a correlation of 0.92 and read about 9% low; GPM IMERG matched at 0.93 and read about 4% high. Both NASA datasets are partly adjusted with gauge data, so this shows consistency, not fully independent proof. It doesn't change the confidence points."
     },
     "kFactor": {
       "title": "Erosion risk (K factor)",

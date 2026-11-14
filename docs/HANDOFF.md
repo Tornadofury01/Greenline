@@ -1,5 +1,7 @@
 # Greenline: Full Handoff for Claude Code
 
+> **Update, Nov 14 2026 (after this file was written).** The 201 sampled `nt-*` fields, the demo field `nt-103` and the three original models described below are **retired** (kept in git history, tag `v1.1-checkpoint`). The app now runs on **300 Ellis County fields (USDA outlines, `ec-000` … `ec-299`, demo `ec-251`)** with the Field Shift models (`pipeline/MODELS.md`) and one shared county weather series. Sections 5, 6, 8 and 9 below are the retired numbers; the current ones are in section 8a and in `CLAUDE.md` (Build status). Work happens on branch `nikkibranch`.
+
 **Read this first, all of it, before touching anything.** It is the complete context from the long planning and build conversation with the team (Divya and teammates, Brightcone), written so a fresh Claude Code session can continue without asking the team to re-explain. It complements `CLAUDE.md` (which stays the source of truth for code paths and commands). Where this file and `CLAUDE.md` disagree about code, trust the code and `CLAUDE.md`, then tell the user.
 
 Live app: https://greenline-psi.vercel.app · Repo: github.com/Tornadofury01/Greenline (public) · Last tag: `v1.0-checkpoint` on `main`.
@@ -189,7 +191,18 @@ Held-out stability 97.6 %; agreement with a percentile rule 64.3 %; clusters nor
 
 ---
 
-## 8. Pitch numbers (nt-103, Ellis County, dryland, goals water + soil)
+## 8a. Current pitch numbers (ec-251, Ellis County, dryland, goals water + soil; read from the scoring on Nov 14 2026)
+
+| Rotation | Bare days/yr | Normal score | 2011 drought | Verdict |
+|---|---|---|---|---|
+| Current, the app's guess: cotton, corn, sorghum | 54 | 31 | 12 | Struggles |
+| Current, set by hand to cotton → corn | 62 | 21 | 0 | Struggles |
+| **Option A: wheat, cowpea, sorghum, rye** | **16** | **80** | 67 | Under strain |
+| Option B: wheat, sorghum-sudan, rye, sorghum | 25 | 76 | 63 | Under strain |
+
+Field: about 42 bare days a year (Landsat 8/9, 2014–2025; a whole-outline average that may undercount bare soil, MODELS.md #1); 2011 rain 24.7 in (−34 % by NASA POWER, −37 % by PRISM); soil holds 6.3 in. Model 1: 83.1 % on unseen years 2023–2025 (91.7 % on clean-label fields) vs 58 % for "same as last year"; fallow recall 0 %. Model 2: AUC 0.936 on unseen years.
+
+## 8. RETIRED pitch numbers (nt-103, v1.1-checkpoint; Ellis County, dryland, goals water + soil)
 
 | Rotation | Bare days/yr | Normal score | 2011 drought | Verdict |
 |---|---|---|---|---|

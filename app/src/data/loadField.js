@@ -1,7 +1,7 @@
 // The ONE place the app gets field data.
 //
 // Real data: /shared/fields/<id>.json (built by pipeline/build_fields.py, format in /shared/data-format.md v2),
-// one file per sampled North Texas field, loaded on demand. If a file can't be loaded, the result is
+// one file per study field (300 Ellis County USDA field outlines, ec-000 ... ec-299), loaded on demand. If a file can't be loaded, the result is
 // { error: 'network' | 'missing' } and the app says so. The fake /shared/sample-field.json is only used in development
 // (npm run dev), never in a production build: a farmer must never see fake data in place of their field.
 //

@@ -74,11 +74,13 @@ npm run deploy     # selftest + i18n + build, then publish to production on Verc
 - Before sharing a new build, check: the live link opens in an incognito window, `sw.js` precaches `assets/fields/<demo id>-*.js`, a made-up `/assets/x.js` returns 404 (not index.html), and the deploy output contains no `.env` values.
 
 ## Build status
+> **Retired numbers (kept as a record).** Entries below that mention the **201 sampled `nt-*` fields**, the demo field **`nt-103`** or its numbers describe the app up to tag `v1.1-checkpoint`. On Nov 14 2026 the fields and models were replaced by the **300 Ellis County study fields** (`ec-000` … `ec-299`, USDA outlines, demo `ec-251`) and the Field Shift models. Current numbers for `ec-251` (dryland, goals water + soil, read from the scoring on Nov 14 2026): field average **42 bare days a year** (Landsat 8/9, 2014–2025, whole-outline average, may undercount bare soil); 2011 rain 24.7 in, **34 % below normal** (NASA POWER; PRISM −37 %); soil holds 16 cm (6.3 in). Current (app's guess: cotton, corn, sorghum) **31**, 54 bare days, 2011: 12 "Struggles"; with cotton → corn: **21**, 62 bare days, 2011: 0. Option A (wheat, cowpea, sorghum, rye) **80**, 16 bare days, 2011: 67 "Under strain". Option B (wheat, sorghum-sudan, rye, sorghum) **76**, 25 bare days, 2011: 63 "Under strain". All 300 fields share one weather series (see `pipeline/MODELS.md`).
+
 **Latest checkpoint `v1.1-checkpoint` (tag on `main` at `59d7504`, Nov 14 2026): everything through Phase 4 plus the field picking fixes, merged into `main` and live at https://greenline-psi.vercel.app.** Earlier: `v1.0-checkpoint` (`a66239f`, through Phase 4).
 `main` contains `app-build`, `datasets`, `landsat89-cover` (and the older `connect-data`, `data-pipeline`, `si-models`, `ui-polish`); only `landsat-harmonize` stays unmerged on purpose (tried, rejected, MODELS.md #14).
 **Next:** optional `ui-polish-2` and `models-v2` branches, then submission prep.
 
-Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-data`, which currently has `main` checked out) only touches `/pipeline`, `/shared`, `/docs`.
+Work now happens on branch **`nikkibranch`** (never commit directly to `main`); before Nov 14 2026 it was `app-build`. The `datasets` branch (worktree `Greenline-data`, which currently has `main` checked out) only touches `/pipeline`, `/shared`, `/docs`.
 - [x] **Phase 0: crop traits.** `crops.json` follows `docs/crop-traits-verification.md` and `-2.md` (sourced water, drought sensitivity, N fixation, sesame and late-rye-kill risks). Still `"verified": false`.
 - [x] **Phase 1: signature features.**
   - [x] 1.1 Bad-year replay re-scores rotations (`scoring/rules/replay.js`, `scoreRotation(..., { replayYear })`, Compare screen picker).
@@ -119,7 +121,7 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
 - [ ] **Next (optional):** `ui-polish-2`. Then submission prep.
 
 ## Roadmap
-- [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields
+- [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields (retired, `v1.1-checkpoint`); now the 300 Ellis County study fields
 - [ ] Real data for every 30 m cell (today a tap loads the nearest sampled field)
 - [x] Landsat 5/7 vs 8/9: harmonizing was tried and rejected; bare days use Landsat 8/9 only and pre-2013 is shown as low confidence (MODELS.md #14)
 - [ ] Verify crop traits with Texas A&M AgriLife and NRCS. Agree on the `yearType` classification rule

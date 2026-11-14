@@ -6,6 +6,7 @@ import { loadFieldAt, loadFieldById, loadDemoField, guessCurrentRotation } from 
 
 const AppContext = createContext(null);
 const STORAGE_KEY = 'greenline:v1';
+const THEME_KEY = 'greenline:theme'; // same key as the inline script in index.html
 
 const DEFAULT_FARM = {
   currentRotation: [],
@@ -24,6 +25,28 @@ function readSaved() {
 export function AppProvider({ children }) {
   const saved = useMemo(readSaved, []);
   const [lang, setLang] = useState(saved.lang || 'en');
+  // Light / dark. First visit follows the phone's own setting; the header button overrides it and is saved.
+  const [theme, setThemeRaw] = useState(() => (document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark'));
+  const setTheme = (next) => {
+    setThemeRaw(next);
+    try { localStorage.setItem(THEME_KEY, next); } catch { /* ignore */ }
+  };
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0e1210' : '#f6f5f1');
+  }, [theme]);
+  // Until the farmer picks a theme, keep following the phone if its setting changes.
+  useEffect(() => {
+    const mq = window.matchMedia?.('(prefers-color-scheme: light)');
+    if (!mq?.addEventListener) return undefined;
+    const onChange = (e) => {
+      let saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch { /* ignore */ }
+      if (!saved) setThemeRaw(e.matches ? 'light' : 'dark');
+    };
+    mq.addEventListener('change', onChange);
+    return () => mq.removeEventListener('change', onChange);
+  }, []);
   const [screen, setScreen] = useState('field');
   // "How we know" is opened from the header and from cards: remember where to return and which term to show.
   const [how, setHow] = useState({ from: 'field', term: null });
@@ -71,7 +94,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, retryLoad, loadError, loading, farm, updateFarm };
+  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, retryLoad, loadError, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

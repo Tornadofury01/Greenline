@@ -15,7 +15,7 @@ import { stressDriverText, modelClassFor } from '../si.js';
 // import VulnerabilityZonesMap from '../components/future/VulnerabilityZonesMap.jsx'; // FUTURE
 
 // Chart colors follow theme.css meaning: drought = risk red, heat = amber, wet = water blue.
-export const YEAR_COLORS = { drought: '#a3362a', heat: '#c98a1b', wet: '#2f75a8', normal: '#8e9c90' };
+export const YEAR_COLORS = { drought: 'var(--chart-drought)', heat: 'var(--chart-heat)', wet: 'var(--chart-wet)', normal: 'var(--chart-normal)' };
 const COVER = ['green', 'residue', 'bare'];
 
 const joinYears = (ys, t) => (ys.length > 1 ? `${ys.slice(0, -1).join(', ')} ${t('common.and')} ${ys.at(-1)}` : `${ys[0] ?? ''}`);
@@ -167,7 +167,7 @@ export default function FieldStory() {
               <defs>
                 <pattern id="bareHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
                   <rect width="6" height="6" fill="var(--chart-bare)" />
-                  <rect width="2" height="6" fill="#ffffff" fillOpacity="0.35" />
+                  <rect width="2" height="6" fill="var(--color-surface)" fillOpacity="0.4" />
                 </pattern>
               </defs>
               <XAxis dataKey="year" tickFormatter={(y) => `'${String(y).slice(2)}`} tick={{ fontSize: 12 }} interval="preserveStartEnd" minTickGap={16} tickLine={false} axisLine={{ stroke: '#8f8b7e' }} />
@@ -177,7 +177,7 @@ export default function FieldStory() {
                 formatter={(v, name) => [`${v}%`, t(`story.cover.${name === 'partly' ? 'residue' : name}`)]}
                 labelFormatter={(y) => `${y}${yearType[y] ? ` · ${t(`yearType.${yearType[y]}`)}` : ''}`}
               />
-              <ReferenceLine x={shares.find((x) => x.year >= SENSOR_YEAR)?.year ?? SENSOR_YEAR} stroke="#4b544d" strokeDasharray="3 3" label={{ value: t('story.sensorChange'), position: 'top', fontSize: 12, fill: '#4b544d' }} />
+              <ReferenceLine x={shares.find((x) => x.year >= SENSOR_YEAR)?.year ?? SENSOR_YEAR} stroke="var(--color-text-muted)" strokeDasharray="3 3" label={{ value: t('story.sensorChange'), position: 'top', fontSize: 12, fill: '#4b544d' }} />
               {[['green', 'var(--chart-green)'], ['partly', 'var(--chart-residue)'], ['bare', 'url(#bareHatch)']].map(([k, fill]) => (
                 <Bar key={k} dataKey={k} stackId="c" fill={fill} isAnimationActive={false}>
                   {shares.map((row) => <Cell key={row.year} fillOpacity={row.lowConfidence ? 0.35 : 1} />)}
@@ -230,7 +230,7 @@ export default function FieldStory() {
         <div role="img" aria-label={t('story.chartAlt', { from: first, to: last, years: joinYears(s.droughtYears, t), avg: s.avgRainIn })}>
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={chartData} margin={{ top: 8, right: 0, left: -20, bottom: 0 }}>
-              <CartesianGrid vertical={false} stroke="#e4e1d8" />
+              <CartesianGrid vertical={false} stroke="var(--color-border)" />
               <XAxis dataKey="year" tickFormatter={(y) => `'${String(y).slice(2)}`} tick={{ fontSize: 12 }} interval="preserveStartEnd" minTickGap={16} tickLine={false} axisLine={{ stroke: '#8f8b7e' }} />
               <YAxis tick={{ fontSize: 12 }} tickLine={false} axisLine={false} unit={` ${t('units.in')}`} width={78} />
               <Tooltip

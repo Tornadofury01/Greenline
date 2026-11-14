@@ -11,7 +11,11 @@
       "en": "EN",
       "es": "ES"
     },
-    "sampleNotice": "Mostrando datos de ejemplo de una parcela de demostración. Todavía no son mediciones reales."
+    "sampleNotice": "Mostrando datos de ejemplo de una parcela de demostración. Todavía no son mediciones reales.",
+    "theme": {
+      "light": "Cambiar a modo claro (más fácil de leer a pleno sol)",
+      "dark": "Cambiar a modo oscuro"
+    }
   },
   "nav": {
     "label": "Principal",
@@ -56,7 +60,7 @@
   "pick": {
     "title": "Elija su parcela",
     "intro": "Busque su parcela en el mapa y tóquela.",
-    "mapLabel": "Mapa del norte de Texas",
+    "mapLabel": "Mapa de los campos del condado de Ellis",
     "mapHint": "Los puntos verdes son los 300 campos del condado de Ellis con datos (contornos de campos del USDA). Toque uno, o toque su campo y cargamos el punto más cercano.",
     "dotLabel": "Campo {id}, condado de {county}",
     "sampledField": "Campo de muestra {id}: datos medidos en este mismo lugar.",
@@ -514,7 +518,7 @@
     },
     "prism": {
       "title": "Lluvia de estaciones en tierra (PRISM)",
-      "text": "PRISM (Universidad Estatal de Oregón) mapea la lluvia en una cuadrícula de 4 km con miles de pluviómetros y estaciones meteorológicas. Lo usamos para revisar los datos de lluvia de la NASA. En 201 campos del norte de Texas (2008–2024), la lluvia anual de NASA POWER coincidió con PRISM con una correlación de 0.92 y marcó cerca de 9% menos; GPM IMERG coincidió con 0.93 y marcó cerca de 4% más. Ambos datos de la NASA se ajustan en parte con pluviómetros, así que esto muestra consistencia, no una prueba totalmente independiente. No cambia los puntos de confianza."
+      "text": "PRISM (Universidad Estatal de Oregón) mapea la lluvia en una cuadrícula de 4 km con miles de pluviómetros y estaciones meteorológicas. Lo usamos para revisar los datos de lluvia de la NASA. Lo revisamos en 201 puntos de muestra del norte de Texas, 2008–2024: la lluvia anual de NASA POWER coincidió con PRISM con una correlación de 0.92 y marcó cerca de 9% menos; GPM IMERG coincidió con 0.93 y marcó cerca de 4% más. Ambos datos de la NASA se ajustan en parte con pluviómetros, así que esto muestra consistencia, no una prueba totalmente independiente. No cambia los puntos de confianza."
     },
     "kFactor": {
       "title": "Riesgo de erosión (factor K)",

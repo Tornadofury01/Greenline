@@ -39,8 +39,8 @@ export default defineConfig(({ mode }) => {
           name: 'Greenline',
           short_name: 'Greenline',
           description: 'Compare crop rotations for North Texas fields using NASA Earth data.',
-          theme_color: '#2f6b3a',
-          background_color: '#f6f4ec',
+          theme_color: '#0e1210',
+          background_color: '#0e1210',
           display: 'standalone',
           start_url: '/',
           icons: [
