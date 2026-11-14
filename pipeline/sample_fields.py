@@ -151,17 +151,29 @@ def run_terrain():
 
 
 def run_soil():
-    """USDA SSURGO via Soil Data Access (public REST, no key): dominant component at each point."""
+    """USDA SSURGO via Soil Data Access (public REST, no key): dominant component at each point.
+
+    Topsoil = the shallowest horizon. Erosion: kwfact (K, whole soil incl. rock fragments), kffact (fine-earth K),
+    tfact (T, tolerable soil loss, tons/acre/yr). Water: awc_r (cm water per cm soil, topsoil) and the map unit's
+    aws0100wta (available water storage in the top 100 cm, cm). Land capability: nirrcapcl + nirrcapscl,
+    non-irrigated (most North Texas fields are dryland), e.g. "2e" = class 2, erosion limited.
+    """
     print("SSURGO soil per field (Soil Data Access) ...")
     f = pd.read_csv(OUT / "fields.csv")
     rows = []
+    top = "(SELECT TOP 1 ch.{col} FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r)"
     for r in f.itertuples():
         q = f"""SELECT TOP 1 mu.mukey, c.compname, c.drainagecl, c.hydgrp, c.comppct_r,
-                  (SELECT TOP 1 ch.om_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS om,
-                  (SELECT TOP 1 ch.claytotal_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS clay,
-                  (SELECT TOP 1 ch.sandtotal_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS sand
+                  {top.format(col='om_r')} AS om,
+                  {top.format(col='claytotal_r')} AS clay,
+                  {top.format(col='sandtotal_r')} AS sand,
+                  {top.format(col='kwfact')} AS kwfact,
+                  {top.format(col='kffact')} AS kffact,
+                  {top.format(col='awc_r')} AS awc,
+                  c.tfact, c.nirrcapcl, c.nirrcapscl, ma.aws0100wta
                 FROM SDA_Get_Mukey_from_intersection_with_WktWgs84('point({r.lon} {r.lat})') AS m
                 JOIN mapunit mu ON mu.mukey = m.mukey JOIN component c ON c.mukey = mu.mukey
+                LEFT JOIN muaggatt ma ON ma.mukey = mu.mukey
                 WHERE c.majcompflag = 'Yes' ORDER BY c.comppct_r DESC"""
         for attempt in range(3):
             try:
@@ -322,7 +334,64 @@ def run_power():
     save(df[["fieldId", "powerCell", "year", "month", "tMaxC", "tMinC", "precipMm", "heatStressDays"]].round(2), "power_monthly")
 
 
-STEPS = {"landsat_early": run_landsat_early, "terrain": run_terrain, "soil": run_soil, "power_long": run_power_long,
+PRISM_Y0 = 1984
+
+
+def run_prism():
+    """PRISM monthly (4 km, gauge-based): rain and temperature per field, 1984-2025."""
+    print("PRISM monthly per field ...")
+    ee = ee_init()
+    col = ee.ImageCollection("OREGONSTATE/PRISM/ANm").select(["ppt", "tmean", "tmin", "tmax"])
+    df = per_month_sample(ee, col, ["ppt", "tmean", "tmin", "tmax"], PRISM_Y0, Y1, 4000, "mean", name="prism")
+    df = df.rename(columns={"ppt": "precipMm", "tmean": "tMeanC", "tmin": "tMinC", "tmax": "tMaxC"})
+    save(df[["fieldId", "year", "month", "precipMm", "tMeanC", "tMinC", "tMaxC"]].round(2), "prism_monthly")
+
+
+def run_prism_yearly():
+    """PRISM daily -> per field and year: last spring / first fall frost (Tmin <= 0 C, split at Jul 1, the same rule
+    as NASA POWER), storm days (>= 25 mm) and annual rain. All computed server-side; only the yearly table comes back.
+    PRISM days run 12:00-12:00 UTC (about 7 am to 7 am local), not midnight to midnight."""
+    print("PRISM daily -> yearly frost dates and storm days per field ...")
+    ee = ee_init()
+    fc = fields_fc(ee, point=True)
+    daily = ee.ImageCollection("OREGONSTATE/PRISM/ANd").select(["ppt", "tmin"])
+
+    def frost_doy(img):
+        doy = ee.Date(img.get("system:time_start")).getRelative("day", "year").add(1)
+        return ee.Image.constant(doy).toInt().rename("doy").updateMask(img.select("tmin").lte(0))
+
+    parts = []
+    for y in range(PRISM_Y0, Y1 + 1):
+        s, mid, e = ee.Date.fromYMD(y, 1, 1), ee.Date.fromYMD(y, 7, 1), ee.Date.fromYMD(y + 1, 1, 1)
+        yr = daily.filterDate(s, e)
+        img = ee.Image.cat([
+            yr.filterDate(s, mid).map(frost_doy).max().rename("lastSpringFrostDoy"),
+            yr.filterDate(mid, e).map(frost_doy).min().rename("firstFallFrostDoy"),
+            yr.select("ppt").map(lambda i: i.gte(25)).sum().rename("stormDays"),
+            yr.select("ppt").sum().rename("precipMm"),
+        ])
+        r = img.reduceRegions(fc, ee.Reducer.first(), 4000).map(
+            lambda f, y=y, n=yr.size(): f.set({"year": y, "days": n}).setGeometry(None))
+        for attempt in range(3):
+            try:
+                parts.append(pd.DataFrame([g["properties"] for g in r.getInfo()["features"]]))
+                break
+            except Exception as ex:
+                print(f"  prism {y} retry ({str(ex)[:80]})")
+                time.sleep(5)
+        else:
+            raise RuntimeError(f"prism {y} failed")
+        print(f"  prism {y}")
+    df = pd.concat(parts, ignore_index=True)
+    for c in ("lastSpringFrostDoy", "firstFallFrostDoy"):
+        if c not in df:
+            df[c] = None
+    df["frostFreeDays"] = df.firstFallFrostDoy - df.lastSpringFrostDoy
+    save(df[["fieldId", "year", "days", "precipMm", "stormDays", "lastSpringFrostDoy", "firstFallFrostDoy",
+             "frostFreeDays"]].round(1), "prism_yearly")
+
+
+STEPS = {"prism": run_prism, "prism_yearly": run_prism_yearly, "landsat_early": run_landsat_early, "terrain": run_terrain, "soil": run_soil, "power_long": run_power_long,
          "fields": run_fields, "cdl": run_cdl, "landsat": run_landsat, "smap": run_smap, "imerg": run_imerg,
          "storms": run_storms, "et": run_et, "power": run_power}
 

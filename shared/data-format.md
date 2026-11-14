@@ -68,6 +68,19 @@ If you change it, bump `schemaVersion`, update this doc, and update `/shared/sam
 
 ## `sources[]`
 `{ dataset, variable, resolution, dateRange }`. These are shown on the expert handoff page. Dataset names should match the `EVIDENCE` names in `/scoring/scoreRotation.js`.
+These four stay **strings** (the app calls `dateRange.replace(...)`). `dateRange` is `"YYYY-YYYY"`, a single year, or `"current"`.
+
+Added (optional, additive; present in real field files and the sample):
+
+| Key | Type | Notes |
+|---|---|---|
+| `id` | string | Stable short id: `power`, `imerg`, `prism`, `smap`, `landsat`, `cdl`, `ssurgo`, `srtm`, `modis_et`, `nass_quickstats`, `nass_progress`, `si` |
+| `name` | string | Full product name, e.g. `SMAP L4 Global 3-hourly Surface and Root Zone Soil Moisture v008` (real fields only) |
+| `product` | string | Catalog id or API, e.g. `NASA/SMAP/SPL4SMGP/008` (real fields only) |
+| `provider` | string | e.g. `NASA GSFC`, `USDA NRCS` (real fields only) |
+| `scale` | string | `patch` (30–70 m, read over the field itself), `area` (a km-scale grid cell; one value for the whole field), `county`, `state`, `model`. See `/docs/data-harmonization.md` |
+| `resolutionM` | number \| null | Approximate pixel size in metres. `null` for map units, county, state and model |
+| `startYear`, `endYear` | number \| null | The years this field actually has data for (`null` for SSURGO) |
 
 ## Pipeline CSV outputs (`/pipeline/data/`)
 Intermediate, monthly files from `pipeline/greenline_pipeline.py`. A later step turns them into the field JSON above
@@ -85,6 +98,8 @@ Empty cell = no valid data that month. All rows have `year` and, for monthly fil
 | `smap_monthly.csv` | `days, sm_surface, sm_rootzone` | SMAP L4, m³/m³, ~11 km |
 | `imerg_monthly.csv` | `precipMm` | GPM IMERG V07 monthly total |
 | `terrain.csv` | `elevationM, slopePct` | One row. SRTM 30 m |
+| `nass_yields.csv` | `crop, state, level, county, district, year, value, unit, raw` | From `pipeline/nass_quickstats.py`. Our counties, their districts, TX and OK state |
+| `nass_prices_tx.csv` | `crop, year, value, unit` | Texas, marketing year |
 | `nass_crop_progress_tx_monthly.csv` | `crop, stage, pctMean, pctEndOfMonth, weeks` | Texas statewide weekly Crop Progress, averaged by month |
 
 ## Multi-field CSVs (`/pipeline/data/fields/`)
@@ -101,6 +116,9 @@ plus a `fieldId` column. 30 m datasets are averaged over a 45 m buffer. Coarse g
 | `imerg_monthly.csv` | `fieldId, year, month, precipMm` | IMERG V07 monthly |
 | `imerg_storms_monthly.csv` | `fieldId, year, month, stormDays` | Days with ≥ 25 mm (half-hourly IMERG summed by UTC day) |
 | `modis_et_monthly.csv` | `fieldId, year, month, composites, etMm, petMm` | MOD16A2GF, sum of 8-day composites starting in the month |
+| `ssurgo.csv` | `fieldId, mukey, compname, drainagecl, hydgrp, comppct_r, om, clay, sand, kwfact, kffact, awc, tfact, nirrcapcl, nirrcapscl, aws0100wta` | Soil Data Access, dominant major component, topsoil horizon |
+| `prism_monthly.csv` | `fieldId, year, month, precipMm, tMeanC, tMinC, tMaxC` | `OREGONSTATE/PRISM/ANm`, 4 km, 1984–2025, sampled at the point |
+| `prism_yearly.csv` | `fieldId, year, days, precipMm, stormDays, lastSpringFrostDoy, firstFallFrostDoy, frostFreeDays` | From `OREGONSTATE/PRISM/ANd` daily, computed server-side. Days run 12:00–12:00 UTC |
 
 ## SI results (`/shared/si/`)
 One small JSON per field (`<fieldId>.json`) plus `index.json`, written by `pipeline/models/export_si.py`.
@@ -150,14 +168,25 @@ How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVer
 |---|---|---|
 | `field.gridCell` | string | `L30-<fieldId>` for sampled fields (real per-cell ids are on the roadmap) |
 | `field.state` | string | `TX`, or `OK` for 3 sample fields just across the Red River |
-| `soil` | object | Real SSURGO (Soil Data Access), dominant component. Any value can be `null`. Adds `clayPct`. `texture` is from topsoil clay/sand |
+| `soil` | object | Real SSURGO (Soil Data Access), dominant component. Any value can be `null`. Adds `clayPct` and the soil keys below. `texture` is from topsoil clay/sand |
+| `soil.kFactor` | number | Erosion factor K (`kwfact`, topsoil), 0.02–0.69. Higher = erodes more easily |
+| `soil.tFactor` | number | Tolerable soil loss T, tons/acre/year (1–5) |
+| `soil.awcCmPerCm` | number | Topsoil available water capacity, cm of water per cm of soil |
+| `soil.waterStorage100Cm` | number | Plant-available water in the top 100 cm, cm (map-unit weighted `aws0100wta`). ÷ 2.54 = inches |
+| `soil.landCapabilityClass` | string | Non-irrigated land capability, class 1–8 + subclass: `e` erosion, `w` wetness, `s` soil limits, `c` climate. E.g. `2e` |
 | `terrain.elevationM` | number | SRTM |
 | `cropHistory[]` | | Adds `cdlCode` and `cdlClass` (model group). `crop` is `"other"` when the CDL crop isn't in `crops.json` |
 | `climateYearly[]` | | 1984–2025 from NASA POWER (`precipMm` is POWER, not IMERG). Adds `precipMmImerg` (2008–). `soilMoistureAnomaly` (2015–) and `heavyStormDays` (IMERG, 2008–) are `null` before their records start. `yearType` from the k-means model |
+| `climateYearly[]` PRISM keys | | `precipMmPrism` (mm), `stormDaysPrism` (days ≥ 25 mm), `lastSpringFrostPrism`, `firstFallFrostPrism` (ISO dates, Tmin ≤ 0 °C split at Jul 1, same rule as POWER), `frostFreeDaysPrism`. PRISM 4 km, gauge-based. Any can be `null` (e.g. no fall frost) |
+| `climateMonthly[]` | array | PRISM, 2008–2025: `{ year, month, precipMm, tMinC, tMaxC }` (°C, monthly means of daily min/max) |
 | `ndviMonthly[]` | | Landsat 5/7/8/9, 1984–2025. Cloudy months are left out |
 | `coverYearly[]` | array | `{ year, months[12], cloudyMonths }`. `months` = `green` / `residue` / `bare` / `null` (no clear image). 2008+ come from model 1 |
 | `bareDaysPerYear[]` | | Adds `greenDays` and `score` (0–100). Years with fewer than 9 clear months are left out |
-| `quality` | object | `rainAgreement { years, corr, imergVsPowerPct }`, `modelAgreesWithCdlPct`, `cloudyMonthsPct`, `climateYears`, `cropYears`. Used by the confidence score |
+| `quality` | object | `rainAgreement { years, corr, imergVsPowerPct }`, `rainVsPrism { power, imerg }` (each `{ years, corr, pct }` or `null`: annual rain vs PRISM, `pct` = how much higher than PRISM), `modelAgreesWithCdlPct`, `cloudyMonthsPct`, `climateYears`, `cropYears`. Used by the confidence score |
+| `market` | object | USDA NASS Quick Stats (survey). `{ county, district, priceState: "TX", yields[], pricesTx[], recent[] }`. Same for every field in a county |
+| `market.yields[]` | | `{ crop, year, value, unit, level }`, 2008–2025. `level` = `county`, or the fallback `district` (NASS stopped district yields after 2019) or `state` when NASS doesn't publish the county. `crop` ids: `corn`, `cotton` (upland), `grain_sorghum`, `winter_wheat`, `soybeans`, `oats`, `sunflower` (soybeans and oats aren't in `crops.json` yet) |
+| `market.pricesTx[]` | | `{ crop, year, value, unit }`: Texas marketing-year average price received, nominal $. Units differ: `$/bu`, `$/lb` (cotton), `$/cwt` (sorghum, sunflower), `$/ton` (`alfalfa` hay). Oklahoma fields use Texas prices too |
+| `market.recent[]` | | `{ crop, years, yield, yieldUnit, yieldLevel, yieldYears, price, priceUnit, grossPerAcreUsd }`: 2021–2025 averages at one level (county if ≥ 3 years, else district, else state). `grossPerAcreUsd` = yield × price after unit conversion (sorghum 56 lb/bu, sunflower lb → cwt). Gross revenue, **not profit**; costs aren't included |
 | `si` | object | `{ models, years, replayPresets }`, the same as `/shared/si/<fieldId>.json` (below). `models.seasonCrop.perClass` adds held-out recall/precision per crop |
 
 Known data caveat: Landsat 8 (2013–) reads NDVI slightly higher than Landsat 5/7 and the sensors are not harmonized yet,

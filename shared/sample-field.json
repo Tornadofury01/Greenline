@@ -1605,43 +1605,78 @@
    "dataset": "NASA POWER",
    "variable": "temperature, heat stress days",
    "resolution": "0.5° × 0.625°",
-   "dateRange": "2005-2025"
+   "dateRange": "2005-2025",
+   "id": "power",
+   "scale": "area",
+   "resolutionM": 50000,
+   "startYear": 2005,
+   "endYear": 2025
   },
   {
    "dataset": "GPM IMERG",
    "variable": "precipitation, heavy storm days",
    "resolution": "0.1°",
-   "dateRange": "2005-2025"
+   "dateRange": "2005-2025",
+   "id": "imerg",
+   "scale": "area",
+   "resolutionM": 11000,
+   "startYear": 2005,
+   "endYear": 2025
   },
   {
    "dataset": "SMAP L4",
    "variable": "soil moisture anomaly",
    "resolution": "9 km",
-   "dateRange": "2015-2025"
+   "dateRange": "2015-2025",
+   "id": "smap",
+   "scale": "area",
+   "resolutionM": 9000,
+   "startYear": 2015,
+   "endYear": 2025
   },
   {
    "dataset": "Landsat 8/9 (HLS)",
    "variable": "NDVI, bare days",
    "resolution": "30 m",
-   "dateRange": "2005-2025"
+   "dateRange": "2005-2025",
+   "id": "landsat",
+   "scale": "patch",
+   "resolutionM": 30,
+   "startYear": 2005,
+   "endYear": 2025
   },
   {
    "dataset": "SRTM",
    "variable": "slope",
    "resolution": "30 m",
-   "dateRange": "2000"
+   "dateRange": "2000",
+   "id": "srtm",
+   "scale": "patch",
+   "resolutionM": 30,
+   "startYear": 2000,
+   "endYear": 2000
   },
   {
    "dataset": "USDA SSURGO",
    "variable": "soil properties",
    "resolution": "1:24,000",
-   "dateRange": "2024"
+   "dateRange": "2024",
+   "id": "ssurgo",
+   "scale": "patch",
+   "resolutionM": null,
+   "startYear": 2024,
+   "endYear": 2024
   },
   {
    "dataset": "USDA Cropland Data Layer",
    "variable": "crop history",
    "resolution": "30 m",
-   "dateRange": "2016-2025"
+   "dateRange": "2016-2025",
+   "id": "cdl",
+   "scale": "patch",
+   "resolutionM": 30,
+   "startYear": 2016,
+   "endYear": 2025
   }
  ]
 }
