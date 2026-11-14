@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Rectangle, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Hand, Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock } from 'lucide-react';
+import { Hand, Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
 import { PageHead, Source } from '../components/Small.jsx';
@@ -12,6 +12,10 @@ import { slopeWord } from '../display.js';
 
 const NORTH_TEXAS = [33.15, -97.3];
 const CELL_HALF_DEG = 0.000135; // ~15 m, so the box is one 30 m cell
+const FAR_KM = 25; // beyond this the nearest sampled field is probably not like the farmer's field
+
+// GPS error code -> which message to show (1 denied, 2 unavailable, 3 timeout).
+const GEO_ERROR = { 1: 'denied', 2: 'unavailable', 3: 'timeout' };
 
 function ClickToPick({ onPick }) {
   useMapEvents({ click: (e) => onPick(e.latlng.lat, e.latlng.lng) });
@@ -91,6 +95,23 @@ export function FieldFacts({ field }) {
 export default function PickField() {
   const { t, field, pickField, pickDemo, loading, setScreen } = useApp();
   const online = useOnline();
+  // How the current field was picked ('tap' | 'gps') and the state of the GPS button. No coordinates are kept here.
+  const [via, setVia] = useState('tap');
+  const [geo, setGeo] = useState(null); // null | 'locating' | 'denied' | 'unavailable' | 'timeout' | 'unsupported'
+  const tapPick = (lat, lon) => { setVia('tap'); setGeo(null); pickField(lat, lon); };
+
+  // Privacy: the GPS point exists only inside this callback. It goes to pickField() to find the nearest sampled
+  // field and is never put in state, storage, a URL or a request. Low accuracy is enough (nearest of 201 fields).
+  function locateMe() {
+    if (!navigator.geolocation || !window.isSecureContext) { setGeo('unsupported'); return; }
+    setGeo('locating');
+    navigator.geolocation.getCurrentPosition(
+      (pos) => { setVia('gps'); setGeo(null); pickField(pos.coords.latitude, pos.coords.longitude); },
+      (err) => setGeo(GEO_ERROR[err.code] || 'unavailable'),
+      { enableHighAccuracy: false, maximumAge: 600000, timeout: 10000 },
+    );
+  }
+
   const cell = field && [
     [field.field.lat - CELL_HALF_DEG, field.field.lon - CELL_HALF_DEG],
     [field.field.lat + CELL_HALF_DEG, field.field.lon + CELL_HALF_DEG],
@@ -109,7 +130,7 @@ export default function PickField() {
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            <ClickToPick onPick={pickField} />
+            <ClickToPick onPick={tapPick} />
             <FlyToField field={field} />
             {cell && <Rectangle bounds={cell} pathOptions={{ color: '#1f5130', weight: 4, fillOpacity: 0.3 }} />}
           </MapContainer>
@@ -119,6 +140,15 @@ export default function PickField() {
           </div>
         )}
         <p className="map-caption"><Hand size={16} aria-hidden="true" />{t('pick.mapHint')}</p>
+        <div className="locate">
+          <button type="button" className="btn btn-block" disabled={geo === 'locating' || loading} onClick={locateMe}>
+            {geo === 'locating' ? <LoaderCircle size={20} className="spin" aria-hidden="true" /> : <LocateFixed size={20} aria-hidden="true" />}
+            {geo === 'locating' ? t('pick.locating') : t('pick.useLocation')}
+          </button>
+          {geo && geo !== 'locating' && (
+            <p className="locate-error" role="alert"><TriangleAlert size={18} aria-hidden="true" /><span>{t(`pick.geo.${geo}`)}</span></p>
+          )}
+        </div>
       </section>
 
       <div className="stack">
@@ -136,7 +166,8 @@ export default function PickField() {
         <>
           <section className="card">
             <h2>{t('pick.summaryTitle')}</h2>
-            {field.nearestKm != null && <p className="notice-inline">{t('pick.nearest', { km: field.nearestKm, id: field.field.id })}</p>}
+            {field.nearestKm != null && <p className="notice-inline">{t(via === 'gps' ? 'pick.nearestGps' : 'pick.nearest', { km: field.nearestKm, id: field.field.id })}</p>}
+            {field.nearestKm > FAR_KM && <p className="notice-inline notice-warn">{t('pick.farAway', { km: field.nearestKm })}</p>}
             {field.fallbackReason && <p className="notice-inline">{t('pick.fallback')}</p>}
             <FieldFacts field={field} />
             <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('pick.privacy')}</span></p>

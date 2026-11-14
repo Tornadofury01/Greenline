@@ -74,7 +74,17 @@
     "loadDemo": "Cargar el campo de demostración",
     "loading": "Cargando…",
     "nearest": "Campo de muestra más cercano ({id}), a {km} km de donde tocó. Pronto habrá datos reales para cada campo.",
-    "fallback": "No pudimos cargar datos reales para este campo, así que este es el campo de muestra ficticio."
+    "fallback": "No pudimos cargar datos reales para este campo, así que este es el campo de muestra ficticio.",
+    "useLocation": "Usar mi ubicación",
+    "locating": "Buscando tu ubicación…",
+    "nearestGps": "Campo de muestra más cercano ({id}), a {km} km de ti. Tu ubicación se usó una vez para encontrarlo y no se guardó.",
+    "farAway": "El campo más cercano con datos está a {km} km, así que puede no parecerse al tuyo. Úsalo como ejemplo, no como tu campo.",
+    "geo": {
+      "denied": "La ubicación está desactivada para este sitio. Puedes permitirla en los ajustes del navegador, o toca el mapa.",
+      "unavailable": "No pudimos encontrar tu ubicación ahora. Inténtalo al aire libre, o toca el mapa.",
+      "timeout": "Encontrar tu ubicación tardó demasiado. Inténtalo de nuevo, o toca el mapa.",
+      "unsupported": "Este navegador o conexión no puede compartir tu ubicación. Toca el mapa."
+    }
   },
   "farm": {
     "title": "Su granja",

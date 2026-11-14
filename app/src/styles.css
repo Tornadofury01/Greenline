@@ -550,3 +550,12 @@ dialog.sheet::backdrop { background: rgb(27 31 28 / 0.45); }
 .strip-cell.cover-residue { background-color: var(--chart-residue); }
 .strip-cell.cover-bare { background-color: var(--chart-bare); background-image: repeating-linear-gradient(45deg, transparent 0 3px, rgb(255 255 255 / 0.35) 3px 5px); }
 .glance-days { grid-column: 1 / -1; font-size: var(--text-xs); color: var(--color-text-muted); }
+
+/* ---------- Use my location (Pick field) ---------- */
+.locate { padding: var(--s-2); border-top: var(--border); display: flex; flex-direction: column; gap: var(--s-1); }
+.locate-error { display: flex; gap: var(--s-1); align-items: flex-start; padding: var(--s-1) var(--s-2); border-radius: var(--radius); background: var(--color-warn-soft); color: var(--color-warn); }
+.locate-error svg { flex: none; margin-top: 2px; }
+.notice-inline.notice-warn { background: var(--color-warn-soft); color: var(--color-warn); }
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
