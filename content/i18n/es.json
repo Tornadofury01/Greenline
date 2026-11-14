@@ -145,7 +145,7 @@
     "scoreDetail": "Últimos 10 años. 100 = nunca desnudo",
     "cover": {
       "green": "Creciendo (verde)",
-      "residue": "Poca cobertura o rastrojo",
+      "residue": "Parcialmente cubierto",
       "bare": "Suelo desnudo",
       "none": "Sin imagen clara (nubes)"
     },
@@ -164,7 +164,20 @@
     "replayCrop": "Cultivo de ese año: {crop}",
     "replayBare": "{days} días desnudo (puntaje {score}/100)",
     "replayStress": "Verdor por debajo de lo normal en: {months}",
-    "replayNoStress": "El verdor se mantuvo cerca de lo normal toda la temporada"
+    "replayNoStress": "El verdor se mantuvo cerca de lo normal toda la temporada",
+    "coverChartTitle": "La cobertura de su suelo, año por año",
+    "coverChartCaption": "Cada barra es un año. El verde es el tiempo con plantas creciendo, el beige es cobertura parcial y la parte café con rayas es suelo desnudo.",
+    "coverChartAlt": "Gráfica de barras de la cobertura del suelo de {from} a {to}. El suelo desnudo promedió {bare}% de los meses despejados desde {since}.",
+    "sensorChange": "Satélites nuevos",
+    "sensorNote": "En 2013 cambió el satélite, y el nuevo se ve un poco más verde. El tiempo desnudo antes de 2013 puede verse mayor de lo que fue, así que compare con cuidado a ambos lados de esa línea.",
+    "typicalTitle": "Un año típico en su parcela",
+    "typicalCaption": "Probabilidad de suelo desnudo en cada mes, según los años desde {since}.",
+    "typicalBare": "Casi siempre desnudo: {months}.",
+    "typicalNone": "Ningún mes suele estar desnudo.",
+    "partlyNote": "“Parcialmente cubierto” significa plantas dispersas, rastrojo o residuos del cultivo. Los satélites todavía no pueden distinguirlos.",
+    "showAll": "Ver los {n} años",
+    "showRecent": "Ver los últimos 10 años",
+    "coverShare": "{green}% creciendo, {partly}% parcialmente cubierto, {bare}% desnudo"
   },
   "compare": {
     "title": "Comparar rotaciones",

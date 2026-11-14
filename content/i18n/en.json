@@ -145,7 +145,7 @@
     "scoreDetail": "Last 10 years. 100 = never bare",
     "cover": {
       "green": "Growing (green)",
-      "residue": "Sparse cover or residue",
+      "residue": "Partly covered",
       "bare": "Bare ground",
       "none": "No clear picture (clouds)"
     },
@@ -164,7 +164,20 @@
     "replayCrop": "Crop that year: {crop}",
     "replayBare": "{days} bare days (score {score}/100)",
     "replayStress": "Greenness below normal in: {months}",
-    "replayNoStress": "Greenness stayed near normal all season"
+    "replayNoStress": "Greenness stayed near normal all season",
+    "coverChartTitle": "Your ground cover, year by year",
+    "coverChartCaption": "Each bar is one year. Green is time with plants growing, tan is partly covered, and the brown striped part is bare ground.",
+    "coverChartAlt": "Bar chart of ground cover from {from} to {to}. Bare ground averaged {bare}% of the clear months since {since}.",
+    "sensorChange": "New satellites",
+    "sensorNote": "In 2013 the satellite changed, and the newer one reads a bit greener. Bare time before 2013 may look higher than it was, so compare across that line with care.",
+    "typicalTitle": "A typical year on your field",
+    "typicalCaption": "Chance the ground is bare in each month, from the years since {since}.",
+    "typicalBare": "Usually bare: {months}.",
+    "typicalNone": "No month is usually bare.",
+    "partlyNote": "“Partly covered” means sparse plants, stubble or crop residue. Satellites can’t yet tell these apart.",
+    "showAll": "Show all {n} years",
+    "showRecent": "Show the latest 10 years",
+    "coverShare": "{green}% growing, {partly}% partly covered, {bare}% bare"
   },
   "compare": {
     "title": "Compare rotations",

@@ -58,10 +58,10 @@ npm run selftest   # scoring sanity checks
 ## Build status
 Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-data`) only touches `/pipeline`, `/shared`, `/docs`.
 - [x] **Phase 0: crop traits.** `crops.json` follows `docs/crop-traits-verification.md` and `-2.md` (sourced water, drought sensitivity, N fixation, sesame and late-rye-kill risks). Still `"verified": false`.
-- [ ] **Phase 1: signature features.**
+- [x] **Phase 1: signature features.**
   - [x] 1.1 Bad-year replay re-scores rotations (`scoring/rules/replay.js`, `scoreRotation(..., { replayYear })`, Compare screen picker).
   - [x] 1.2 Bare days per rotation (`scoring/bareDays.js`; per-crop `bareShare` calendars in `crops.json`, built by `scoring/tools/build_calendars.mjs` from the 201 fields' 2013+ Landsat + CDL; estimates marked).
-  - [ ] 1.3 Clearer green / residue / bare field story.
+  - [x] 1.3 Clearer green / residue / bare field story (cover-by-year chart with a 2013 sensor marker, typical-year strip, "partly covered" wording; headline and bare-day stats use 2013+ only because Landsat 5/7 vs 8/9 isn't harmonized).
 - [ ] **Phase 2:** not started (fertilizer-saved estimate from `nFixLbPerAcre`).
 - [ ] **Phase 4:** not started.
 

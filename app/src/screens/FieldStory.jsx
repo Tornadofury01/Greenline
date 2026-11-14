@@ -1,11 +1,12 @@
 // Screen 3: lead with the answer, then 40 years of rain, year types and ground cover, and bad-year replay.
 import { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer, CartesianGrid } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer, CartesianGrid, ReferenceLine } from 'recharts';
+import CoverStrip from '../components/CoverStrip.jsx';
 import { Sun, CloudRain, Thermometer, CalendarX, ArrowRight, History, Gauge, TriangleAlert } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { StatCard, NeedField, JudgmentNote, PageHead, Source, ModelCard, Receipt } from '../components/Small.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
-import { climateStats, usuallyBareMonths, mmToIn } from '../display.js';
+import { climateStats, usuallyBareMonths, mmToIn, coverShares, typicalBareMonths, SENSOR_YEAR } from '../display.js';
 import { stressDriverText, modelClassFor } from '../si.js';
 // import VulnerabilityZonesMap from '../components/future/VulnerabilityZonesMap.jsx'; // FUTURE
 
@@ -80,6 +81,7 @@ function CoverRow({ row, label, extra }) {
 export default function FieldStory() {
   const { t, field, setScreen } = useApp();
   const [replayYear, setReplayYear] = useState(null);
+  const [allYears, setAllYears] = useState(false);
   if (!field) return <div className="screen"><NeedField /></div>;
 
   const s = climateStats(field);
@@ -98,6 +100,14 @@ export default function FieldStory() {
   const recentScore = Math.round(field.bareDaysPerYear.slice(-10).reduce((a, b) => a + b.score, 0) / Math.max(1, Math.min(10, field.bareDaysPerYear.length)));
   const cropLabel = (h) => (h.crop === 'other' ? t(`si.cls.${h.cdlClass || 'other'}`) : t(`crops.${h.crop}`));
   const climateSrc = ['NASA POWER', 'Greenline SI models'];
+  const shares = coverShares(field);
+  const typical = typicalBareMonths(field);
+  const modernShares = shares.filter((x) => x.year >= SENSOR_YEAR);
+  const sinceShares = modernShares.length ? modernShares : shares;
+  const avgBarePct = sinceShares.length ? Math.round(sinceShares.reduce((a, b) => a + b.bare, 0) / sinceShares.length) : 0;
+  const typicalBare = typical.map((p, i) => (p >= 0.5 ? monthsLong[i] : null)).filter(Boolean);
+  const coverRows = [...field.coverYearly].reverse();
+  const shownRows = allYears ? coverRows : coverRows.slice(0, 10);
 
   return (
     <div className="screen">
@@ -121,6 +131,54 @@ export default function FieldStory() {
       </div>
 
       <ModelCard />
+
+      <section className="card">
+        <div className="field-group">
+          <h2 className="section-title">{t('story.coverChartTitle')} <GlossaryIcon term="ndvi" /></h2>
+          <p className="chart-caption">{t('story.coverChartCaption')}</p>
+        </div>
+        <div className="legend">
+          <span className="legend-item"><span className="swatch cover-green" />{t('story.cover.green')}</span>
+          <span className="legend-item"><span className="swatch cover-residue" />{t('story.cover.residue')}</span>
+          <span className="legend-item"><span className="swatch cover-bare" />{t('story.cover.bare')}</span>
+        </div>
+        <div role="img" aria-label={t('story.coverChartAlt', { from: shares[0]?.year, to: shares.at(-1)?.year, bare: avgBarePct, since: sinceShares[0]?.year })}>
+          <ResponsiveContainer width="100%" height={220}>
+            <BarChart data={shares} margin={{ top: 16, right: 4, left: 0, bottom: 0 }} barCategoryGap={1}>
+              <defs>
+                <pattern id="bareHatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <rect width="6" height="6" fill="var(--chart-bare)" />
+                  <rect width="2" height="6" fill="#ffffff" fillOpacity="0.35" />
+                </pattern>
+              </defs>
+              <XAxis dataKey="year" tickFormatter={(y) => `'${String(y).slice(2)}`} tick={{ fontSize: 12 }} interval="preserveStartEnd" minTickGap={16} tickLine={false} axisLine={{ stroke: '#8f8b7e' }} />
+              <YAxis tick={{ fontSize: 12 }} tickLine={false} axisLine={false} unit="%" width={40} domain={[0, 100]} ticks={[0, 50, 100]} />
+              <Tooltip
+                cursor={{ fill: 'rgb(31 81 48 / 0.08)' }}
+                formatter={(v, name) => [`${v}%`, t(`story.cover.${name === 'partly' ? 'residue' : name}`)]}
+                labelFormatter={(y) => `${y}${yearType[y] ? ` · ${t(`yearType.${yearType[y]}`)}` : ''}`}
+              />
+              <ReferenceLine x={SENSOR_YEAR} stroke="#4b544d" strokeDasharray="3 3" label={{ value: t('story.sensorChange'), position: 'top', fontSize: 12, fill: '#4b544d' }} />
+              <Bar dataKey="green" stackId="c" fill="var(--chart-green)" isAnimationActive={false} />
+              <Bar dataKey="partly" stackId="c" fill="var(--chart-residue)" isAnimationActive={false} />
+              <Bar dataKey="bare" stackId="c" fill="url(#bareHatch)" isAnimationActive={false} />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
+        <p className="hint">{t('story.partlyNote')}</p>
+        <p className="gap-note"><TriangleAlert size={16} aria-hidden="true" />{t('story.sensorNote')}</p>
+        <Source datasets={['Landsat 5/7/8/9', 'Greenline SI models']} />
+      </section>
+
+      <section className="card">
+        <div className="field-group">
+          <h2>{t('story.typicalTitle')}</h2>
+          <p className="chart-caption">{t('story.typicalCaption', { since: sinceShares[0]?.year ?? SENSOR_YEAR })}</p>
+        </div>
+        <CoverStrip months={typical} />
+        <p className="muted">{typicalBare.length ? t('story.typicalBare', { months: typicalBare.join(', ') }) : t('story.typicalNone')}</p>
+        <Source datasets={['Landsat 5/7/8/9']} />
+      </section>
 
       <section className="card">
         <h2 className="section-title"><History size={20} aria-hidden="true" />{t('story.replayTitle')}</h2>
@@ -184,7 +242,7 @@ export default function FieldStory() {
             <span className="bare-score bare-head" role="columnheader">{t('story.scoreCol')}</span>
             <span className="bare-crop bare-head" role="columnheader">{t('story.cropCol')}</span>
           </div>
-          {[...field.coverYearly].reverse().map((row) => {
+          {shownRows.map((row) => {
             const ty = yearType[row.year];
             const h = cropBy[row.year];
             const si = siBy[row.year];
@@ -203,6 +261,11 @@ export default function FieldStory() {
             );
           })}
         </div>
+        {coverRows.length > 10 && (
+          <button type="button" className="btn btn-block" aria-expanded={allYears} onClick={() => setAllYears(!allYears)}>
+            {allYears ? t('story.showRecent') : t('story.showAll', { n: coverRows.length })}
+          </button>
+        )}
         <p className="hint">{t('story.timelineNote')}</p>
         <p className="gap-note"><TriangleAlert size={16} aria-hidden="true" /><Receipt src={['USDA Cropland Data Layer']}>{t('gaps.cdlNoise')}</Receipt></p>
         <Source datasets={['Landsat 5/7/8/9', 'USDA Cropland Data Layer']} />
