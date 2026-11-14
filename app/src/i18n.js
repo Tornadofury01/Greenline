@@ -30,3 +30,16 @@ export function formatReason(t, { key, params = {} }) {
   if (p.priority) p.priority = t(`priorities.${p.priority}`);
   return t(key, p);
 }
+
+// Dataset descriptions in field.sources[] are English data strings. Show them in the reader's language:
+// `variable` by source id (i18n sources.var.<id>), plus the few word-only resolutions and "current".
+// Unknown ids / values fall back to the raw text from the file.
+const RES_KEYS = { 'per field': 'perField', 'county / state': 'countyState', state: 'state', 'map unit (1:24,000)': 'mapUnit' };
+export function sourceText(t, s) {
+  const tr = (key, fallback) => { const v = t(key); return v === key ? fallback : v; };
+  return {
+    variable: s.id ? tr(`sources.var.${s.id}`, s.variable) : s.variable,
+    resolution: RES_KEYS[s.resolution] ? t(`sources.res.${RES_KEYS[s.resolution]}`) : s.resolution,
+    dates: s.dateRange === 'current' ? t('sources.current') : String(s.dateRange).replace('-', '–'),
+  };
+}

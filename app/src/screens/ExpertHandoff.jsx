@@ -2,7 +2,7 @@
 import { Printer } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useScores } from '../state/useScores.js';
-import { formatReason } from '../i18n.js';
+import { formatReason, sourceText } from '../i18n.js';
 import { NeedField, JudgmentNote, PageHead, ModelCard } from '../components/Small.jsx';
 import { FieldFacts } from './PickField.jsx';
 import { SoilFacts, FrostFacts } from '../components/SoilFacts.jsx';
@@ -95,7 +95,7 @@ export default function ExpertHandoff() {
       <section className="card doc-section">
         <h2>{t('handoff.sources')}</h2>
         {field.isSampleData && <p className="muted">{t('handoff.sampleNote')}</p>}
-        <Table rows={field.sources.map((src) => [src.dataset, [src.variable, src.resolution, src.dateRange.replace('-', '–'), src.scale && t(`common.scale.${src.scale}`)].filter(Boolean).join(' · ')])} />
+        <Table rows={field.sources.map((src) => { const x = sourceText(t, src); return [src.dataset, [x.variable, x.resolution, x.dates, src.scale && t(`common.scale.${src.scale}`)].filter(Boolean).join(' · ')]; })} />
       </section>
       </div>
 

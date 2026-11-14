@@ -157,7 +157,7 @@ function ReplaySummary({ replay, normal, shown, maxed }) {
       <span>{replay.hypothetical
         ? t('whatIfUi.scoreLine', { score: Math.round(replay.score * 10) / 10 })
         : t('replayUi.scoreLine', { year: replay.year, score: Math.round(replay.score * 10) / 10 })}</span>
-      <span className="muted">{t('replayUi.vsNormal', { n: Math.abs(diff), dir: t(`replayUi.dir${dir}`) })}</span>
+      <span className="muted">{diff === 0 ? t('replayUi.vsNormalSame') : t('replayUi.vsNormal', { n: Math.abs(diff), dir: t(`replayUi.dir${dir}`) })}</span>
     </div>
   );
 }
@@ -267,7 +267,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           {rp && (
             <section className="detail">
               <h4>{scenarioTitle}</h4>
-              <p className="small">{t('replayUi.totalLine', { score: shown })} {t('replayUi.vsNormal', { n: Math.abs(shown - result.total), dir: t(`replayUi.dir${shown > result.total ? 'Up' : shown < result.total ? 'Down' : 'Same'}`) })}</p>
+              <p className="small">{t('replayUi.totalLine', { score: shown })} {shown === result.total ? t('replayUi.vsNormalSame') : t('replayUi.vsNormal', { n: Math.abs(shown - result.total), dir: t(`replayUi.dir${shown > result.total ? 'Up' : 'Down'}`) })}</p>
               <IconList items={rp.reasons} Icon={Lightbulb} tone="info" />
               {rp.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
               <p className="muted small">{rp.hypothetical ? t('whatIfUi.note') : t('replayUi.note')}</p>

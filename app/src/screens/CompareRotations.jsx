@@ -57,7 +57,6 @@ export default function CompareRotations() {
   const bareDelta = (r) => (current ? bareOf(r).bareDays - bareOf(current.result).bareDays : null);
   // A scenario score clamped to 0: the verdict stands in for the number (see RotationCard).
   const isMaxed = (r) => scenario && r.replayTotal === 0 && !!r.replay;
-  const anyMaxed = rows.some((r) => isMaxed(r.result));
   const delta = (r) => (current ? shownScore(r) - shownScore(current.result) : null);
 
   return (
@@ -84,10 +83,10 @@ export default function CompareRotations() {
               {scenario && r.result.replay && <span className="glance-verdict"><Verdict verdict={r.result.replay.verdict} maxed={isMaxed(r.result)} /></span>}
               <span className="glance-bar" aria-hidden="true"><span style={{ width: `${shownScore(r.result)}%` }} /></span>
               <span className="glance-days">{t('bareUi.glanceDays', { n: bareOf(r.result).bareDays })}</span>
+              {isMaxed(r.result) && <span className="glance-days glance-maxed">{t('replayUi.maxedGlance')}</span>}
             </div>
           ))}
         </div>
-        {anyMaxed && <p className="hint">{t('replayUi.maxedNote')}</p>}
         <p className="hint">{t('compare.glanceHint')}</p>
       </section>
 

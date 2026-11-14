@@ -4,6 +4,7 @@ import { ShieldCheck, Shield, ShieldQuestion, Database, Handshake, MapPin, Recei
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
 import { modelSummary } from '../si.js';
+import { sourceText } from '../i18n.js';
 
 export function JudgmentNote() {
   const { t } = useApp();
@@ -48,8 +49,8 @@ export function Receipt({ src, extra, children }) {
           {rows.map((s) => (
             <span key={s.dataset} className="receipt-row">
               <strong>{s.dataset}</strong>
-              <span>{s.variable}</span>
-              <span className="muted">{t('common.receiptLine', { resolution: s.resolution, dates: s.dateRange.replace('-', '–') })}</span>
+              <span>{sourceText(t, s).variable}</span>
+              <span className="muted">{t('common.receiptLine', { resolution: sourceText(t, s).resolution, dates: sourceText(t, s).dates })}</span>
               {SCALES.includes(s.scale) && <span className={`receipt-scale scale-${s.scale}`}>{t(`common.scale.${s.scale}`)}</span>}
             </span>
           ))}
@@ -124,7 +125,7 @@ export function Source({ datasets }) {
   if (!field) return null;
   const rows = datasets.map((d) => field.sources.find((s) => s.dataset === d)).filter(Boolean);
   if (!rows.length) return null;
-  const text = rows.map((s) => `${s.dataset} · ${s.resolution} · ${s.dateRange.replace('-', '–')}`).join('; ');
+  const text = rows.map((s) => { const x = sourceText(t, s); return `${s.dataset} · ${x.resolution} · ${x.dates}`; }).join('; ');
   return (
     <p className="source">
       <Database size={14} aria-hidden="true" />

@@ -175,7 +175,7 @@
     "timelineNote": "Crop names start in 2008 (USDA crop maps). Bare and green time before 2013 comes from older satellites and is low confidence.",
     "replayTitle": "Replay a bad year",
     "replayCaption": "The worst years in 40 years of NASA weather, picked by our year-pattern model. Tap one to see what happened on this field.",
-    "replayHeading": "{year}: a {type} year",
+    "replayHeading": "{year}: {type}",
     "replayRain": "{inches} in of rain ({pct}% vs. normal)",
     "replayHeat": "{n} days over 95°F (normal: {avg})",
     "replayStorms": "{n} days with heavy rain (over 1 inch)",
@@ -638,7 +638,6 @@
     "vsNormal": "{n} points {dir} than in a normal year",
     "dirUp": "higher",
     "dirDown": "lower",
-    "dirSame": "same",
     "heading": "If {year} came back",
     "note": "This is a stress check from real weather and crop traits, not a yield forecast. Local experts know your field best.",
     "glanceTitle": "How each option holds up in {year}",
@@ -646,7 +645,9 @@
     "noYear": "No weather record for {year} on this field.",
     "coverRule": "In drought years we count cover crops as only half established, so their bare-day savings are halved. A dry fall can stop them from coming up, and we don't want the replay to oversell them.",
     "maxedNote": "Extreme settings max out the stress, so this option bottoms out. The exact score is in the details.",
-    "totalLine": "Score in this scenario: {score} out of 100."
+    "totalLine": "Score in this scenario: {score} out of 100.",
+    "vsNormalSame": "Same as in a normal year",
+    "maxedGlance": "These settings push the stress to the limit, so the score bottoms out. The exact number is in its details."
   },
   "bareUi": {
     "stripAlt": "Estimated months with bare ground: {months}.",
@@ -776,5 +777,35 @@
     "seasonValue": "{days} days",
     "powerNote": "NASA POWER says {days} days. The year-pattern model uses that one.",
     "source": "PRISM daily temperatures (4 km, from weather stations), low of 32 °F or colder"
+  },
+  "yearTypeYear": {
+    "drought": "a drought year",
+    "wet": "a wet year",
+    "heat": "a hot year",
+    "normal": "a normal year"
+  },
+  "sources": {
+    "var": {
+      "power": "rain, temperature, heat stress days, frost dates",
+      "imerg": "rain, heavy storm days (≥ 25 mm)",
+      "prism": "monthly rain and temperature, frost dates, heavy rain days (gauge-based)",
+      "smap": "root-zone soil moisture",
+      "landsat": "NDVI (green cover), NDTI, BSI",
+      "landsat89": "bare days and green / partly covered / bare cover (one sensor family)",
+      "cdl": "crop grown each year",
+      "ssurgo": "soil series, texture, drainage, organic matter, erosion factors (K, T), available water, land capability class",
+      "srtm": "slope",
+      "modis_et": "evapotranspiration (tested, not used in scores)",
+      "nass_quickstats": "county crop yields, Texas price received (marketing year)",
+      "nass_progress": "planting and harvest dates (Texas)",
+      "si": "crop and cover classifier, weather risk signal, year types"
+    },
+    "res": {
+      "perField": "per field",
+      "countyState": "county / state",
+      "state": "state",
+      "mapUnit": "soil map unit (1:24,000)"
+    },
+    "current": "current"
   }
 }

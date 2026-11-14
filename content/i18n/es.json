@@ -1,7 +1,7 @@
 {
   "app": {
     "title": "Greenline",
-    "tagline": "Planeación de rotación de cultivos con datos de la NASA",
+    "tagline": "Planee la rotación de sus cultivos con datos de la NASA",
     "langGroup": "Idioma",
     "langName": {
       "en": "English",
@@ -111,14 +111,14 @@
   "story": {
     "title": "El historial de su parcela",
     "kicker": "Hallazgo principal",
-    "headline": "Su parcela queda sin cubierta unos {months} meses al año.",
+    "headline": "Su parcela se queda con el suelo desnudo unos {months} meses al año.",
     "headlineDetail": "Por lo general en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
     "statDrought": "Años de sequía",
     "statRain": "Lluvia por año",
     "rainDetail": "Promedio ({mm} mm)",
     "statHeat": "Días de más de 95°F",
     "heatDetail": "Promedio por año",
-    "statBare": "Días sin cubierta",
+    "statBare": "Días de suelo desnudo",
     "bareDetail": "Promedio por año, desde 2014",
     "chartTitle": "Lluvia de cada año desde {from}",
     "chartCaption": "Cada barra es un año, con el color del tipo de año. Sequías recientes: {years}.",
@@ -174,8 +174,8 @@
     "doubleCropNote": "El mapa de cultivos dice dos cultivos este año. Confianza baja: hay muy pocos ejemplos para comprobarlo.",
     "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). El tiempo desnudo y verde antes de 2013 viene de satélites antiguos y es de baja confianza.",
     "replayTitle": "Revivir un mal año",
-    "replayCaption": "Los peores años en 40 años de clima de la NASA, elegidos por nuestro modelo de tipos de año. Toque uno para ver qué pasó en este campo.",
-    "replayHeading": "{year}: un año de {type}",
+    "replayCaption": "Los peores años en 40 años de clima de la NASA, escogidos por nuestro modelo de tipos de año. Toque uno para ver qué pasó en esta parcela.",
+    "replayHeading": "{year}: {type}",
     "replayRain": "{inches} pulg. de lluvia ({pct}% frente a lo normal)",
     "replayHeat": "{n} días de más de 95°F (normal: {avg})",
     "replayStorms": "{n} días de lluvia fuerte (más de 1 pulgada)",
@@ -202,7 +202,7 @@
   },
   "compare": {
     "title": "Comparar rotaciones",
-    "intro": "Los puntajes son de 0 a 100, según sus metas y límites. Más alto, mejor ajuste.",
+    "intro": "Los puntajes van de 0 a 100, según sus metas y límites. Entre más alto, mejor le queda.",
     "glance": "De un vistazo",
     "glanceHint": "Abra cada opción abajo para ver por qué obtuvo ese puntaje.",
     "current": "Lo que siembra ahora",
@@ -332,12 +332,12 @@
     "waterAvg": "La necesidad promedio de agua es {value} de 5.",
     "droughtHistory": "{count} de los últimos {total} años fueron de sequía en este campo.",
     "erosionAvg": "La protección del suelo es {value} de 5 en promedio.",
-    "slopeBare": "Su pendiente de {slope}% hace más riesgosas las temporadas sin cubierta.",
-    "nitrogen": "{count} temporada(s) con un cultivo que aporta nitrógeno.",
+    "slopeBare": "Con su pendiente de {slope}%, las temporadas sin cobertura son más riesgosas.",
+    "nitrogen": "{count} temporada(s) con un cultivo que deja nitrógeno en el suelo.",
     "cover": "{count} temporada(s) de cultivo de cobertura.",
     "variety": "{count} cultivos diferentes en la rotación.",
     "cashShare": "{count} de {total} temporadas tienen un cultivo que puede vender.",
-    "marketMatch": "Se ajusta a dónde vende.",
+    "marketMatch": "Se puede vender donde usted vende.",
     "forageAvg": "El valor para pastoreo y heno es {value} de 5.",
     "drySoilYears": "El suelo estuvo al menos 10% más seco de lo normal en {count} de {total} temporadas.",
     "lowOrganicMatter": "La materia orgánica del suelo es baja ({om}%), así que los cultivos de cobertura y las leguminosas ayudan más.",
@@ -367,7 +367,7 @@
   },
   "risks": {
     "lateKill": "{crops}: si se elimina tarde en primavera, puede agotar la humedad del suelo que necesita el siguiente cultivo. Termínelo a tiempo.",
-    "thirstyDryland": "{crops} necesitan mucha agua para temporal.",
+    "thirstyDryland": "{crops} necesitan mucha agua para sembrarse de temporal (sin riego).",
     "heat": "{crops} pueden sufrir con el calor. {count} de {total} años aquí fueron de calor o sequía.",
     "bare": "El barbecho deja el suelo desnudo.",
     "contractCrop": "{crops}: se cultiva solo por contrato y no es común en esta región. Consulte con un comprador y su agente del condado.",
@@ -392,7 +392,7 @@
     "resolution": "Nivel de detalle: {fine} para verdor y mapas de cultivos, {mid} para lluvia por satélite y humedad del suelo, {coarse} para temperatura. El clima es un promedio de un área, no una medición de su campo.",
     "toneUp": "Aumenta la confianza",
     "toneDown": "Reduce la confianza",
-    "toneNote": "Bueno saber",
+    "toneNote": "Bueno saberlo",
     "prism": {
       "agreesLower": "La lluvia de {name} coincide con la lluvia de estaciones en tierra (PRISM) año por año en este campo: correlación {corr}, {pct}% más baja ({years} años).",
       "agreesHigher": "La lluvia de {name} coincide con la lluvia de estaciones en tierra (PRISM) año por año en este campo: correlación {corr}, {pct}% más alta ({years} años).",
@@ -474,7 +474,7 @@
     },
     "heldOut": {
       "title": "Probado en años no vistos",
-      "text": "Escondimos un año a la vez del modelo, lo entrenamos con los demás años y revisamos su respuesta para el año escondido. Así se ve cómo le va en un año que nunca ha visto, como el próximo. La precisión general es cuántas veces acertó. La precisión equilibrada promedia el acierto de cada cultivo, para que cultivos comunes como el maíz y el trigo no oculten problemas con los menos frecuentes. Suponer “igual que el año pasado” es la vara que hay que superar."
+      "text": "Escondimos un año a la vez del modelo, lo entrenamos con los demás años y revisamos lo que contestó para el año escondido. Así se ve cómo le va en un año que nunca ha visto, como el próximo. La precisión general es cuántas veces acertó. La precisión equilibrada promedia el acierto de cada cultivo, para que cultivos comunes como el maíz y el trigo no tapen los errores con los menos comunes. Para que valga, tiene que acertar más que suponer “igual que el año pasado”."
     },
     "bareScore": {
       "title": "Puntaje de cobertura",
@@ -502,7 +502,7 @@
     },
     "sensor2013": {
       "title": "Por qué importa 2013",
-      "text": "Landsat 7 ve el verdor de las plantas más bajo que Landsat 8 y 9, unos 0,05 de NDVI en la misma parcela y mes. Con un límite fijo para “desnudo”, eso solo suma días desnudos. Por eso todos los días desnudos aquí usan solo Landsat 8 y 9, desde 2014. Los años antes de 2013 solo tenían los satélites antiguos. Los mostramos marcados como de baja confianza, pero no los usamos en los puntajes. Los años anteriores se siguen usando para el historial de lluvia y calor."
+      "text": "Landsat 7 ve el verdor de las plantas más bajo que Landsat 8 y 9, unos 0.05 de NDVI en la misma parcela y mes. Con un límite fijo para “desnudo”, eso solo suma días desnudos. Por eso todos los días desnudos aquí usan solo Landsat 8 y 9, desde 2014. Los años antes de 2013 solo tenían los satélites antiguos. Los mostramos marcados como de baja confianza, pero no los usamos en los puntajes. Los años anteriores se siguen usando para el historial de lluvia y calor."
     },
     "prism": {
       "title": "Lluvia de estaciones en tierra (PRISM)",
@@ -624,29 +624,30 @@
     "coverPartial": "Regla de año seco: {crops} cuentan como solo medio establecidos, porque un otoño seco puede impedir que salgan los cultivos de cobertura."
   },
   "replayUi": {
-    "title": "Repetir un mal año",
+    "title": "Revivir un mal año",
     "caption": "Elija un año pasado real. Volvemos a calificar cada opción con el clima real de ese año en su parcela.",
     "off": "Años normales",
-    "pickLabel": "Año a repetir",
+    "pickLabel": "Año a revivir",
     "verdict": {
       "holds": "Aguanta",
-      "strained": "Con presión",
-      "struggles": "Le cuesta",
-      "maxed": "Le cuesta mucho"
+      "strained": "Batalla un poco",
+      "struggles": "Batalla",
+      "maxed": "Batalla mucho"
     },
     "scoreLine": "Puntaje de {year}: {score} de 10",
     "vsNormal": "{n} puntos {dir} que en un año normal",
     "dirUp": "más",
     "dirDown": "menos",
-    "dirSame": "igual",
     "heading": "Si volviera {year}",
     "note": "Es una revisión de estrés con clima real y rasgos de cultivos, no un pronóstico de rendimiento. Los expertos locales conocen mejor su parcela.",
     "glanceTitle": "Cómo aguanta cada opción en {year}",
     "see": "Ver cómo aguantan las rotaciones en {year}",
     "noYear": "No hay registro de clima de {year} para esta parcela.",
-    "coverRule": "En años de sequía contamos los cultivos de cobertura como solo medio establecidos, así que sus días desnudos ahorrados se reducen a la mitad. Un otoño seco puede impedir que salgan, y no queremos que la repetición los exagere.",
+    "coverRule": "En años de sequía contamos los cultivos de cobertura como solo medio establecidos, así que los días desnudos que ahorran se reducen a la mitad. Un otoño seco puede impedir que nazcan, y no queremos exagerar lo que ayudan.",
     "maxedNote": "Los ajustes extremos llevan el estrés al máximo, así que esta opción toca fondo. El puntaje exacto está en los detalles.",
-    "totalLine": "Puntaje en este escenario: {score} de 100."
+    "totalLine": "Puntaje en este escenario: {score} de 100.",
+    "vsNormalSame": "Igual que en un año normal",
+    "maxedGlance": "Con estos ajustes el estrés llega al máximo y el puntaje toca fondo. El número exacto está en sus detalles."
   },
   "bareUi": {
     "stripAlt": "Meses estimados con suelo desnudo: {months}.",
@@ -677,7 +678,7 @@
     "title": "Cómo lo sabemos",
     "intro": "Qué significa cada número, de dónde viene y dónde puede equivocarse.",
     "termsTitle": "Palabras que usamos",
-    "notesTitle": "Bueno saber",
+    "notesTitle": "Bueno saberlo",
     "jump": "Ir a una palabra",
     "dataLabel": "Datos",
     "back": "Volver"
@@ -691,7 +692,7 @@
   "whatIfUi": {
     "title": "¿Y si…?",
     "caption": "Cambie el clima y vea cómo resiste cada opción. Partimos del año promedio de su propio campo.",
-    "rain": "Lluvia vs. promedio",
+    "rain": "Lluvia frente al promedio",
     "heat": "Días extra sobre 95 °F",
     "rainNormal": "Promedio",
     "rainValue": "{pct}%",
@@ -700,7 +701,7 @@
     "banner": "Hipotético, no es un pronóstico.",
     "bannerDetail": "Estos puntajes muestran un año inventado para explorar riesgos. No predicen el próximo año.",
     "reset": "Restablecer",
-    "assumption": "Los días de lluvia fuerte suben y bajan con la lluvia. La humedad del suelo no cambia. Los puntajes usan las mismas reglas que la repetición de un mal año.",
+    "assumption": "Los días de lluvia fuerte suben y bajan con la lluvia. La humedad del suelo no cambia. Los puntajes usan las mismas reglas que al revivir un mal año.",
     "glanceTitle": "Cómo resiste cada opción en su año hipotético",
     "scoreLine": "Puntaje hipotético: {score} de 10",
     "heading": "En su año hipotético",
@@ -776,5 +777,35 @@
     "seasonValue": "{days} días",
     "powerNote": "NASA POWER indica {days} días. El modelo de tipos de año usa ese dato.",
     "source": "Temperaturas diarias de PRISM (4 km, de estaciones meteorológicas), mínima de 32 °F o menos"
+  },
+  "yearTypeYear": {
+    "drought": "un año de sequía",
+    "wet": "un año húmedo",
+    "heat": "un año de calor",
+    "normal": "un año normal"
+  },
+  "sources": {
+    "var": {
+      "power": "lluvia, temperatura, días de calor extremo, fechas de helada",
+      "imerg": "lluvia, días de tormenta fuerte (≥ 25 mm)",
+      "prism": "lluvia y temperatura por mes, fechas de helada, días de lluvia fuerte (de pluviómetros)",
+      "smap": "humedad del suelo en la zona de las raíces",
+      "landsat": "NDVI (verdor), NDTI, BSI",
+      "landsat89": "días desnudos y cobertura verde / parcial / desnuda (una sola familia de satélites)",
+      "cdl": "cultivo sembrado cada año",
+      "ssurgo": "serie de suelo, textura, drenaje, materia orgánica, factores de erosión (K, T), agua disponible, clase de capacidad de la tierra",
+      "srtm": "pendiente",
+      "modis_et": "evapotranspiración (probada, no se usa en los puntajes)",
+      "nass_quickstats": "rendimientos del condado, precio recibido en Texas (año comercial)",
+      "nass_progress": "fechas de siembra y cosecha (Texas)",
+      "si": "clasificador de cultivo y cobertura, señal de riesgo por clima, tipos de año"
+    },
+    "res": {
+      "perField": "por parcela",
+      "countyState": "condado / estado",
+      "state": "estado",
+      "mapUnit": "unidad del mapa de suelos (1:24,000)"
+    },
+    "current": "actual"
   }
 }

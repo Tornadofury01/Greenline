@@ -35,7 +35,7 @@ function Replay({ year }) {
   const signalOk = si && (field.si.models.vegStress.showSignalFor || []).includes(si.cdlClass);
   return (
     <div className="replay">
-      <h3>{t('story.replayHeading', { year, type: t(`yearType.${c.yearType}`) })}</h3>
+      <h3>{t('story.replayHeading', { year, type: t(`yearTypeYear.${c.yearType}`) })}</h3>
       <ul className="replay-facts">
         <li><Receipt src={['NASA POWER']}>{t('story.replayRain', { inches: mmToIn(c.precipMm), pct: rainDiff > 0 ? `+${rainDiff}` : rainDiff })}</Receipt></li>
         <li><Receipt src={['NASA POWER']}>{t('story.replayHeat', { n: c.heatStressDays, avg: s.avgHeatDays })}</Receipt></li>
@@ -177,7 +177,7 @@ export default function FieldStory() {
                 formatter={(v, name) => [`${v}%`, t(`story.cover.${name === 'partly' ? 'residue' : name}`)]}
                 labelFormatter={(y) => `${y}${yearType[y] ? ` · ${t(`yearType.${yearType[y]}`)}` : ''}`}
               />
-              <ReferenceLine x={SENSOR_YEAR} stroke="#4b544d" strokeDasharray="3 3" label={{ value: t('story.sensorChange'), position: 'top', fontSize: 12, fill: '#4b544d' }} />
+              <ReferenceLine x={shares.find((x) => x.year >= SENSOR_YEAR)?.year ?? SENSOR_YEAR} stroke="#4b544d" strokeDasharray="3 3" label={{ value: t('story.sensorChange'), position: 'top', fontSize: 12, fill: '#4b544d' }} />
               {[['green', 'var(--chart-green)'], ['partly', 'var(--chart-residue)'], ['bare', 'url(#bareHatch)']].map(([k, fill]) => (
                 <Bar key={k} dataKey={k} stackId="c" fill={fill} isAnimationActive={false}>
                   {shares.map((row) => <Cell key={row.year} fillOpacity={row.lowConfidence ? 0.35 : 1} />)}
@@ -232,7 +232,7 @@ export default function FieldStory() {
             <BarChart data={chartData} margin={{ top: 8, right: 0, left: -20, bottom: 0 }}>
               <CartesianGrid vertical={false} stroke="#e4e1d8" />
               <XAxis dataKey="year" tickFormatter={(y) => `'${String(y).slice(2)}`} tick={{ fontSize: 12 }} interval="preserveStartEnd" minTickGap={16} tickLine={false} axisLine={{ stroke: '#8f8b7e' }} />
-              <YAxis tick={{ fontSize: 12 }} tickLine={false} axisLine={false} unit={` ${t('units.in')}`} width={64} />
+              <YAxis tick={{ fontSize: 12 }} tickLine={false} axisLine={false} unit={` ${t('units.in')}`} width={78} />
               <Tooltip
                 cursor={{ fill: 'rgb(31 81 48 / 0.08)' }}
                 formatter={(v, _n, item) => [`${v} ${t('units.in')} (${item.payload.precipMm} mm)`, t('story.tooltipRain')]}
