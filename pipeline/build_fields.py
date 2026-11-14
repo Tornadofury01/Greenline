@@ -31,7 +31,7 @@ SOURCES = [
     {"dataset": "SMAP L4", "variable": "root-zone soil moisture", "resolution": "~11 km", "dateRange": "2015-2025"},
     {"dataset": "Landsat 5/7/8/9", "variable": "NDVI (green cover), NDTI, BSI", "resolution": "30 m", "dateRange": "1984-2025"},
     {"dataset": "USDA Cropland Data Layer", "variable": "crop grown each year", "resolution": "30 m", "dateRange": "2008-2025"},
-    {"dataset": "USDA SSURGO", "variable": "soil series, texture, drainage, organic matter", "resolution": "map unit (1:24,000)", "dateRange": "current"},
+    {"dataset": "USDA SSURGO", "variable": "soil series, texture, drainage, organic matter, erosion factors (K, T), available water, land capability class", "resolution": "map unit (1:24,000)", "dateRange": "current"},
     {"dataset": "SRTM", "variable": "slope", "resolution": "30 m", "dateRange": "2000"},
     {"dataset": "MODIS MOD16A2GF", "variable": "evapotranspiration (tested, not used in scores)", "resolution": "500 m", "dateRange": "2008-2025"},
     {"dataset": "NASS Crop Progress", "variable": "planting and harvest dates (Texas)", "resolution": "state", "dateRange": "2008-2025"},
@@ -61,6 +61,13 @@ def texture(clay, sand):
     if sand >= 52:
         return "sandy_loam"
     return "loam"
+
+
+def land_class(s):
+    """Non-irrigated land capability class + subclass, e.g. "2e" (e erosion, w wetness, s soil, c climate)."""
+    if pd.isna(s.nirrcapcl):
+        return None
+    return f"{int(s.nirrcapcl)}{s.nirrcapscl if isinstance(s.nirrcapscl, str) else ''}"
 
 
 def state(v):
@@ -145,6 +152,12 @@ def main():
             "organicMatterPct": nn(s.om, 1) if s is not None else None,
             "hydrologicGroup": (s.hydgrp[0] if s is not None and isinstance(s.hydgrp, str) else None),
             "clayPct": nn(s.clay, 0) if s is not None else None,
+            # Erosion and water (SSURGO). K: 0.02-0.69, higher = erodes more easily. T: tons/acre/yr of tolerable loss.
+            "kFactor": nn(s.kwfact, 2) if s is not None else None,
+            "tFactor": nn(s.tfact) if s is not None else None,
+            "awcCmPerCm": nn(s.awc, 2) if s is not None else None,          # topsoil available water capacity
+            "waterStorage100Cm": nn(s.aws0100wta, 1) if s is not None else None,  # cm of plant-available water, top 100 cm
+            "landCapabilityClass": land_class(s) if s is not None else None,  # non-irrigated, e.g. "2e"
         }
         t = terr.loc[fid]
 

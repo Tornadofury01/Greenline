@@ -150,7 +150,12 @@ How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVer
 |---|---|---|
 | `field.gridCell` | string | `L30-<fieldId>` for sampled fields (real per-cell ids are on the roadmap) |
 | `field.state` | string | `TX`, or `OK` for 3 sample fields just across the Red River |
-| `soil` | object | Real SSURGO (Soil Data Access), dominant component. Any value can be `null`. Adds `clayPct`. `texture` is from topsoil clay/sand |
+| `soil` | object | Real SSURGO (Soil Data Access), dominant component. Any value can be `null`. Adds `clayPct` and the soil keys below. `texture` is from topsoil clay/sand |
+| `soil.kFactor` | number | Erosion factor K (`kwfact`, topsoil), 0.02–0.69. Higher = erodes more easily |
+| `soil.tFactor` | number | Tolerable soil loss T, tons/acre/year (1–5) |
+| `soil.awcCmPerCm` | number | Topsoil available water capacity, cm of water per cm of soil |
+| `soil.waterStorage100Cm` | number | Plant-available water in the top 100 cm, cm (map-unit weighted `aws0100wta`). ÷ 2.54 = inches |
+| `soil.landCapabilityClass` | string | Non-irrigated land capability, class 1–8 + subclass: `e` erosion, `w` wetness, `s` soil limits, `c` climate. E.g. `2e` |
 | `terrain.elevationM` | number | SRTM |
 | `cropHistory[]` | | Adds `cdlCode` and `cdlClass` (model group). `crop` is `"other"` when the CDL crop isn't in `crops.json` |
 | `climateYearly[]` | | 1984–2025 from NASA POWER (`precipMm` is POWER, not IMERG). Adds `precipMmImerg` (2008–). `soilMoistureAnomaly` (2015–) and `heavyStormDays` (IMERG, 2008–) are `null` before their records start. `yearType` from the k-means model |

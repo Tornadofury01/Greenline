@@ -151,17 +151,29 @@ def run_terrain():
 
 
 def run_soil():
-    """USDA SSURGO via Soil Data Access (public REST, no key): dominant component at each point."""
+    """USDA SSURGO via Soil Data Access (public REST, no key): dominant component at each point.
+
+    Topsoil = the shallowest horizon. Erosion: kwfact (K, whole soil incl. rock fragments), kffact (fine-earth K),
+    tfact (T, tolerable soil loss, tons/acre/yr). Water: awc_r (cm water per cm soil, topsoil) and the map unit's
+    aws0100wta (available water storage in the top 100 cm, cm). Land capability: nirrcapcl + nirrcapscl,
+    non-irrigated (most North Texas fields are dryland), e.g. "2e" = class 2, erosion limited.
+    """
     print("SSURGO soil per field (Soil Data Access) ...")
     f = pd.read_csv(OUT / "fields.csv")
     rows = []
+    top = "(SELECT TOP 1 ch.{col} FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r)"
     for r in f.itertuples():
         q = f"""SELECT TOP 1 mu.mukey, c.compname, c.drainagecl, c.hydgrp, c.comppct_r,
-                  (SELECT TOP 1 ch.om_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS om,
-                  (SELECT TOP 1 ch.claytotal_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS clay,
-                  (SELECT TOP 1 ch.sandtotal_r FROM chorizon ch WHERE ch.cokey = c.cokey ORDER BY ch.hzdept_r) AS sand
+                  {top.format(col='om_r')} AS om,
+                  {top.format(col='claytotal_r')} AS clay,
+                  {top.format(col='sandtotal_r')} AS sand,
+                  {top.format(col='kwfact')} AS kwfact,
+                  {top.format(col='kffact')} AS kffact,
+                  {top.format(col='awc_r')} AS awc,
+                  c.tfact, c.nirrcapcl, c.nirrcapscl, ma.aws0100wta
                 FROM SDA_Get_Mukey_from_intersection_with_WktWgs84('point({r.lon} {r.lat})') AS m
                 JOIN mapunit mu ON mu.mukey = m.mukey JOIN component c ON c.mukey = mu.mukey
+                LEFT JOIN muaggatt ma ON ma.mukey = mu.mukey
                 WHERE c.majcompflag = 'Yes' ORDER BY c.comppct_r DESC"""
         for attempt in range(3):
             try:

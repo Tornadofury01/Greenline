@@ -1,202 +1,202 @@
-fieldId,mukey,compname,drainagecl,hydgrp,comppct_r,om,clay,sand
-demo-ellis-001,365330,Trinity,Moderately well drained,D,85,2.5,70,9
-nt-001,368175,Heiden,Well drained,D,85,2.5,50,22
-nt-002,365534,Leson,Moderately well drained,D,100,2.5,50,22.1
-nt-003,364075,Houston Black,Moderately well drained,D,85,3,54,20
-nt-004,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-005,364076,Houston Black,Moderately well drained,D,80,3,54,20
-nt-006,370917,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-007,376687,Venus,Well drained,B,100,2,24,39.1
-nt-008,367752,Ferris,Well drained,D,50,1.3,52,19
-nt-009,391152,Denton,Well drained,C,85,2.5,50,6
-nt-010,367798,Wilson,Moderately well drained,C,85,1.25,31,35
-nt-011,369396,Ferris,Well drained,D,50,1.3,52,19
-nt-012,369401,Houston Black,Moderately well drained,D,80,3,54,20
-nt-013,363862,Deandale,Moderately well drained,D,100,2,22.5,22.4
-nt-014,367753,Altoga,Well drained,C,92,1.3,45,7
-nt-015,365302,Houston Black,Moderately well drained,D,80,3,54,20
-nt-016,393338,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-017,366675,Heiden,Well drained,D,85,2.5,50,22
-nt-018,376682,Slidell,Moderately well drained,D,85,2.5,50,22
-nt-019,364076,Houston Black,Moderately well drained,D,80,3,54,20
-nt-020,365302,Houston Black,Moderately well drained,D,80,3,54,20
-nt-021,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-022,365302,Houston Black,Moderately well drained,D,80,3,54,20
-nt-023,365301,Houston Black,Moderately well drained,D,85,3,54,20
-nt-024,370137,Wilson,Moderately well drained,C,85,1.25,31,35
-nt-025,365517,Fairlie,Moderately well drained,D,100,2.5,42.5,28.1
-nt-026,575173,Trinity,Moderately well drained,D,85,2.5,70,9
-nt-027,365301,Houston Black,Moderately well drained,D,85,3,54,20
-nt-028,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-029,365331,Trinity,Moderately well drained,D,85,2.5,65,10
-nt-030,370917,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-031,365526,Houston Black,Moderately well drained,D,80,3,54,20
-nt-032,367898,Crockett,Moderately well drained,D,85,1.25,14,40
-nt-033,362421,Bluegrove,Well drained,C,100,1.75,15,68.8
-nt-034,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-035,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-036,367752,Ferris,Well drained,D,50,1.3,52,19
-nt-037,363001,Krum,Well drained,C,75,2,43,28
-nt-038,373703,Westfork,Well drained,D,100,2.5,50,5.3
-nt-039,367799,Wilson,Moderately well drained,D,55,1.25,31,35.4
-nt-040,3180440,Tinn,Moderately well drained,D,85,2.5,50,22
-nt-041,368175,Heiden,Well drained,D,85,2.5,50,22
-nt-042,370104,Houston Black,Moderately well drained,D,80,3,54,20
-nt-043,366719,Wilson,Moderately well drained,D,100,1.25,31,18.1
-nt-044,365302,Houston Black,Moderately well drained,D,80,3,54,20
-nt-045,376673,Pidcoke,Well drained,D,85,2,29,34
-nt-046,373803,Anocon,Well drained,C,90,2,14,66.1
-nt-047,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-048,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-049,370137,Wilson,Moderately well drained,C,85,1.25,31,35
-nt-050,366720,Austin,Well drained,D,90,2.5,45,7
-nt-051,362991,Denton,Well drained,C,85,2.5,50,6
-nt-052,391144,Bolar,Well drained,C,90,2.5,30,34
-nt-053,367736,Chatt,Well drained,C,100,2,50,22.1
-nt-054,364858,Trinity,Moderately well drained,D,85,2.5,65,10
-nt-055,374478,Houston Black,Moderately well drained,D,80,3,54,20
-nt-056,381840,Muskogee,Moderately well drained,C,85,2.5,18.5,11.7
-nt-057,367608,Kaufman,Moderately well drained,D,100,2.5,68,9.7
-nt-058,367878,Houston Black,Moderately well drained,D,80,3,54,20
-nt-059,370104,Houston Black,Moderately well drained,D,80,3,54,20
-nt-060,367897,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-061,374477,Houston Black,Moderately well drained,D,85,3,54,20
-nt-062,367769,Krum,Well drained,D,70,1.25,45,7
-nt-063,370945,Houston Black,Moderately well drained,D,80,3,54,20
-nt-064,368175,Heiden,Well drained,D,85,2.5,50,22
-nt-065,366710,Vertel,Well drained,D,100,0.75,70,8.9
-nt-066,393363,Leson,Moderately well drained,D,95,2.5,50,22.1
-nt-067,369400,Heiden,Well drained,D,85,2.5,50,22
-nt-068,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-069,370945,Houston Black,Moderately well drained,D,80,3,54,20
-nt-070,369401,Houston Black,Moderately well drained,D,80,3,54,20
-nt-071,363862,Deandale,Moderately well drained,D,100,2,22.5,22.4
-nt-072,364057,Austin,Well drained,D,85,2.5,45,7
-nt-073,362461,Winters,Well drained,C,85,0.75,17,45
-nt-074,365526,Houston Black,Moderately well drained,D,80,3,54,20
-nt-075,370103,Heiden,Well drained,D,85,2.5,50,22.1
-nt-076,367608,Kaufman,Moderately well drained,D,100,2.5,68,9.7
-nt-077,370133,Tinn,Moderately well drained,D,85,2.5,50,22
-nt-078,370945,Houston Black,Moderately well drained,D,80,3,54,20
-nt-079,393354,Heiden,Well drained,D,85,2.5,50,22
-nt-080,370084,Crawford,Well drained,D,85,2.5,45,7.2
-nt-081,381849,Oklared,Well drained,A,85,0.75,14,66.1
-nt-082,364824,Heiden,Well drained,D,85,2.5,50,22
-nt-083,373680,Purves,Well drained,D,89,3,47.5,25
-nt-084,368205,Sanger,Well drained,D,90,2.5,45,22
-nt-085,366721,Wilson,Moderately well drained,D,100,1.25,31,18.1
-nt-086,369400,Heiden,Well drained,D,85,2.5,50,22
-nt-087,369401,Houston Black,Moderately well drained,D,80,3,54,20
-nt-088,367757,Heiden,Well drained,D,85,2.5,50,22
-nt-089,368175,Heiden,Well drained,D,85,2.5,50,22
-nt-090,369401,Houston Black,Moderately well drained,D,80,3,54,20
-nt-091,364524,Slidell,Moderately well drained,D,55,2.5,50,22.1
-nt-092,365526,Houston Black,Moderately well drained,D,80,3,54,20
-nt-093,363900,Renfrow,Well drained,D,60,2,22,41.1
-nt-094,370965,Trinity,Moderately well drained,D,85,2.5,65,10
-nt-095,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-096,370945,Houston Black,Moderately well drained,D,80,3,54,20
-nt-097,366657,Crockett,Moderately well drained,D,85,1.25,14,40
-nt-098,364076,Houston Black,Moderately well drained,D,80,3,54,20
-nt-099,370944,Houston Black,Moderately well drained,D,85,3,54,20
-nt-100,367608,Kaufman,Moderately well drained,D,100,2.5,68,9.7
-nt-101,364090,Wilson,Moderately well drained,D,85,1.25,31,35
-nt-102,367752,Ferris,Well drained,D,50,1.3,52,19
-nt-103,365302,Houston Black,Moderately well drained,D,80,3,54,20
-nt-104,370917,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-105,367733,Branyon,Moderately well drained,D,85,2,47,18
-nt-106,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-107,370779,Teller,Well drained,B,85,2,20.6,42.1
-nt-108,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-109,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-110,367898,Crockett,Moderately well drained,D,85,1.25,14,40
-nt-111,365517,Fairlie,Moderately well drained,D,100,2.5,42.5,28.1
-nt-112,365284,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-113,370079,Branyon,Moderately well drained,D,85,2,47,18
-nt-114,367752,Ferris,Well drained,D,50,1.3,52,19
-nt-115,364972,Burleson,Moderately well drained,D,85,2,50,22.1
-nt-116,364515,Sanger,Well drained,D,90,2.5,45,22
-nt-117,364507,Normangee,Moderately well drained,D,100,1.25,30,33.5
-nt-118,367878,Houston Black,Moderately well drained,D,80,3,54,20
-nt-119,393357,Houston Black,Moderately well drained,D,80,3,54,20
-nt-120,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-121,363862,Deandale,Moderately well drained,D,100,2,22.5,22.4
-nt-122,366719,Wilson,Moderately well drained,D,100,1.25,31,18.1
-nt-123,370773,Renfrow,Well drained,D,100,2,22,41.1
-nt-124,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1
-nt-125,370945,Houston Black,Moderately well drained,D,80,3,54,20
-nt-126,391152,Denton,Well drained,C,85,2.5,50,6
-nt-127,364075,Houston Black,Moderately well drained,D,85,3,54,20
-nt-128,365021,Sanger,Well drained,D,90,2.5,45,22
-nt-129,368165,Ferris,Well drained,D,50,1.3,52,19
-nt-130,366669,Fairlie,Moderately well drained,D,58,2.5,45,26.1
-nt-131,364076,Houston Black,Moderately well drained,D,80,3,54,20
-nt-132,365011,Mingo,Well drained,D,100,2,33.5,34.2
-nt-133,368182,Lewisville,Well drained,C,85,2,46,8
-nt-134,365302,Houston Black,Moderately well drained,D,80,3,54,20
-nt-135,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1
-nt-136,366669,Fairlie,Moderately well drained,D,58,2.5,45,26.1
-nt-137,363878,Kamay,Well drained,D,100,2,20,26.5
-nt-138,363023,Slidell,Moderately well drained,D,85,2.5,50,22
-nt-139,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-140,364797,Branyon,Moderately well drained,D,85,2,47,18
-nt-141,365331,Trinity,Moderately well drained,D,85,2.5,65,10
-nt-142,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-143,363899,Renfrow,Well drained,D,31,2,22,41.1
-nt-144,369401,Houston Black,Moderately well drained,D,80,3,54,20
-nt-145,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-146,366690,Normangee,Moderately well drained,C,85,1.25,29,34
-nt-147,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-148,383224,Dougherty,Well drained,B,85,0.75,6,87
-nt-149,365522,Heiden,Well drained,D,85,2.5,50,22
-nt-150,370120,Purves,Well drained,D,89,3,47.5,25
-nt-151,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1
-nt-152,369401,Houston Black,Moderately well drained,D,80,3,54,20
-nt-153,393377,Trinity,Moderately well drained,D,85,2.5,65,10
-nt-154,368175,Heiden,Well drained,D,85,2.5,50,22
-nt-155,367878,Houston Black,Moderately well drained,D,80,3,54,20
-nt-156,370104,Houston Black,Moderately well drained,D,80,3,54,20
-nt-157,368175,Heiden,Well drained,D,85,2.5,50,22
-nt-158,367762,Houston Black,Moderately well drained,D,85,3,54,20
-nt-159,366720,Austin,Well drained,D,90,2.5,45,7
-nt-160,367727,Blum,Moderately well drained,C,100,2,20,42.1
-nt-161,374477,Houston Black,Moderately well drained,D,85,3,54,20
-nt-162,368178,Houston Black,Moderately well drained,D,85,3,54,20
-nt-163,370084,Crawford,Well drained,D,85,2.5,45,7.2
-nt-164,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-165,364526,Tinn,Moderately well drained,D,95,2.5,50,22.1
-nt-166,365029,Slidell,Moderately well drained,D,85,2.5,50,22
-nt-167,367742,Altoga,Well drained,C,95,1.3,45,7
-nt-168,366719,Wilson,Moderately well drained,D,100,1.25,31,18.1
-nt-169,370082,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-170,364404,Pedernales,Well drained,C,90,0.8,12,71
-nt-171,364075,Houston Black,Moderately well drained,D,85,3,54,20
-nt-172,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-173,365541,Okay,Well drained,B,100,2,21.5,41.4
-nt-174,393357,Houston Black,Moderately well drained,D,80,3,54,20
-nt-175,370917,Burleson,Moderately well drained,D,90,2,50,22.1
-nt-176,370126,Ships,Moderately well drained,D,85,1.75,68,1
-nt-177,367883,Leson,Moderately well drained,D,100,2.5,50,22.1
-nt-178,369384,Branyon,Moderately well drained,D,100,3,50,22.1
-nt-179,367753,Altoga,Well drained,C,92,1.3,45,7
-nt-180,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-181,367763,Houston Black,Moderately well drained,D,80,3,54,20
-nt-182,364493,Lindy,Well drained,D,100,1.25,27.5,37.2
-nt-183,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-184,367757,Heiden,Well drained,D,85,2.5,50,22
-nt-185,367796,Wilson,Moderately well drained,D,85,1.25,31,35
-nt-186,370945,Houston Black,Moderately well drained,D,80,3,54,20
-nt-187,393357,Houston Black,Moderately well drained,D,80,3,54,20
-nt-188,365304,Branyon,Moderately well drained,D,85,2,47,18
-nt-189,367752,Ferris,Well drained,D,50,1.3,52,19
-nt-190,365275,Austin,Well drained,D,90,2.5,45,7
-nt-191,367752,Ferris,Well drained,D,50,1.3,52,19
-nt-192,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1
-nt-193,365303,Branyon,Moderately well drained,D,85,2,47,18
-nt-194,367790,Tinn,Moderately well drained,D,85,2.5,50,22
-nt-195,374493,Trinity,Moderately well drained,D,85,2.5,65,10
-nt-196,364492,Lewisville,Well drained,B,100,2,36.5,23.5
-nt-197,363916,Bonti,Well drained,C,80,2.5,15,65.4
-nt-198,374478,Houston Black,Moderately well drained,D,80,3,54,20
-nt-199,393357,Houston Black,Moderately well drained,D,80,3,54,20
-nt-200,370107,Lewisville,Well drained,C,85,2,46,8
+fieldId,mukey,compname,drainagecl,hydgrp,comppct_r,om,clay,sand,kwfact,kffact,awc,tfact,nirrcapcl,nirrcapscl,aws0100wta
+demo-ellis-001,365330,Trinity,Moderately well drained,D,85,2.5,70,9,.17,.17,0.16,5,5,w,11.42
+nt-001,368175,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-002,365534,Leson,Moderately well drained,D,100,2.5,50,22.1,.24,.24,0.15,5,2,e,15
+nt-003,364075,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-004,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-005,364076,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-006,370917,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-007,376687,Venus,Well drained,B,100,2,24,39.1,.24,.24,0.18,5,1,,17.78
+nt-008,367752,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-009,391152,Denton,Well drained,C,85,2.5,50,6,.20,.20,0.15,3,3,e,13.69
+nt-010,367798,Wilson,Moderately well drained,C,85,1.25,31,35,.37,.37,0.14,5,3,w,12.59
+nt-011,369396,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-012,369401,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-013,363862,Deandale,Moderately well drained,D,100,2,22.5,22.4,.43,.43,0.18,5,2,s,15.69
+nt-014,367753,Altoga,Well drained,C,92,1.3,45,7,.32,.32,0.17,5,3,e,17
+nt-015,365302,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-016,393338,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-017,366675,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-018,376682,Slidell,Moderately well drained,D,85,2.5,50,22,.17,.17,0.15,5,3,e,14.62
+nt-019,364076,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-020,365302,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-021,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-022,365302,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-023,365301,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-024,370137,Wilson,Moderately well drained,C,85,1.25,31,35,.37,.37,0.14,5,3,w,12.59
+nt-025,365517,Fairlie,Moderately well drained,D,100,2.5,42.5,28.1,.28,.28,0.17,4,2,s,17
+nt-026,575173,Trinity,Moderately well drained,D,85,2.5,70,9,.17,.17,0.16,5,5,w,11.42
+nt-027,365301,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-028,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-029,365331,Trinity,Moderately well drained,D,85,2.5,65,10,.20,.20,0.11,5,4,w,13.36
+nt-030,370917,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-031,365526,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-032,367898,Crockett,Moderately well drained,D,85,1.25,14,40,.55,.55,0.18,5,3,e,16.4
+nt-033,362421,Bluegrove,Well drained,C,100,1.75,15,68.8,.28,.28,0.13,3,3,e,12.32
+nt-034,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-035,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-036,367752,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-037,363001,Krum,Well drained,C,75,2,43,28,.24,.24,0.18,5,3,e,18
+nt-038,373703,Westfork,Well drained,D,100,2.5,50,5.3,.28,.28,0.15,5,3,w,15
+nt-039,367799,Wilson,Moderately well drained,D,55,1.25,31,35.4,.37,.37,0.14,5,3,w,13.92
+nt-040,3180440,Tinn,Moderately well drained,D,85,2.5,50,22,.24,.24,0.18,5,3,s,17.4
+nt-041,368175,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-042,370104,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-043,366719,Wilson,Moderately well drained,D,100,1.25,31,18.1,.43,.43,0.14,5,3,w,13.2
+nt-044,365302,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-045,376673,Pidcoke,Well drained,D,85,2,29,34,.17,.24,0.13,1,4,s,5.98
+nt-046,373803,Anocon,Well drained,C,90,2,14,66.1,.24,.24,0.14,5,2,e,14
+nt-047,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-048,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-049,370137,Wilson,Moderately well drained,C,85,1.25,31,35,.37,.37,0.14,5,3,w,12.59
+nt-050,366720,Austin,Well drained,D,90,2.5,45,7,.24,.24,0.18,3,3,e,12.33
+nt-051,362991,Denton,Well drained,C,85,2.5,50,6,.20,.20,0.15,3,3,e,13.69
+nt-052,391144,Bolar,Well drained,C,90,2.5,30,34,.10,.20,0.12,2,3,e,11.64
+nt-053,367736,Chatt,Well drained,C,100,2,50,22.1,.20,.20,0.15,5,2,e,14.38
+nt-054,364858,Trinity,Moderately well drained,D,85,2.5,65,10,.20,.20,0.11,5,4,w,13.36
+nt-055,374478,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-056,381840,Muskogee,Moderately well drained,C,85,2.5,18.5,11.7,.43,.43,0.18,5,1,,18.67
+nt-057,367608,Kaufman,Moderately well drained,D,100,2.5,68,9.7,.17,.17,0.15,5,2,w,15
+nt-058,367878,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-059,370104,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-060,367897,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-061,374477,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-062,367769,Krum,Well drained,D,70,1.25,45,7,.28,.28,0.18,5,3,s,18
+nt-063,370945,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-064,368175,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-065,366710,Vertel,Well drained,D,100,0.75,70,8.9,.17,.17,0.11,3,3,e,10.4
+nt-066,393363,Leson,Moderately well drained,D,95,2.5,50,22.1,.24,.24,0.15,5,2,e,15
+nt-067,369400,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-068,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-069,370945,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-070,369401,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-071,363862,Deandale,Moderately well drained,D,100,2,22.5,22.4,.43,.43,0.18,5,2,s,15.69
+nt-072,364057,Austin,Well drained,D,85,2.5,45,7,.24,.24,0.17,3,4,e,11.92
+nt-073,362461,Winters,Well drained,C,85,0.75,17,45,.43,.43,0.18,5,1,,16.36
+nt-074,365526,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-075,370103,Heiden,Well drained,D,85,2.5,50,22.1,.10,.24,0.14,5,2,e,14.85
+nt-076,367608,Kaufman,Moderately well drained,D,100,2.5,68,9.7,.17,.17,0.15,5,2,w,15
+nt-077,370133,Tinn,Moderately well drained,D,85,2.5,50,22,.24,.24,0.14,5,5,w,14
+nt-078,370945,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-079,393354,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-080,370084,Crawford,Well drained,D,85,2.5,45,7.2,.32,.32,0.15,2,3,s,10.73
+nt-081,381849,Oklared,Well drained,A,85,0.75,14,66.1,.20,.20,0.16,5,2,e,16.46
+nt-082,364824,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-083,373680,Purves,Well drained,D,89,3,47.5,25,.10,.10,0.15,1,4,s,4.6
+nt-084,368205,Sanger,Well drained,D,90,2.5,45,22,.24,.24,0.15,5,3,e,15
+nt-085,366721,Wilson,Moderately well drained,D,100,1.25,31,18.1,.43,.43,0.14,5,3,e,13.15
+nt-086,369400,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-087,369401,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-088,367757,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-089,368175,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-090,369401,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-091,364524,Slidell,Moderately well drained,D,55,2.5,50,22.1,.17,.17,0.17,5,2,e,15.15
+nt-092,365526,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-093,363900,Renfrow,Well drained,D,60,2,22,41.1,.37,.37,0.2,5,3,e,15.67
+nt-094,370965,Trinity,Moderately well drained,D,85,2.5,65,10,.20,.20,0.11,5,4,w,13.36
+nt-095,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-096,370945,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-097,366657,Crockett,Moderately well drained,D,85,1.25,14,40,.55,.55,0.18,5,3,e,16.4
+nt-098,364076,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-099,370944,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-100,367608,Kaufman,Moderately well drained,D,100,2.5,68,9.7,.17,.17,0.15,5,2,w,15
+nt-101,364090,Wilson,Moderately well drained,D,85,1.25,31,35,.37,.37,0.14,5,3,w,12.59
+nt-102,367752,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-103,365302,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-104,370917,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-105,367733,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-106,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-107,370779,Teller,Well drained,B,85,2,20.6,42.1,.43,.43,0.16,5,2,e,16.49
+nt-108,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-109,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-110,367898,Crockett,Moderately well drained,D,85,1.25,14,40,.55,.55,0.18,5,3,e,16.4
+nt-111,365517,Fairlie,Moderately well drained,D,100,2.5,42.5,28.1,.28,.28,0.17,4,2,s,17
+nt-112,365284,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-113,370079,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-114,367752,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-115,364972,Burleson,Moderately well drained,D,85,2,50,22.1,.24,.24,0.15,5,3,e,15
+nt-116,364515,Sanger,Well drained,D,90,2.5,45,22,.24,.24,0.15,5,3,e,15
+nt-117,364507,Normangee,Moderately well drained,D,100,1.25,30,33.5,.37,.37,0.18,4,3,e,15.54
+nt-118,367878,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-119,393357,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-120,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-121,363862,Deandale,Moderately well drained,D,100,2,22.5,22.4,.43,.43,0.18,5,2,s,15.69
+nt-122,366719,Wilson,Moderately well drained,D,100,1.25,31,18.1,.43,.43,0.14,5,3,w,13.2
+nt-123,370773,Renfrow,Well drained,D,100,2,22,41.1,.37,.37,0.2,5,3,e,15.68
+nt-124,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1,.28,.28,0.17,4,2,e,15.88
+nt-125,370945,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-126,391152,Denton,Well drained,C,85,2.5,50,6,.20,.20,0.15,3,3,e,13.69
+nt-127,364075,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-128,365021,Sanger,Well drained,D,90,2.5,45,22,.24,.24,0.15,5,3,e,15
+nt-129,368165,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-130,366669,Fairlie,Moderately well drained,D,58,2.5,45,26.1,.24,.24,0.17,4,2,e,16.73
+nt-131,364076,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-132,365011,Mingo,Well drained,D,100,2,33.5,34.2,.32,.32,0.15,2,3,e,11.1
+nt-133,368182,Lewisville,Well drained,C,85,2,46,8,.20,.20,0.18,5,2,e,16.75
+nt-134,365302,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-135,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1,.28,.28,0.17,4,2,e,15.88
+nt-136,366669,Fairlie,Moderately well drained,D,58,2.5,45,26.1,.24,.24,0.17,4,2,e,16.73
+nt-137,363878,Kamay,Well drained,D,100,2,20,26.5,.49,.49,0.13,5,3,e,13
+nt-138,363023,Slidell,Moderately well drained,D,85,2.5,50,22,.17,.17,0.15,5,3,e,14.62
+nt-139,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-140,364797,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-141,365331,Trinity,Moderately well drained,D,85,2.5,65,10,.20,.20,0.11,5,4,w,13.36
+nt-142,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-143,363899,Renfrow,Well drained,D,31,2,22,41.1,.37,.37,0.2,5,3,e,14.92
+nt-144,369401,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-145,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-146,366690,Normangee,Moderately well drained,C,85,1.25,29,34,.37,.37,0.19,4,3,e,15.68
+nt-147,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-148,383224,Dougherty,Well drained,B,85,0.75,6,87,.20,.20,0.09,5,3,e,10.34
+nt-149,365522,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-150,370120,Purves,Well drained,D,89,3,47.5,25,.10,.10,0.15,1,4,s,4.6
+nt-151,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1,.28,.28,0.17,4,2,e,15.88
+nt-152,369401,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-153,393377,Trinity,Moderately well drained,D,85,2.5,65,10,.20,.20,0.11,5,4,w,13.36
+nt-154,368175,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-155,367878,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-156,370104,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-157,368175,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-158,367762,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-159,366720,Austin,Well drained,D,90,2.5,45,7,.24,.24,0.18,3,3,e,12.33
+nt-160,367727,Blum,Moderately well drained,C,100,2,20,42.1,.32,.32,0.14,5,2,e,14.52
+nt-161,374477,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-162,368178,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-163,370084,Crawford,Well drained,D,85,2.5,45,7.2,.32,.32,0.15,2,3,s,10.73
+nt-164,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-165,364526,Tinn,Moderately well drained,D,95,2.5,50,22.1,.20,.20,0.18,5,2,w,17.94
+nt-166,365029,Slidell,Moderately well drained,D,85,2.5,50,22,.17,.17,0.15,5,3,e,14.62
+nt-167,367742,Altoga,Well drained,C,95,1.3,45,7,.32,.32,0.17,5,3,e,17
+nt-168,366719,Wilson,Moderately well drained,D,100,1.25,31,18.1,.43,.43,0.14,5,3,w,13.2
+nt-169,370082,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-170,364404,Pedernales,Well drained,C,90,0.8,12,71,.24,.24,0.15,5,3,e,14.3
+nt-171,364075,Houston Black,Moderately well drained,D,85,3,54,20,.24,.24,0.15,5,2,w,15.85
+nt-172,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-173,365541,Okay,Well drained,B,100,2,21.5,41.4,.28,.28,0.18,5,1,,16.05
+nt-174,393357,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-175,370917,Burleson,Moderately well drained,D,90,2,50,22.1,.24,.24,0.12,5,2,s,13.26
+nt-176,370126,Ships,Moderately well drained,D,85,1.75,68,1,.20,.20,0.19,5,3,s,15.16
+nt-177,367883,Leson,Moderately well drained,D,100,2.5,50,22.1,.24,.24,0.15,5,2,e,15
+nt-178,369384,Branyon,Moderately well drained,D,100,3,50,22.1,.24,.24,0.15,5,2,e,15
+nt-179,367753,Altoga,Well drained,C,92,1.3,45,7,.32,.32,0.17,5,3,e,17
+nt-180,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-181,367763,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-182,364493,Lindy,Well drained,D,100,1.25,27.5,37.2,.32,.32,0.16,2,4,e,11.65
+nt-183,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-184,367757,Heiden,Well drained,D,85,2.5,50,22,.24,.24,0.16,5,3,e,16
+nt-185,367796,Wilson,Moderately well drained,D,85,1.25,31,35,.37,.37,0.14,5,3,w,12.59
+nt-186,370945,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-187,393357,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-188,365304,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,e,17
+nt-189,367752,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-190,365275,Austin,Well drained,D,90,2.5,45,7,.24,.24,0.18,3,3,e,12.33
+nt-191,367752,Ferris,Well drained,D,50,1.3,52,19,.24,.24,0.18,4,3,e,16.56
+nt-192,365518,Fairlie,Moderately well drained,D,60,2.5,42.5,28.1,.28,.28,0.17,4,2,e,15.88
+nt-193,365303,Branyon,Moderately well drained,D,85,2,47,18,.20,.20,0.17,5,2,w,17
+nt-194,367790,Tinn,Moderately well drained,D,85,2.5,50,22,.24,.24,0.18,5,3,s,17.4
+nt-195,374493,Trinity,Moderately well drained,D,85,2.5,65,10,.20,.20,0.11,5,4,w,13.36
+nt-196,364492,Lewisville,Well drained,B,100,2,36.5,23.5,.20,.20,0.18,5,4,e,16.66
+nt-197,363916,Bonti,Well drained,C,80,2.5,15,65.4,.20,.20,0.13,3,3,e,9.85
+nt-198,374478,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-199,393357,Houston Black,Moderately well drained,D,80,3,54,20,.24,.24,0.16,5,2,e,16
+nt-200,370107,Lewisville,Well drained,C,85,2,46,8,.20,.20,0.18,5,2,e,16.75
