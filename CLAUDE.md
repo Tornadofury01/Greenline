@@ -68,7 +68,11 @@ npm run deploy     # selftest + i18n + build, then publish to production on Verc
 - Before sharing a new build, check: the live link opens in an incognito window, `sw.js` precaches `assets/fields/<demo id>-*.js`, and the deploy output contains no `.env` values.
 
 ## Build status
-Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-data`) only touches `/pipeline`, `/shared`, `/docs`.
+**Checkpoint `v1.0-checkpoint` (tag on `main`, Nov 14 2026): everything through Phase 4 is done, merged into `main` and live at https://greenline-psi.vercel.app.**
+`main` contains `app-build`, `datasets`, `landsat89-cover` (and the older `connect-data`, `data-pipeline`, `si-models`, `ui-polish`); only `landsat-harmonize` stays unmerged on purpose (tried, rejected, MODELS.md #14).
+**Next:** optional `ui-polish-2` and `models-v2` branches, then submission prep.
+
+Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-data`, which currently has `main` checked out) only touches `/pipeline`, `/shared`, `/docs`.
 - [x] **Phase 0: crop traits.** `crops.json` follows `docs/crop-traits-verification.md` and `-2.md` (sourced water, drought sensitivity, N fixation, sesame and late-rye-kill risks). Still `"verified": false`.
 - [x] **Phase 1: signature features.**
   - [x] 1.1 Bad-year replay re-scores rotations (`scoring/rules/replay.js`, `scoreRotation(..., { replayYear })`, Compare screen picker).
@@ -101,7 +105,7 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] Full Spanish pass (plain *usted*, "suelo desnudo", verdicts "Aguanta / Batalla un poco / Batalla / Batalla mucho", "Revivir un mal año"); grammar fixes in both languages (`yearTypeYear.*`, `replayUi.vsNormalSame`); dataset descriptions translated (`sources.*`).
   - [x] Checked in Chrome (playwright-core) at 375 / 768 / 1280 px, en + es, along the demo path (demo field → farm → story → replay 2011 → compare → what-if at −50 % / +40 days → build my own → handoff → How we know): no horizontal scroll, overflow, text < 12 px or console errors. Fixed: rain axis cut off "pulg", Landsat 8 marker, "Struggles badly" note placement, receipt touch area.
   - [x] Demo field is one setting (see Key code paths); tested with `VITE_DEMO_FIELD_ID=nt-141` (only nt-141 precached).
-- [ ] **Phase 5:** not started.
+- [ ] **Next (optional):** `ui-polish-2`, `models-v2`. Then submission prep.
 
 ## Roadmap
 - [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields
