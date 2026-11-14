@@ -64,3 +64,48 @@ export function typicalBareMonths(field) {
     return seen.length ? Math.round((100 * seen.filter((s) => s === 'bare').length) / seen.length) / 100 : 0;
   });
 }
+
+// --- Soil (SSURGO) in plain words. Thresholds from docs/app-changes-needed.md. ---
+export function kWord(k) {
+  if (k == null) return null;
+  if (k < 0.2) return 'low';
+  if (k <= 0.35) return 'moderate';
+  return 'high';
+}
+// "2e" -> { cls: 2, sub: 'e' }. Subclass letters: e erosion, w wetness, s soil limits, c climate.
+export function parseCapability(lcc) {
+  const m = String(lcc ?? '').match(/^([1-8])([ewsc])?$/i);
+  return m ? { cls: Number(m[1]), sub: m[2]?.toLowerCase() ?? null } : null;
+}
+
+// --- Frost dates (PRISM, 4 km). Typical = median over the last `n` years that have the date. ---
+// Display only. Model 3 (year types) keeps using NASA POWER frostFreeDays.
+const dayOfYear = (iso) => {
+  const d = new Date(`${iso}T00:00:00Z`);
+  return Math.round((d - Date.UTC(d.getUTCFullYear(), 0, 1)) / 86400000) + 1;
+};
+const median = (xs) => {
+  const s = [...xs].sort((a, b) => a - b);
+  const m = Math.floor(s.length / 2);
+  return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2;
+};
+// Day of year -> { month: 0-11, day } in a non-leap year.
+const fromDoy = (doy) => {
+  const d = new Date(Date.UTC(2023, 0, 1) + (Math.round(doy) - 1) * 86400000);
+  return { month: d.getUTCMonth(), day: d.getUTCDate() };
+};
+export function frostDates(field, n = 10) {
+  const rows = field.climateYearly.filter((y) => y.lastSpringFrostPrism || y.firstFallFrostPrism).slice(-n);
+  if (!rows.length) return null;
+  const spring = rows.map((y) => y.lastSpringFrostPrism).filter(Boolean).map(dayOfYear);
+  const fall = rows.map((y) => y.firstFallFrostPrism).filter(Boolean).map(dayOfYear);
+  const season = rows.map((y) => y.frostFreeDaysPrism).filter((x) => x != null);
+  const power = rows.map((y) => y.frostFreeDays).filter((x) => x != null);
+  return {
+    from: rows[0].year, to: rows.at(-1).year,
+    spring: spring.length ? fromDoy(median(spring)) : null,
+    fall: fall.length ? fromDoy(median(fall)) : null,
+    seasonDays: season.length ? Math.round(median(season)) : null,
+    powerDays: power.length ? Math.round(median(power)) : null,
+  };
+}

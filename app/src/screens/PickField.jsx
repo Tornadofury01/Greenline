@@ -54,7 +54,7 @@ function useOnline() {
   return online;
 }
 
-function Fact({ icon: Icon, tone, label, value, detail, term }) {
+export function Fact({ icon: Icon, tone, label, value, detail, term }) {
   return (
     <div className="fact">
       <span className={`fact-icon ${tone || ''}`}><Icon size={20} aria-hidden="true" /></span>

@@ -6,6 +6,7 @@ import { Sun, CloudRain, Thermometer, CalendarX, ArrowRight, History, Gauge, Tri
 import { useApp } from '../state/AppContext.jsx';
 import { StatCard, NeedField, JudgmentNote, PageHead, Source, ModelCard, Receipt } from '../components/Small.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
+import SoilAndFrost from '../components/SoilFacts.jsx';
 import { climateStats, usuallyBareMonths, mmToIn, coverShares, typicalBareMonths, SENSOR_YEAR } from '../display.js';
 import { stressDriverText, modelClassFor } from '../si.js';
 // import VulnerabilityZonesMap from '../components/future/VulnerabilityZonesMap.jsx'; // FUTURE
@@ -129,6 +130,8 @@ export default function FieldStory() {
         <StatCard icon={Sun} label={t('story.statBare')} value={s.avgBareDays} term="bareDays" src={['Landsat 5/7/8/9']} detail={t('story.bareDetail')} />
         <StatCard icon={Gauge} label={t('story.statScore')} value={recentScore} unit="/100" term="bareScore" src={['Landsat 5/7/8/9', 'Greenline SI models']} detail={t('story.scoreDetail')} />
       </div>
+
+      <SoilAndFrost field={field} />
 
       <ModelCard />
 

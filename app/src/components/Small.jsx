@@ -26,6 +26,9 @@ export function PageHead({ title, intro }) {
 
 // Evidence receipt: tap a claim to see which datasets back it, with resolution and dates.
 // `src` is a list of dataset names matching field.sources[].dataset. Without matches it renders plain text.
+// field.sources[].scale: is the number read over the field itself, or a regional / county / state value?
+const SCALES = ['patch', 'area', 'county', 'state', 'model'];
+
 export function Receipt({ src, children }) {
   const { t, field } = useApp();
   const [open, setOpen] = useState(false);
@@ -46,6 +49,7 @@ export function Receipt({ src, children }) {
               <strong>{s.dataset}</strong>
               <span>{s.variable}</span>
               <span className="muted">{t('common.receiptLine', { resolution: s.resolution, dates: s.dateRange.replace('-', '–') })}</span>
+              {SCALES.includes(s.scale) && <span className={`receipt-scale scale-${s.scale}`}>{t(`common.scale.${s.scale}`)}</span>}
             </span>
           ))}
           {field.isSampleData && <span className="muted">{t('common.sampleValues')}</span>}

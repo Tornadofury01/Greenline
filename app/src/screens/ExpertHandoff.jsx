@@ -5,6 +5,7 @@ import { useScores } from '../state/useScores.js';
 import { formatReason } from '../i18n.js';
 import { NeedField, JudgmentNote, PageHead, ModelCard } from '../components/Small.jsx';
 import { FieldFacts } from './PickField.jsx';
+import { SoilFacts, FrostFacts } from '../components/SoilFacts.jsx';
 import { climateStats } from '../display.js';
 
 function Table({ rows }) {
@@ -40,6 +41,8 @@ export default function ExpertHandoff() {
       <section className="card doc-section">
         <h2>{t('handoff.fieldSection')}</h2>
         <FieldFacts field={field} />
+        <SoilFacts field={field} />
+        <FrostFacts field={field} />
       </section>
 
       <section className="card doc-section">
@@ -92,7 +95,7 @@ export default function ExpertHandoff() {
       <section className="card doc-section">
         <h2>{t('handoff.sources')}</h2>
         {field.isSampleData && <p className="muted">{t('handoff.sampleNote')}</p>}
-        <Table rows={field.sources.map((src) => [src.dataset, `${src.variable} · ${src.resolution} · ${src.dateRange.replace('-', '–')}`])} />
+        <Table rows={field.sources.map((src) => [src.dataset, [src.variable, src.resolution, src.dateRange.replace('-', '–'), src.scale && t(`common.scale.${src.scale}`)].filter(Boolean).join(' · ')])} />
       </section>
       </div>
 
