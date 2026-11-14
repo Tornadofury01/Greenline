@@ -26,7 +26,8 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 ## Key code paths
 - Field data enters the app in **one place**: `app/src/data/loadField.js`. Real fields: `/shared/fields/<id>.json`
   (built by `pipeline/build_fields.py`); falls back to the fake `sample-field.json` if a file is missing.
-- **Demo field: one setting**, `DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local`). Default `nt-103`.
+- **Demo field: one setting**, `DEFAULT_DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local` / the shell). Default `nt-103`. `vite.config.js` imports it, so the precached field always matches.
+- Bare days and cover: **Landsat 8/9 only** (`*L89` keys, 2014+) via `bareRows()` / `coverRows()` in `app/src/display.js`; pre-2013 years shown muted with `<LowConfTag>`, never averaged or scored. Dataset text in receipts is translated by source id (`sourceText()` in `app/src/i18n.js`, i18n `sources.*`).
 - SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
 - Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them, with `sources[].scale` (your field vs regional).
 - Dollars: `scoring/economics.js` (display only, from `field.market`), N price in `content/economics.json` (USDA AMS Illinois Production Cost Report, national, not Texas). What-if: `whatIfHazards()` in `scoring/rules/replay.js`.
@@ -90,12 +91,21 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - [x] Confidence: PRISM agreement for POWER and IMERG with the field's numbers (no points: not independent, see `docs/data-validation.md`). `EVIDENCE` has PRISM, NASS Quick Stats, SSURGO. Receipts show "measured on your field" vs "regional value" from `sources[].scale`.
   - Decisions: N price $0.60/lb N from the USDA AMS Illinois Production Cost Report (Nov 13 2026, anhydrous 82% N, $981.11/ton ÷ 1,640 lb N; math in `content/economics.json` and `scoring/economics.js`), labeled "national estimate, not Texas": NASS has no Texas fertilizer price. No price slider. `docs/economics-placeholders-todo.md` dropped (real NASS data now).
   - [x] Fixes: a scenario score clamped to 0 shows the verdict "Struggles badly" (card and glance) with a "settings max out the stress" note; the number stays in the details. `<Receipt extra>` takes non-field sources (scale `national`).
-- [ ] **Phase 4:** not started.
+- [x] **Landsat 8/9 switch** (after merging `landsat89-cover` from `main`, docs/app-changes-needed.md §5).
+  - [x] Headline, stats, usually-bare months, typical year, timeline scores, field calibration (`bareDays.js`, 2014+) and `recentBareDays()` read the `*L89` keys; old keys only as a fallback (fake sample) and for pre-2013 display.
+  - [x] `build_calendars.mjs` reads `shared/crop-calendars-l89.json` (corn 133→94 bare days, cotton 95→54, sorghum 113→60, wheat 88→60). Bare-day reasons cite "Landsat 8/9". Selftest checks both.
+  - [x] Pre-2013 bars and rows muted + "Low confidence: older satellite" tag (opens "Why 2013 matters"); Jan–Mar 2013 = "no image"; too-cloudy years say so. No "less bare over time" wording left (that trend was a sensor artifact).
+  - Decision: erosion thresholds unchanged (60 free days, 1 point per 60). nt-103: field average 113 → 78 bare days a year; rotation ranking unchanged, totals move ≤ 1 point.
+- [x] **Phase 4: Spanish and polish.**
+  - [x] Full Spanish pass (plain *usted*, "suelo desnudo", verdicts "Aguanta / Batalla un poco / Batalla / Batalla mucho", "Revivir un mal año"); grammar fixes in both languages (`yearTypeYear.*`, `replayUi.vsNormalSame`); dataset descriptions translated (`sources.*`).
+  - [x] Checked in Chrome (playwright-core) at 375 / 768 / 1280 px, en + es, along the demo path (demo field → farm → story → replay 2011 → compare → what-if at −50 % / +40 days → build my own → handoff → How we know): no horizontal scroll, overflow, text < 12 px or console errors. Fixed: rain axis cut off "pulg", Landsat 8 marker, "Struggles badly" note placement, receipt touch area.
+  - [x] Demo field is one setting (see Key code paths); tested with `VITE_DEMO_FIELD_ID=nt-141` (only nt-141 precached).
+- [ ] **Phase 5:** not started.
 
 ## Roadmap
 - [x] Pipeline: real NASA POWER / IMERG / SMAP / Landsat / SRTM / SSURGO / CDL for 201 sampled fields
 - [ ] Real data for every 30 m cell (today a tap loads the nearest sampled field)
-- [ ] Harmonize Landsat 5/7 with Landsat 8/9 NDVI (see MODELS.md)
+- [x] Landsat 5/7 vs 8/9: harmonizing was tried and rejected; bare days use Landsat 8/9 only and pre-2013 is shown as low confidence (MODELS.md #14)
 - [ ] Verify crop traits with Texas A&M AgriLife and NRCS. Agree on the `yearType` classification rule
 - [x] What-if sliders (rain, hot days) → `app/src/components/WhatIfSliders.jsx`. A price slider could use `market.pricesTx[]` (2008–2025)
 - [ ] Field walk mode (live GPS → cell, kept on device) → `FieldWalkMode.jsx`
@@ -103,4 +113,4 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
 - [ ] Vulnerability zones map (erosion and drought hot spots) → `VulnerabilityZonesMap.jsx`
 - [ ] AI-assisted explanations (must stay grounded in the rule-based scores)
 - [ ] Offline map tiles for the farmer's area. Code-split Leaflet and Recharts
-- [ ] Deploy (GitHub Pages or Netlify)
+- [x] Deploy: Vercel, https://greenline-psi.vercel.app (see Deploy)
