@@ -1,6 +1,7 @@
 // Quick sanity check: node scoring/selftest.js
 import { readFileSync } from 'node:fs';
 import { scoreRotation, suggestRotations } from './index.js';
+import { topReasons, estimatedTraits } from './confidence.js';
 
 const load = (p) => JSON.parse(readFileSync(new URL(p, import.meta.url)));
 const field = load('../shared/sample-field.json');
@@ -76,5 +77,21 @@ check(!tagsOf(['corn', 'corn']).includes('pestBreak'), 'tags: corn after corn is
 check(!tagsOf(['corn', 'winter_wheat', 'grain_sorghum']).includes('pestBreak'), 'tags: all grasses is not a pest break');
 check(!tagsOf(['cotton', 'cotton']).includes('pestBreak'), 'tags: cotton after cotton is not a pest break');
 check(!tagsOf(['winter_wheat', 'cotton', 'cotton']).includes('pestBreak'), 'tags: back-to-back cotton inside a longer rotation fails');
+
+// Confidence: every reason has a tone, estimated traits cost a point, top-2 reasons for the card face.
+const confOf = (crops, f = real) => scoreRotation({ crops }, f, [], {}, lib).confidence;
+const basic = confOf(['winter_wheat', 'corn']);
+check(basic.reasons.length > 0 && basic.reasons.every((r) => ['up', 'down', 'note'].includes(r.tone)), 'confidence: every reason has a tone (up / down / note)');
+check(basic.reasons.some((r) => r.key === 'confidence.resolution' && r.params.fine === '30 m'), 'confidence: resolution reason names the real 30 m / ~11 km / ~50 km');
+const vetch = confOf(['hairy_vetch', 'cotton']);
+check(vetch.reasons.some((r) => r.key === 'confidence.traitsEstimated' && r.params.crops.includes('hairy_vetch')), 'confidence: hairy vetch (estimated drought sensitivity) is flagged');
+check(!basic.reasons.some((r) => r.key === 'confidence.traitsEstimated'), 'confidence: wheat / corn have no estimated scored traits');
+check(estimatedTraits(lib.crops.find((c) => c.id === 'alfalfa')).includes('nFixLbPerAcre'), 'confidence: alfalfa unknown nitrogen counts as an estimate');
+check(topReasons(basic).length === 2 && topReasons(basic).every((r) => r.tone), 'confidence: two top reasons for the card face');
+check(topReasons({ reasons: [{ tone: 'up', key: 'a' }, { tone: 'down', key: 'b' }, { tone: 'up', key: 'c' }] }).map((r) => r.key).join() === 'b,a', 'confidence: top reasons = one lowering, one adding');
+check(confOf(['corn'], field).reasons.every((r) => r.tone), 'confidence: sample field (no SI) also has tones');
+const withPrism = { ...real, quality: { ...real.quality, rainVsPrism: { power: { years: 18, corr: 0.95, pct: 6 }, imerg: null } } };
+check(confOf(['corn'], withPrism).reasons.some((r) => r.key === 'confidence.prismAgrees'), 'confidence: PRISM agreement shows when the data exists');
+check(!basic.reasons.some((r) => r.key.startsWith('confidence.prism')), 'confidence: no PRISM reason when the data is absent');
 
 process.exit(failed ? 1 : 0);

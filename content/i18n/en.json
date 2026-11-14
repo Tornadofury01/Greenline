@@ -362,14 +362,21 @@
     "familiarCrops": "Most crops have been grown on this field before.",
     "someNewCrops": "Some crops are new to this field.",
     "newCrops": "Most crops are new to this field.",
-    "placeholderTraits": "Crop trait values are early estimates and still being checked.",
+    "placeholderTraits": "Crop traits come from published sources (FAO, SARE, NRCS) but are still being checked by Texas A&M AgriLife and NRCS.",
     "modelStrong": "The crop model was right {acc}% of the time on years it never saw ({bal}% balanced across crops).",
     "modelMixed": "The crop model was right {acc}% of the time on years it never saw, but only {bal}% balanced across crops.",
     "cropHardToSee": "Satellites have trouble recognizing {crops}.",
     "datasetsAgree": "Two rain datasets agree for this field (correlation {corr}, {pct}% apart).",
     "datasetsDisagree": "Two rain datasets disagree for this field (correlation {corr}, {pct}% apart).",
-    "coarseWeather": "Weather data covers a wide area (about 30 miles), not just your field.",
-    "cdlNoise": "Crop maps are sometimes wrong."
+    "cdlNoise": "Crop maps are sometimes wrong.",
+    "traitsEstimated": "{crops}: some traits used here are rough estimates, not from a published source.",
+    "bareEstimated": "Bare-day timing for {crops} is an estimate, not measured on this field.",
+    "prismAgrees": "NASA rain data agrees with ground-station rain (PRISM): correlation {corr}, {pct}% apart.",
+    "prismDisagrees": "NASA rain data differs from ground-station rain (PRISM): correlation {corr}, {pct}% apart.",
+    "resolution": "Detail level: {fine} for greenness and crop maps, {mid} for satellite rain and soil moisture, {coarse} for temperature. Weather is an area average, not a reading from your field.",
+    "toneUp": "Adds confidence",
+    "toneDown": "Lowers confidence",
+    "toneNote": "Good to know"
   },
   "crops": {
     "winter_wheat": "Winter wheat",
@@ -413,11 +420,11 @@
   "glossary": {
     "ndvi": {
       "title": "NDVI (plant greenness)",
-      "text": "Satellites measure how green the ground looks, from 0 (bare dirt) to 1 (thick green crop). Below 0.25 we count the month as bare."
+      "text": "Satellites measure how green the ground looks, from 0 (bare dirt) to 1 (thick green crop). We count a month below 0.25 as bare, above 0.40 as green, and in between as partly covered."
     },
     "soilMoisture": {
-      "title": "Soil moisture",
-      "text": "How wet or dry the top of the soil was compared with a normal year. Measured from space by NASA's SMAP satellite."
+      "title": "Soil moisture anomaly",
+      "text": "How wet or dry the root zone was in the growing season compared with this field’s normal, from NASA’s SMAP satellite (each reading covers about 7 miles). −28% means 28% drier than normal. SMAP starts in 2015, so earlier years use rain instead."
     },
     "hydrologicGroup": {
       "title": "Hydrologic group",
@@ -433,7 +440,7 @@
     },
     "confidence": {
       "title": "Confidence",
-      "text": "How sure we are about a score. It is higher when we have many years of data and the crops have grown on your field before."
+      "text": "High, medium or low. A rotation gains points for 30 or more years of weather data, 8 or more years of crop maps, crops that have grown on your field before, a crop model that was right on years it never saw (balanced accuracy of 70% or more), and two rain datasets that agree. It loses points for crops that are new to the field, crops satellites struggle to recognize, and crop traits that are only estimates. Data detail (30 m maps vs. weather averaged over about 30 miles) adds no points. We state it so nobody over-reads it."
     },
     "score": {
       "title": "Score",
@@ -441,15 +448,39 @@
     },
     "bareDays": {
       "title": "Bare days",
-      "text": "Days when satellites saw little or no plant cover, so the soil was open to wind and rain."
+      "text": "Estimated days a year when satellites would see little or no plant cover, so the soil is open to wind and rain. Based on satellite years from 2013 on (see “Why 2013 matters”), your field’s own crop history where we have it, and regional patterns for the rest."
     },
     "heldOut": {
       "title": "Tested on unseen years",
-      "text": "We hid one year at a time from the model, trained it on the others, and checked its answer for the hidden year. This shows how it does on a year it has never seen, like next year."
+      "text": "We hid one year at a time from the model, trained it on the other years, then checked its answer for the hidden year. That shows how it does on a year it has never seen, like next year. Overall accuracy is how often it was right. Balanced accuracy averages the right-rate for each crop, so common crops like corn and wheat can’t hide trouble with rarer ones. Guessing “same as last year” is the bar to beat."
     },
     "bareScore": {
       "title": "Ground cover score",
       "text": "100 minus the share of the year the ground was bare. 100 means plants or residue all year. Lower means more bare days, when soil can wash or blow away."
+    },
+    "ndti": {
+      "title": "NDTI and crop residue",
+      "text": "NDTI is a satellite index that is supposed to spot dead crop stalks (residue) left on a field. We tested it, and a bare-soil index (BSI), on North Texas clay soils. They mostly reflect soil type and could not tell residue from bare dirt. So we do not claim to measure residue. We say “partly covered” for months between bare and green."
+    },
+    "evapotranspiration": {
+      "title": "Evapotranspiration (ET)",
+      "text": "Water that leaves a field as vapor, from the soil and from plants. NASA’s MODIS satellite estimates it. It predicted plant stress better in our tests, but MODIS builds ET partly from leaf greenness, so it would partly be answering with the answer. We left it out of every score."
+    },
+    "frost": {
+      "title": "Frost risk and frost-free days",
+      "text": "Frost-free days are the days between the last freeze in spring and the first freeze in fall (a low of 32°F or colder), from NASA POWER, with ground-based PRISM data as a cross-check where we have it. They set planting windows and decide whether a cool-season cover crop can finish. Greenline uses them to sort years into types. It does not score frost risk for a rotation yet."
+    },
+    "waterBalance": {
+      "title": "Water balance",
+      "text": "Rain coming in compared with the water a crop needs over its season. Greenline compares each crop’s seasonal water need (from FAO) with this field’s rain and its dry years. It is a simple comparison, not a full soil-water model."
+    },
+    "satVsGround": {
+      "title": "Satellite vs. ground measurements",
+      "text": "Satellites see a whole region at once, every few days, for decades. But each reading is an average over a square (30 m for greenness, about 7 miles for soil moisture, about 30 miles for NASA POWER weather), and clouds can hide the ground. A rain gauge or soil probe measures one spot very well but only that spot. Neither is perfect, so we compare them where we can, such as satellite rain against ground-station rain (PRISM). Your own eyes and records on your field still count most."
+    },
+    "sensor2013": {
+      "title": "Why 2013 matters",
+      "text": "Landsat 8 launched in 2013 and sees plant greenness a little higher than the older Landsat 5 and 7. With a fixed cutoff for “bare”, that alone makes later years look less bare. We have not matched the two sensors yet, so every bare-day number uses 2013 and later only. Older years are still used for rain and heat history."
     }
   },
   "si": {
@@ -464,7 +495,7 @@
     "yearTitle": "Year types:",
     "yearLine": "the same drought / wet / heat / normal label {pct}% of the time ({from}–{to}).",
     "cardTitle": "What the models saw on this field",
-    "cardAccuracy": "Crop model on unseen years: {acc}% right, {bal}% balanced across crops.",
+    "cardAccuracy": "Crop model on unseen years: {acc}% right overall, {bal}% balanced across crops. Guessing “same as last year” would be right {base}%.",
     "noModel": "{crop}: no satellite model for this crop yet.",
     "recognized": "{crop}: recognized from space in {n} of {of} years it was grown here.",
     "neverGrown": "{crop}: not grown on this field since 2008.",
@@ -530,7 +561,9 @@
         "low": "Low soil moisture before {month} mattered most",
         "high": "Wet soil before {month} mattered most"
       }
-    }
+    },
+    "riskBeat": "Beat the “assume a normal year” guess on unseen years by {pct}% (error {rmse} vs {base}, lower is better).",
+    "evidenceWhy": "What mattered most for {crop}: {why}."
   },
   "replay": {
     "dry": "In {year}, rain was {pct}% below this field's normal.",
@@ -588,5 +621,16 @@
     "estimatedFor": "Estimated, not measured, for: {crops}.",
     "fallowNote": "Bare fallow is our estimate for a tilled field. Satellite “fallow” fields are often weedy, so they don't show it.",
     "replayBare": "Bare days if {year} came back"
+  },
+  "how": {
+    "link": "How we know",
+    "open": "How we know",
+    "title": "How we know",
+    "intro": "What each number means, where it comes from, and where it can be wrong.",
+    "termsTitle": "Words we use",
+    "notesTitle": "Good to know",
+    "jump": "Jump to a word",
+    "dataLabel": "Data",
+    "back": "Back"
   }
 }

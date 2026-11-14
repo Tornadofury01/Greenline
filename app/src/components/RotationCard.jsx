@@ -3,11 +3,12 @@
 import { useId, useState } from 'react';
 import {
   Award, ChevronDown, ArrowUp, ArrowDown, Minus, ArrowRight, CircleCheck, CircleMinus,
-  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun, Droplet, Bug,
+  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun, Droplet, Bug, BookOpen,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { formatReason } from '../i18n.js';
 import { PRIORITIES } from '@scoring/index.js';
+import { topReasons } from '@scoring/confidence.js';
 import { ConfidenceBadge, Receipt } from './Small.jsx';
 import Verdict from './Verdict.jsx';
 import CoverStrip from './CoverStrip.jsx';
@@ -38,6 +39,26 @@ function IconList({ items, Icon, tone }) {
       {items.map((r, i) => (
         <li key={i}><Icon size={18} className={tone} aria-hidden="true" /><Receipt src={r.src}>{formatReason(t, r)}</Receipt></li>
       ))}
+    </ul>
+  );
+}
+
+// Confidence reasons: the icon follows the tone (adds / lowers / note), with a hidden label for screen readers.
+const TONE = { up: { Icon: CircleCheck, cls: 'ok' }, down: { Icon: CircleMinus, cls: 'gap' }, note: { Icon: Lightbulb, cls: 'info' } };
+function ToneList({ items, className = 'icon-list' }) {
+  const { t } = useApp();
+  return (
+    <ul className={className}>
+      {items.map((r, i) => {
+        const tone = TONE[r.tone] ? r.tone : 'note';
+        const { Icon, cls } = TONE[tone];
+        return (
+          <li key={i}>
+            <Icon size={18} className={cls} aria-hidden="true" />
+            <span><span className="sr-only">{t(`confidence.tone${tone[0].toUpperCase()}${tone.slice(1)}`)}: </span><Receipt src={r.src}>{formatReason(t, r)}</Receipt></span>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -85,7 +106,7 @@ function ModelInsights({ crops }) {
     <section className="detail">
       <h4><BrainCircuit size={18} aria-hidden="true" /> {t('si.cardTitle')} <GlossaryIcon term="heldOut" /></h4>
       <p className="muted small">
-        <Receipt src={['Greenline SI models']}>{t('si.cardAccuracy', { acc: m.cropAcc, bal: m.cropBal })}</Receipt>
+        <Receipt src={['Greenline SI models']}>{t('si.cardAccuracy', { acc: m.cropAcc, bal: m.cropBal, base: m.cropBase })}</Receipt>
       </p>
       <ul className="icon-list">
         {ids.map((id) => {
@@ -112,6 +133,7 @@ function ModelInsights({ crops }) {
                       : t('si.riskNoSeasons'))
                     : t('si.riskNotForCrop')}
                 </span>
+                {x.beat && <span className="si-sub">{t('si.riskBeat', x.beat)}</span>}
               </span>
             </li>
           );
@@ -145,6 +167,37 @@ function Delta({ value }) {
       <Icon size={14} strokeWidth={2.5} aria-hidden="true" />
       {t(`compare.delta.${dir}`, { n: Math.abs(value) })}
     </span>
+  );
+}
+
+// Data used, plus the SI models' "what mattered most" reason, and a link to the plain-language explanations.
+function EvidenceFooter({ result }) {
+  const { t, field, openHow } = useApp();
+  const datasets = field?.si ? [...result.evidence, 'Greenline SI models'] : result.evidence;
+  const x = field?.si ? [...new Set(result.crops)].map((id) => cropInsight(field, id)).find((i) => i?.driver) : null;
+  return (
+    <div className="evidence">
+      <p className="source">
+        <Database size={14} aria-hidden="true" />
+        <span>
+          {t('compare.evidence')}:{' '}
+          {datasets.map((d, i) => (
+            <span key={d}>{i > 0 && ', '}<Receipt src={[d]}>{d}</Receipt></span>
+          ))}
+        </span>
+      </p>
+      {x && (
+        <p className="source">
+          <BrainCircuit size={14} aria-hidden="true" />
+          <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9']}>
+            {t('si.evidenceWhy', { crop: t(`crops.${x.cropId}`), why: cropDriverText(t, x.driver) })}
+          </Receipt>
+        </p>
+      )}
+      <button type="button" className="btn-text" onClick={() => openHow()}>
+        <BookOpen size={16} aria-hidden="true" />{t('how.link')}
+      </button>
+    </div>
   );
 }
 
@@ -185,6 +238,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
             return <span key={tag} className="badge" title={t(`tags.explain.${tag}`)}><Icon size={14} aria-hidden="true" />{t(`tags.${tag}`)}</span>;
           })}
         </div>
+        <ToneList items={topReasons(result.confidence)} className="icon-list conf-face" />
         <Delta value={delta} />
         {rp && <ReplaySummary replay={rp} normal={result.total} shown={shown} />}
         <TopReason crops={result.crops} />
@@ -275,18 +329,10 @@ export default function RotationCard({ result, label, name, best = false, delta 
           </section>
           <section className="detail">
             <h4>{t('compare.confidenceWhy')} <GlossaryIcon term="confidence" /></h4>
-            <IconList items={result.confidence.reasons} Icon={CircleCheck} tone="info" />
+            <ToneList items={result.confidence.reasons} />
           </section>
           <ModelInsights crops={result.crops} />
-          <div className="source">
-            <Database size={14} aria-hidden="true" />
-            <span>
-              {t('compare.evidence')}:{' '}
-              {result.evidence.map((d, i) => (
-                <span key={d}>{i > 0 && ', '}<Receipt src={[d]}>{d}</Receipt></span>
-              ))}
-            </span>
-          </div>
+          <EvidenceFooter result={result} />
         </div>
       )}
     </article>

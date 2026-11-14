@@ -1,0 +1,73 @@
+// "How we know": plain-language explanations of every term and data limit the app uses.
+// Opened from the header and from "How we know" links on cards. Text lives in i18n under glossary.<id>.
+import { useEffect } from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useApp } from '../state/AppContext.jsx';
+import { PageHead, JudgmentNote } from '../components/Small.jsx';
+
+// Terms in reading order, with the datasets behind each (dataset names are not translated).
+const TERMS = [
+  { id: 'ndvi', data: ['Landsat 5/7/8/9'] },
+  { id: 'ndti', data: ['Landsat 5/7/8/9'] },
+  { id: 'evapotranspiration', data: ['MODIS MOD16A2GF'] },
+  { id: 'soilMoisture', data: ['SMAP L4'] },
+  { id: 'frost', data: ['NASA POWER', 'PRISM'] },
+  { id: 'waterBalance', data: ['NASA POWER', 'GPM IMERG', 'FAO'] },
+  { id: 'bareDays', data: ['Landsat 5/7/8/9', 'USDA Cropland Data Layer'] },
+  { id: 'confidence', data: [] },
+  { id: 'heldOut', data: ['Greenline SI models'] },
+];
+const NOTES = [{ id: 'satVsGround' }, { id: 'sensor2013', data: ['Landsat 5/7/8/9'] }];
+
+function Entry({ id, data = [] }) {
+  const { t } = useApp();
+  return (
+    <article className="how-term" id={`term-${id}`}>
+      <h3>{t(`glossary.${id}.title`)}</h3>
+      <p>{t(`glossary.${id}.text`)}</p>
+      {data.length > 0 && <p className="muted small">{t('how.dataLabel')}: {data.join(', ')}</p>}
+    </article>
+  );
+}
+
+export default function HowWeKnow() {
+  const { t, how, setScreen } = useApp();
+
+  // App.jsx scrolls to the top after a screen change, so wait a beat before jumping to a term.
+  useEffect(() => {
+    if (!how.term) return undefined;
+    const id = setTimeout(() => document.getElementById(`term-${how.term}`)?.scrollIntoView({ block: 'start' }), 60);
+    return () => clearTimeout(id);
+  }, [how.term]);
+
+  const jump = (id) => document.getElementById(`term-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  return (
+    <div className="screen">
+      <button type="button" className="btn-text" onClick={() => setScreen(how.from)}>
+        <ArrowLeft size={18} aria-hidden="true" />{t('how.back')}
+      </button>
+      <PageHead title={t('how.title')} intro={t('how.intro')} />
+
+      <nav className="card" aria-label={t('how.jump')}>
+        <div className="chips">
+          {[...TERMS, ...NOTES].map(({ id }) => (
+            <button key={id} type="button" className="chip" onClick={() => jump(id)}>{t(`glossary.${id}.title`)}</button>
+          ))}
+        </div>
+      </nav>
+
+      <section className="card how-list" aria-labelledby="how-terms">
+        <h2 id="how-terms">{t('how.termsTitle')}</h2>
+        {TERMS.map((x) => <Entry key={x.id} {...x} />)}
+      </section>
+
+      <section className="card how-list" aria-labelledby="how-notes">
+        <h2 id="how-notes">{t('how.notesTitle')}</h2>
+        {NOTES.map((x) => <Entry key={x.id} {...x} />)}
+      </section>
+
+      <JudgmentNote />
+    </div>
+  );
+}

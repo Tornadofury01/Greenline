@@ -1,10 +1,10 @@
-import { FlaskConical } from 'lucide-react';
+import { FlaskConical, BookOpen } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import Logo from './Logo.jsx';
 import { NavItems } from './BottomNav.jsx';
 
 export default function Header() {
-  const { t, lang, setLang, field } = useApp();
+  const { t, lang, setLang, field, screen, openHow } = useApp();
   return (
     <>
       <header className="header">
@@ -18,6 +18,10 @@ export default function Header() {
           <nav className="top-nav" aria-label={t('nav.label')}>
             <NavItems />
           </nav>
+          <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
+            aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
+            <BookOpen size={24} aria-hidden="true" />
+          </button>
           <div className="lang" role="group" aria-label={t('app.langGroup')}>
             {['en', 'es'].map((code) => (
               <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}

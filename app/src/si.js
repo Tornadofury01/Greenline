@@ -34,11 +34,14 @@ export function cropInsight(field, cropId) {
   const flagged = seasons.filter((y) => (y.predictedStressMonths || []).length > 0).length;
   const lastStress = [...seasons].reverse().find((y) => y.stressDriver);
   const perCrop = si.models.seasonCrop.perClass?.[cls];
+  // The weather risk signal is only worth showing where it beat "assume a normal year" on unseen years.
+  const pc = vs.perCrop?.[cls];
+  const beat = signalAllowed && pc?.beatsBaseline ? { rmse: pc.rmse, base: pc.baselineRmse, pct: Math.round(((pc.baselineRmse - pc.rmse) / pc.baselineRmse) * 100) } : null;
   return {
     cropId, hasModel: true, years: years.length, recognized,
     recall: perCrop?.recall ?? null,
     driver: latest?.cropDriver || null, driverYear: latest?.year ?? null,
-    signalAllowed, seasons: seasons.length, flagged,
+    signalAllowed, beat, seasons: seasons.length, flagged,
     stressDriver: lastStress?.stressDriver || null, stressYear: lastStress?.year ?? null,
   };
 }

@@ -76,14 +76,14 @@
     "nearest": "Campo de muestra más cercano ({id}), a {km} km de donde tocó. Pronto habrá datos reales para cada campo.",
     "fallback": "No pudimos cargar datos reales para este campo, así que este es el campo de muestra ficticio.",
     "useLocation": "Usar mi ubicación",
-    "locating": "Buscando tu ubicación…",
-    "nearestGps": "Campo de muestra más cercano ({id}), a {km} km de ti. Tu ubicación se usó una vez para encontrarlo y no se guardó.",
-    "farAway": "El campo más cercano con datos está a {km} km, así que puede no parecerse al tuyo. Úsalo como ejemplo, no como tu campo.",
+    "locating": "Buscando su ubicación…",
+    "nearestGps": "Campo de muestra más cercano ({id}), a {km} km de usted. Su ubicación se usó una sola vez para encontrarlo y no se guardó.",
+    "farAway": "El campo más cercano con datos está a {km} km, así que puede no parecerse al suyo. Úselo como ejemplo, no como su campo.",
     "geo": {
-      "denied": "La ubicación está desactivada para este sitio. Puedes permitirla en los ajustes del navegador, o toca el mapa.",
-      "unavailable": "No pudimos encontrar tu ubicación ahora. Inténtalo al aire libre, o toca el mapa.",
-      "timeout": "Encontrar tu ubicación tardó demasiado. Inténtalo de nuevo, o toca el mapa.",
-      "unsupported": "Este navegador o conexión no puede compartir tu ubicación. Toca el mapa."
+      "denied": "La ubicación está desactivada para este sitio. Puede permitirla en los ajustes del navegador, o toque el mapa.",
+      "unavailable": "No pudimos encontrar su ubicación ahora. Inténtelo al aire libre, o toque el mapa.",
+      "timeout": "Encontrar su ubicación tardó demasiado. Inténtelo de nuevo, o toque el mapa.",
+      "unsupported": "Este navegador o conexión no puede compartir su ubicación. Toque el mapa."
     }
   },
   "farm": {
@@ -362,14 +362,21 @@
     "familiarCrops": "La mayoría de los cultivos ya se sembraron en esta parcela.",
     "someNewCrops": "Algunos cultivos son nuevos en esta parcela.",
     "newCrops": "La mayoría de los cultivos son nuevos en esta parcela.",
-    "placeholderTraits": "Los valores de los cultivos son estimaciones iniciales y aún se revisan.",
+    "placeholderTraits": "Los rasgos de los cultivos provienen de fuentes publicadas (FAO, SARE, NRCS), pero Texas A&M AgriLife y NRCS aún los están revisando.",
     "modelStrong": "El modelo de cultivos acertó el {acc}% de las veces en años que nunca vio ({bal}% equilibrado entre cultivos).",
     "modelMixed": "El modelo de cultivos acertó el {acc}% de las veces en años que nunca vio, pero solo {bal}% equilibrado entre cultivos.",
     "cropHardToSee": "A los satélites les cuesta reconocer {crops}.",
     "datasetsAgree": "Dos fuentes de lluvia coinciden para este campo (correlación {corr}, {pct}% de diferencia).",
     "datasetsDisagree": "Dos fuentes de lluvia no coinciden para este campo (correlación {corr}, {pct}% de diferencia).",
-    "coarseWeather": "Los datos del clima cubren un área amplia (unas 30 millas), no solo su campo.",
-    "cdlNoise": "Los mapas de cultivos a veces se equivocan."
+    "cdlNoise": "Los mapas de cultivos a veces se equivocan.",
+    "traitsEstimated": "{crops}: algunos rasgos usados aquí son estimaciones aproximadas, no de una fuente publicada.",
+    "bareEstimated": "Los días de suelo desnudo de {crops} son una estimación, no una medición en este campo.",
+    "prismAgrees": "Los datos de lluvia de la NASA coinciden con la lluvia de estaciones en tierra (PRISM): correlación {corr}, {pct}% de diferencia.",
+    "prismDisagrees": "Los datos de lluvia de la NASA difieren de la lluvia de estaciones en tierra (PRISM): correlación {corr}, {pct}% de diferencia.",
+    "resolution": "Nivel de detalle: {fine} para verdor y mapas de cultivos, {mid} para lluvia por satélite y humedad del suelo, {coarse} para temperatura. El clima es un promedio de un área, no una medición de su campo.",
+    "toneUp": "Aumenta la confianza",
+    "toneDown": "Reduce la confianza",
+    "toneNote": "Bueno saber"
   },
   "crops": {
     "winter_wheat": "Trigo de invierno",
@@ -413,11 +420,11 @@
   "glossary": {
     "ndvi": {
       "title": "NDVI (verdor de las plantas)",
-      "text": "Los satélites miden qué tan verde se ve el suelo, de 0 (tierra desnuda) a 1 (cultivo verde y denso). Debajo de 0.25 contamos el mes como sin cubierta."
+      "text": "Los satélites miden qué tan verde se ve el suelo, de 0 (tierra desnuda) a 1 (cultivo verde y denso). Contamos un mes por debajo de 0.25 como desnudo, por encima de 0.40 como verde y entre ambos como parcialmente cubierto."
     },
     "soilMoisture": {
-      "title": "Humedad del suelo",
-      "text": "Qué tan húmeda o seca estuvo la capa superior del suelo comparada con un año normal. Se mide desde el espacio con el satélite SMAP de la NASA."
+      "title": "Anomalía de humedad del suelo",
+      "text": "Qué tan húmeda o seca estuvo la zona de las raíces en la temporada de cultivo comparada con lo normal de este campo, según el satélite SMAP de la NASA (cada lectura cubre unas 7 millas). −28% significa 28% más seco de lo normal. SMAP empieza en 2015, así que los años anteriores usan la lluvia."
     },
     "hydrologicGroup": {
       "title": "Grupo hidrológico",
@@ -433,23 +440,47 @@
     },
     "confidence": {
       "title": "Confianza",
-      "text": "Qué tan seguros estamos de un puntaje. Es más alta cuando hay muchos años de datos y los cultivos ya se han sembrado en su parcela."
+      "text": "Alta, media o baja. Una rotación gana puntos por 30 o más años de datos del clima, 8 o más años de mapas de cultivos, cultivos que ya se han sembrado en su campo, un modelo de cultivos que acertó en años que nunca vio (precisión equilibrada de 70% o más) y dos fuentes de datos de lluvia que coinciden. Pierde puntos por cultivos nuevos en el campo, cultivos que los satélites reconocen con dificultad y rasgos de cultivos que son solo estimaciones. El nivel de detalle de los datos (mapas de 30 m frente a un clima promediado en unas 30 millas) no suma puntos. Lo indicamos para que nadie lo sobrevalore."
     },
     "score": {
       "title": "Puntaje",
       "text": "Un número de 0 a 100 de qué tan bien se ajusta una rotación a sus metas y límites. Sus metas elegidas cuentan doble. Cada regla está abierta para que los expertos la revisen."
     },
     "bareDays": {
-      "title": "Días sin cubierta",
-      "text": "Días en que los satélites vieron poca o ninguna cubierta vegetal, así que el suelo quedó expuesto al viento y la lluvia."
+      "title": "Días de suelo desnudo",
+      "text": "Días estimados al año en que los satélites verían poca o ninguna cobertura vegetal, y el suelo queda expuesto al viento y la lluvia. Se basa en años de satélite desde 2013 (vea “Por qué importa 2013”), el historial de cultivos de su campo donde lo tenemos y patrones regionales para el resto."
     },
     "heldOut": {
       "title": "Probado en años no vistos",
-      "text": "Escondimos un año a la vez del modelo, lo entrenamos con los demás y revisamos su respuesta para el año escondido. Así se ve cómo le va en un año que nunca ha visto, como el próximo."
+      "text": "Escondimos un año a la vez del modelo, lo entrenamos con los demás años y revisamos su respuesta para el año escondido. Así se ve cómo le va en un año que nunca ha visto, como el próximo. La precisión general es cuántas veces acertó. La precisión equilibrada promedia el acierto de cada cultivo, para que cultivos comunes como el maíz y el trigo no oculten problemas con los menos frecuentes. Suponer “igual que el año pasado” es la vara que hay que superar."
     },
     "bareScore": {
       "title": "Puntaje de cobertura",
       "text": "100 menos la parte del año en que el suelo estuvo desnudo. 100 significa plantas o rastrojo todo el año. Más bajo significa más días desnudo, cuando el suelo se puede lavar o volar."
+    },
+    "ndti": {
+      "title": "NDTI y residuos de cultivo",
+      "text": "El NDTI es un índice satelital que debería detectar los tallos secos (residuos) que quedan en un campo. Lo probamos, junto con un índice de suelo desnudo (BSI), en suelos arcillosos del norte de Texas. Reflejan sobre todo el tipo de suelo y no distinguieron los residuos de la tierra desnuda. Por eso no decimos que medimos residuos. Decimos “parcialmente cubierto” para los meses entre desnudo y verde."
+    },
+    "evapotranspiration": {
+      "title": "Evapotranspiración (ET)",
+      "text": "Agua que sale de un campo como vapor, del suelo y de las plantas. El satélite MODIS de la NASA la estima. Predijo mejor el estrés de las plantas en nuestras pruebas, pero MODIS calcula la ET en parte con el verdor de las hojas, así que en parte respondería con la propia respuesta. La dejamos fuera de todos los puntajes."
+    },
+    "frost": {
+      "title": "Riesgo de helada y días sin helada",
+      "text": "Los días sin helada son los días entre la última helada de primavera y la primera de otoño (mínima de 32°F o menos), según NASA POWER, con datos de PRISM medidos en tierra como comprobación donde los tenemos. Definen las fechas de siembra y si un cultivo de cobertura de invierno alcanza a terminar. Greenline los usa para clasificar los años por tipo. Todavía no puntúa el riesgo de helada de una rotación."
+    },
+    "waterBalance": {
+      "title": "Balance de agua",
+      "text": "La lluvia que entra comparada con el agua que necesita un cultivo durante su temporada. Greenline compara la necesidad de agua de cada cultivo (de la FAO) con la lluvia y los años secos de este campo. Es una comparación sencilla, no un modelo completo del agua del suelo."
+    },
+    "satVsGround": {
+      "title": "Satélite frente a mediciones en tierra",
+      "text": "Los satélites ven toda una región a la vez, cada pocos días, durante décadas. Pero cada lectura es un promedio sobre un cuadro (30 m para el verdor, unas 7 millas para la humedad del suelo, unas 30 millas para el clima de NASA POWER) y las nubes pueden tapar el suelo. Un pluviómetro o una sonda de suelo mide muy bien un solo punto, pero solo ese punto. Ninguno es perfecto, así que los comparamos donde podemos, como la lluvia por satélite frente a la de estaciones en tierra (PRISM). Lo que usted ve y registra en su campo sigue siendo lo más importante."
+    },
+    "sensor2013": {
+      "title": "Por qué importa 2013",
+      "text": "Landsat 8 se lanzó en 2013 y ve el verdor de las plantas un poco más alto que los antiguos Landsat 5 y 7. Con un límite fijo para “desnudo”, eso solo hace que los años recientes parezcan menos desnudos. Todavía no igualamos los dos sensores, así que todos los números de días desnudos usan solo 2013 en adelante. Los años anteriores se siguen usando para el historial de lluvia y calor."
     }
   },
   "si": {
@@ -464,7 +495,7 @@
     "yearTitle": "Tipos de año:",
     "yearLine": "la misma etiqueta de sequía / húmedo / calor / normal el {pct}% de las veces ({from}–{to}).",
     "cardTitle": "Lo que vieron los modelos en este campo",
-    "cardAccuracy": "Modelo de cultivos en años no vistos: {acc}% de aciertos, {bal}% equilibrado entre cultivos.",
+    "cardAccuracy": "Modelo de cultivos en años no vistos: acierta {acc}% en general, {bal}% equilibrado entre cultivos. Suponer “igual que el año pasado” acertaría {base}%.",
     "noModel": "{crop}: todavía no hay modelo satelital para este cultivo.",
     "recognized": "{crop}: reconocido desde el espacio en {n} de {of} años en que se sembró aquí.",
     "neverGrown": "{crop}: no se ha sembrado en este campo desde 2008.",
@@ -530,7 +561,9 @@
         "low": "Lo que más pesó: poca humedad del suelo antes de {month}",
         "high": "Lo que más pesó: suelo húmedo antes de {month}"
       }
-    }
+    },
+    "riskBeat": "Superó la suposición de “un año normal” en años no vistos por {pct}% (error {rmse} frente a {base}; menos es mejor).",
+    "evidenceWhy": "Lo que más pesó para {crop}: {why}."
   },
   "replay": {
     "dry": "En {year}, la lluvia fue {pct}% menor que lo normal en esta parcela.",
@@ -588,5 +621,16 @@
     "estimatedFor": "Estimado, no medido, para: {crops}.",
     "fallowNote": "El barbecho desnudo es nuestra estimación para un campo labrado. Los campos “en barbecho” del satélite suelen tener maleza, así que no lo muestran.",
     "replayBare": "Días desnudos si volviera {year}"
+  },
+  "how": {
+    "link": "Cómo lo sabemos",
+    "open": "Cómo lo sabemos",
+    "title": "Cómo lo sabemos",
+    "intro": "Qué significa cada número, de dónde viene y dónde puede equivocarse.",
+    "termsTitle": "Palabras que usamos",
+    "notesTitle": "Bueno saber",
+    "jump": "Ir a una palabra",
+    "dataLabel": "Datos",
+    "back": "Volver"
   }
 }

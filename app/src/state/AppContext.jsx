@@ -25,6 +25,9 @@ export function AppProvider({ children }) {
   const saved = useMemo(readSaved, []);
   const [lang, setLang] = useState(saved.lang || 'en');
   const [screen, setScreen] = useState('field');
+  // "How we know" is opened from the header and from cards: remember where to return and which term to show.
+  const [how, setHow] = useState({ from: 'field', term: null });
+  const openHow = (term = null) => { setHow({ from: screen === 'how' ? how.from : screen, term }); setScreen('how'); };
   const [field, setField] = useState(null);
   // The bad year being replayed on the Compare screen (null = normal years). Shared so Field story can open it.
   const [replayYear, setReplayYear] = useState(null);
@@ -55,7 +58,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, t, screen, setScreen, field, replayYear, setReplayYear, pickField, pickDemo, loading, farm, updateFarm };
+  const value = { lang, setLang, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, pickField, pickDemo, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

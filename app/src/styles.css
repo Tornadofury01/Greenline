@@ -559,3 +559,16 @@ dialog.sheet::backdrop { background: rgb(27 31 28 / 0.45); }
 .spin { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spin { animation: none; } }
+
+/* ---------- Confidence on the card face, evidence footer ---------- */
+.conf-face { margin-top: var(--s-1); font-size: var(--text-xs); color: var(--color-text-muted); gap: var(--s-half); }
+.evidence { display: flex; flex-direction: column; gap: var(--s-1); }
+.evidence .btn-text { align-self: flex-start; }
+
+/* ---------- How we know ---------- */
+.how-list { display: flex; flex-direction: column; gap: var(--s-2); }
+.how-term { display: flex; flex-direction: column; gap: var(--s-1); padding-top: var(--s-2); border-top: var(--border); scroll-margin-top: calc(var(--header-h, 64px) + var(--s-2)); }
+.how-term:first-of-type { border-top: 0; padding-top: 0; }
+.how-term h3 { font-size: var(--text-md, 1.05rem); }
+.how-btn { flex: none; margin: 0; }
+.how-btn[aria-current='page'] { background: var(--color-primary-soft); color: var(--color-primary); }

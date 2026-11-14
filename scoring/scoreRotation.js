@@ -149,7 +149,7 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
     rotationId: rotation.id,
     crops: rotation.crops,
     total, breakdown, reasons, benefits, gaps, risks, tags, evidence, bareDays, replay, replayTotal,
-    confidence: confidenceFor(crops, field, cropLibrary.verified),
+    confidence: confidenceFor(crops, field, cropLibrary.verified, bareDays),
   };
 }
 
