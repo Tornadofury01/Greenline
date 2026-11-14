@@ -1,7 +1,7 @@
 # How Greenline lines up its data: one field, one calendar
 
 Greenline combines 10 datasets (NASA, USDA and PRISM) that were never designed to work together. They differ in pixel size (30 m to
-50 km), in timing (every 30 minutes to once a year), and in record length (2015 to 1984). We don't stretch them
+50 km), in timing (every 30 minutes to once a year), and in when their records start (1984 to 2015). We don't stretch them
 all onto one big map. We **ask every dataset the same question: "what happened at this field, in this month?"**
 
 ## Step 1. Same place: the field
@@ -53,5 +53,5 @@ agreement score, which feeds the app's confidence rating.
 
 **Slide version (3 bullets)**
 - **One field, one calendar:** 10 NASA, USDA and PRISM datasets, from 30 m satellite pixels to county statistics, all answer "what happened on this field, this month?"
-- **Local vs regional, labeled:** greenness, crops, slope and soil are measured on the field itself; rain, heat and soil moisture describe the field's neighborhood, and the app says which is which.
-- **Cross-checked:** NASA rainfall agrees with ground-gauge PRISM (r = 0.92–0.93), and every gap is shown as a gap, never filled in.
+- **Local vs regional, labeled:** greenness, crops, slope and soil are measured on the field itself; rain, heat and soil moisture describe the field's neighborhood, and every value is labeled with its scale.
+- **Cross-checked:** NASA rainfall agrees with ground-gauge PRISM (r = 0.92–0.93), and long gaps stay gaps; we never invent missing years.
