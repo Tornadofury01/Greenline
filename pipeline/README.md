@@ -52,3 +52,13 @@ use HLS and MODIS to fill gaps.
 ## Rules
 - Monthly CSVs are small and committed. Rasters and other large files are gitignored.
 - Output by field / grid cell id only. Never write a farmer's raw GPS position.
+
+## 201-field sample (models and app field files)
+See [`MODELS.md`](MODELS.md) for the full run order. Data-only steps added on the `datasets` branch (none of them
+retrain or change a model):
+```
+pipeline\.venv\Scripts\python pipeline\sample_fields.py soil prism prism_yearly   # SSURGO extras, PRISM monthly + frost/storm days
+pipeline\.venv\Scripts\python pipeline\nass_quickstats.py                         # county yields + Texas prices (NASS_API_KEY)
+pipeline\.venv\Scripts\python pipeline\validate_rain.py                           # writes docs/data-validation.md
+pipeline\.venv\Scripts\python pipeline\build_fields.py                            # rebuilds shared/fields/*.json
+```
