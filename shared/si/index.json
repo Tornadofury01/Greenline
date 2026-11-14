@@ -1,1713 +1,2498 @@
 {
- "schemaVersion": 1,
+ "schemaVersion": 2,
  "models": {
   "seasonCrop": {
    "approach": "gradientBoosting",
-   "validation": "leave-one-year-out",
-   "heldOutAccuracy": 0.773,
-   "heldOutBalancedAccuracy": 0.543,
-   "baselineAccuracy": 0.344,
+   "validation": "unseenYears",
    "years": [
-    2008,
+    2023,
     2025
    ],
-   "nFieldYears": 3618
-  },
-  "vegStress": {
-   "approach": "gradientBoosting_noET",
-   "presentAs": "weatherRiskSignal",
-   "confidence": "low",
-   "showSignalFor": [
-    "corn",
+   "heldOutAccuracy": 0.831,
+   "heldOutBalancedAccuracy": 0.673,
+   "heldOutAccuracyClean": 0.917,
+   "baselineAccuracy": 0.58,
+   "nFieldYears": 872,
+   "trainPurityMin": 0.7,
+   "classes": [
     "cotton",
-    "small_grain",
-    "soybeans",
-    "winter_wheat"
+    "fallow",
+    "grass_hay",
+    "summer_grain",
+    "winter_grain"
    ],
-   "perCrop": {
-    "corn": {
-     "n": 5005,
-     "r2": 0.062,
-     "rmse": 1.021,
-     "baselineRmse": 1.054,
-     "beatsBaseline": true
-    },
+   "perClass": {
     "cotton": {
-     "n": 923,
-     "r2": 0.019,
-     "rmse": 1.042,
-     "baselineRmse": 1.052,
-     "beatsBaseline": true
-    },
-    "double_crop": {
-     "n": 74,
-     "r2": 0.119,
-     "rmse": 1.023,
-     "baselineRmse": 1.089,
-     "beatsBaseline": true
+     "recall": 0.75,
+     "precision": 0.545,
+     "f1": 0.63,
+     "n": 40
     },
     "fallow": {
-     "n": 1020,
-     "r2": -0.081,
-     "rmse": 1.063,
-     "baselineRmse": 1.023,
-     "beatsBaseline": false
+     "recall": 0.0,
+     "precision": 0.0,
+     "f1": 0.0,
+     "n": 30
     },
-    "grain_sorghum": {
-     "n": 727,
-     "r2": -0.019,
-     "rmse": 1.077,
-     "baselineRmse": 1.067,
-     "beatsBaseline": false
+    "grass_hay": {
+     "recall": 0.885,
+     "precision": 0.866,
+     "f1": 0.88,
+     "n": 410
     },
-    "small_grain": {
-     "n": 332,
-     "r2": 0.087,
-     "rmse": 1.014,
-     "baselineRmse": 1.061,
-     "beatsBaseline": true
+    "summer_grain": {
+     "recall": 0.802,
+     "precision": 0.871,
+     "f1": 0.84,
+     "n": 253
     },
-    "soybeans": {
-     "n": 322,
-     "r2": 0.049,
-     "rmse": 1.043,
-     "baselineRmse": 1.069,
-     "beatsBaseline": true
-    },
-    "winter_wheat": {
-     "n": 3726,
-     "r2": 0.048,
-     "rmse": 1.002,
-     "baselineRmse": 1.027,
-     "beatsBaseline": true
+    "winter_grain": {
+     "recall": 0.928,
+     "precision": 0.787,
+     "f1": 0.85,
+     "n": 139
     }
-   },
-   "validation": "leave-one-year-out",
-   "heldOutR2": 0.039,
-   "heldOutBelowNormalBalancedAccuracy": 0.562,
+   }
+  },
+  "vegStress": {
+   "approach": "gradientBoosting_leakFree",
+   "presentAs": "stressModel",
+   "validation": "unseenYears",
    "years": [
-    2015,
+    2023,
     2025
+   ],
+   "heldOutAuc": 0.936,
+   "heldOutAccuracy": 0.909,
+   "heldOutBalancedAccuracy": 0.832,
+   "heldOutR2": 0.655,
+   "cvAuc": 0.897,
+   "baselineCvAuc": 0.857,
+   "threshold": 0.7,
+   "showSignalFor": [
+    "cotton",
+    "grass_hay",
+    "summer_grain",
+    "winter_grain"
    ]
   },
   "yearPatterns": {
    "approach": "kmeans",
-   "validation": "leave-one-year-out",
-   "heldOutStability": 0.976,
+   "k": 4,
+   "silhouette": 0.258,
+   "agreementWithEm": 0.43,
    "years": [
-    1984,
+    1985,
     2025
-   ]
+   ],
+   "groups": {
+    "drought": 2,
+    "heat": 13,
+    "normal": 19,
+    "wet": 7
+   }
   }
  },
  "fields": [
   {
-   "fieldId": "demo-ellis-001",
+   "fieldId": "ec-000",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.182,
-   "lon": -96.835,
-   "nYears": 18
+   "lat": 32.248423,
+   "lon": -96.750172,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-001",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.37093,
-   "lon": -97.1417,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-002",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.50638,
-   "lon": -95.98311,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-003",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.24257,
-   "lon": -96.39269,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-004",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.92206,
-   "lon": -96.9032,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-005",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.32056,
-   "lon": -96.36333,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-006",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.09701,
-   "lon": -96.16926,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-007",
-   "county": "Hamilton",
-   "state": "TX",
-   "lat": 31.60652,
-   "lon": -98.01983,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-008",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.85981,
-   "lon": -96.90231,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-009",
-   "county": "Coryell",
-   "state": "TX",
-   "lat": 31.55183,
-   "lon": -97.69883,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-010",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.83696,
-   "lon": -96.91283,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-011",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.7539,
-   "lon": -96.76837,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-012",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.60539,
-   "lon": -96.80574,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-013",
-   "county": "Clay",
-   "state": "TX",
-   "lat": 33.94053,
-   "lon": -98.33796,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-014",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.88107,
-   "lon": -97.11476,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-015",
+   "fieldId": "ec-001",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.39432,
-   "lon": -96.79036,
-   "nYears": 18
+   "lat": 32.249872,
+   "lon": -96.747096,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-016",
-   "county": "Lamar",
-   "state": "TX",
-   "lat": 33.51481,
-   "lon": -95.50168,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-017",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.60715,
-   "lon": -96.8417,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-018",
-   "county": "Hamilton",
-   "state": "TX",
-   "lat": 31.60598,
-   "lon": -97.97137,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-019",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.37318,
-   "lon": -96.6149,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-020",
+   "fieldId": "ec-002",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.31001,
-   "lon": -96.82622,
-   "nYears": 18
+   "lat": 32.246139,
+   "lon": -96.748448,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-021",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.05309,
-   "lon": -96.95122,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-022",
+   "fieldId": "ec-003",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.33514,
-   "lon": -96.86213,
-   "nYears": 18
+   "lat": 32.245922,
+   "lon": -96.754584,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-023",
+   "fieldId": "ec-004",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.24101,
-   "lon": -96.74624,
-   "nYears": 18
+   "lat": 32.255935,
+   "lon": -96.745429,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-024",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.62538,
-   "lon": -96.90036,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-025",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.409,
-   "lon": -96.31764,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-026",
-   "county": "Anderson",
-   "state": "TX",
-   "lat": 31.89338,
-   "lon": -95.98351,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-027",
+   "fieldId": "ec-005",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.33458,
-   "lon": -96.72063,
-   "nYears": 18
+   "lat": 32.242129,
+   "lon": -96.751129,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-028",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.06267,
-   "lon": -97.16769,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-029",
+   "fieldId": "ec-006",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.5184,
-   "lon": -96.51552,
-   "nYears": 18
+   "lat": 32.246704,
+   "lon": -96.758514,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-030",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.11284,
-   "lon": -96.32047,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-031",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.36918,
-   "lon": -96.17993,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-032",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.34811,
-   "lon": -95.87293,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-033",
-   "county": "Archer",
-   "state": "TX",
-   "lat": 33.58253,
-   "lon": -98.44488,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-034",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.80545,
-   "lon": -96.91952,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-035",
+   "fieldId": "ec-007",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.08554,
-   "lon": -96.92937,
-   "nYears": 18
+   "lat": 32.246245,
+   "lon": -96.741647,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-036",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.862,
-   "lon": -97.04287,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-037",
-   "county": "Bosque",
-   "state": "TX",
-   "lat": 32.07927,
-   "lon": -97.51603,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-038",
-   "county": "Wise",
-   "state": "TX",
-   "lat": 33.20507,
-   "lon": -97.78817,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-039",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.95682,
-   "lon": -97.31331,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-040",
-   "county": "Delta",
-   "state": "TX",
-   "lat": 33.39035,
-   "lon": -95.83416,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-041",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.26806,
-   "lon": -97.14882,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-042",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.68232,
-   "lon": -96.96047,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-043",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.53527,
-   "lon": -96.8097,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-044",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.07088,
-   "lon": -96.90223,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-045",
-   "county": "Hamilton",
-   "state": "TX",
-   "lat": 31.66738,
-   "lon": -98.15648,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-046",
-   "county": "Young",
-   "state": "TX",
-   "lat": 33.15695,
-   "lon": -98.4928,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-047",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.23398,
-   "lon": -97.0988,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-048",
+   "fieldId": "ec-008",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.10653,
-   "lon": -96.88655,
-   "nYears": 18
+   "lat": 32.251491,
+   "lon": -96.759446,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-049",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.76497,
-   "lon": -97.01604,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-050",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.48518,
-   "lon": -96.58553,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-051",
-   "county": "Bosque",
-   "state": "TX",
-   "lat": 31.68117,
-   "lon": -97.76713,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-052",
-   "county": "Coryell",
-   "state": "TX",
-   "lat": 31.54616,
-   "lon": -97.64342,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-053",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.97405,
-   "lon": -97.02467,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-054",
-   "county": "Dallas",
-   "state": "TX",
-   "lat": 32.58542,
-   "lon": -96.57701,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-055",
-   "county": "Kaufman",
-   "state": "TX",
-   "lat": 32.7706,
-   "lon": -96.35266,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-056",
-   "county": "Bryan",
-   "state": "OK",
-   "lat": 33.85072,
-   "lon": -96.45323,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-057",
-   "county": "Henderson",
-   "state": "TX",
-   "lat": 32.02188,
-   "lon": -96.03822,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-058",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.2787,
-   "lon": -96.00055,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-059",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.83203,
-   "lon": -97.03121,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-060",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.28447,
-   "lon": -96.08453,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-061",
-   "county": "Kaufman",
-   "state": "TX",
-   "lat": 32.61496,
-   "lon": -96.41195,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-062",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.90665,
-   "lon": -97.17825,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-063",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 31.8706,
-   "lon": -96.66763,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-064",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.44052,
-   "lon": -97.1653,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-065",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.59424,
-   "lon": -96.8066,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-066",
-   "county": "Lamar",
-   "state": "TX",
-   "lat": 33.557,
-   "lon": -95.54063,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-067",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.61682,
-   "lon": -96.80834,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-068",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.97369,
-   "lon": -97.1536,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-069",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 31.83957,
-   "lon": -96.66746,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-070",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.62268,
-   "lon": -96.80704,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-071",
-   "county": "Clay",
-   "state": "TX",
-   "lat": 33.92757,
-   "lon": -98.36041,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-072",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.35806,
-   "lon": -96.58664,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-073",
-   "county": "Archer",
-   "state": "TX",
-   "lat": 33.57033,
-   "lon": -98.45777,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-074",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.45846,
-   "lon": -96.13098,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-075",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.79577,
-   "lon": -97.16852,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-076",
-   "county": "Henderson",
-   "state": "TX",
-   "lat": 32.01936,
-   "lon": -96.04096,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-077",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.55977,
-   "lon": -97.04436,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-078",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.08316,
-   "lon": -96.85379,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-079",
-   "county": "Delta",
-   "state": "TX",
-   "lat": 33.38483,
-   "lon": -95.82322,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-080",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.53783,
-   "lon": -97.38896,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-081",
-   "county": "Bryan",
-   "state": "OK",
-   "lat": 33.85533,
-   "lon": -96.12586,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-082",
-   "county": "Dallas",
-   "state": "TX",
-   "lat": 32.54928,
-   "lon": -96.73167,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-083",
-   "county": "Wise",
-   "state": "TX",
-   "lat": 33.36509,
-   "lon": -97.40132,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-084",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.45987,
-   "lon": -97.50552,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-085",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.49685,
-   "lon": -96.39704,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-086",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.60134,
-   "lon": -96.77598,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-087",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.58109,
-   "lon": -96.77731,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-088",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.86534,
-   "lon": -97.09522,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-089",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.24303,
-   "lon": -97.24156,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-090",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.51798,
-   "lon": -96.78998,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-091",
-   "county": "Cooke",
-   "state": "TX",
-   "lat": 33.51227,
-   "lon": -97.27788,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-092",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.43348,
-   "lon": -96.12464,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-093",
-   "county": "Clay",
-   "state": "TX",
-   "lat": 33.61077,
-   "lon": -98.27026,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-094",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.19769,
-   "lon": -96.63518,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-095",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.93337,
-   "lon": -97.09278,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-096",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.09948,
-   "lon": -96.57067,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-097",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.66536,
-   "lon": -96.86249,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-098",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.2729,
-   "lon": -96.44235,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-099",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.09696,
-   "lon": -96.29419,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-100",
-   "county": "Henderson",
-   "state": "TX",
-   "lat": 32.01032,
-   "lon": -96.0379,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-101",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.38364,
-   "lon": -96.83183,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-102",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.77014,
-   "lon": -96.9536,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-103",
+   "fieldId": "ec-009",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.20732,
-   "lon": -96.75332,
-   "nYears": 18
+   "lat": 32.256501,
+   "lon": -96.756254,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-104",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 31.96094,
-   "lon": -96.81508,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-105",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.0245,
-   "lon": -96.9454,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-106",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.23835,
-   "lon": -97.1966,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-107",
-   "county": "Montague",
-   "state": "TX",
-   "lat": 33.90198,
-   "lon": -97.76017,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-108",
+   "fieldId": "ec-010",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.48411,
-   "lon": -96.66034,
-   "nYears": 18
+   "lat": 32.257647,
+   "lon": -96.754755,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-109",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.92551,
-   "lon": -97.11246,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-110",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.11603,
-   "lon": -96.18503,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-111",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.57275,
-   "lon": -95.89066,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-112",
+   "fieldId": "ec-011",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.2173,
-   "lon": -96.63853,
-   "nYears": 18
+   "lat": 32.258313,
+   "lon": -96.746974,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-113",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.53519,
-   "lon": -97.27278,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-114",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.98208,
-   "lon": -97.11638,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-115",
-   "county": "Denton",
-   "state": "TX",
-   "lat": 33.27391,
-   "lon": -96.87214,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-116",
-   "county": "Cooke",
-   "state": "TX",
-   "lat": 33.42516,
-   "lon": -97.16526,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-117",
-   "county": "Cooke",
-   "state": "TX",
-   "lat": 33.59311,
-   "lon": -97.17898,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-118",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.3139,
-   "lon": -96.21098,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-119",
-   "county": "Lamar",
-   "state": "TX",
-   "lat": 33.62116,
-   "lon": -95.54077,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-120",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.76687,
-   "lon": -96.87388,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-121",
-   "county": "Clay",
-   "state": "TX",
-   "lat": 33.95196,
-   "lon": -98.30197,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-122",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.55581,
-   "lon": -96.77509,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-123",
-   "county": "Montague",
-   "state": "TX",
-   "lat": 33.70476,
-   "lon": -97.92149,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-124",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.39751,
-   "lon": -96.25625,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-125",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 31.83609,
-   "lon": -96.70108,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-126",
-   "county": "Coryell",
-   "state": "TX",
-   "lat": 31.54323,
-   "lon": -97.6424,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-127",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.29487,
-   "lon": -96.43786,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-128",
-   "county": "Denton",
-   "state": "TX",
-   "lat": 33.37535,
-   "lon": -97.17249,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-129",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.42942,
-   "lon": -97.18677,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-130",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.53349,
-   "lon": -96.68904,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-131",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.29298,
-   "lon": -96.43976,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-132",
-   "county": "Denton",
-   "state": "TX",
-   "lat": 33.28159,
-   "lon": -97.19766,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-133",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.54313,
-   "lon": -97.57277,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-134",
+   "fieldId": "ec-012",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.15135,
-   "lon": -96.83294,
-   "nYears": 18
+   "lat": 32.25754,
+   "lon": -96.755878,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-135",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.39513,
-   "lon": -96.23888,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-136",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.52243,
-   "lon": -96.67458,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-137",
-   "county": "Clay",
-   "state": "TX",
-   "lat": 33.87132,
-   "lon": -98.40562,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-138",
-   "county": "Bosque",
-   "state": "TX",
-   "lat": 31.82626,
-   "lon": -97.53152,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-139",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.99447,
-   "lon": -96.93807,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-140",
-   "county": "Dallas",
-   "state": "TX",
-   "lat": 32.57708,
-   "lon": -96.65947,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-141",
+   "fieldId": "ec-013",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.16973,
-   "lon": -96.7885,
-   "nYears": 18
+   "lat": 32.253197,
+   "lon": -96.739934,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-142",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.19684,
-   "lon": -97.12311,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-143",
-   "county": "Clay",
-   "state": "TX",
-   "lat": 33.96577,
-   "lon": -98.06651,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-144",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.6128,
-   "lon": -96.80427,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-145",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.17413,
-   "lon": -97.19195,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-146",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.60157,
-   "lon": -96.69819,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-147",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.98274,
-   "lon": -96.83499,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-148",
-   "county": "Jefferson",
-   "state": "OK",
-   "lat": 33.91375,
-   "lon": -97.88435,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-149",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.52418,
-   "lon": -96.29704,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-150",
-   "county": "Coryell",
-   "state": "TX",
-   "lat": 31.52042,
-   "lon": -97.55792,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-151",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.55682,
-   "lon": -96.3427,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-152",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.52268,
-   "lon": -96.79548,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-153",
-   "county": "Delta",
-   "state": "TX",
-   "lat": 33.47322,
-   "lon": -95.65893,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-154",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.40922,
-   "lon": -97.12174,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-155",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.09701,
-   "lon": -96.21519,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-156",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.76892,
-   "lon": -97.03099,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-157",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.45498,
-   "lon": -97.13103,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-158",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.2349,
-   "lon": -97.19391,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-159",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.50026,
-   "lon": -96.67776,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-160",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.82998,
-   "lon": -96.93647,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-161",
-   "county": "Kaufman",
-   "state": "TX",
-   "lat": 32.48377,
-   "lon": -96.41969,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-162",
-   "county": "Johnson",
-   "state": "TX",
-   "lat": 32.2701,
-   "lon": -97.10754,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-163",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.54557,
-   "lon": -97.31887,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-164",
+   "fieldId": "ec-014",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.20508,
-   "lon": -96.67821,
-   "nYears": 18
+   "lat": 32.242744,
+   "lon": -96.74249,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-165",
-   "county": "Cooke",
-   "state": "TX",
-   "lat": 33.57307,
-   "lon": -97.11492,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-166",
-   "county": "Denton",
-   "state": "TX",
-   "lat": 33.06981,
-   "lon": -97.23858,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-167",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.98814,
-   "lon": -97.21601,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-168",
-   "county": "Grayson",
-   "state": "TX",
-   "lat": 33.50354,
-   "lon": -96.74567,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-169",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.57275,
-   "lon": -97.34708,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-170",
-   "county": "Comanche",
-   "state": "TX",
-   "lat": 31.79629,
-   "lon": -98.47191,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-171",
-   "county": "Collin",
-   "state": "TX",
-   "lat": 33.26817,
-   "lon": -96.64215,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-172",
+   "fieldId": "ec-015",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.08998,
-   "lon": -96.8841,
-   "nYears": 18
+   "lat": 32.255633,
+   "lon": -96.759642,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-173",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.83062,
-   "lon": -96.03436,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-174",
-   "county": "Lamar",
-   "state": "TX",
-   "lat": 33.54044,
-   "lon": -95.79095,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-175",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 32.11273,
-   "lon": -96.30634,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-176",
-   "county": "McLennan",
-   "state": "TX",
-   "lat": 31.52949,
-   "lon": -97.03864,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-177",
-   "county": "Hunt",
-   "state": "TX",
-   "lat": 33.07253,
-   "lon": -96.27413,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-178",
-   "county": "Limestone",
-   "state": "TX",
-   "lat": 31.57955,
-   "lon": -96.79924,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-179",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.98018,
-   "lon": -97.19487,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-180",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.1665,
-   "lon": -97.19461,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-181",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.01914,
-   "lon": -96.9672,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-182",
-   "county": "Cooke",
-   "state": "TX",
-   "lat": 33.63972,
-   "lon": -97.21244,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-183",
+   "fieldId": "ec-016",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.31073,
-   "lon": -96.72804,
-   "nYears": 18
+   "lat": 32.258911,
+   "lon": -96.755417,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-184",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.89783,
-   "lon": -97.02542,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-185",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.83343,
-   "lon": -96.93395,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-186",
-   "county": "Navarro",
-   "state": "TX",
-   "lat": 31.83698,
-   "lon": -96.6617,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-187",
-   "county": "Lamar",
-   "state": "TX",
-   "lat": 33.55942,
-   "lon": -95.79506,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-188",
+   "fieldId": "ec-017",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.31652,
-   "lon": -96.69639,
-   "nYears": 18
+   "lat": 32.259385,
+   "lon": -96.745673,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-189",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 32.06661,
-   "lon": -97.11774,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-190",
+   "fieldId": "ec-018",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.40926,
-   "lon": -96.77682,
-   "nYears": 18
+   "lat": 32.25662,
+   "lon": -96.758985,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-191",
-   "county": "Hill",
-   "state": "TX",
-   "lat": 31.86623,
-   "lon": -96.93954,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-192",
-   "county": "Fannin",
-   "state": "TX",
-   "lat": 33.48237,
-   "lon": -96.12837,
-   "nYears": 18
-  },
-  {
-   "fieldId": "nt-193",
+   "fieldId": "ec-019",
    "county": "Ellis",
    "state": "TX",
-   "lat": 32.10622,
-   "lon": -96.89455,
-   "nYears": 18
+   "lat": 32.258061,
+   "lon": -96.758807,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-194",
-   "county": "Hill",
+   "fieldId": "ec-020",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 31.9258,
-   "lon": -96.84005,
-   "nYears": 18
+   "lat": 32.243434,
+   "lon": -96.7391,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-195",
-   "county": "Kaufman",
+   "fieldId": "ec-021",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 32.53349,
-   "lon": -96.45104,
-   "nYears": 18
+   "lat": 32.251848,
+   "lon": -96.763515,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-196",
-   "county": "Cooke",
+   "fieldId": "ec-022",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 33.56187,
-   "lon": -97.11931,
-   "nYears": 18
+   "lat": 32.240006,
+   "lon": -96.742684,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-197",
-   "county": "Clay",
+   "fieldId": "ec-023",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 33.62715,
-   "lon": -98.11703,
-   "nYears": 18
+   "lat": 32.256445,
+   "lon": -96.738233,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-198",
-   "county": "Kaufman",
+   "fieldId": "ec-024",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 32.78681,
-   "lon": -96.36044,
-   "nYears": 18
+   "lat": 32.238629,
+   "lon": -96.754705,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-199",
-   "county": "Delta",
+   "fieldId": "ec-025",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 33.45789,
-   "lon": -95.61047,
-   "nYears": 18
+   "lat": 32.250248,
+   "lon": -96.735746,
+   "nYears": 40
   },
   {
-   "fieldId": "nt-200",
-   "county": "McLennan",
+   "fieldId": "ec-026",
+   "county": "Ellis",
    "state": "TX",
-   "lat": 31.51375,
-   "lon": -97.36535,
-   "nYears": 18
+   "lat": 32.23803,
+   "lon": -96.746325,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-027",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237628,
+   "lon": -96.752501,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-028",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.254339,
+   "lon": -96.736099,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-029",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.256041,
+   "lon": -96.763006,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-030",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.242002,
+   "lon": -96.761624,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-031",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.261025,
+   "lon": -96.75811,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-032",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.258724,
+   "lon": -96.761563,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-033",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.254357,
+   "lon": -96.764701,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-034",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.242725,
+   "lon": -96.763098,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-035",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.240784,
+   "lon": -96.761476,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-036",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26266,
+   "lon": -96.756183,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-037",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26063,
+   "lon": -96.739527,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-038",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.252502,
+   "lon": -96.733883,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-039",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.25537,
+   "lon": -96.765158,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-040",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.264244,
+   "lon": -96.751833,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-041",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237579,
+   "lon": -96.758692,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-042",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.25643,
+   "lon": -96.76595,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-043",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.239507,
+   "lon": -96.762637,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-044",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.244232,
+   "lon": -96.733196,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-045",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26203,
+   "lon": -96.738469,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-046",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265543,
+   "lon": -96.747528,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-047",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237316,
+   "lon": -96.739109,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-048",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.241109,
+   "lon": -96.734765,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-049",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.23924,
+   "lon": -96.736453,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-050",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.257032,
+   "lon": -96.767028,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-051",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.261392,
+   "lon": -96.736293,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-052",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.247338,
+   "lon": -96.769101,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-053",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.247366,
+   "lon": -96.730792,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-054",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266638,
+   "lon": -96.747583,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-055",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265733,
+   "lon": -96.742876,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-056",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.261631,
+   "lon": -96.764373,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-057",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266514,
+   "lon": -96.754341,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-058",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.243485,
+   "lon": -96.731505,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-059",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.264423,
+   "lon": -96.760918,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-060",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265702,
+   "lon": -96.741454,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-061",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.253821,
+   "lon": -96.770092,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-062",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.232952,
+   "lon": -96.744897,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-063",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.23267,
+   "lon": -96.753652,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-064",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266743,
+   "lon": -96.742623,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-065",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265779,
+   "lon": -96.739042,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-066",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.243101,
+   "lon": -96.730019,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-067",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.231712,
+   "lon": -96.752241,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-068",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.255182,
+   "lon": -96.770809,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-069",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.256548,
+   "lon": -96.729561,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-070",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26706,
+   "lon": -96.740904,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-071",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268481,
+   "lon": -96.754446,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-072",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268629,
+   "lon": -96.74565,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-073",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.256022,
+   "lon": -96.771325,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-074",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.247313,
+   "lon": -96.727652,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-075",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.267377,
+   "lon": -96.739774,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-076",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.243835,
+   "lon": -96.727853,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-077",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.234061,
+   "lon": -96.736002,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-078",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269794,
+   "lon": -96.752616,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-079",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26742,
+   "lon": -96.761397,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-080",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269001,
+   "lon": -96.742728,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-081",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269872,
+   "lon": -96.74657,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-082",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.260653,
+   "lon": -96.770307,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-083",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26664,
+   "lon": -96.735981,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-084",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.267612,
+   "lon": -96.737591,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-085",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.248441,
+   "lon": -96.725891,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-086",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.264416,
+   "lon": -96.732643,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-087",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266508,
+   "lon": -96.765085,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-088",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.231142,
+   "lon": -96.739112,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-089",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.250287,
+   "lon": -96.724944,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-090",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.244118,
+   "lon": -96.774181,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-091",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269042,
+   "lon": -96.761435,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-092",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270413,
+   "lon": -96.742059,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-093",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269747,
+   "lon": -96.739007,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-094",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.229586,
+   "lon": -96.759925,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-095",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.262121,
+   "lon": -96.771733,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-096",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.271231,
+   "lon": -96.757267,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-097",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.27227,
+   "lon": -96.748648,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-098",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228409,
+   "lon": -96.756834,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-099",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.24649,
+   "lon": -96.723858,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-100",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.264437,
+   "lon": -96.77031,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-101",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269937,
+   "lon": -96.762361,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-102",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.229921,
+   "lon": -96.762522,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-103",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.227208,
+   "lon": -96.75317,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-104",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228221,
+   "lon": -96.758706,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-105",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269411,
+   "lon": -96.734919,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-106",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266121,
+   "lon": -96.769782,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-107",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268545,
+   "lon": -96.73325,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-108",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.227654,
+   "lon": -96.741818,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-109",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.22851,
+   "lon": -96.760922,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-110",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270647,
+   "lon": -96.736955,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-111",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.251647,
+   "lon": -96.722298,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-112",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228631,
+   "lon": -96.76203,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-113",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.230171,
+   "lon": -96.765321,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-114",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.226192,
+   "lon": -96.750763,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-115",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.263586,
+   "lon": -96.773104,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-116",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.258231,
+   "lon": -96.77653,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-117",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265467,
+   "lon": -96.728393,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-118",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.261993,
+   "lon": -96.725459,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-119",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.251206,
+   "lon": -96.778309,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-120",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.242901,
+   "lon": -96.722767,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-121",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.274324,
+   "lon": -96.750365,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-122",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.244293,
+   "lon": -96.722109,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-123",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.27328,
+   "lon": -96.758696,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-124",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265271,
+   "lon": -96.72754,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-125",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237368,
+   "lon": -96.774737,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-126",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237611,
+   "lon": -96.725019,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-127",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.240042,
+   "lon": -96.776447,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-128",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228836,
+   "lon": -96.735239,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-129",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.274772,
+   "lon": -96.747884,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-130",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.225753,
+   "lon": -96.75643,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-131",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269745,
+   "lon": -96.767864,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-132",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.238214,
+   "lon": -96.775876,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-133",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.229796,
+   "lon": -96.732695,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-134",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.23115,
+   "lon": -96.730684,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-135",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.271772,
+   "lon": -96.764626,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-136",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266581,
+   "lon": -96.727488,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-137",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.23889,
+   "lon": -96.722862,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-138",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.251663,
+   "lon": -96.780103,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-139",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.272643,
+   "lon": -96.735825,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-140",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269434,
+   "lon": -96.73029,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-141",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.24923,
+   "lon": -96.719796,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-142",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.274397,
+   "lon": -96.759489,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-143",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.230265,
+   "lon": -96.730408,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-144",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270654,
+   "lon": -96.73169,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-145",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.236546,
+   "lon": -96.723931,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-146",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237404,
+   "lon": -96.776822,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-147",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270375,
+   "lon": -96.730862,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-148",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.244133,
+   "lon": -96.720081,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-149",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.254057,
+   "lon": -96.780403,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-150",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.274591,
+   "lon": -96.739422,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-151",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.257067,
+   "lon": -96.779726,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-152",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.264695,
+   "lon": -96.724391,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-153",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.237988,
+   "lon": -96.777476,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-154",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266758,
+   "lon": -96.726169,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-155",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.252179,
+   "lon": -96.71907,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-156",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.260269,
+   "lon": -96.778698,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-157",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.236044,
+   "lon": -96.77646,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-158",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268128,
+   "lon": -96.7273,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-159",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228467,
+   "lon": -96.73165,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-160",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.236907,
+   "lon": -96.722585,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-161",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.249318,
+   "lon": -96.718534,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-162",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.260208,
+   "lon": -96.72085,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-163",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269513,
+   "lon": -96.728393,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-164",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.253231,
+   "lon": -96.781585,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-165",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270395,
+   "lon": -96.770963,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-166",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.254659,
+   "lon": -96.781626,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-167",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.267273,
+   "lon": -96.725043,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-168",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.24891,
+   "lon": -96.782194,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-169",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.250544,
+   "lon": -96.717778,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-170",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270893,
+   "lon": -96.72899,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-171",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.262589,
+   "lon": -96.72124,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-172",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.246185,
+   "lon": -96.717955,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-173",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.277554,
+   "lon": -96.749125,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-174",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.223028,
+   "lon": -96.756726,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-175",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.274372,
+   "lon": -96.734468,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-176",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269703,
+   "lon": -96.726914,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-177",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.243412,
+   "lon": -96.781978,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-178",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.277444,
+   "lon": -96.743512,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-179",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.222303,
+   "lon": -96.755801,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-180",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.246056,
+   "lon": -96.717145,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-181",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.276401,
+   "lon": -96.761658,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-182",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.235285,
+   "lon": -96.721593,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-183",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.242299,
+   "lon": -96.717973,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-184",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.250935,
+   "lon": -96.716613,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-185",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.248578,
+   "lon": -96.716544,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-186",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.222448,
+   "lon": -96.758929,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-187",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.258765,
+   "lon": -96.717747,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-188",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.278556,
+   "lon": -96.754642,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-189",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.277633,
+   "lon": -96.76084,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-190",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.276615,
+   "lon": -96.735515,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-191",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.274426,
+   "lon": -96.730697,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-192",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.279592,
+   "lon": -96.749618,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-193",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.279581,
+   "lon": -96.753633,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-194",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.232657,
+   "lon": -96.721256,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-195",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.279845,
+   "lon": -96.74645,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-196",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.273785,
+   "lon": -96.728467,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-197",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.221934,
+   "lon": -96.737315,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-198",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.258826,
+   "lon": -96.783896,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-199",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266674,
+   "lon": -96.720424,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-200",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.257942,
+   "lon": -96.715741,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-201",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.246076,
+   "lon": -96.714735,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-202",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268621,
+   "lon": -96.721836,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-203",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.261135,
+   "lon": -96.783214,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-204",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.233594,
+   "lon": -96.719703,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-205",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270884,
+   "lon": -96.723648,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-206",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.234573,
+   "lon": -96.718771,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-207",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.280683,
+   "lon": -96.747924,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-208",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.271499,
+   "lon": -96.723832,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-209",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.279666,
+   "lon": -96.739468,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-210",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270365,
+   "lon": -96.722475,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-211",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.240387,
+   "lon": -96.715248,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-212",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.266379,
+   "lon": -96.781114,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-213",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.219271,
+   "lon": -96.743943,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-214",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.261023,
+   "lon": -96.784296,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-215",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.27892,
+   "lon": -96.764147,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-216",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.275986,
+   "lon": -96.770932,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-217",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.249795,
+   "lon": -96.712942,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-218",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.276833,
+   "lon": -96.769644,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-219",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.230703,
+   "lon": -96.720373,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-220",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.281255,
+   "lon": -96.756452,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-221",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26242,
+   "lon": -96.78437,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-222",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.24173,
+   "lon": -96.713879,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-223",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.234117,
+   "lon": -96.717582,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-224",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26784,
+   "lon": -96.781035,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-225",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.244518,
+   "lon": -96.712808,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-226",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.231811,
+   "lon": -96.718909,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-227",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.276388,
+   "lon": -96.728505,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-228",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.281902,
+   "lon": -96.754252,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-229",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.270386,
+   "lon": -96.720684,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-230",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.248672,
+   "lon": -96.787899,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-231",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.217755,
+   "lon": -96.751232,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-232",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.277134,
+   "lon": -96.770736,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-233",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.277831,
+   "lon": -96.769515,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-234",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268613,
+   "lon": -96.718748,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-235",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.248859,
+   "lon": -96.711854,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-236",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.232872,
+   "lon": -96.717562,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-237",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.253727,
+   "lon": -96.788299,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-238",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.246564,
+   "lon": -96.711555,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-239",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.275907,
+   "lon": -96.726215,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-240",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.250234,
+   "lon": -96.711279,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-241",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.276992,
+   "lon": -96.772276,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-242",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.272776,
+   "lon": -96.721936,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-243",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.230243,
+   "lon": -96.718935,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-244",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.280538,
+   "lon": -96.764774,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-245",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.26486,
+   "lon": -96.715062,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-246",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.283154,
+   "lon": -96.747161,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-247",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.280917,
+   "lon": -96.735533,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-248",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.278357,
+   "lon": -96.770537,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-249",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.282464,
+   "lon": -96.740801,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-250",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.282803,
+   "lon": -96.742273,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-251",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.28334,
+   "lon": -96.746734,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-252",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.246515,
+   "lon": -96.710683,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-253",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.216909,
+   "lon": -96.758178,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-254",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.2781,
+   "lon": -96.772254,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-255",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.241731,
+   "lon": -96.711259,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-256",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.251616,
+   "lon": -96.789942,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-257",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.216189,
+   "lon": -96.74592,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-258",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.282746,
+   "lon": -96.760847,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-259",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.229107,
+   "lon": -96.718391,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-260",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.219167,
+   "lon": -96.76706,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-261",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.249048,
+   "lon": -96.709869,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-262",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.215987,
+   "lon": -96.75383,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-263",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.216328,
+   "lon": -96.742416,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-264",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.216041,
+   "lon": -96.743968,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-265",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.275664,
+   "lon": -96.77687,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-266",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.230946,
+   "lon": -96.716364,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-267",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.271696,
+   "lon": -96.718575,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-268",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.243763,
+   "lon": -96.789828,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-269",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.269888,
+   "lon": -96.716897,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-270",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.282387,
+   "lon": -96.763847,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-271",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.242125,
+   "lon": -96.710518,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-272",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.240622,
+   "lon": -96.789081,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-273",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265631,
+   "lon": -96.78645,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-274",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.268797,
+   "lon": -96.715347,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-275",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.272238,
+   "lon": -96.781896,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-276",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.279031,
+   "lon": -96.773154,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-277",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.246451,
+   "lon": -96.708944,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-278",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.224936,
+   "lon": -96.778866,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-279",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.244394,
+   "lon": -96.709146,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-280",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.284561,
+   "lon": -96.741689,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-281",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228998,
+   "lon": -96.716479,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-282",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.223904,
+   "lon": -96.778441,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-283",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.219211,
+   "lon": -96.771102,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-284",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.264508,
+   "lon": -96.788303,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-285",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.265276,
+   "lon": -96.787894,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-286",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.28524,
+   "lon": -96.756835,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-287",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.253008,
+   "lon": -96.792119,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-288",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.22686,
+   "lon": -96.717482,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-289",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.286059,
+   "lon": -96.752134,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-290",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.286009,
+   "lon": -96.744627,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-291",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.21489,
+   "lon": -96.739129,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-292",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.251579,
+   "lon": -96.707265,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-293",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.23681,
+   "lon": -96.710134,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-294",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.260932,
+   "lon": -96.790854,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-295",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.283699,
+   "lon": -96.766238,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-296",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.228646,
+   "lon": -96.784719,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-297",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.219099,
+   "lon": -96.727238,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-298",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.282924,
+   "lon": -96.731508,
+   "nYears": 40
+  },
+  {
+   "fieldId": "ec-299",
+   "county": "Ellis",
+   "state": "TX",
+   "lat": 32.263798,
+   "lon": -96.789814,
+   "nYears": 40
   }
  ]
 }

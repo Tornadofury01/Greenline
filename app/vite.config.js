@@ -9,7 +9,7 @@ const root = (p) => fileURLToPath(new URL(p, import.meta.url));
 
 export default defineConfig(({ mode }) => {
   // The demo field: the one setting in src/config.js, or VITE_DEMO_FIELD_ID (shell or .env.local).
-  // Only this field is precached for offline use; the other 200 are cached when opened.
+  // Only this field is precached for offline use; the other 299 are cached when opened.
   const DEMO_FIELD_ID = loadEnv(mode, process.cwd(), 'VITE_').VITE_DEMO_FIELD_ID || process.env.VITE_DEMO_FIELD_ID || DEFAULT_DEMO_FIELD_ID;
 
   return {

@@ -26,22 +26,21 @@ export function cropInsight(field, cropId) {
   const cls = modelClassFor(cropId);
   const vs = si.models.vegStress;
   if (!cls) return { cropId, hasModel: false };
+  // Years the USDA crop map shows this crop class here (2008+). The model's right/wrong is only known for unseen
+  // years (2023-2025, `correct`); for the rest we show how often it finds this class on unseen years overall.
   const years = si.years.filter((y) => y.cdlClass === cls);
-  const recognized = years.filter((y) => y.correct).length;
+  const tested = years.filter((y) => y.correct != null);
   const latest = years.at(-1);
   const signalAllowed = (vs.showSignalFor || []).includes(cls);
   const seasons = years.filter((y) => y.stressMonths != null);
   const flagged = seasons.filter((y) => (y.predictedStressMonths || []).length > 0).length;
   const lastStress = [...seasons].reverse().find((y) => y.stressDriver);
   const perCrop = si.models.seasonCrop.perClass?.[cls];
-  // The weather risk signal is only worth showing where it beat "assume a normal year" on unseen years.
-  const pc = vs.perCrop?.[cls];
-  const beat = signalAllowed && pc?.beatsBaseline ? { rmse: pc.rmse, base: pc.baselineRmse, pct: Math.round(((pc.baselineRmse - pc.rmse) / pc.baselineRmse) * 100) } : null;
   return {
-    cropId, hasModel: true, years: years.length, recognized,
+    cropId, cls, hasModel: true, years: years.length, tested: tested.length, recognized: tested.filter((y) => y.correct).length,
     recall: perCrop?.recall ?? null,
     driver: latest?.cropDriver || null, driverYear: latest?.year ?? null,
-    signalAllowed, beat, seasons: seasons.length, flagged,
+    signalAllowed, beat: null, seasons: seasons.length, flagged,
     stressDriver: lastStress?.stressDriver || null, stressYear: lastStress?.year ?? null,
   };
 }
@@ -54,8 +53,9 @@ export function modelSummary(field) {
   const { seasonCrop: c, vegStress: v, yearPatterns: y } = si.models;
   return {
     cropAcc: pct(c.heldOutAccuracy), cropBal: pct(c.heldOutBalancedAccuracy), cropBase: pct(c.baselineAccuracy),
-    cropYears: c.years, stressR2: v.heldOutR2, stressCrops: v.showSignalFor || [],
-    yearStability: pct(y.heldOutStability), yearYears: y.years,
+    cropClean: pct(c.heldOutAccuracyClean), cropYears: c.years,
+    stressAcc: pct(v.heldOutAccuracy), stressAuc: v.heldOutAuc, stressBaseAuc: v.baselineCvAuc, stressCrops: v.showSignalFor || [],
+    yearGroups: y.groups || {}, yearYears: y.years,
     fieldAgree: field.quality?.modelAgreesWithCdlPct ?? null,
   };
 }

@@ -11,19 +11,20 @@ import { fieldIndex } from '../data/loadField.js';
 // import FieldWalkMode from '../components/future/FieldWalkMode.jsx';  // FUTURE
 // import MemoryPins from '../components/future/MemoryPins.jsx';        // FUTURE
 
-const NORTH_TEXAS = [33.15, -97.3];
+// The 300 Field Shift study fields: USDA field outlines within ~4 km of this point (Ellis County, TX).
+const STUDY_AREA = [32.25, -96.75];
 const CELL_HALF_DEG = 0.000135; // ~15 m, so the box is one 30 m cell
 const FAR_KM = 25; // beyond this the nearest sampled field is probably not like the farmer's field
 
 // GPS error code -> which message to show (1 denied, 2 unavailable, 3 timeout).
 const GEO_ERROR = { 1: 'denied', 2: 'unavailable', 3: 'timeout' };
 const SAMPLED = fieldIndex();
-// Dot look: small visible dot plus an invisible stroke so the tap target is ~24 px. Kept modest because the 201 dots
+// Dot look: small visible dot plus an invisible stroke so the tap target is ~24 px. Kept modest because the 300 dots
 // sit ~4 km apart: a bigger target would swallow most map taps at the starting zoom. Tapping the map works too.
 const DOT = { radius: 6, color: '#1f5130', weight: 12, opacity: 0, fillColor: '#2f7a46', fillOpacity: 0.85 };
 const DOT_ON = { ...DOT, fillColor: '#f2b33d', fillOpacity: 1 };
 
-// The 201 sampled fields we have data for. Tapping one loads exactly that field.
+// The 300 study fields we have data for. Tapping one loads exactly that field.
 function SampledDots({ selectedId, onPick, label }) {
   return SAMPLED.map((f) => (
     <CircleMarker key={f.id} center={[f.lat, f.lon]} pathOptions={f.id === selectedId ? DOT_ON : DOT}
@@ -119,7 +120,7 @@ export default function PickField() {
   const dotLabel = (f) => t('pick.dotLabel', { id: f.id, county: f.county });
 
   // Privacy: the GPS point exists only inside this callback. It goes to pickField() to find the nearest sampled
-  // field and is never put in state, storage, a URL or a request. Low accuracy is enough (nearest of 201 fields).
+  // field and is never put in state, storage, a URL or a request. Low accuracy is enough (nearest of 300 fields).
   function locateMe() {
     if (!navigator.geolocation || !window.isSecureContext) { setGeo('unsupported'); return; }
     setGeo('locating');
@@ -142,7 +143,7 @@ export default function PickField() {
       <div className="split split-map">
       <section className="card card-flush map-card" aria-label={t('pick.mapLabel')}>
         {online ? (
-          <MapContainer center={NORTH_TEXAS} zoom={8} scrollWheelZoom={false} className="map">
+          <MapContainer center={STUDY_AREA} zoom={13} scrollWheelZoom={false} className="map">
             <FitOnResize />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'

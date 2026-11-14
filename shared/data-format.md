@@ -107,12 +107,17 @@ Empty cell = no valid data that month. All rows have `year` and, for monthly fil
 | `nass_crop_progress_tx_monthly.csv` | `crop, stage, pctMean, pctEndOfMonth, weeks` | Texas statewide weekly Crop Progress, averaged by month |
 
 ## Multi-field CSVs (`/pipeline/data/fields/`)
-From `pipeline/sample_fields.py`: 200 random North Texas cropland pixels plus the demo field. Same as above,
-plus a `fieldId` column. 30 m datasets are averaged over a 45 m buffer. Coarse grids (SMAP, IMERG) are sampled at the point.
+Built by `pipeline/fieldshift/build_app_inputs.py` for the **300 Field Shift study fields** (`ec-000` … `ec-299`, USDA
+Crop Sequence Boundary outlines within ~4 km of 32.25 N, 96.75 W). Same columns as the old `sample_fields.py` tables for
+201 North Texas points (retired, in git history). Landsat values are the **whole-outline average** per scene (clear
+fraction ≥ 0.6, Landsat 5/7/8/9 only, HLS left out), monthly median of scenes. NASA POWER, SMAP (L3 surface; written to
+both `sm_surface` and `sm_rootzone`), IMERG (daily, 2001+) are one study-area series repeated for every field; PRISM is
+the 4 km series of old sample nt-103 (4.8 km south of the centre), labelled "area" in the app. SSURGO and SRTM are per
+field. `modis_et_monthly.csv` is not built (not used by the app).
 
 | File | Columns | Notes |
 |---|---|---|
-| `fields.csv` | `fieldId, lon, lat, county` | CDL pixel centers chosen by us (never farmer GPS). `nt-001`… plus `demo-ellis-001` |
+| `fields.csv` | `fieldId, lon, lat, county, state` | Study field outline centroids (never farmer GPS). `ec-000` … `ec-299` |
 | `cdl.csv` | `fieldId, year, code` | CDL mode class, 2008–2025 |
 | `landsat_monthly.csv` | `fieldId, year, month, scenes, ndvi, ndti, bsi` | As `landsat_monthly.csv` above |
 | `landsat_monthly_l89.csv` | `fieldId, year, month, scenes, ndvi, ndti, bsi` | Same processing, **Landsat 8 and 9 only** (no Landsat 7), April 2013–2025. `sample_fields.py landsat_l89` |
@@ -126,47 +131,43 @@ plus a `fieldId` column. 30 m datasets are averaged over a 45 m buffer. Coarse g
 | `prism_yearly.csv` | `fieldId, year, days, precipMm, stormDays, lastSpringFrostDoy, firstFallFrostDoy, frostFreeDays` | From `OREGONSTATE/PRISM/ANd` daily, computed server-side. Days run 12:00–12:00 UTC |
 
 ## SI results (`/shared/si/`)
-One small JSON per field (`<fieldId>.json`) plus `index.json`, written by `pipeline/models/export_si.py`.
-How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVersion` is `1`.
+One small JSON per field (`ec-NNN.json`) plus `index.json`, written by `pipeline/fieldshift/export_si.py` from the
+Field Shift models. How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVersion` is `2`
+(schema 1 was the retired models on the 201 `nt-*` fields).
 
 ### Top level
 | Key | Type | Notes |
 |---|---|---|
-| `schemaVersion` | number | `1` |
-| `fieldId`, `county`, `state`, `lat`, `lon` | | Sample pixel center, not a farmer's position |
+| `schemaVersion` | number | `2` |
+| `fieldId`, `county`, `state`, `lat`, `lon` | | Study field outline centroid, not a farmer's position |
 | `generated` | string | ISO date |
-| `models` | object | Held-out (leave-one-year-out) scores. Same in every file. See below |
-| `years[]` | array | One entry per field-year, 2008–2025 |
-| `yearTypes[]` | array | `{ year, yearType }` from the k-means model, 1984–2025. `yearType` is `drought` \| `wet` \| `heat` \| `normal`. Same for every field (one POWER cell) |
-| `replayPresets[]` | array | `{ year, yearType, severityZ }`: the worst past years for "bad-year replay" (e.g. 2011 drought) |
+| `models` | object | Scores on unseen years 2023–2025. Same in every file. See below |
+| `years[]` | array | One entry per field-year, 1986–2025 |
+| `yearTypes[]` | array | `{ year, yearType, p }` from Model 3, 1985–2025. `yearType` is `drought` \| `wet` \| `heat` \| `normal` (Model 3's "hot" = `heat`); `p` = EM probability of that label. Same for every field (one POWER point) |
+| `replayPresets[]` | array | `{ year, yearType, severityZ }`: every drought year plus the two most extreme wet and hot seasons |
 
 ### `models`
 | Key | Notes |
 |---|---|
-| `seasonCrop` | `approach`, `heldOutAccuracy`, `heldOutBalancedAccuracy`, `baselineAccuracy` (same crop as last year), `years`, `nFieldYears` |
-| `vegStress` | `approach`, `presentAs: "weatherRiskSignal"`, `confidence: "low"`, `heldOutR2`, `heldOutBelowNormalBalancedAccuracy`, `showSignalFor` (crop classes where it beat "always normal"), `perCrop` |
-| `yearPatterns` | `approach: "kmeans"`, `heldOutStability`, `years` |
+| `seasonCrop` | `approach`, `validation: "unseenYears"`, `years` [2023, 2025], `heldOutAccuracy`, `heldOutBalancedAccuracy` (all fields), `heldOutAccuracyClean` (fields with ≥ 70% one USDA label), `baselineAccuracy` (same crop as last year), `nFieldYears`, `trainPurityMin`, `classes`, `perClass.<class>.{recall, precision, f1, n}` |
+| `vegStress` | `approach`, `presentAs: "stressModel"`, `heldOutAuc`, `heldOutAccuracy`, `heldOutBalancedAccuracy`, `heldOutR2`, `cvAuc`, `baselineCvAuc` (last month only), `threshold` (stress probability that counts as flagged), `showSignalFor` (classes) |
+| `yearPatterns` | `approach: "kmeans"`, `k`, `silhouette`, `agreementWithEm` (ARI), `years`, `groups.<type>` (number of years) |
 
 ### `years[]`
 | Key | Type | Notes |
 |---|---|---|
 | `year` | number | |
-| `cdlClass` | string | CDL label grouped: `corn`, `cotton`, `grain_sorghum`, `soybeans`, `winter_wheat`, `small_grain`, `fallow`, `double_crop`, `other`. Can be wrong (CDL label noise) |
-| `predictedClass` | string | Model 1 prediction from a model that **did not see this year**. Never `double_crop` |
-| `correct` | boolean \| null | Prediction = CDL. `null` for double-crop years |
-| `doubleCropCdl` | boolean | CDL says double-cropped. Not modeled (too few examples). Show as "detected by CDL" |
-| `doubleCropConfidence` | `"low"` \| null | |
-| `fallow` | boolean | Model 1 predicted fallow |
-| `months` | string[12] | `green` (NDVI ≥ 0.40), `residue` (0.25–0.40: sparse cover, stubble or residue), `bare` (NDVI < 0.25) |
-| `greenDays`, `residueDays`, `bareDays` | number | Days per state (monthly values interpolated to daily). `bareDays` matches `bareDaysPerYear` |
-| `bareDaysScore` | number | 0–100, `100 × (1 − bareDays / 365)`. Higher = more ground cover |
-| `filledMonths` | number | Cloudy months filled by interpolation (lower confidence) |
-| `greenUpDoy`, `senescenceDoy` | number \| null | Day of year. Only for corn, cotton, sorghum, soybeans with a clear season. ±15 days or more |
-| `cropDriver` | object \| null | SHAP top driver for the crop call: `{ key, params, text }`. `key` is an i18n key (`si.driver.ndviMonth`, `si.driver.bsiMonth`, `si.driver.ndtiMonth`, `si.driver.ndvi_spring_minus_summer`, …), `params.month` 1–12. `text` is English, for debugging only |
+| `cdlClass` | string \| null | USDA CDL label in the model's classes: `winter_grain`, `summer_grain` (corn + sorghum), `cotton`, `grass_hay`, `fallow`. 2008+; null for other land or no label |
+| `predictedClass` | string | Model 1 label (model refit on all years) |
+| `confidence` | number | Model 1 probability of that label |
+| `cropFinal`, `cropSource` | string | USDA label where it exists (`usda`), the model's otherwise (`model`) |
+| `heldOutPredicted`, `correct` | string \| null, boolean \| null | Only for 2023–2025: the prediction of the model trained before 2023, and whether it matched USDA. Null elsewhere |
+| `greenDays`, `residueDays`, `bareDays` | number \| null | Model 1 day states (green NDVI ≥ 0.35; bare NDVI < 0.25 and NDTI < 0.165; else residue). The app's own bare days are `bareDaysPerYear*` |
+| `greenUpDoy`, `senescenceDoy`, `peakDoy` | number \| null | Day of year from the season curve |
+| `cropDriver`, `stressDriver` | null | Not exported by the Field Shift models (kept for the app's format) |
 | `yearType` | string \| null | From `yearTypes` |
-| `stressMonths` | number[] \| null | Months (Apr–Sep, 2015–) where NDVI was below normal (z < −0.5) |
-| `predictedStressMonths` | number[] \| null | Months the weather risk signal flagged (held-out). Show only if `cdlClass` is in `models.vegStress.showSignalFor`; otherwise show "Weather alone doesn't predict stress well for this crop" |
-| `stressDriver` | object \| null | SHAP: the input that pushed greenness down most that season. `{ key: "si.driver.<feature>", params: { month, direction: "low" \| "high" }, text }` |
+| `stressMonths` | number[] \| null | Months the field's NDVI was in its lowest 20% (vs. earlier years). From 1990 on |
+| `predictedStressMonths` | number[] \| null | Months Model 2 gave a stress probability ≥ `models.vegStress.threshold` |
 
 ## v2 additions (`/shared/fields/<fieldId>.json`)
 | Key | Type | Notes |

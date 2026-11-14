@@ -14,7 +14,9 @@
 import { reason } from './rules/helpers.js';
 
 // crops.json id -> crop-model class. Crops without a class have no satellite model yet.
-export const MODEL_CLASS = { corn: 'corn', cotton: 'cotton', grain_sorghum: 'grain_sorghum', winter_wheat: 'winter_wheat', fallow: 'fallow' };
+// crops.json id -> the Field Shift crop model's class (corn and sorghum share "summer grain"; alfalfa is hay).
+export const MODEL_CLASS = { corn: 'summer_grain', grain_sorghum: 'summer_grain', cotton: 'cotton', winter_wheat: 'winter_grain',
+  cereal_rye: 'winter_grain', alfalfa: 'grass_hay', fallow: 'fallow' };
 
 // Traits the scores actually use. A trait counts as an estimate if crops.json lists it under `estimates`,
 // or if it is unknown (nFixLbPerAcre is null for a nitrogen-fixing crop, e.g. alfalfa).

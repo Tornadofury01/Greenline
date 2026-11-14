@@ -1,4 +1,5 @@
-"""Multi-field sample for training the SI models (pipeline/models/).
+"""Multi-field sample of the OLD 201 North Texas fields (nt-*), retired: the app now uses the 300 Field Shift study
+fields (pipeline/fieldshift/). Kept to re-download that sample if needed.
 
 Picks 200 random cropland pixels across North Texas from the Cropland Data Layer, plus the
 Ellis County demo field, and exports per-field monthly tables to pipeline/data/fields/.

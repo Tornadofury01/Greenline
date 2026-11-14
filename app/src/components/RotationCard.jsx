@@ -107,7 +107,7 @@ function ModelInsights({ crops }) {
     <section className="detail">
       <h4><BrainCircuit size={18} aria-hidden="true" /> {t('si.cardTitle')} <GlossaryIcon term="heldOut" /></h4>
       <p className="muted small">
-        <Receipt src={['Greenline SI models']}>{t('si.cardAccuracy', { acc: m.cropAcc, bal: m.cropBal, base: m.cropBase })}</Receipt>
+        <Receipt src={['Greenline SI models']}>{t('si.cardAccuracy', { acc: m.cropAcc, clean: m.cropClean, base: m.cropBase })}</Receipt>
       </p>
       <ul className="icon-list">
         {ids.map((id) => {
@@ -119,7 +119,7 @@ function ModelInsights({ crops }) {
               <Lightbulb size={18} className="info" aria-hidden="true" />
               <span>
                 {x.years > 0
-                  ? <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>{t('si.recognized', { crop: name, n: x.recognized, of: x.years })}</Receipt>
+                  ? <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>{t('si.recognized', { crop: name, cls: t(`si.cls.${x.cls}`), n: x.years, pct: x.recall != null ? Math.round(x.recall * 100) : '—' })}</Receipt>
                   : t('si.neverGrown', { crop: name })}
                 {x.driver && <span className="si-why">{t('si.whyCrop', { year: x.driverYear, why: cropDriverText(t, x.driver) })}</span>}
                 {x.recall != null && x.recall < 0.5 && <span className="si-warn">{t('si.hardToSee', { pct: Math.round(x.recall * 100) })}</span>}

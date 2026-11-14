@@ -74,19 +74,19 @@ export function ModelCard() {
       <ul className="si-list">
         <li>
           <Receipt src={['Greenline SI models', 'Landsat 5/7/8/9', 'USDA Cropland Data Layer']}>
-            <strong>{t('si.cropTitle')}</strong> {t('si.cropLine', { acc: m.cropAcc, bal: m.cropBal, base: m.cropBase })}
+            <strong>{t('si.cropTitle')}</strong> {t('si.cropLine', { acc: m.cropAcc, clean: m.cropClean, base: m.cropBase })}
           </Receipt>
           {m.fieldAgree != null && <span className="si-sub">{t('si.fieldAgree', { pct: m.fieldAgree })}</span>}
         </li>
         <li>
           <Receipt src={['Greenline SI models', 'NASA POWER', 'SMAP L4', 'GPM IMERG']}>
-            <strong>{t('si.stressTitle')}</strong> {t('si.stressLine', { r2: m.stressR2 })}
+            <strong>{t('si.stressTitle')}</strong> {t('si.stressLine', { acc: m.stressAcc, auc: m.stressAuc, base: m.stressBaseAuc })}
           </Receipt>
           <span className="si-sub">{t('si.stressCrops', { crops })}</span>
         </li>
         <li>
           <Receipt src={['Greenline SI models', 'NASA POWER']}>
-            <strong>{t('si.yearTitle')}</strong> {t('si.yearLine', { pct: m.yearStability, from: m.yearYears[0], to: m.yearYears[1] })}
+            <strong>{t('si.yearTitle')}</strong> {t('si.yearLine', { from: m.yearYears[0], to: m.yearYears[1], drought: m.yearGroups.drought ?? 0, heat: m.yearGroups.heat ?? 0, normal: m.yearGroups.normal ?? 0, wet: m.yearGroups.wet ?? 0 })}
           </Receipt>
         </li>
       </ul>

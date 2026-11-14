@@ -28,8 +28,8 @@ check(soilB.breakdown.soil.score > soilA.breakdown.soil.score, 'cover/legume mix
 const sugg = suggestRotations(rotations, current, field, ['water', 'erosion'], { water: 'dryland' }, lib);
 check(sugg.length === 2, `two suggestions: ${sugg.map((s) => `${s.rotationId}=${s.total}`).join(', ')}`);
 
-// Bad-year replay on a real field (nt-103) in the 2011 drought.
-const real = load('../shared/fields/nt-103.json');
+// Bad-year replay on a real field (ec-251) in the 2011 drought.
+const real = load('../shared/fields/ec-251.json');
 const dry = { water: 'dryland' };
 const replayOf = (crops, year = 2011) => scoreRotation({ crops }, real, ['water'], dry, lib, { replayYear: year });
 const cornHeavy = replayOf(['corn', 'corn', 'winter_wheat']);
@@ -49,7 +49,7 @@ const covered = bd(['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye']);
 const fallow2 = bd(['fallow', 'fallow']);
 check(covered.bareDays < cotton2.bareDays, `bare days: cover-crop rotation (${covered.bareDays}) < continuous cotton (${cotton2.bareDays})`);
 check(fallow2.bareDays > cotton2.bareDays && fallow2.bareDays > covered.bareDays, `bare days: fallow is worst (${fallow2.bareDays})`);
-check(bd(['corn', 'cotton']).calibrated.length === 2, 'bare days: corn and cotton calibrated on nt-103 own record');
+check(bd(['corn', 'cotton']).calibrated.length === 2, 'bare days: corn and cotton calibrated on ec-251 own record');
 check(bd(['corn', 'cotton'], field).calibrated.length === 0, 'bare days: sample field has no own record, uses regional pattern');
 check(bd(['winter_wheat', 'cereal_rye']).bareDays < bd(['winter_wheat']).bareDays, 'bare days: adding a cover crop never adds bare days');
 const eroLow = scoreRotation({ crops: ['winter_wheat', 'cowpea', 'grain_sorghum', 'cereal_rye'] }, real, ['erosion'], {}, lib).breakdown.erosion.score;
@@ -98,8 +98,8 @@ check(estimatedTraits(lib.crops.find((c) => c.id === 'alfalfa')).includes('nFixL
 check(topReasons(basic).length === 2 && topReasons(basic).every((r) => r.tone), 'confidence: two top reasons for the card face');
 check(topReasons({ reasons: [{ tone: 'up', key: 'a' }, { tone: 'down', key: 'b' }, { tone: 'up', key: 'c' }] }).map((r) => r.key).join() === 'b,a', 'confidence: top reasons = one lowering, one adding');
 check(confOf(['corn'], field).reasons.every((r) => r.tone), 'confidence: sample field (no SI) also has tones');
-check(basic.reasons.some((r) => r.key === 'confidence.prism.agreesLower' && r.params.name === 'NASA POWER'), 'confidence: nt-103 shows POWER vs PRISM agreement (real data)');
-check(basic.reasons.some((r) => r.key.startsWith('confidence.prism.') && r.params.name === 'GPM IMERG'), 'confidence: nt-103 shows IMERG vs PRISM agreement');
+check(basic.reasons.some((r) => r.key === 'confidence.prism.agreesLower' && r.params.name === 'NASA POWER'), 'confidence: ec-251 shows POWER vs PRISM agreement (real data)');
+check(basic.reasons.some((r) => r.key.startsWith('confidence.prism.') && r.params.name === 'GPM IMERG'), 'confidence: ec-251 shows IMERG vs PRISM agreement');
 const noPrism = { ...real, quality: { ...real.quality, rainVsPrism: null } };
 check(!confOf(['corn'], noPrism).reasons.some((r) => r.key.startsWith('confidence.prism')), 'confidence: no PRISM reason when the data is absent');
 check(confOf(['corn'], noPrism).points === confOf(['corn']).points, 'confidence: PRISM adds no points');
@@ -150,8 +150,8 @@ check(rotations.every((r) => { const x = scoreRotation(r, real, ['water'], dry, 
   'no rotation scores higher in the 2011 drought than in a normal year');
 
 // Soil: K x slope and soil water storage show up as reasons.
-check(normal.breakdown.water.reasons.some((r) => r.key === 'reasons.soilStore.high'), 'water rule: nt-103 Houston Black clay holds a lot of water');
+check(normal.breakdown.water.reasons.some((r) => r.key === 'reasons.soilStore.high'), 'water rule: ec-251 Houston Black clay holds a lot of water');
 const ero = scoreRotation({ crops: rot }, real, ['erosion'], dry, lib).breakdown.erosion.reasons;
-check(ero.some((r) => r.key === 'reasons.erodible' && r.params.k === 0.24), 'erosion rule: K x slope reason on nt-103');
+check(ero.some((r) => r.key === 'reasons.erodible' && r.params.k === 0.24), 'erosion rule: K x slope reason on ec-251');
 
 process.exit(failed ? 1 : 0);

@@ -2,1411 +2,2104 @@
 "schemaVersion": 3,
 "fields": [
 {
-"id": "demo-ellis-001",
+"id": "ec-000",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.182,
-"lon": -96.835
+"lat": 32.24842,
+"lon": -96.75017
 },
 {
-"id": "nt-001",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.37093,
-"lon": -97.1417
-},
-{
-"id": "nt-002",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.50638,
-"lon": -95.98311
-},
-{
-"id": "nt-003",
-"county": "Collin",
-"state": "TX",
-"lat": 33.24257,
-"lon": -96.39269
-},
-{
-"id": "nt-004",
-"county": "Hill",
-"state": "TX",
-"lat": 31.92206,
-"lon": -96.9032
-},
-{
-"id": "nt-005",
-"county": "Collin",
-"state": "TX",
-"lat": 33.32056,
-"lon": -96.36333
-},
-{
-"id": "nt-006",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.09701,
-"lon": -96.16926
-},
-{
-"id": "nt-007",
-"county": "Hamilton",
-"state": "TX",
-"lat": 31.60652,
-"lon": -98.01983
-},
-{
-"id": "nt-008",
-"county": "Hill",
-"state": "TX",
-"lat": 31.85981,
-"lon": -96.90231
-},
-{
-"id": "nt-009",
-"county": "Coryell",
-"state": "TX",
-"lat": 31.55183,
-"lon": -97.69883
-},
-{
-"id": "nt-010",
-"county": "Hill",
-"state": "TX",
-"lat": 31.83696,
-"lon": -96.91283
-},
-{
-"id": "nt-011",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.7539,
-"lon": -96.76837
-},
-{
-"id": "nt-012",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.60539,
-"lon": -96.80574
-},
-{
-"id": "nt-013",
-"county": "Clay",
-"state": "TX",
-"lat": 33.94053,
-"lon": -98.33796
-},
-{
-"id": "nt-014",
-"county": "Hill",
-"state": "TX",
-"lat": 31.88107,
-"lon": -97.11476
-},
-{
-"id": "nt-015",
+"id": "ec-001",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.39432,
-"lon": -96.79036
+"lat": 32.24987,
+"lon": -96.7471
 },
 {
-"id": "nt-016",
-"county": "Lamar",
-"state": "TX",
-"lat": 33.51481,
-"lon": -95.50168
-},
-{
-"id": "nt-017",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.60715,
-"lon": -96.8417
-},
-{
-"id": "nt-018",
-"county": "Hamilton",
-"state": "TX",
-"lat": 31.60598,
-"lon": -97.97137
-},
-{
-"id": "nt-019",
-"county": "Collin",
-"state": "TX",
-"lat": 33.37318,
-"lon": -96.6149
-},
-{
-"id": "nt-020",
+"id": "ec-002",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.31001,
-"lon": -96.82622
+"lat": 32.24614,
+"lon": -96.74845
 },
 {
-"id": "nt-021",
-"county": "Hill",
-"state": "TX",
-"lat": 32.05309,
-"lon": -96.95122
-},
-{
-"id": "nt-022",
+"id": "ec-003",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.33514,
-"lon": -96.86213
+"lat": 32.24592,
+"lon": -96.75458
 },
 {
-"id": "nt-023",
+"id": "ec-004",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.24101,
-"lon": -96.74624
+"lat": 32.25594,
+"lon": -96.74543
 },
 {
-"id": "nt-024",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.62538,
-"lon": -96.90036
-},
-{
-"id": "nt-025",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.409,
-"lon": -96.31764
-},
-{
-"id": "nt-026",
-"county": "Anderson",
-"state": "TX",
-"lat": 31.89338,
-"lon": -95.98351
-},
-{
-"id": "nt-027",
+"id": "ec-005",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.33458,
-"lon": -96.72063
+"lat": 32.24213,
+"lon": -96.75113
 },
 {
-"id": "nt-028",
-"county": "Hill",
-"state": "TX",
-"lat": 32.06267,
-"lon": -97.16769
-},
-{
-"id": "nt-029",
+"id": "ec-006",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.5184,
-"lon": -96.51552
+"lat": 32.2467,
+"lon": -96.75851
 },
 {
-"id": "nt-030",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.11284,
-"lon": -96.32047
-},
-{
-"id": "nt-031",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.36918,
-"lon": -96.17993
-},
-{
-"id": "nt-032",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.34811,
-"lon": -95.87293
-},
-{
-"id": "nt-033",
-"county": "Archer",
-"state": "TX",
-"lat": 33.58253,
-"lon": -98.44488
-},
-{
-"id": "nt-034",
-"county": "Hill",
-"state": "TX",
-"lat": 31.80545,
-"lon": -96.91952
-},
-{
-"id": "nt-035",
+"id": "ec-007",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.08554,
-"lon": -96.92937
+"lat": 32.24625,
+"lon": -96.74165
 },
 {
-"id": "nt-036",
-"county": "Hill",
-"state": "TX",
-"lat": 31.862,
-"lon": -97.04287
-},
-{
-"id": "nt-037",
-"county": "Bosque",
-"state": "TX",
-"lat": 32.07927,
-"lon": -97.51603
-},
-{
-"id": "nt-038",
-"county": "Wise",
-"state": "TX",
-"lat": 33.20507,
-"lon": -97.78817
-},
-{
-"id": "nt-039",
-"county": "Hill",
-"state": "TX",
-"lat": 31.95682,
-"lon": -97.31331
-},
-{
-"id": "nt-040",
-"county": "Delta",
-"state": "TX",
-"lat": 33.39035,
-"lon": -95.83416
-},
-{
-"id": "nt-041",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.26806,
-"lon": -97.14882
-},
-{
-"id": "nt-042",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.68232,
-"lon": -96.96047
-},
-{
-"id": "nt-043",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.53527,
-"lon": -96.8097
-},
-{
-"id": "nt-044",
-"county": "Hill",
-"state": "TX",
-"lat": 32.07088,
-"lon": -96.90223
-},
-{
-"id": "nt-045",
-"county": "Hamilton",
-"state": "TX",
-"lat": 31.66738,
-"lon": -98.15648
-},
-{
-"id": "nt-046",
-"county": "Young",
-"state": "TX",
-"lat": 33.15695,
-"lon": -98.4928
-},
-{
-"id": "nt-047",
-"county": "Hill",
-"state": "TX",
-"lat": 32.23398,
-"lon": -97.0988
-},
-{
-"id": "nt-048",
+"id": "ec-008",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.10653,
-"lon": -96.88655
+"lat": 32.25149,
+"lon": -96.75945
 },
 {
-"id": "nt-049",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.76497,
-"lon": -97.01604
-},
-{
-"id": "nt-050",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.48518,
-"lon": -96.58553
-},
-{
-"id": "nt-051",
-"county": "Bosque",
-"state": "TX",
-"lat": 31.68117,
-"lon": -97.76713
-},
-{
-"id": "nt-052",
-"county": "Coryell",
-"state": "TX",
-"lat": 31.54616,
-"lon": -97.64342
-},
-{
-"id": "nt-053",
-"county": "Hill",
-"state": "TX",
-"lat": 31.97405,
-"lon": -97.02467
-},
-{
-"id": "nt-054",
-"county": "Dallas",
-"state": "TX",
-"lat": 32.58542,
-"lon": -96.57701
-},
-{
-"id": "nt-055",
-"county": "Kaufman",
-"state": "TX",
-"lat": 32.7706,
-"lon": -96.35266
-},
-{
-"id": "nt-056",
-"county": "Bryan",
-"state": "OK",
-"lat": 33.85072,
-"lon": -96.45323
-},
-{
-"id": "nt-057",
-"county": "Henderson",
-"state": "TX",
-"lat": 32.02188,
-"lon": -96.03822
-},
-{
-"id": "nt-058",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.2787,
-"lon": -96.00055
-},
-{
-"id": "nt-059",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.83203,
-"lon": -97.03121
-},
-{
-"id": "nt-060",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.28447,
-"lon": -96.08453
-},
-{
-"id": "nt-061",
-"county": "Kaufman",
-"state": "TX",
-"lat": 32.61496,
-"lon": -96.41195
-},
-{
-"id": "nt-062",
-"county": "Hill",
-"state": "TX",
-"lat": 31.90665,
-"lon": -97.17825
-},
-{
-"id": "nt-063",
-"county": "Navarro",
-"state": "TX",
-"lat": 31.8706,
-"lon": -96.66763
-},
-{
-"id": "nt-064",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.44052,
-"lon": -97.1653
-},
-{
-"id": "nt-065",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.59424,
-"lon": -96.8066
-},
-{
-"id": "nt-066",
-"county": "Lamar",
-"state": "TX",
-"lat": 33.557,
-"lon": -95.54063
-},
-{
-"id": "nt-067",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.61682,
-"lon": -96.80834
-},
-{
-"id": "nt-068",
-"county": "Hill",
-"state": "TX",
-"lat": 31.97369,
-"lon": -97.1536
-},
-{
-"id": "nt-069",
-"county": "Navarro",
-"state": "TX",
-"lat": 31.83957,
-"lon": -96.66746
-},
-{
-"id": "nt-070",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.62268,
-"lon": -96.80704
-},
-{
-"id": "nt-071",
-"county": "Clay",
-"state": "TX",
-"lat": 33.92757,
-"lon": -98.36041
-},
-{
-"id": "nt-072",
-"county": "Collin",
-"state": "TX",
-"lat": 33.35806,
-"lon": -96.58664
-},
-{
-"id": "nt-073",
-"county": "Archer",
-"state": "TX",
-"lat": 33.57033,
-"lon": -98.45777
-},
-{
-"id": "nt-074",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.45846,
-"lon": -96.13098
-},
-{
-"id": "nt-075",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.79577,
-"lon": -97.16852
-},
-{
-"id": "nt-076",
-"county": "Henderson",
-"state": "TX",
-"lat": 32.01936,
-"lon": -96.04096
-},
-{
-"id": "nt-077",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.55977,
-"lon": -97.04436
-},
-{
-"id": "nt-078",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.08316,
-"lon": -96.85379
-},
-{
-"id": "nt-079",
-"county": "Delta",
-"state": "TX",
-"lat": 33.38483,
-"lon": -95.82322
-},
-{
-"id": "nt-080",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.53783,
-"lon": -97.38896
-},
-{
-"id": "nt-081",
-"county": "Bryan",
-"state": "OK",
-"lat": 33.85533,
-"lon": -96.12586
-},
-{
-"id": "nt-082",
-"county": "Dallas",
-"state": "TX",
-"lat": 32.54928,
-"lon": -96.73167
-},
-{
-"id": "nt-083",
-"county": "Wise",
-"state": "TX",
-"lat": 33.36509,
-"lon": -97.40132
-},
-{
-"id": "nt-084",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.45987,
-"lon": -97.50552
-},
-{
-"id": "nt-085",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.49685,
-"lon": -96.39704
-},
-{
-"id": "nt-086",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.60134,
-"lon": -96.77598
-},
-{
-"id": "nt-087",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.58109,
-"lon": -96.77731
-},
-{
-"id": "nt-088",
-"county": "Hill",
-"state": "TX",
-"lat": 31.86534,
-"lon": -97.09522
-},
-{
-"id": "nt-089",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.24303,
-"lon": -97.24156
-},
-{
-"id": "nt-090",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.51798,
-"lon": -96.78998
-},
-{
-"id": "nt-091",
-"county": "Cooke",
-"state": "TX",
-"lat": 33.51227,
-"lon": -97.27788
-},
-{
-"id": "nt-092",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.43348,
-"lon": -96.12464
-},
-{
-"id": "nt-093",
-"county": "Clay",
-"state": "TX",
-"lat": 33.61077,
-"lon": -98.27026
-},
-{
-"id": "nt-094",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.19769,
-"lon": -96.63518
-},
-{
-"id": "nt-095",
-"county": "Hill",
-"state": "TX",
-"lat": 31.93337,
-"lon": -97.09278
-},
-{
-"id": "nt-096",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.09948,
-"lon": -96.57067
-},
-{
-"id": "nt-097",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.66536,
-"lon": -96.86249
-},
-{
-"id": "nt-098",
-"county": "Collin",
-"state": "TX",
-"lat": 33.2729,
-"lon": -96.44235
-},
-{
-"id": "nt-099",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.09696,
-"lon": -96.29419
-},
-{
-"id": "nt-100",
-"county": "Henderson",
-"state": "TX",
-"lat": 32.01032,
-"lon": -96.0379
-},
-{
-"id": "nt-101",
-"county": "Collin",
-"state": "TX",
-"lat": 33.38364,
-"lon": -96.83183
-},
-{
-"id": "nt-102",
-"county": "Hill",
-"state": "TX",
-"lat": 31.77014,
-"lon": -96.9536
-},
-{
-"id": "nt-103",
+"id": "ec-009",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.20732,
-"lon": -96.75332
+"lat": 32.2565,
+"lon": -96.75625
 },
 {
-"id": "nt-104",
-"county": "Navarro",
-"state": "TX",
-"lat": 31.96094,
-"lon": -96.81508
-},
-{
-"id": "nt-105",
-"county": "Hill",
-"state": "TX",
-"lat": 32.0245,
-"lon": -96.9454
-},
-{
-"id": "nt-106",
-"county": "Hill",
-"state": "TX",
-"lat": 32.23835,
-"lon": -97.1966
-},
-{
-"id": "nt-107",
-"county": "Montague",
-"state": "TX",
-"lat": 33.90198,
-"lon": -97.76017
-},
-{
-"id": "nt-108",
+"id": "ec-010",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.48411,
-"lon": -96.66034
+"lat": 32.25765,
+"lon": -96.75476
 },
 {
-"id": "nt-109",
-"county": "Hill",
-"state": "TX",
-"lat": 31.92551,
-"lon": -97.11246
-},
-{
-"id": "nt-110",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.11603,
-"lon": -96.18503
-},
-{
-"id": "nt-111",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.57275,
-"lon": -95.89066
-},
-{
-"id": "nt-112",
+"id": "ec-011",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.2173,
-"lon": -96.63853
+"lat": 32.25831,
+"lon": -96.74697
 },
 {
-"id": "nt-113",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.53519,
-"lon": -97.27278
-},
-{
-"id": "nt-114",
-"county": "Hill",
-"state": "TX",
-"lat": 31.98208,
-"lon": -97.11638
-},
-{
-"id": "nt-115",
-"county": "Denton",
-"state": "TX",
-"lat": 33.27391,
-"lon": -96.87214
-},
-{
-"id": "nt-116",
-"county": "Cooke",
-"state": "TX",
-"lat": 33.42516,
-"lon": -97.16526
-},
-{
-"id": "nt-117",
-"county": "Cooke",
-"state": "TX",
-"lat": 33.59311,
-"lon": -97.17898
-},
-{
-"id": "nt-118",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.3139,
-"lon": -96.21098
-},
-{
-"id": "nt-119",
-"county": "Lamar",
-"state": "TX",
-"lat": 33.62116,
-"lon": -95.54077
-},
-{
-"id": "nt-120",
-"county": "Hill",
-"state": "TX",
-"lat": 31.76687,
-"lon": -96.87388
-},
-{
-"id": "nt-121",
-"county": "Clay",
-"state": "TX",
-"lat": 33.95196,
-"lon": -98.30197
-},
-{
-"id": "nt-122",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.55581,
-"lon": -96.77509
-},
-{
-"id": "nt-123",
-"county": "Montague",
-"state": "TX",
-"lat": 33.70476,
-"lon": -97.92149
-},
-{
-"id": "nt-124",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.39751,
-"lon": -96.25625
-},
-{
-"id": "nt-125",
-"county": "Navarro",
-"state": "TX",
-"lat": 31.83609,
-"lon": -96.70108
-},
-{
-"id": "nt-126",
-"county": "Coryell",
-"state": "TX",
-"lat": 31.54323,
-"lon": -97.6424
-},
-{
-"id": "nt-127",
-"county": "Collin",
-"state": "TX",
-"lat": 33.29487,
-"lon": -96.43786
-},
-{
-"id": "nt-128",
-"county": "Denton",
-"state": "TX",
-"lat": 33.37535,
-"lon": -97.17249
-},
-{
-"id": "nt-129",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.42942,
-"lon": -97.18677
-},
-{
-"id": "nt-130",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.53349,
-"lon": -96.68904
-},
-{
-"id": "nt-131",
-"county": "Collin",
-"state": "TX",
-"lat": 33.29298,
-"lon": -96.43976
-},
-{
-"id": "nt-132",
-"county": "Denton",
-"state": "TX",
-"lat": 33.28159,
-"lon": -97.19766
-},
-{
-"id": "nt-133",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.54313,
-"lon": -97.57277
-},
-{
-"id": "nt-134",
+"id": "ec-012",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.15135,
-"lon": -96.83294
+"lat": 32.25754,
+"lon": -96.75588
 },
 {
-"id": "nt-135",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.39513,
-"lon": -96.23888
-},
-{
-"id": "nt-136",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.52243,
-"lon": -96.67458
-},
-{
-"id": "nt-137",
-"county": "Clay",
-"state": "TX",
-"lat": 33.87132,
-"lon": -98.40562
-},
-{
-"id": "nt-138",
-"county": "Bosque",
-"state": "TX",
-"lat": 31.82626,
-"lon": -97.53152
-},
-{
-"id": "nt-139",
-"county": "Hill",
-"state": "TX",
-"lat": 31.99447,
-"lon": -96.93807
-},
-{
-"id": "nt-140",
-"county": "Dallas",
-"state": "TX",
-"lat": 32.57708,
-"lon": -96.65947
-},
-{
-"id": "nt-141",
+"id": "ec-013",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.16973,
-"lon": -96.7885
+"lat": 32.2532,
+"lon": -96.73993
 },
 {
-"id": "nt-142",
-"county": "Hill",
-"state": "TX",
-"lat": 32.19684,
-"lon": -97.12311
-},
-{
-"id": "nt-143",
-"county": "Clay",
-"state": "TX",
-"lat": 33.96577,
-"lon": -98.06651
-},
-{
-"id": "nt-144",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.6128,
-"lon": -96.80427
-},
-{
-"id": "nt-145",
-"county": "Hill",
-"state": "TX",
-"lat": 32.17413,
-"lon": -97.19195
-},
-{
-"id": "nt-146",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.60157,
-"lon": -96.69819
-},
-{
-"id": "nt-147",
-"county": "Hill",
-"state": "TX",
-"lat": 31.98274,
-"lon": -96.83499
-},
-{
-"id": "nt-148",
-"county": "Jefferson",
-"state": "OK",
-"lat": 33.91375,
-"lon": -97.88435
-},
-{
-"id": "nt-149",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.52418,
-"lon": -96.29704
-},
-{
-"id": "nt-150",
-"county": "Coryell",
-"state": "TX",
-"lat": 31.52042,
-"lon": -97.55792
-},
-{
-"id": "nt-151",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.55682,
-"lon": -96.3427
-},
-{
-"id": "nt-152",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.52268,
-"lon": -96.79548
-},
-{
-"id": "nt-153",
-"county": "Delta",
-"state": "TX",
-"lat": 33.47322,
-"lon": -95.65893
-},
-{
-"id": "nt-154",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.40922,
-"lon": -97.12174
-},
-{
-"id": "nt-155",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.09701,
-"lon": -96.21519
-},
-{
-"id": "nt-156",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.76892,
-"lon": -97.03099
-},
-{
-"id": "nt-157",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.45498,
-"lon": -97.13103
-},
-{
-"id": "nt-158",
-"county": "Hill",
-"state": "TX",
-"lat": 32.2349,
-"lon": -97.19391
-},
-{
-"id": "nt-159",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.50026,
-"lon": -96.67776
-},
-{
-"id": "nt-160",
-"county": "Hill",
-"state": "TX",
-"lat": 31.82998,
-"lon": -96.93647
-},
-{
-"id": "nt-161",
-"county": "Kaufman",
-"state": "TX",
-"lat": 32.48377,
-"lon": -96.41969
-},
-{
-"id": "nt-162",
-"county": "Johnson",
-"state": "TX",
-"lat": 32.2701,
-"lon": -97.10754
-},
-{
-"id": "nt-163",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.54557,
-"lon": -97.31887
-},
-{
-"id": "nt-164",
+"id": "ec-014",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.20508,
-"lon": -96.67821
+"lat": 32.24274,
+"lon": -96.74249
 },
 {
-"id": "nt-165",
-"county": "Cooke",
+"id": "ec-015",
+"county": "Ellis",
 "state": "TX",
-"lat": 33.57307,
-"lon": -97.11492
+"lat": 32.25563,
+"lon": -96.75964
 },
 {
-"id": "nt-166",
-"county": "Denton",
+"id": "ec-016",
+"county": "Ellis",
 "state": "TX",
-"lat": 33.06981,
-"lon": -97.23858
+"lat": 32.25891,
+"lon": -96.75542
 },
 {
-"id": "nt-167",
-"county": "Hill",
+"id": "ec-017",
+"county": "Ellis",
 "state": "TX",
-"lat": 31.98814,
-"lon": -97.21601
-},
-{
-"id": "nt-168",
-"county": "Grayson",
-"state": "TX",
-"lat": 33.50354,
+"lat": 32.25939,
 "lon": -96.74567
 },
 {
-"id": "nt-169",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.57275,
-"lon": -97.34708
-},
-{
-"id": "nt-170",
-"county": "Comanche",
-"state": "TX",
-"lat": 31.79629,
-"lon": -98.47191
-},
-{
-"id": "nt-171",
-"county": "Collin",
-"state": "TX",
-"lat": 33.26817,
-"lon": -96.64215
-},
-{
-"id": "nt-172",
+"id": "ec-018",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.08998,
-"lon": -96.8841
+"lat": 32.25662,
+"lon": -96.75898
 },
 {
-"id": "nt-173",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.83062,
-"lon": -96.03436
-},
-{
-"id": "nt-174",
-"county": "Lamar",
-"state": "TX",
-"lat": 33.54044,
-"lon": -95.79095
-},
-{
-"id": "nt-175",
-"county": "Navarro",
-"state": "TX",
-"lat": 32.11273,
-"lon": -96.30634
-},
-{
-"id": "nt-176",
-"county": "McLennan",
-"state": "TX",
-"lat": 31.52949,
-"lon": -97.03864
-},
-{
-"id": "nt-177",
-"county": "Hunt",
-"state": "TX",
-"lat": 33.07253,
-"lon": -96.27413
-},
-{
-"id": "nt-178",
-"county": "Limestone",
-"state": "TX",
-"lat": 31.57955,
-"lon": -96.79924
-},
-{
-"id": "nt-179",
-"county": "Hill",
-"state": "TX",
-"lat": 31.98018,
-"lon": -97.19487
-},
-{
-"id": "nt-180",
-"county": "Hill",
-"state": "TX",
-"lat": 32.1665,
-"lon": -97.19461
-},
-{
-"id": "nt-181",
-"county": "Hill",
-"state": "TX",
-"lat": 32.01914,
-"lon": -96.9672
-},
-{
-"id": "nt-182",
-"county": "Cooke",
-"state": "TX",
-"lat": 33.63972,
-"lon": -97.21244
-},
-{
-"id": "nt-183",
+"id": "ec-019",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.31073,
-"lon": -96.72804
+"lat": 32.25806,
+"lon": -96.75881
 },
 {
-"id": "nt-184",
-"county": "Hill",
-"state": "TX",
-"lat": 31.89783,
-"lon": -97.02542
-},
-{
-"id": "nt-185",
-"county": "Hill",
-"state": "TX",
-"lat": 31.83343,
-"lon": -96.93395
-},
-{
-"id": "nt-186",
-"county": "Navarro",
-"state": "TX",
-"lat": 31.83698,
-"lon": -96.6617
-},
-{
-"id": "nt-187",
-"county": "Lamar",
-"state": "TX",
-"lat": 33.55942,
-"lon": -95.79506
-},
-{
-"id": "nt-188",
+"id": "ec-020",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.31652,
-"lon": -96.69639
+"lat": 32.24343,
+"lon": -96.7391
 },
 {
-"id": "nt-189",
-"county": "Hill",
-"state": "TX",
-"lat": 32.06661,
-"lon": -97.11774
-},
-{
-"id": "nt-190",
+"id": "ec-021",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.40926,
+"lat": 32.25185,
+"lon": -96.76351
+},
+{
+"id": "ec-022",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24001,
+"lon": -96.74268
+},
+{
+"id": "ec-023",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25644,
+"lon": -96.73823
+},
+{
+"id": "ec-024",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23863,
+"lon": -96.75471
+},
+{
+"id": "ec-025",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25025,
+"lon": -96.73575
+},
+{
+"id": "ec-026",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23803,
+"lon": -96.74632
+},
+{
+"id": "ec-027",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23763,
+"lon": -96.7525
+},
+{
+"id": "ec-028",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25434,
+"lon": -96.7361
+},
+{
+"id": "ec-029",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25604,
+"lon": -96.76301
+},
+{
+"id": "ec-030",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.242,
+"lon": -96.76162
+},
+{
+"id": "ec-031",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26102,
+"lon": -96.75811
+},
+{
+"id": "ec-032",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25872,
+"lon": -96.76156
+},
+{
+"id": "ec-033",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25436,
+"lon": -96.7647
+},
+{
+"id": "ec-034",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24273,
+"lon": -96.7631
+},
+{
+"id": "ec-035",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24078,
+"lon": -96.76148
+},
+{
+"id": "ec-036",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26266,
+"lon": -96.75618
+},
+{
+"id": "ec-037",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26063,
+"lon": -96.73953
+},
+{
+"id": "ec-038",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2525,
+"lon": -96.73388
+},
+{
+"id": "ec-039",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25537,
+"lon": -96.76516
+},
+{
+"id": "ec-040",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26424,
+"lon": -96.75183
+},
+{
+"id": "ec-041",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23758,
+"lon": -96.75869
+},
+{
+"id": "ec-042",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25643,
+"lon": -96.76595
+},
+{
+"id": "ec-043",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23951,
+"lon": -96.76264
+},
+{
+"id": "ec-044",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24423,
+"lon": -96.7332
+},
+{
+"id": "ec-045",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26203,
+"lon": -96.73847
+},
+{
+"id": "ec-046",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26554,
+"lon": -96.74753
+},
+{
+"id": "ec-047",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23732,
+"lon": -96.73911
+},
+{
+"id": "ec-048",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24111,
+"lon": -96.73476
+},
+{
+"id": "ec-049",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23924,
+"lon": -96.73645
+},
+{
+"id": "ec-050",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25703,
+"lon": -96.76703
+},
+{
+"id": "ec-051",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26139,
+"lon": -96.73629
+},
+{
+"id": "ec-052",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24734,
+"lon": -96.7691
+},
+{
+"id": "ec-053",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24737,
+"lon": -96.73079
+},
+{
+"id": "ec-054",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26664,
+"lon": -96.74758
+},
+{
+"id": "ec-055",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26573,
+"lon": -96.74288
+},
+{
+"id": "ec-056",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26163,
+"lon": -96.76437
+},
+{
+"id": "ec-057",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26651,
+"lon": -96.75434
+},
+{
+"id": "ec-058",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24348,
+"lon": -96.7315
+},
+{
+"id": "ec-059",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26442,
+"lon": -96.76092
+},
+{
+"id": "ec-060",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2657,
+"lon": -96.74145
+},
+{
+"id": "ec-061",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25382,
+"lon": -96.77009
+},
+{
+"id": "ec-062",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23295,
+"lon": -96.7449
+},
+{
+"id": "ec-063",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23267,
+"lon": -96.75365
+},
+{
+"id": "ec-064",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26674,
+"lon": -96.74262
+},
+{
+"id": "ec-065",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26578,
+"lon": -96.73904
+},
+{
+"id": "ec-066",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2431,
+"lon": -96.73002
+},
+{
+"id": "ec-067",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23171,
+"lon": -96.75224
+},
+{
+"id": "ec-068",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25518,
+"lon": -96.77081
+},
+{
+"id": "ec-069",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25655,
+"lon": -96.72956
+},
+{
+"id": "ec-070",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26706,
+"lon": -96.7409
+},
+{
+"id": "ec-071",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26848,
+"lon": -96.75445
+},
+{
+"id": "ec-072",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26863,
+"lon": -96.74565
+},
+{
+"id": "ec-073",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25602,
+"lon": -96.77133
+},
+{
+"id": "ec-074",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24731,
+"lon": -96.72765
+},
+{
+"id": "ec-075",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26738,
+"lon": -96.73977
+},
+{
+"id": "ec-076",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24383,
+"lon": -96.72785
+},
+{
+"id": "ec-077",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23406,
+"lon": -96.736
+},
+{
+"id": "ec-078",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26979,
+"lon": -96.75262
+},
+{
+"id": "ec-079",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26742,
+"lon": -96.7614
+},
+{
+"id": "ec-080",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.269,
+"lon": -96.74273
+},
+{
+"id": "ec-081",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26987,
+"lon": -96.74657
+},
+{
+"id": "ec-082",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26065,
+"lon": -96.77031
+},
+{
+"id": "ec-083",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26664,
+"lon": -96.73598
+},
+{
+"id": "ec-084",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26761,
+"lon": -96.73759
+},
+{
+"id": "ec-085",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24844,
+"lon": -96.72589
+},
+{
+"id": "ec-086",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26442,
+"lon": -96.73264
+},
+{
+"id": "ec-087",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26651,
+"lon": -96.76508
+},
+{
+"id": "ec-088",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23114,
+"lon": -96.73911
+},
+{
+"id": "ec-089",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25029,
+"lon": -96.72494
+},
+{
+"id": "ec-090",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24412,
+"lon": -96.77418
+},
+{
+"id": "ec-091",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26904,
+"lon": -96.76144
+},
+{
+"id": "ec-092",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27041,
+"lon": -96.74206
+},
+{
+"id": "ec-093",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26975,
+"lon": -96.73901
+},
+{
+"id": "ec-094",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22959,
+"lon": -96.75992
+},
+{
+"id": "ec-095",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26212,
+"lon": -96.77173
+},
+{
+"id": "ec-096",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27123,
+"lon": -96.75727
+},
+{
+"id": "ec-097",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27227,
+"lon": -96.74865
+},
+{
+"id": "ec-098",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22841,
+"lon": -96.75683
+},
+{
+"id": "ec-099",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24649,
+"lon": -96.72386
+},
+{
+"id": "ec-100",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26444,
+"lon": -96.77031
+},
+{
+"id": "ec-101",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26994,
+"lon": -96.76236
+},
+{
+"id": "ec-102",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22992,
+"lon": -96.76252
+},
+{
+"id": "ec-103",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22721,
+"lon": -96.75317
+},
+{
+"id": "ec-104",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22822,
+"lon": -96.75871
+},
+{
+"id": "ec-105",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26941,
+"lon": -96.73492
+},
+{
+"id": "ec-106",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26612,
+"lon": -96.76978
+},
+{
+"id": "ec-107",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26855,
+"lon": -96.73325
+},
+{
+"id": "ec-108",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22765,
+"lon": -96.74182
+},
+{
+"id": "ec-109",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22851,
+"lon": -96.76092
+},
+{
+"id": "ec-110",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27065,
+"lon": -96.73695
+},
+{
+"id": "ec-111",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25165,
+"lon": -96.7223
+},
+{
+"id": "ec-112",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22863,
+"lon": -96.76203
+},
+{
+"id": "ec-113",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23017,
+"lon": -96.76532
+},
+{
+"id": "ec-114",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22619,
+"lon": -96.75076
+},
+{
+"id": "ec-115",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26359,
+"lon": -96.7731
+},
+{
+"id": "ec-116",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25823,
+"lon": -96.77653
+},
+{
+"id": "ec-117",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26547,
+"lon": -96.72839
+},
+{
+"id": "ec-118",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26199,
+"lon": -96.72546
+},
+{
+"id": "ec-119",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25121,
+"lon": -96.77831
+},
+{
+"id": "ec-120",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2429,
+"lon": -96.72277
+},
+{
+"id": "ec-121",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27432,
+"lon": -96.75037
+},
+{
+"id": "ec-122",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24429,
+"lon": -96.72211
+},
+{
+"id": "ec-123",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27328,
+"lon": -96.7587
+},
+{
+"id": "ec-124",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26527,
+"lon": -96.72754
+},
+{
+"id": "ec-125",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23737,
+"lon": -96.77474
+},
+{
+"id": "ec-126",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23761,
+"lon": -96.72502
+},
+{
+"id": "ec-127",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24004,
+"lon": -96.77645
+},
+{
+"id": "ec-128",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22884,
+"lon": -96.73524
+},
+{
+"id": "ec-129",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27477,
+"lon": -96.74788
+},
+{
+"id": "ec-130",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22575,
+"lon": -96.75643
+},
+{
+"id": "ec-131",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26975,
+"lon": -96.76786
+},
+{
+"id": "ec-132",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23821,
+"lon": -96.77588
+},
+{
+"id": "ec-133",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2298,
+"lon": -96.7327
+},
+{
+"id": "ec-134",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23115,
+"lon": -96.73068
+},
+{
+"id": "ec-135",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27177,
+"lon": -96.76463
+},
+{
+"id": "ec-136",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26658,
+"lon": -96.72749
+},
+{
+"id": "ec-137",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23889,
+"lon": -96.72286
+},
+{
+"id": "ec-138",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25166,
+"lon": -96.7801
+},
+{
+"id": "ec-139",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27264,
+"lon": -96.73583
+},
+{
+"id": "ec-140",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26943,
+"lon": -96.73029
+},
+{
+"id": "ec-141",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24923,
+"lon": -96.7198
+},
+{
+"id": "ec-142",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2744,
+"lon": -96.75949
+},
+{
+"id": "ec-143",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23027,
+"lon": -96.73041
+},
+{
+"id": "ec-144",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27065,
+"lon": -96.73169
+},
+{
+"id": "ec-145",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23655,
+"lon": -96.72393
+},
+{
+"id": "ec-146",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2374,
 "lon": -96.77682
 },
 {
-"id": "nt-191",
-"county": "Hill",
-"state": "TX",
-"lat": 31.86623,
-"lon": -96.93954
-},
-{
-"id": "nt-192",
-"county": "Fannin",
-"state": "TX",
-"lat": 33.48237,
-"lon": -96.12837
-},
-{
-"id": "nt-193",
+"id": "ec-147",
 "county": "Ellis",
 "state": "TX",
-"lat": 32.10622,
-"lon": -96.89455
+"lat": 32.27038,
+"lon": -96.73086
 },
 {
-"id": "nt-194",
-"county": "Hill",
+"id": "ec-148",
+"county": "Ellis",
 "state": "TX",
-"lat": 31.9258,
-"lon": -96.84005
+"lat": 32.24413,
+"lon": -96.72008
 },
 {
-"id": "nt-195",
-"county": "Kaufman",
+"id": "ec-149",
+"county": "Ellis",
 "state": "TX",
-"lat": 32.53349,
-"lon": -96.45104
+"lat": 32.25406,
+"lon": -96.7804
 },
 {
-"id": "nt-196",
-"county": "Cooke",
+"id": "ec-150",
+"county": "Ellis",
 "state": "TX",
-"lat": 33.56187,
-"lon": -97.11931
+"lat": 32.27459,
+"lon": -96.73942
 },
 {
-"id": "nt-197",
-"county": "Clay",
+"id": "ec-151",
+"county": "Ellis",
 "state": "TX",
-"lat": 33.62715,
-"lon": -98.11703
+"lat": 32.25707,
+"lon": -96.77973
 },
 {
-"id": "nt-198",
-"county": "Kaufman",
+"id": "ec-152",
+"county": "Ellis",
 "state": "TX",
-"lat": 32.78681,
-"lon": -96.36044
+"lat": 32.2647,
+"lon": -96.72439
 },
 {
-"id": "nt-199",
-"county": "Delta",
+"id": "ec-153",
+"county": "Ellis",
 "state": "TX",
-"lat": 33.45789,
-"lon": -95.61047
+"lat": 32.23799,
+"lon": -96.77748
 },
 {
-"id": "nt-200",
-"county": "McLennan",
+"id": "ec-154",
+"county": "Ellis",
 "state": "TX",
-"lat": 31.51375,
-"lon": -97.36535
+"lat": 32.26676,
+"lon": -96.72617
+},
+{
+"id": "ec-155",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25218,
+"lon": -96.71907
+},
+{
+"id": "ec-156",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26027,
+"lon": -96.7787
+},
+{
+"id": "ec-157",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23604,
+"lon": -96.77646
+},
+{
+"id": "ec-158",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26813,
+"lon": -96.7273
+},
+{
+"id": "ec-159",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22847,
+"lon": -96.73165
+},
+{
+"id": "ec-160",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23691,
+"lon": -96.72258
+},
+{
+"id": "ec-161",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24932,
+"lon": -96.71853
+},
+{
+"id": "ec-162",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26021,
+"lon": -96.72085
+},
+{
+"id": "ec-163",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26951,
+"lon": -96.72839
+},
+{
+"id": "ec-164",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25323,
+"lon": -96.78159
+},
+{
+"id": "ec-165",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2704,
+"lon": -96.77096
+},
+{
+"id": "ec-166",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25466,
+"lon": -96.78163
+},
+{
+"id": "ec-167",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26727,
+"lon": -96.72504
+},
+{
+"id": "ec-168",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24891,
+"lon": -96.78219
+},
+{
+"id": "ec-169",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25054,
+"lon": -96.71778
+},
+{
+"id": "ec-170",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27089,
+"lon": -96.72899
+},
+{
+"id": "ec-171",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26259,
+"lon": -96.72124
+},
+{
+"id": "ec-172",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24618,
+"lon": -96.71796
+},
+{
+"id": "ec-173",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27755,
+"lon": -96.74913
+},
+{
+"id": "ec-174",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22303,
+"lon": -96.75673
+},
+{
+"id": "ec-175",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27437,
+"lon": -96.73447
+},
+{
+"id": "ec-176",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2697,
+"lon": -96.72691
+},
+{
+"id": "ec-177",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24341,
+"lon": -96.78198
+},
+{
+"id": "ec-178",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27744,
+"lon": -96.74351
+},
+{
+"id": "ec-179",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2223,
+"lon": -96.7558
+},
+{
+"id": "ec-180",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24606,
+"lon": -96.71715
+},
+{
+"id": "ec-181",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2764,
+"lon": -96.76166
+},
+{
+"id": "ec-182",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23528,
+"lon": -96.72159
+},
+{
+"id": "ec-183",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2423,
+"lon": -96.71797
+},
+{
+"id": "ec-184",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25093,
+"lon": -96.71661
+},
+{
+"id": "ec-185",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24858,
+"lon": -96.71654
+},
+{
+"id": "ec-186",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22245,
+"lon": -96.75893
+},
+{
+"id": "ec-187",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25876,
+"lon": -96.71775
+},
+{
+"id": "ec-188",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27856,
+"lon": -96.75464
+},
+{
+"id": "ec-189",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27763,
+"lon": -96.76084
+},
+{
+"id": "ec-190",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27661,
+"lon": -96.73552
+},
+{
+"id": "ec-191",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27443,
+"lon": -96.7307
+},
+{
+"id": "ec-192",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27959,
+"lon": -96.74962
+},
+{
+"id": "ec-193",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27958,
+"lon": -96.75363
+},
+{
+"id": "ec-194",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23266,
+"lon": -96.72126
+},
+{
+"id": "ec-195",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27985,
+"lon": -96.74645
+},
+{
+"id": "ec-196",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27378,
+"lon": -96.72847
+},
+{
+"id": "ec-197",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22193,
+"lon": -96.73731
+},
+{
+"id": "ec-198",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25883,
+"lon": -96.7839
+},
+{
+"id": "ec-199",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26667,
+"lon": -96.72042
+},
+{
+"id": "ec-200",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25794,
+"lon": -96.71574
+},
+{
+"id": "ec-201",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24608,
+"lon": -96.71474
+},
+{
+"id": "ec-202",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26862,
+"lon": -96.72184
+},
+{
+"id": "ec-203",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26114,
+"lon": -96.78321
+},
+{
+"id": "ec-204",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23359,
+"lon": -96.7197
+},
+{
+"id": "ec-205",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27088,
+"lon": -96.72365
+},
+{
+"id": "ec-206",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23457,
+"lon": -96.71877
+},
+{
+"id": "ec-207",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28068,
+"lon": -96.74792
+},
+{
+"id": "ec-208",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2715,
+"lon": -96.72383
+},
+{
+"id": "ec-209",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27967,
+"lon": -96.73947
+},
+{
+"id": "ec-210",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27036,
+"lon": -96.72248
+},
+{
+"id": "ec-211",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24039,
+"lon": -96.71525
+},
+{
+"id": "ec-212",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26638,
+"lon": -96.78111
+},
+{
+"id": "ec-213",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21927,
+"lon": -96.74394
+},
+{
+"id": "ec-214",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26102,
+"lon": -96.7843
+},
+{
+"id": "ec-215",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27892,
+"lon": -96.76415
+},
+{
+"id": "ec-216",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27599,
+"lon": -96.77093
+},
+{
+"id": "ec-217",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24979,
+"lon": -96.71294
+},
+{
+"id": "ec-218",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27683,
+"lon": -96.76964
+},
+{
+"id": "ec-219",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2307,
+"lon": -96.72037
+},
+{
+"id": "ec-220",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28126,
+"lon": -96.75645
+},
+{
+"id": "ec-221",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26242,
+"lon": -96.78437
+},
+{
+"id": "ec-222",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24173,
+"lon": -96.71388
+},
+{
+"id": "ec-223",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23412,
+"lon": -96.71758
+},
+{
+"id": "ec-224",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26784,
+"lon": -96.78104
+},
+{
+"id": "ec-225",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24452,
+"lon": -96.71281
+},
+{
+"id": "ec-226",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23181,
+"lon": -96.71891
+},
+{
+"id": "ec-227",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27639,
+"lon": -96.7285
+},
+{
+"id": "ec-228",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2819,
+"lon": -96.75425
+},
+{
+"id": "ec-229",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27039,
+"lon": -96.72068
+},
+{
+"id": "ec-230",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24867,
+"lon": -96.7879
+},
+{
+"id": "ec-231",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21775,
+"lon": -96.75123
+},
+{
+"id": "ec-232",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27713,
+"lon": -96.77074
+},
+{
+"id": "ec-233",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27783,
+"lon": -96.76951
+},
+{
+"id": "ec-234",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26861,
+"lon": -96.71875
+},
+{
+"id": "ec-235",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24886,
+"lon": -96.71185
+},
+{
+"id": "ec-236",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23287,
+"lon": -96.71756
+},
+{
+"id": "ec-237",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25373,
+"lon": -96.7883
+},
+{
+"id": "ec-238",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24656,
+"lon": -96.71156
+},
+{
+"id": "ec-239",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27591,
+"lon": -96.72621
+},
+{
+"id": "ec-240",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25023,
+"lon": -96.71128
+},
+{
+"id": "ec-241",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27699,
+"lon": -96.77228
+},
+{
+"id": "ec-242",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27278,
+"lon": -96.72194
+},
+{
+"id": "ec-243",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23024,
+"lon": -96.71894
+},
+{
+"id": "ec-244",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28054,
+"lon": -96.76477
+},
+{
+"id": "ec-245",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26486,
+"lon": -96.71506
+},
+{
+"id": "ec-246",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28315,
+"lon": -96.74716
+},
+{
+"id": "ec-247",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28092,
+"lon": -96.73553
+},
+{
+"id": "ec-248",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27836,
+"lon": -96.77054
+},
+{
+"id": "ec-249",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28246,
+"lon": -96.7408
+},
+{
+"id": "ec-250",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2828,
+"lon": -96.74227
+},
+{
+"id": "ec-251",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28334,
+"lon": -96.74673
+},
+{
+"id": "ec-252",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24652,
+"lon": -96.71068
+},
+{
+"id": "ec-253",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21691,
+"lon": -96.75818
+},
+{
+"id": "ec-254",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2781,
+"lon": -96.77225
+},
+{
+"id": "ec-255",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24173,
+"lon": -96.71126
+},
+{
+"id": "ec-256",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25162,
+"lon": -96.78994
+},
+{
+"id": "ec-257",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21619,
+"lon": -96.74592
+},
+{
+"id": "ec-258",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28275,
+"lon": -96.76085
+},
+{
+"id": "ec-259",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22911,
+"lon": -96.71839
+},
+{
+"id": "ec-260",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21917,
+"lon": -96.76706
+},
+{
+"id": "ec-261",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24905,
+"lon": -96.70987
+},
+{
+"id": "ec-262",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21599,
+"lon": -96.75383
+},
+{
+"id": "ec-263",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21633,
+"lon": -96.74242
+},
+{
+"id": "ec-264",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21604,
+"lon": -96.74397
+},
+{
+"id": "ec-265",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27566,
+"lon": -96.77687
+},
+{
+"id": "ec-266",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23095,
+"lon": -96.71636
+},
+{
+"id": "ec-267",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2717,
+"lon": -96.71858
+},
+{
+"id": "ec-268",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24376,
+"lon": -96.78983
+},
+{
+"id": "ec-269",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26989,
+"lon": -96.7169
+},
+{
+"id": "ec-270",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28239,
+"lon": -96.76385
+},
+{
+"id": "ec-271",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24213,
+"lon": -96.71052
+},
+{
+"id": "ec-272",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24062,
+"lon": -96.78908
+},
+{
+"id": "ec-273",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26563,
+"lon": -96.78645
+},
+{
+"id": "ec-274",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2688,
+"lon": -96.71535
+},
+{
+"id": "ec-275",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27224,
+"lon": -96.7819
+},
+{
+"id": "ec-276",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.27903,
+"lon": -96.77315
+},
+{
+"id": "ec-277",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24645,
+"lon": -96.70894
+},
+{
+"id": "ec-278",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22494,
+"lon": -96.77887
+},
+{
+"id": "ec-279",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.24439,
+"lon": -96.70915
+},
+{
+"id": "ec-280",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28456,
+"lon": -96.74169
+},
+{
+"id": "ec-281",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.229,
+"lon": -96.71648
+},
+{
+"id": "ec-282",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2239,
+"lon": -96.77844
+},
+{
+"id": "ec-283",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21921,
+"lon": -96.7711
+},
+{
+"id": "ec-284",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26451,
+"lon": -96.7883
+},
+{
+"id": "ec-285",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26528,
+"lon": -96.78789
+},
+{
+"id": "ec-286",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28524,
+"lon": -96.75683
+},
+{
+"id": "ec-287",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25301,
+"lon": -96.79212
+},
+{
+"id": "ec-288",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22686,
+"lon": -96.71748
+},
+{
+"id": "ec-289",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28606,
+"lon": -96.75213
+},
+{
+"id": "ec-290",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28601,
+"lon": -96.74463
+},
+{
+"id": "ec-291",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.21489,
+"lon": -96.73913
+},
+{
+"id": "ec-292",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.25158,
+"lon": -96.70727
+},
+{
+"id": "ec-293",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.23681,
+"lon": -96.71013
+},
+{
+"id": "ec-294",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.26093,
+"lon": -96.79085
+},
+{
+"id": "ec-295",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2837,
+"lon": -96.76624
+},
+{
+"id": "ec-296",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.22865,
+"lon": -96.78472
+},
+{
+"id": "ec-297",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2191,
+"lon": -96.72724
+},
+{
+"id": "ec-298",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.28292,
+"lon": -96.73151
+},
+{
+"id": "ec-299",
+"county": "Ellis",
+"state": "TX",
+"lat": 32.2638,
+"lon": -96.78981
 }
 ]
 }

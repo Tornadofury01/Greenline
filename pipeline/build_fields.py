@@ -2,8 +2,11 @@
 plus /shared/crop-calendars-l89.json (per-crop bare-month calendars from Landsat 8/9 only).
 
 Combines the per-field pipeline CSVs (pipeline/data/fields/) with the SI model results (shared/si/).
-Run after sample_fields.py and pipeline/models/*:
-    pipeline/.venv/Scripts/python pipeline/build_fields.py
+Fields: the 300 Field Shift study fields (ec-000 ... ec-299, Ellis County). Run after
+pipeline/fieldshift/build_app_inputs.py and pipeline/fieldshift/export_si.py (see pipeline/fieldshift/README.md):
+    python pipeline/build_fields.py
+/shared/crop-calendars-l89.json is only rebuilt from the old 200 North Texas sample fields (nt-*); with the study
+fields it is left as it is (the calendars use the old crop classes and more fields).
 """
 import json
 import math
@@ -26,7 +29,7 @@ L89_BARE_FROM = 2014        # first full L8/9 year: bare days per year and calen
 LOW_CONF_BEFORE = 2013      # cover / bare days before this year: Landsat 5/7 only -> low confidence (sensor mismatch)
 GREEN_NDVI, BARE_NDVI = 0.40, 0.25
 # Model 1 held-out recall/precision per crop class (the app uses it for confidence: "hard to recognise" crops).
-PER_CLASS = json.loads((ROOT / "pipeline" / "models" / "results" / "season_crop.json").read_text())["perClass"]
+PER_CLASS = json.loads((SI / "index.json").read_text())["models"]["seasonCrop"]["perClass"]
 
 # CDL code -> crops.json id. Anything else is "other" and keeps its CDL group in `cdlClass`.
 CDL_TO_CROP = {1: "corn", 2: "cotton", 4: "grain_sorghum", 24: "winter_wheat", 61: "fallow", 6: "sunflower",
@@ -45,13 +48,13 @@ SOURCES = [
      "scale": "area", "resolutionM": 50000, "years": (1984, 2025), "per_field": "power"},
     {"id": "imerg", "dataset": "GPM IMERG", "name": "GPM IMERG Final V07 (monthly + half-hourly)", "product": "NASA/GPM_L3/IMERG_MONTHLY_V07, NASA/GPM_L3/IMERG_V07",
      "provider": "NASA GSFC", "variable": "rain, heavy storm days (≥ 25 mm)", "resolution": "0.1° (~11 km)",
-     "scale": "area", "resolutionM": 11000, "years": (2008, 2025), "per_field": "imerg"},
+     "scale": "area", "resolutionM": 11000, "years": (2001, 2025), "per_field": "imerg"},
     {"id": "prism", "dataset": "PRISM", "name": "PRISM daily and monthly climate (AN)", "product": "OREGONSTATE/PRISM/ANd, OREGONSTATE/PRISM/ANm",
-     "provider": "PRISM Group, Oregon State University", "variable": "monthly rain and temperature, frost dates, heavy rain days (gauge-based)", "resolution": "4 km",
+     "provider": "PRISM Group, Oregon State University", "variable": "monthly rain and temperature, frost dates, heavy rain days (gauge-based), study-area cell", "resolution": "4 km",
      "scale": "area", "resolutionM": 4000, "years": (1984, 2025), "per_field": "prism"},
-    {"id": "smap", "dataset": "SMAP L4", "name": "SMAP L4 Global 3-hourly Surface and Root Zone Soil Moisture v008", "product": "NASA/SMAP/SPL4SMGP/008",
-     "provider": "NASA", "variable": "root-zone soil moisture", "resolution": "~11 km",
-     "scale": "area", "resolutionM": 11000, "years": (2015, 2025), "per_field": "smap"},
+    {"id": "smap", "dataset": "SMAP L4", "name": "SMAP surface soil moisture (AM + PM passes)", "product": "NASA SMAP L3 (Field Shift Earth Engine export)",
+     "provider": "NASA", "variable": "surface soil moisture", "resolution": "~9 km",
+     "scale": "area", "resolutionM": 9000, "years": (2015, 2025), "per_field": "smap"},
     {"id": "landsat", "dataset": "Landsat 5/7/8/9", "name": "Landsat Collection 2 Level-2 surface reflectance", "product": "LANDSAT/LT05, LE07, LC08, LC09 /C02/T1_L2",
      "provider": "USGS / NASA", "variable": "NDVI (green cover), NDTI, BSI", "resolution": "30 m",
      "scale": "patch", "resolutionM": 30, "years": (1984, 2025), "per_field": "landsat"},
@@ -76,9 +79,9 @@ SOURCES = [
     {"id": "nass_progress", "dataset": "NASS Crop Progress", "name": "USDA NASS Crop Progress (weekly)", "product": "quickstats.nass.usda.gov API",
      "provider": "USDA NASS", "variable": "planting and harvest dates (Texas)", "resolution": "state",
      "scale": "state", "resolutionM": None, "years": (2008, 2025)},
-    {"id": "si", "dataset": "Greenline SI models", "name": "Greenline models 1-3 (see pipeline/MODELS.md)", "product": "pipeline/models",
-     "provider": "Greenline", "variable": "crop and cover classifier, weather risk signal, year types", "resolution": "per field",
-     "scale": "model", "resolutionM": None, "years": (2008, 2025)},
+    {"id": "si", "dataset": "Greenline SI models", "name": "Field Shift models 1-3 (see pipeline/MODELS.md)", "product": "pipeline/fieldshift/models",
+     "provider": "Greenline", "variable": "crop classifier, crop stress model, year types", "resolution": "per field",
+     "scale": "model", "resolutionM": None, "years": (1985, 2025)},
 ]
 
 
@@ -330,7 +333,7 @@ def main():
         for y, g in L.groupby("year"):
             vals = g.set_index("month").ndvi.reindex(range(1, 13))
             filled = vals.interpolate(limit=2, limit_area="inside")
-            if int(y) in si_years:   # 2008+: the same states model 1 exported
+            if si_years.get(int(y), {}).get("months"):   # old models exported monthly states; Field Shift doesn't
                 months = si_years[int(y)]["months"]
             else:
                 months = [state(v) for v in filled]
@@ -418,6 +421,9 @@ def main():
         index.append({"id": fid, "county": f.county, "state": f.state, "lat": round(f.lat, 5), "lon": round(f.lon, 5)})
     (OUT / "index.json").write_text(json.dumps({"schemaVersion": SCHEMA, "fields": index}, indent=0), encoding="utf-8")
     print(f"wrote {len(index)} field files to shared/fields/")
+    if not calendar_input:
+        print("kept shared/crop-calendars-l89.json (no nt-* sample fields in this build)")
+        return
     cal = crop_calendars(calendar_input)
     (ROOT / "shared" / "crop-calendars-l89.json").write_text(json.dumps(cal, indent=1), encoding="utf-8")
     print(f"wrote shared/crop-calendars-l89.json ({len(cal['crops'])} crop classes)")

@@ -4,8 +4,8 @@ A mobile-first PWA for the NASA Space Apps challenge "Field Shift: Adapting Farm
 It helps North Texas farmers compare crop rotations using NASA Earth observation data.
 **It supports farmer judgment and local experts. It doesn't replace them.**
 
-Current stage: running on **real data for 201 North Texas fields** (NASA POWER, IMERG, SMAP, Landsat, SRTM, SSURGO, CDL)
-and three trained SI models (season/crop classifier, vegetation stress signal, year patterns; see `pipeline/MODELS.md`).
+Current stage: running on **real data for the 300 Field Shift study fields** in Ellis County, TX (`ec-000` … `ec-299`, USDA field outlines; Landsat, CDL, NASA POWER, IMERG, SMAP, SRTM, SSURGO, PRISM)
+and the three Field Shift models (crop classifier, leak-free stress model, year types; see `pipeline/MODELS.md`), plus the season replay + recommender.
 The fake `shared/sample-field.json` is only used in development (`npm run dev`) when a field file is missing; production never shows it.
 
 ## Stack
@@ -27,14 +27,14 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 - Field data enters the app in **one place**: `app/src/data/loadField.js`. Real fields: `/shared/fields/<id>.json`
   (built by `pipeline/build_fields.py`). A failed load returns `{ error, id }` (AppContext `loadError`, Retry button on the
   map); a failed import first reloads the tab once (stale build after a deploy). The fake `sample-field.json` is DEV only.
-- Picking a field (`PickField.jsx`): green dots = the 201 sampled fields (`fieldIndex()`, tap = that exact field,
+- Picking a field (`PickField.jsx`): green dots = the 300 study fields (`fieldIndex()`, tap = that exact field,
   `pickFieldById`); a tap elsewhere or GPS = nearest sampled field (`loadFieldAt`), with a far-away warning (> 25 km) and
   a not-cropland warning from `croplandAt()` (`shared/cropland-mask.json`, ~400 m USDA CDL grid built by
   `pipeline/build_cropland_mask.py`). The point is never stored or sent.
-- **Demo field: one setting**, `DEFAULT_DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local` / the shell). Default `nt-103`. `vite.config.js` imports it, so the precached field always matches.
+- **Demo field: one setting**, `DEFAULT_DEMO_FIELD_ID` in `app/src/config.js` (or `VITE_DEMO_FIELD_ID` in `app/.env.local` / the shell). Default `ec-251` (100 acres, Houston Black clay, cropped all 18 USDA years). `vite.config.js` imports it, so the precached field always matches.
 - Bare days and cover: **Landsat 8/9 only** (`*L89` keys, 2014+) via `bareRows()` / `coverRows()` in `app/src/display.js`; pre-2013 years shown muted with `<LowConfTag>`, never averaged or scored. Dataset text in receipts is translated by source id (`sourceText()` in `app/src/i18n.js`, i18n `sources.*`).
-- SI models: `/pipeline/models/`, documented in `/pipeline/MODELS.md`. App display helpers: `app/src/si.js`.
-- Field Shift study (Space Apps models: crop classifier, leak-free stress model, year types, season replay + recommender on 300 Ellis County fields, a separate field set): `/pipeline/fieldshift/` (README there). `export_app.py` → `shared/fieldshift/ellis-study.json` → `components/FieldShiftStudy.jsx` on the Compare screen, Ellis County fields only, text in i18n `fieldShift.*`. Model 2: use only the `_causal` files.
+- SI models: the Field Shift models in `/pipeline/fieldshift/` (README there: run order), documented in `/pipeline/MODELS.md`. `build_app_inputs.py` → `pipeline/data/fields/*.csv`, `export_si.py` → `shared/si/`, then `pipeline/build_fields.py` → `shared/fields/`. App display helpers: `app/src/si.js`; crop → model class in `MODEL_CLASS` (`scoring/confidence.js`). Model 2: use only the `_causal` files.
+- Season replay study card: `pipeline/fieldshift/export_app.py` → `shared/fieldshift/ellis-study.json` → `components/FieldShiftStudy.jsx` on the Compare screen, text in i18n `fieldShift.*`. The replay and recommender are simulations on published agronomy, not ML.
 - Evidence receipts: scoring reasons may carry `src` (dataset names). `<Receipt>` in `components/Small.jsx` shows them, with `sources[].scale` (your field vs regional).
 - Dollars: `scoring/economics.js` (display only, from `field.market`), N price in `content/economics.json` (USDA AMS Illinois Production Cost Report, national, not Texas). What-if: `whatIfHazards()` in `scoring/rules/replay.js`.
 - Scoring: `scoring/scoreRotation.js` → `scoreRotation(rotation, field, priorities, constraints, cropLibrary)`.
@@ -115,6 +115,7 @@ Work happens on branch `app-build`. The `datasets` branch (worktree `Greenline-d
   - No fake data in production; reload-once on a failed import; error + Retry; Vercel returns 404 for missing `/assets/*`.
   - Map dots for the 201 sampled fields (tap = exact field). Not-cropland warning for taps and GPS (CDL mask, cell or a neighbour counts). Far-away rule unchanged (load nearest + warning), by decision.
 - [x] **`models-v2`: Field Shift study models** (branch `models-v2`). Space Apps bundles in `pipeline/fieldshift/` (Model 1 v2, Model 2 `_causal`, Model 3, replay + recommender); Model 3 year types wired into the replay (grades and picks unchanged); everything rerun and reproduced. App: Ellis County season replay card on Compare (4 priority presets, today vs best, all 7 rotations, models behind it) + "Season replay" and "Field Shift study models" in How we know, en + es. Checked at 375 px in en and es.
+- [x] **Field Shift models replace the old models and fields** (branch `models-v2`). The app's fields are now the 300 study fields (`ec-*`, from `fields_index.csv` / `fields.geojson`); `pipeline/models/` and the 201 `nt-*` field files are retired (git history, `v1.1-checkpoint`). New `build_app_inputs.py`, `export_si.py`, `models/evaluate_m1.py`; `build_fields.py` reads them and keeps the old crop calendars. App: Model 1 classes (`summer_grain` etc.) in `MODEL_CLASS`, model text rewritten (unseen years 2023–2025: crops 83% / 92% clean vs 58% baseline; stress AUC 0.936), map centred on the study area, demo `ec-251`. Known gap: whole-outline NDVI reads greener, so bare days run low (MODELS.md #1; fix = field-interior export). Selftest 72/72, i18n, build, en + es at 375 px checked.
 - [ ] **Next (optional):** `ui-polish-2`. Then submission prep.
 
 ## Roadmap

@@ -13,14 +13,14 @@ import { DEMO_FIELD_ID } from '../config.js';
 
 // Lazy: each field file becomes its own small chunk, fetched only when needed.
 const FIELD_FILES = import.meta.glob(['../../../shared/fields/*.json', '!../../../shared/fields/index.json']);
-// The index (id, county, lat, lon for 201 fields, ~14 kB) is bundled so map taps work offline.
+// The index (id, county, lat, lon for 300 fields, ~20 kB) is bundled so map taps work offline.
 const INDEX_FILE = import.meta.glob('../../../shared/fields/index.json', { eager: true, import: 'default' });
 const pathFor = (id) => `../../../shared/fields/${id}.json`;
 
 export const crops = cropLibrary;
 export const candidateRotations = rotationLibrary.rotations;
 
-// Cover thresholds (same as pipeline/models/season_crop.py).
+// Cover thresholds for the app's monthly cover (same as pipeline/build_fields.py).
 export const BARE_NDVI = 0.25;
 export const GREEN_NDVI = 0.40;
 
