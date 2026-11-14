@@ -57,7 +57,7 @@
     "title": "Pick your field",
     "intro": "Find your field on the map and tap it.",
     "mapLabel": "Map of North Texas",
-    "mapHint": "Green dots are the 201 crop fields we have data for. Tap one, or tap your field and we load the nearest dot.",
+    "mapHint": "Green dots are the 201 crop fields we have data for. Tap one, or tap your field and we load the nearest dot. Drag to move the map. Scroll or pinch to zoom.",
     "dotLabel": "Crop field in {county} County",
     "sampledField": "We have satellite and soil data for this exact field.",
     "notCropland": "The spot you tapped doesn't look like cropland on the USDA crop map, so we show the nearest sampled crop field as an example. Tap your own field to get closer.",
@@ -99,7 +99,8 @@
       "unavailable": "We couldn’t find your location right now. Try again outside, or tap the map instead.",
       "timeout": "Finding your location took too long. Try again, or tap the map instead.",
       "unsupported": "This browser or connection can’t share your location. Tap the map instead."
-    }
+    },
+    "pickAnother": "Pick a different field"
   },
   "farm": {
     "title": "Your farm",

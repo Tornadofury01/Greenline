@@ -57,7 +57,7 @@
     "title": "Elija su parcela",
     "intro": "Busque su parcela en el mapa y tóquela.",
     "mapLabel": "Mapa del norte de Texas",
-    "mapHint": "Los puntos verdes son los 201 campos de cultivo con datos. Toque uno, o toque su campo y cargamos el punto más cercano.",
+    "mapHint": "Los puntos verdes son los 201 campos de cultivo con datos. Toque uno, o toque su campo y cargamos el punto más cercano. Arrastre para mover el mapa. Use la rueda o pellizque para acercar.",
     "dotLabel": "Campo de cultivo en el condado de {county}",
     "sampledField": "Tenemos datos de satélite y de suelo para este mismo campo.",
     "notCropland": "El lugar que tocó no parece tierra de cultivo en el mapa de cultivos del USDA, así que mostramos el campo de muestra más cercano como ejemplo. Toque su propio campo para acercarse más.",
@@ -99,7 +99,8 @@
       "unavailable": "No pudimos encontrar su ubicación ahora. Inténtelo al aire libre, o toque el mapa.",
       "timeout": "Encontrar su ubicación tardó demasiado. Inténtelo de nuevo, o toque el mapa.",
       "unsupported": "Este navegador o conexión no puede compartir su ubicación. Toque el mapa."
-    }
+    },
+    "pickAnother": "Elegir otro campo"
   },
   "farm": {
     "title": "Su granja",

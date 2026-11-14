@@ -1,8 +1,8 @@
 // Screen 1: tap the map to load a field, then see the field at a glance.
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Rectangle, CircleMarker, Tooltip, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Hand, Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw } from 'lucide-react';
+import { Hand, Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw, ArrowLeft } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
 import { PageHead, Source } from '../components/Small.jsx';
@@ -46,6 +46,15 @@ function FitOnResize() {
     ro.observe(map.getContainer());
     return () => ro.disconnect();
   }, [map]);
+  return null;
+}
+
+// Zooms back out to the whole region when resetKey changes (the "pick a different field" button).
+function ResetView({ resetKey }) {
+  const map = useMap();
+  useEffect(() => {
+    if (resetKey > 0) map.flyTo(NORTH_TEXAS, 8, { duration: 0.8 });
+  }, [resetKey, map]);
   return null;
 }
 
@@ -116,6 +125,13 @@ export default function PickField() {
   const [geo, setGeo] = useState(null); // null | 'locating' | 'denied' | 'unavailable' | 'timeout' | 'unsupported'
   const tapPick = (lat, lon) => { setVia('tap'); setGeo(null); pickField(lat, lon); };
   const dotPick = (id) => { setVia('dot'); setGeo(null); pickFieldById(id); };
+  // Back to the region view so the farmer can choose another field. The current field stays loaded until they do.
+  const [resetKey, setResetKey] = useState(0);
+  const mapCardRef = useRef(null);
+  const backToMap = () => {
+    setResetKey((k) => k + 1);
+    mapCardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
   const dotLabel = (f) => t('pick.dotLabel', { id: f.id, county: f.county });
 
   // Privacy: the GPS point exists only inside this callback. It goes to pickField() to find the nearest sampled
@@ -140,9 +156,9 @@ export default function PickField() {
       <PageHead title={t('pick.title')} intro={t('pick.intro')} />
 
       <div className="split split-map">
-      <section className="card card-flush map-card" aria-label={t('pick.mapLabel')}>
+      <section ref={mapCardRef} className="card card-flush map-card" aria-label={t('pick.mapLabel')}>
         {online ? (
-          <MapContainer center={NORTH_TEXAS} zoom={8} scrollWheelZoom={false} className="map">
+          <MapContainer center={NORTH_TEXAS} zoom={8} scrollWheelZoom zoomSnap={0.5} zoomDelta={1} wheelPxPerZoomLevel={100} className="map">
             <FitOnResize />
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -151,6 +167,7 @@ export default function PickField() {
             <ClickToPick onPick={tapPick} />
             <SampledDots selectedId={field?.field?.id} onPick={dotPick} label={dotLabel} />
             <FlyToField field={field} />
+            <ResetView resetKey={resetKey} />
             {cell && <Rectangle bounds={cell} pathOptions={{ color: '#1f5130', weight: 4, fillOpacity: 0.3 }} />}
           </MapContainer>
         ) : (
@@ -208,6 +225,11 @@ export default function PickField() {
           <button type="button" className="btn btn-primary btn-block" onClick={() => setScreen('farm')}>
             {t('pick.continue')}<ArrowRight size={20} aria-hidden="true" />
           </button>
+          {online && (
+            <button type="button" className="btn btn-block" onClick={backToMap}>
+              <ArrowLeft size={20} aria-hidden="true" />{t('pick.pickAnother')}
+            </button>
+          )}
         </>
       )}
       </div>
