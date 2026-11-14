@@ -82,3 +82,61 @@ Empty cell = no valid data that month. All rows have `year` and, for monthly fil
 | `imerg_monthly.csv` | `precipMm` | GPM IMERG V07 monthly total |
 | `terrain.csv` | `elevationM, slopePct` | One row. SRTM 30 m |
 | `nass_crop_progress_tx_monthly.csv` | `crop, stage, pctMean, pctEndOfMonth, weeks` | Texas statewide weekly Crop Progress, averaged by month |
+
+## Multi-field CSVs (`/pipeline/data/fields/`)
+From `pipeline/sample_fields.py`: 200 random North Texas cropland pixels plus the demo field. Same as above,
+plus a `fieldId` column. 30 m datasets are averaged over a 45 m buffer. Coarse grids (SMAP, IMERG) are sampled at the point.
+
+| File | Columns | Notes |
+|---|---|---|
+| `fields.csv` | `fieldId, lon, lat, county` | CDL pixel centers chosen by us (never farmer GPS). `nt-001`… plus `demo-ellis-001` |
+| `cdl.csv` | `fieldId, year, code` | CDL mode class, 2008–2025 |
+| `landsat_monthly.csv` | `fieldId, year, month, scenes, ndvi, ndti, bsi` | As `landsat_monthly.csv` above |
+| `power_monthly.csv` | `fieldId, powerCell, year, month, tMaxC, tMinC, precipMm, heatStressDays` | POWER daily, aggregated |
+| `smap_monthly.csv` | `fieldId, year, month, days, sm_surface, sm_rootzone` | SMAP L4 v008, 2015– |
+| `imerg_monthly.csv` | `fieldId, year, month, precipMm` | IMERG V07 monthly |
+| `imerg_storms_monthly.csv` | `fieldId, year, month, stormDays` | Days with ≥ 25 mm (half-hourly IMERG summed by UTC day) |
+| `modis_et_monthly.csv` | `fieldId, year, month, composites, etMm, petMm` | MOD16A2GF, sum of 8-day composites starting in the month |
+
+## SI results (`/shared/si/`)
+One small JSON per field (`<fieldId>.json`) plus `index.json`, written by `pipeline/models/export_si.py`.
+How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVersion` is `1`.
+
+### Top level
+| Key | Type | Notes |
+|---|---|---|
+| `schemaVersion` | number | `1` |
+| `fieldId`, `county`, `state`, `lat`, `lon` | | Sample pixel center, not a farmer's position |
+| `generated` | string | ISO date |
+| `models` | object | Held-out (leave-one-year-out) scores. Same in every file. See below |
+| `years[]` | array | One entry per field-year, 2008–2025 |
+| `yearTypes[]` | array | `{ year, yearType }` from the k-means model, 1984–2025. `yearType` is `drought` \| `wet` \| `heat` \| `normal`. Same for every field (one POWER cell) |
+| `replayPresets[]` | array | `{ year, yearType, severityZ }`: the worst past years for "bad-year replay" (e.g. 2011 drought) |
+
+### `models`
+| Key | Notes |
+|---|---|
+| `seasonCrop` | `approach`, `heldOutAccuracy`, `heldOutBalancedAccuracy`, `baselineAccuracy` (same crop as last year), `years`, `nFieldYears` |
+| `vegStress` | `approach`, `presentAs: "weatherRiskSignal"`, `confidence: "low"`, `heldOutR2`, `heldOutBelowNormalBalancedAccuracy`, `showSignalFor` (crop classes where it beat "always normal"), `perCrop` |
+| `yearPatterns` | `approach: "kmeans"`, `heldOutStability`, `years` |
+
+### `years[]`
+| Key | Type | Notes |
+|---|---|---|
+| `year` | number | |
+| `cdlClass` | string | CDL label grouped: `corn`, `cotton`, `grain_sorghum`, `soybeans`, `winter_wheat`, `small_grain`, `fallow`, `double_crop`, `other`. Can be wrong (CDL label noise) |
+| `predictedClass` | string | Model 1 prediction from a model that **did not see this year**. Never `double_crop` |
+| `correct` | boolean \| null | Prediction = CDL. `null` for double-crop years |
+| `doubleCropCdl` | boolean | CDL says double-cropped. Not modeled (too few examples). Show as "detected by CDL" |
+| `doubleCropConfidence` | `"low"` \| null | |
+| `fallow` | boolean | Model 1 predicted fallow |
+| `months` | string[12] | `green` (NDVI ≥ 0.40), `residue` (0.25–0.40: sparse cover, stubble or residue), `bare` (NDVI < 0.25) |
+| `greenDays`, `residueDays`, `bareDays` | number | Days per state (monthly values interpolated to daily). `bareDays` matches `bareDaysPerYear` |
+| `bareDaysScore` | number | 0–100, `100 × (1 − bareDays / 365)`. Higher = more ground cover |
+| `filledMonths` | number | Cloudy months filled by interpolation (lower confidence) |
+| `greenUpDoy`, `senescenceDoy` | number \| null | Day of year. Only for corn, cotton, sorghum, soybeans with a clear season. ±15 days or more |
+| `cropDriver` | object \| null | SHAP top driver for the crop call: `{ key, params, text }`. `key` is an i18n key (`si.driver.ndviMonth`, `si.driver.bsiMonth`, `si.driver.ndtiMonth`, `si.driver.ndvi_spring_minus_summer`, …), `params.month` 1–12. `text` is English, for debugging only |
+| `yearType` | string \| null | From `yearTypes` |
+| `stressMonths` | number[] \| null | Months (Apr–Sep, 2015–) where NDVI was below normal (z < −0.5) |
+| `predictedStressMonths` | number[] \| null | Months the weather risk signal flagged (held-out). Show only if `cdlClass` is in `models.vegStress.showSignalFor`; otherwise show "Weather alone doesn't predict stress well for this crop" |
+| `stressDriver` | object \| null | SHAP: the input that pushed greenness down most that season. `{ key: "si.driver.<feature>", params: { month, direction: "low" \| "high" }, text }` |

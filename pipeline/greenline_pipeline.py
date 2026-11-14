@@ -28,7 +28,8 @@ load_dotenv(ROOT / ".env")
 EE_PROJECT = "skillful-cider-490516-f6"
 
 # Demo field: a cultivated cropland pixel in Ellis County, TX (Blackland Prairie,
-# between Italy and Avalon). Confirmed as cropland in the CDL by the `cdl` step.
+# between Italy and Avalon). NOTE: CDL labels this pixel grassland/pasture (176) in 2008-2024, so it is
+# NOT cropland. See pipeline/MODELS.md; nearby cropland samples: nt-141, nt-103.
 FIELD = {
     "id": "demo-ellis-001",
     "county": "Ellis",
