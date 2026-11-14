@@ -70,7 +70,7 @@
     "summaryTitle": "Your field at a glance",
     "location": "Location",
     "countyValue": "{county} County, {state}",
-    "cellDetail": "Map square {cell} (30 m)",
+    "cellDetail": "Data for a 30 m (100 ft) square of this field",
     "soil": "Soil",
     "soilValue": "{texture}, {drainage}",
     "soilDetail": "{series} series · {om}% organic matter · hydrologic group {group}",
@@ -88,18 +88,19 @@
     "emptySummary": "Tap your field on the map, or load the demo field (real NASA data) to try the app.",
     "loadDemo": "Load the demo field",
     "loading": "Loading…",
-    "nearest": "Nearest sampled field ({id}), {km} km from your tap. Real data for every field is coming.",
+    "nearest": "Showing the closest field we have data for, {km} km from where you tapped. Data for every field is coming.",
     "fallback": "We couldn’t load real data for this field, so this is the fake sample field.",
     "useLocation": "Use my location",
     "locating": "Finding you…",
-    "nearestGps": "Nearest sampled field ({id}), {km} km from you. Your location was used once to find it and was not saved.",
+    "nearestGps": "Showing the closest field we have data for, {km} km from you. Your location was used once to find it and was not saved.",
     "farAway": "The closest field we have data for is {km} km away, so it may not look like yours. Use it as an example, not as your field.",
     "geo": {
       "denied": "Location is turned off for this site. You can allow it in your browser settings, or tap the map instead.",
       "unavailable": "We couldn’t find your location right now. Try again outside, or tap the map instead.",
       "timeout": "Finding your location took too long. Try again, or tap the map instead.",
       "unsupported": "This browser or connection can’t share your location. Tap the map instead."
-    }
+    },
+    "pickAnother": "Pick a different field"
   },
   "farm": {
     "title": "Your farm",

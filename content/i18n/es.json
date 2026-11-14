@@ -70,7 +70,7 @@
     "summaryTitle": "Su parcela de un vistazo",
     "location": "Ubicación",
     "countyValue": "Condado de {county}, {state}",
-    "cellDetail": "Cuadro del mapa {cell} (30 m)",
+    "cellDetail": "Datos de un cuadro de 30 m (100 pies) de este campo",
     "soil": "Suelo",
     "soilValue": "{texture}, {drainage}",
     "soilDetail": "Serie {series} · {om}% de materia orgánica · grupo hidrológico {group}",
@@ -88,18 +88,19 @@
     "emptySummary": "Toque su campo en el mapa o cargue el campo de demostración (datos reales de la NASA) para probar la app.",
     "loadDemo": "Cargar el campo de demostración",
     "loading": "Cargando…",
-    "nearest": "Campo de muestra más cercano ({id}), a {km} km de donde tocó. Pronto habrá datos reales para cada campo.",
+    "nearest": "Mostramos el campo más cercano con datos, a {km} km de donde tocó. Pronto habrá datos para todos los campos.",
     "fallback": "No pudimos cargar datos reales para este campo, así que este es el campo de muestra ficticio.",
     "useLocation": "Usar mi ubicación",
     "locating": "Buscando su ubicación…",
-    "nearestGps": "Campo de muestra más cercano ({id}), a {km} km de usted. Su ubicación se usó una sola vez para encontrarlo y no se guardó.",
+    "nearestGps": "Mostramos el campo más cercano con datos, a {km} km de usted. Su ubicación se usó una vez para encontrarlo y no se guardó.",
     "farAway": "El campo más cercano con datos está a {km} km, así que puede no parecerse al suyo. Úselo como ejemplo, no como su campo.",
     "geo": {
       "denied": "La ubicación está desactivada para este sitio. Puede permitirla en los ajustes del navegador, o toque el mapa.",
       "unavailable": "No pudimos encontrar su ubicación ahora. Inténtelo al aire libre, o toque el mapa.",
       "timeout": "Encontrar su ubicación tardó demasiado. Inténtelo de nuevo, o toque el mapa.",
       "unsupported": "Este navegador o conexión no puede compartir su ubicación. Toque el mapa."
-    }
+    },
+    "pickAnother": "Elegir otro campo"
   },
   "farm": {
     "title": "Su granja",
