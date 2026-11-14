@@ -293,7 +293,18 @@
     "nitrogen": "Adds nitrogen",
     "cover": "Covers soil",
     "deepRoots": "Deep roots",
-    "diverse": "Diverse"
+    "diverse": "Diverse",
+    "droughtTolerant": "Drought-tolerant",
+    "pestBreak": "Breaks pest cycle",
+    "detailTitle": "Soil-health tags",
+    "explain": {
+      "nitrogen": "A legume pulls nitrogen out of the air and leaves some for the next crop.",
+      "cover": "A cover crop keeps living roots or residue on the soil between cash crops.",
+      "deepRoots": "Two or more deep-rooted crops open up the subsoil so water and roots can go deeper.",
+      "diverse": "Three or more different crops, so no single pest, disease or bad season hits everything.",
+      "droughtTolerant": "Every crop grown here handles dry spells well (low drought sensitivity).",
+      "pestBreak": "Grass crops and broadleaf crops take turns, which interrupts pests and diseases that build up on one plant family. Cover crops and fallow are not counted."
+    }
   },
   "reasons": {
     "ryeDryYear": "Texas Tech research in drought-hit West Texas: rye was the most reliable winter cover crop. It yielded even in a dry year and didn't reduce soil water for the next summer crop.",

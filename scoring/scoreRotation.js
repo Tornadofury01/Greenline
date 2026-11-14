@@ -41,6 +41,15 @@ const REPLAY_WEIGHT = 3; // when replaying a year, how it held up counts like a 
 const SELECTED_WEIGHT = 2; // priorities the farmer picked count double
 const OTHER_WEIGHT = 1;
 
+// Pest-cycle break: crops of one plant family share pests and diseases, so a different family between them interrupts the cycle.
+// True when the rotation has a grass crop AND a non-grass crop, and no crop is followed (looping back to the start) by one
+// of its own family. Fallow and cover crops are skipped: they are terminated early, so they count neither as hosts nor as breaks.
+export function breaksPestCycle(crops) {
+  const fam = crops.filter((c) => c.id !== 'fallow' && !c.coverCrop).map((c) => c.family);
+  if (fam.length < 2 || !fam.includes('grass') || fam.every((f) => f === 'grass')) return false;
+  return fam.every((f, i) => f !== fam[(i + 1) % fam.length]);
+}
+
 export function scoreRotation(rotation, field, priorities = [], constraints = {}, cropLibrary, options = {}) {
   const byId = Object.fromEntries(cropLibrary.crops.map((c) => [c.id, c]));
   const crops = rotation.crops.map((id) => byId[id]).filter(Boolean);
@@ -101,6 +110,10 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   if (crops.some((c) => c.coverCrop)) tags.push('cover');
   if (crops.filter((c) => c.rootDepth === 'deep').length >= 2) tags.push('deepRoots');
   if (new Set(crops.map((c) => c.id)).size >= 3) tags.push('diverse');
+  // Drought-tolerant: every crop actually grown has low drought sensitivity in crops.json (FAO water-shortage class).
+  const grown = crops.filter((c) => c.id !== 'fallow');
+  if (grown.length && grown.every((c) => c.droughtSensitivity <= 2)) tags.push('droughtTolerant');
+  if (breaksPestCycle(crops)) tags.push('pestBreak');
 
   // 6. "Why" = reasons from the farmer's priorities (or all, if none picked).
   const focus = priorities.length ? priorities : PRIORITIES;

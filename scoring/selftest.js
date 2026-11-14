@@ -65,4 +65,16 @@ check(covR(2007).replay.bareDays.bareDays === covR(null).bareDays.bareDays, 'wet
 check(scoreRotation({ crops: ['corn', 'cotton'] }, real, [], {}, lib, { replayYear: 2011 }).replay.coverPartial === false, 'no covers: nothing changes in a drought replay');
 check(plain.gaps.some((g) => g.key === 'gaps.sensorChange'), 'sensor-change gap shown with bare-day numbers');
 
+// Soil-health tags: drought-tolerant and pest-cycle break.
+const tagsOf = (crops) => scoreRotation({ crops }, real, [], {}, lib).tags;
+check(tagsOf(['sesame', 'cowpea']).includes('droughtTolerant'), 'tags: sesame/cowpea is drought-tolerant');
+check(!tagsOf(['corn', 'winter_wheat']).includes('droughtTolerant'), 'tags: corn (drought-sensitive 4) is not drought-tolerant');
+check(!tagsOf(['fallow']).includes('droughtTolerant'), 'tags: fallow alone is not drought-tolerant');
+check(tagsOf(['sesame', 'winter_wheat', 'cowpea']).includes('pestBreak'), 'tags: sesame / wheat / cowpea breaks the pest cycle');
+check(tagsOf(['grain_sorghum', 'cotton']).includes('pestBreak'), 'tags: sorghum then cotton alternates grass and mallow');
+check(!tagsOf(['corn', 'corn']).includes('pestBreak'), 'tags: corn after corn is not a pest break');
+check(!tagsOf(['corn', 'winter_wheat', 'grain_sorghum']).includes('pestBreak'), 'tags: all grasses is not a pest break');
+check(!tagsOf(['cotton', 'cotton']).includes('pestBreak'), 'tags: cotton after cotton is not a pest break');
+check(!tagsOf(['winter_wheat', 'cotton', 'cotton']).includes('pestBreak'), 'tags: back-to-back cotton inside a longer rotation fails');
+
 process.exit(failed ? 1 : 0);

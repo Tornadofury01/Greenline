@@ -3,7 +3,7 @@
 import { useId, useState } from 'react';
 import {
   Award, ChevronDown, ArrowUp, ArrowDown, Minus, ArrowRight, CircleCheck, CircleMinus,
-  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun,
+  TriangleAlert, Lightbulb, Sprout, Layers, ArrowDownToLine, Shuffle, Database, BrainCircuit, CloudSun, Droplet, Bug,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { formatReason } from '../i18n.js';
@@ -14,7 +14,7 @@ import CoverStrip from './CoverStrip.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
 import { cropInsight, cropDriverText, stressDriverText, modelSummary } from '../si.js';
 
-const TAG_ICON = { nitrogen: Sprout, cover: Layers, deepRoots: ArrowDownToLine, diverse: Shuffle };
+const TAG_ICON = { nitrogen: Sprout, cover: Layers, deepRoots: ArrowDownToLine, diverse: Shuffle, droughtTolerant: Droplet, pestBreak: Bug };
 
 export function CropSteps({ crops }) {
   const { t } = useApp();
@@ -182,7 +182,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           <ConfidenceBadge level={result.confidence.level} />
           {result.tags.map((tag) => {
             const Icon = TAG_ICON[tag];
-            return <span key={tag} className="badge"><Icon size={14} aria-hidden="true" />{t(`tags.${tag}`)}</span>;
+            return <span key={tag} className="badge" title={t(`tags.explain.${tag}`)}><Icon size={14} aria-hidden="true" />{t(`tags.${tag}`)}</span>;
           })}
         </div>
         <Delta value={delta} />
@@ -203,6 +203,22 @@ export default function RotationCard({ result, label, name, best = false, delta 
               <IconList items={rp.reasons} Icon={Lightbulb} tone="info" />
               {rp.coverPartial && <p className="muted small">{t('replayUi.coverRule')}</p>}
               <p className="muted small">{t('replayUi.note')}</p>
+            </section>
+          )}
+          {result.tags.length > 0 && (
+            <section className="detail">
+              <h4>{t('tags.detailTitle')}</h4>
+              <ul className="icon-list">
+                {result.tags.map((tag) => {
+                  const Icon = TAG_ICON[tag];
+                  return (
+                    <li key={tag}>
+                      <Icon size={18} className="ok" aria-hidden="true" />
+                      <span><strong>{t(`tags.${tag}`)}.</strong> {t(`tags.explain.${tag}`)}</span>
+                    </li>
+                  );
+                })}
+              </ul>
             </section>
           )}
           <section className="detail">

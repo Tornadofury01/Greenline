@@ -293,7 +293,18 @@
     "nitrogen": "Aporta nitrógeno",
     "cover": "Cubre el suelo",
     "deepRoots": "Raíces profundas",
-    "diverse": "Diversa"
+    "diverse": "Diversa",
+    "droughtTolerant": "Tolera la sequía",
+    "pestBreak": "Rompe el ciclo de plagas",
+    "detailTitle": "Etiquetas de salud del suelo",
+    "explain": {
+      "nitrogen": "Una leguminosa toma nitrógeno del aire y deja parte para el siguiente cultivo.",
+      "cover": "Un cultivo de cobertura mantiene raíces vivas o residuos sobre el suelo entre cultivos comerciales.",
+      "deepRoots": "Dos o más cultivos de raíz profunda abren el subsuelo para que el agua y las raíces lleguen más hondo.",
+      "diverse": "Tres o más cultivos distintos, así una sola plaga, enfermedad o mala temporada no afecta todo.",
+      "droughtTolerant": "Todos los cultivos aguantan bien los períodos secos (baja sensibilidad a la sequía).",
+      "pestBreak": "Se alternan cultivos de pasto y de hoja ancha, lo que interrumpe las plagas y enfermedades que se acumulan en una sola familia de plantas. No cuentan los cultivos de cobertura ni el barbecho."
+    }
   },
   "reasons": {
     "ryeDryYear": "Investigación de Texas Tech en el oeste de Texas con sequía: el centeno fue el cultivo de cobertura de invierno más confiable. Produjo incluso en un año seco y no redujo el agua del suelo para el siguiente cultivo de verano.",
