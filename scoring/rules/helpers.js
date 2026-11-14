@@ -13,3 +13,18 @@ export function recentBareDays(field) {
   return b.length ? Math.round(avg(b.map((x) => x.days))) : null;
 }
 export const droughtYears = (field) => field.climateYearly.filter((y) => y.yearType === 'drought').length;
+
+// Crop water need on a 1-5 scale, from the midpoint of the FAO seasonal range (crops.json seasonalWaterMm).
+// Mapping (docs/crop-traits-verification.md): <475 mm -> 1, <600 -> 2, <=800 -> 3, <1050 -> 4, else 5. Fallow = 0.
+export function waterNeed(crop) {
+  const [lo, hi] = crop.seasonalWaterMm || [0, 0];
+  const mid = (lo + hi) / 2;
+  if (mid === 0) return 0;
+  if (mid < 475) return 1;
+  if (mid < 600) return 2;
+  if (mid <= 800) return 3;
+  if (mid < 1050) return 4;
+  return 5;
+}
+// "Thirsty" = a lot of water over the season OR yield badly hurt by a dry spell (corn).
+export const isThirsty = (crop) => waterNeed(crop) >= 4 || (crop.droughtSensitivity || 0) >= 4;

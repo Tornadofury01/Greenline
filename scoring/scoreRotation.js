@@ -68,6 +68,9 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
     risks.push(reason('risks.heat', { crops: [...new Set(heatSensitive.map((c) => c.id))], count: hotYears, total: nYears },
       ['NASA POWER', 'Greenline SI models']));
   }
+  // Contract-only or regionally uncommon crops (e.g. sesame in the Blackland Prairie, per AgriLife).
+  const contract = crops.filter((c) => c.contractOnly || c.regionalFit === 'uncommon');
+  if (contract.length) risks.push(reason('risks.contractCrop', { crops: [...new Set(contract.map((c) => c.id))] }, ['Texas A&M AgriLife']));
   if (crops.some((c) => c.id === 'fallow')) risks.push(reason('risks.bare', {}, ['Landsat 5/7/8/9']));
   // CDL can mislabel crops, which affects crop history and the crop model. Shown as a gap so it isn't hidden.
   if (field.si) gaps.push(reason('gaps.cdlNoise', {}, ['USDA Cropland Data Layer']));

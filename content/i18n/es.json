@@ -314,7 +314,8 @@
   "risks": {
     "thirstyDryland": "{crops} necesitan mucha agua para temporal.",
     "heat": "{crops} pueden sufrir con el calor. {count} de {total} años aquí fueron de calor o sequía.",
-    "bare": "El barbecho deja el suelo desnudo."
+    "bare": "El barbecho deja el suelo desnudo.",
+    "contractCrop": "{crops}: se cultiva solo por contrato y no es común en esta región. Consulte con un comprador y su agente del condado."
   },
   "confidence": {
     "longClimate": "{count} años de datos climáticos de su parcela.",

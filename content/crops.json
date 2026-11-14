@@ -1,18 +1,43 @@
 {
-  "_note": "PLACEHOLDER trait values. Every number must be verified with Texas A&M AgriLife / NRCS before real use. Names and descriptions live in /content/i18n under crops.<id>.",
+  "_note": "Trait values are still NOT fully verified (see docs/crop-traits-verification.md). Each crop's `sources` maps a trait to the reference ids in `sourceRefs` that support it; a trait missing from `sources` is unverified. 1-5 scales are Greenline's own scales mapped from the sources. Names and descriptions live in /content/i18n under crops.<id>.",
   "verified": false,
+  "sourceRefs": {
+    "fao-cwn": "FAO, Irrigation Water Management Training Manual No. 3: Crop Water Needs, Tables 4-5. https://www.fao.org/3/s2022e/s2022e02.htm",
+    "fao-56": "FAO Irrigation and Drainage Paper 56, Chapter 8, Table 22 (max effective rooting depth). https://www.fao.org/3/x0490e/x0490e0e.htm",
+    "sare-mccp": "SARE, Managing Cover Crops Profitably, Chart 2: Performance and Roles. https://www.sare.org/wp-content/uploads/chart2-performance-and-roles.pdf",
+    "nrcs-cowpea": "USDA NRCS, Cowpea Crop Fact Sheet. https://www.nrcs.usda.gov/sites/default/files/2024-04/Cowpea%20Crop%20Fact%20Sheet.pdf",
+    "agrilife-sesame": "Texas A&M AgriLife, Expanded Sesame Opportunities in Texas (2022). https://agrilife.org/texasrowcrops/2022/03/04/expanded-sesame-opportunities-in-texas/"
+  },
+  "_fields": {
+    "seasonalWaterMm": "[min, max] seasonal crop water need in mm (FAO). Scoring maps the midpoint to a 1-5 water-need scale.",
+    "droughtSensitivity": "1-5: how badly a dry spell hurts yield (5 = very sensitive, e.g. corn at pollination).",
+    "nFixLbPerAcre": "[min, max] lb N/acre/yr fixed (SARE). [0, 0] for non-legumes, null when unknown. Used for the fertilizer-saved estimate.",
+    "contractOnly": "true when the crop is normally grown only under a buyer contract.",
+    "regionalFit": "\"common\" or \"uncommon\" for North Texas Blackland Prairie."
+  },
   "crops": [
-    { "id": "winter_wheat", "season": "cool", "waterUse": 2, "heatTolerance": 2, "rootDepth": "medium", "nitrogenFixing": false, "coverCrop": false, "forageValue": 4, "erosionProtection": 4, "marketType": "grain" },
-    { "id": "grain_sorghum", "season": "warm", "waterUse": 2, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 3, "erosionProtection": 3, "marketType": "grain" },
-    { "id": "cotton", "season": "warm", "waterUse": 3, "heatTolerance": 4, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 1, "erosionProtection": 1, "marketType": "fiber" },
-    { "id": "corn", "season": "warm", "waterUse": 5, "heatTolerance": 2, "rootDepth": "medium", "nitrogenFixing": false, "coverCrop": false, "forageValue": 3, "erosionProtection": 2, "marketType": "grain" },
-    { "id": "cowpea", "season": "warm", "waterUse": 1, "heatTolerance": 5, "rootDepth": "medium", "nitrogenFixing": true, "coverCrop": true, "forageValue": 3, "erosionProtection": 3, "marketType": "cover" },
-    { "id": "cereal_rye", "season": "cool", "waterUse": 2, "heatTolerance": 1, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": true, "forageValue": 3, "erosionProtection": 5, "marketType": "cover" },
-    { "id": "hairy_vetch", "season": "cool", "waterUse": 2, "heatTolerance": 1, "rootDepth": "medium", "nitrogenFixing": true, "coverCrop": true, "forageValue": 2, "erosionProtection": 3, "marketType": "cover" },
-    { "id": "sorghum_sudangrass", "season": "warm", "waterUse": 2, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": true, "forageValue": 5, "erosionProtection": 4, "marketType": "forage" },
-    { "id": "alfalfa", "season": "perennial", "waterUse": 4, "heatTolerance": 3, "rootDepth": "deep", "nitrogenFixing": true, "coverCrop": false, "forageValue": 5, "erosionProtection": 5, "marketType": "forage" },
-    { "id": "sunflower", "season": "warm", "waterUse": 2, "heatTolerance": 4, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 1, "erosionProtection": 2, "marketType": "oilseed" },
-    { "id": "sesame", "season": "warm", "waterUse": 1, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 1, "erosionProtection": 2, "marketType": "oilseed" },
-    { "id": "fallow", "season": "any", "waterUse": 0, "heatTolerance": 5, "rootDepth": "none", "nitrogenFixing": false, "coverCrop": false, "forageValue": 0, "erosionProtection": 0, "marketType": "none" }
+    { "id": "winter_wheat", "season": "cool", "seasonalWaterMm": [450, 650], "droughtSensitivity": 2, "heatTolerance": 2, "rootDepth": "deep", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 4, "erosionProtection": 4, "marketType": "grain", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"] } },
+    { "id": "grain_sorghum", "season": "warm", "seasonalWaterMm": [450, 650], "droughtSensitivity": 1, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 3, "erosionProtection": 3, "marketType": "grain", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"] } },
+    { "id": "cotton", "season": "warm", "seasonalWaterMm": [700, 1300], "droughtSensitivity": 2, "heatTolerance": 4, "rootDepth": "medium", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 1, "erosionProtection": 1, "marketType": "fiber", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"] } },
+    { "id": "corn", "season": "warm", "seasonalWaterMm": [500, 800], "droughtSensitivity": 5, "heatTolerance": 2, "rootDepth": "medium", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 3, "erosionProtection": 2, "marketType": "grain", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"] } },
+    { "id": "cowpea", "season": "warm", "seasonalWaterMm": [300, 500], "droughtSensitivity": 1, "heatTolerance": 5, "rootDepth": "medium", "nitrogenFixing": true, "nFixLbPerAcre": [100, 150], "coverCrop": true, "forageValue": 4, "erosionProtection": 3, "marketType": "cover", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"], "nFixLbPerAcre": ["sare-mccp"], "droughtSensitivity": ["nrcs-cowpea"], "forageValue": ["nrcs-cowpea"], "erosionProtection": ["nrcs-cowpea"] } },
+    { "id": "cereal_rye", "season": "cool", "seasonalWaterMm": [450, 650], "droughtSensitivity": 2, "heatTolerance": 1, "rootDepth": "deep", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": true, "forageValue": 3, "erosionProtection": 5, "marketType": "cover", "contractOnly": false, "regionalFit": "common",
+      "sources": { "erosionProtection": ["sare-mccp"] } },
+    { "id": "hairy_vetch", "season": "cool", "seasonalWaterMm": [450, 650], "droughtSensitivity": 3, "heatTolerance": 1, "rootDepth": "medium", "nitrogenFixing": true, "nFixLbPerAcre": [90, 200], "coverCrop": true, "forageValue": 2, "erosionProtection": 3, "marketType": "cover", "contractOnly": false, "regionalFit": "common",
+      "sources": { "nFixLbPerAcre": ["sare-mccp"] } },
+    { "id": "sorghum_sudangrass", "season": "warm", "seasonalWaterMm": [450, 650], "droughtSensitivity": 1, "heatTolerance": 5, "rootDepth": "medium", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": true, "forageValue": 5, "erosionProtection": 4, "marketType": "forage", "contractOnly": false, "regionalFit": "common",
+      "sources": { "forageValue": ["sare-mccp"], "rootDepth": ["fao-56"] } },
+    { "id": "alfalfa", "season": "perennial", "seasonalWaterMm": [800, 1600], "droughtSensitivity": 3, "heatTolerance": 3, "rootDepth": "deep", "nitrogenFixing": true, "nFixLbPerAcre": null, "coverCrop": false, "forageValue": 5, "erosionProtection": 5, "marketType": "forage", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"] } },
+    { "id": "sunflower", "season": "warm", "seasonalWaterMm": [600, 1000], "droughtSensitivity": 2, "heatTolerance": 4, "rootDepth": "medium", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 1, "erosionProtection": 2, "marketType": "oilseed", "contractOnly": false, "regionalFit": "common",
+      "sources": { "seasonalWaterMm": ["fao-cwn"], "rootDepth": ["fao-56"] } },
+    { "id": "sesame", "season": "warm", "seasonalWaterMm": [300, 500], "droughtSensitivity": 1, "heatTolerance": 5, "rootDepth": "medium", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 1, "erosionProtection": 2, "marketType": "oilseed", "contractOnly": true, "regionalFit": "uncommon",
+      "sources": { "seasonalWaterMm": ["agrilife-sesame"], "droughtSensitivity": ["agrilife-sesame"], "heatTolerance": ["agrilife-sesame"], "rootDepth": ["fao-56"], "contractOnly": ["agrilife-sesame"], "regionalFit": ["agrilife-sesame"] } },
+    { "id": "fallow", "season": "any", "seasonalWaterMm": [0, 0], "droughtSensitivity": 0, "heatTolerance": 5, "rootDepth": "none", "nitrogenFixing": false, "nFixLbPerAcre": [0, 0], "coverCrop": false, "forageValue": 0, "erosionProtection": 0, "marketType": "none", "contractOnly": false, "regionalFit": "common", "sources": {} }
   ]
 }

@@ -314,7 +314,8 @@
   "risks": {
     "thirstyDryland": "{crops} need a lot of water for dryland.",
     "heat": "{crops} can suffer in heat. {count} of {total} years here were hot or drought years.",
-    "bare": "Fallow leaves the ground bare."
+    "bare": "Fallow leaves the ground bare.",
+    "contractCrop": "{crops}: grown by contract only and not a common crop in this region. Check with a buyer and your county agent."
   },
   "confidence": {
     "longClimate": "{count} years of climate data for your field.",
