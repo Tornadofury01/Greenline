@@ -1,0 +1,1647 @@
+{
+ "schemaVersion": 1,
+ "isSampleData": true,
+ "field": {
+  "id": "sample-denton-001",
+  "county": "Denton",
+  "state": "TX",
+  "gridCell": "L30-TX121-04417-08823",
+  "lat": 33.2655,
+  "lon": -97.188
+ },
+ "soil": {
+  "seriesName": "Sanger",
+  "texture": "clay",
+  "drainageClass": "well drained",
+  "organicMatterPct": 1.8,
+  "hydrologicGroup": "D"
+ },
+ "terrain": {
+  "slopePct": 2.4
+ },
+ "cropHistory": [
+  {
+   "year": 2016,
+   "crop": "winter_wheat"
+  },
+  {
+   "year": 2017,
+   "crop": "grain_sorghum"
+  },
+  {
+   "year": 2018,
+   "crop": "winter_wheat"
+  },
+  {
+   "year": 2019,
+   "crop": "cotton"
+  },
+  {
+   "year": 2020,
+   "crop": "winter_wheat"
+  },
+  {
+   "year": 2021,
+   "crop": "grain_sorghum"
+  },
+  {
+   "year": 2022,
+   "crop": "cotton"
+  },
+  {
+   "year": 2023,
+   "crop": "winter_wheat"
+  },
+  {
+   "year": 2024,
+   "crop": "grain_sorghum"
+  },
+  {
+   "year": 2025,
+   "crop": "winter_wheat"
+  }
+ ],
+ "climateYearly": [
+  {
+   "year": 2005,
+   "precipMm": 860,
+   "heatStressDays": 26,
+   "frostFreeDays": 240,
+   "soilMoistureAnomaly": -0.02,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2006,
+   "precipMm": 394,
+   "heatStressDays": 66,
+   "frostFreeDays": 235,
+   "soilMoistureAnomaly": -0.28,
+   "heavyStormDays": 2,
+   "yearType": "drought"
+  },
+  {
+   "year": 2007,
+   "precipMm": 1203,
+   "heatStressDays": 19,
+   "frostFreeDays": 243,
+   "soilMoistureAnomaly": 0.22,
+   "heavyStormDays": 9,
+   "yearType": "wet"
+  },
+  {
+   "year": 2008,
+   "precipMm": 890,
+   "heatStressDays": 24,
+   "frostFreeDays": 231,
+   "soilMoistureAnomaly": -0.03,
+   "heavyStormDays": 6,
+   "yearType": "normal"
+  },
+  {
+   "year": 2009,
+   "precipMm": 924,
+   "heatStressDays": 29,
+   "frostFreeDays": 240,
+   "soilMoistureAnomaly": -0.03,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2010,
+   "precipMm": 876,
+   "heatStressDays": 29,
+   "frostFreeDays": 234,
+   "soilMoistureAnomaly": 0,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2011,
+   "precipMm": 398,
+   "heatStressDays": 58,
+   "frostFreeDays": 225,
+   "soilMoistureAnomaly": -0.24,
+   "heavyStormDays": 3,
+   "yearType": "drought"
+  },
+  {
+   "year": 2012,
+   "precipMm": 794,
+   "heatStressDays": 50,
+   "frostFreeDays": 240,
+   "soilMoistureAnomaly": -0.11,
+   "heavyStormDays": 4,
+   "yearType": "heat"
+  },
+  {
+   "year": 2013,
+   "precipMm": 905,
+   "heatStressDays": 24,
+   "frostFreeDays": 232,
+   "soilMoistureAnomaly": 0.01,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2014,
+   "precipMm": 866,
+   "heatStressDays": 26,
+   "frostFreeDays": 228,
+   "soilMoistureAnomaly": 0,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2015,
+   "precipMm": 1213,
+   "heatStressDays": 13,
+   "frostFreeDays": 245,
+   "soilMoistureAnomaly": 0.22,
+   "heavyStormDays": 9,
+   "yearType": "wet"
+  },
+  {
+   "year": 2016,
+   "precipMm": 979,
+   "heatStressDays": 25,
+   "frostFreeDays": 239,
+   "soilMoistureAnomaly": -0.03,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2017,
+   "precipMm": 979,
+   "heatStressDays": 24,
+   "frostFreeDays": 239,
+   "soilMoistureAnomaly": -0.01,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2018,
+   "precipMm": 790,
+   "heatStressDays": 46,
+   "frostFreeDays": 241,
+   "soilMoistureAnomaly": -0.1,
+   "heavyStormDays": 3,
+   "yearType": "heat"
+  },
+  {
+   "year": 2019,
+   "precipMm": 1194,
+   "heatStressDays": 13,
+   "frostFreeDays": 238,
+   "soilMoistureAnomaly": 0.21,
+   "heavyStormDays": 9,
+   "yearType": "wet"
+  },
+  {
+   "year": 2020,
+   "precipMm": 921,
+   "heatStressDays": 26,
+   "frostFreeDays": 227,
+   "soilMoistureAnomaly": 0.04,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2021,
+   "precipMm": 952,
+   "heatStressDays": 24,
+   "frostFreeDays": 238,
+   "soilMoistureAnomaly": 0.03,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2022,
+   "precipMm": 423,
+   "heatStressDays": 65,
+   "frostFreeDays": 234,
+   "soilMoistureAnomaly": -0.24,
+   "heavyStormDays": 2,
+   "yearType": "drought"
+  },
+  {
+   "year": 2023,
+   "precipMm": 795,
+   "heatStressDays": 52,
+   "frostFreeDays": 240,
+   "soilMoistureAnomaly": -0.12,
+   "heavyStormDays": 5,
+   "yearType": "heat"
+  },
+  {
+   "year": 2024,
+   "precipMm": 924,
+   "heatStressDays": 24,
+   "frostFreeDays": 232,
+   "soilMoistureAnomaly": -0.02,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  },
+  {
+   "year": 2025,
+   "precipMm": 928,
+   "heatStressDays": 27,
+   "frostFreeDays": 226,
+   "soilMoistureAnomaly": 0,
+   "heavyStormDays": 5,
+   "yearType": "normal"
+  }
+ ],
+ "ndviMonthly": [
+  {
+   "year": 2005,
+   "month": 1,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2005,
+   "month": 2,
+   "ndvi": 0.43
+  },
+  {
+   "year": 2005,
+   "month": 3,
+   "ndvi": 0.54
+  },
+  {
+   "year": 2005,
+   "month": 4,
+   "ndvi": 0.62
+  },
+  {
+   "year": 2005,
+   "month": 5,
+   "ndvi": 0.52
+  },
+  {
+   "year": 2005,
+   "month": 6,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2005,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2005,
+   "month": 8,
+   "ndvi": 0.14
+  },
+  {
+   "year": 2005,
+   "month": 9,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2005,
+   "month": 10,
+   "ndvi": 0.23
+  },
+  {
+   "year": 2005,
+   "month": 11,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2005,
+   "month": 12,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2006,
+   "month": 1,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2006,
+   "month": 2,
+   "ndvi": 0.25
+  },
+  {
+   "year": 2006,
+   "month": 3,
+   "ndvi": 0.35
+  },
+  {
+   "year": 2006,
+   "month": 4,
+   "ndvi": 0.37
+  },
+  {
+   "year": 2006,
+   "month": 5,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2006,
+   "month": 6,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2006,
+   "month": 7,
+   "ndvi": 0.09
+  },
+  {
+   "year": 2006,
+   "month": 8,
+   "ndvi": 0.11
+  },
+  {
+   "year": 2006,
+   "month": 9,
+   "ndvi": 0.1
+  },
+  {
+   "year": 2006,
+   "month": 10,
+   "ndvi": 0.12
+  },
+  {
+   "year": 2006,
+   "month": 11,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2006,
+   "month": 12,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2007,
+   "month": 1,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2007,
+   "month": 2,
+   "ndvi": 0.41
+  },
+  {
+   "year": 2007,
+   "month": 3,
+   "ndvi": 0.56
+  },
+  {
+   "year": 2007,
+   "month": 4,
+   "ndvi": 0.61
+  },
+  {
+   "year": 2007,
+   "month": 5,
+   "ndvi": 0.49
+  },
+  {
+   "year": 2007,
+   "month": 6,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2007,
+   "month": 7,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2007,
+   "month": 8,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2007,
+   "month": 9,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2007,
+   "month": 10,
+   "ndvi": 0.25
+  },
+  {
+   "year": 2007,
+   "month": 11,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2007,
+   "month": 12,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2008,
+   "month": 1,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2008,
+   "month": 2,
+   "ndvi": 0.4
+  },
+  {
+   "year": 2008,
+   "month": 3,
+   "ndvi": 0.57
+  },
+  {
+   "year": 2008,
+   "month": 4,
+   "ndvi": 0.63
+  },
+  {
+   "year": 2008,
+   "month": 5,
+   "ndvi": 0.5
+  },
+  {
+   "year": 2008,
+   "month": 6,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2008,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2008,
+   "month": 8,
+   "ndvi": 0.14
+  },
+  {
+   "year": 2008,
+   "month": 9,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2008,
+   "month": 10,
+   "ndvi": 0.23
+  },
+  {
+   "year": 2008,
+   "month": 11,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2008,
+   "month": 12,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2009,
+   "month": 1,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2009,
+   "month": 2,
+   "ndvi": 0.4
+  },
+  {
+   "year": 2009,
+   "month": 3,
+   "ndvi": 0.56
+  },
+  {
+   "year": 2009,
+   "month": 4,
+   "ndvi": 0.62
+  },
+  {
+   "year": 2009,
+   "month": 5,
+   "ndvi": 0.48
+  },
+  {
+   "year": 2009,
+   "month": 6,
+   "ndvi": 0.27
+  },
+  {
+   "year": 2009,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2009,
+   "month": 8,
+   "ndvi": 0.13
+  },
+  {
+   "year": 2009,
+   "month": 9,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2009,
+   "month": 10,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2009,
+   "month": 11,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2009,
+   "month": 12,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2010,
+   "month": 1,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2010,
+   "month": 2,
+   "ndvi": 0.4
+  },
+  {
+   "year": 2010,
+   "month": 3,
+   "ndvi": 0.57
+  },
+  {
+   "year": 2010,
+   "month": 4,
+   "ndvi": 0.64
+  },
+  {
+   "year": 2010,
+   "month": 5,
+   "ndvi": 0.52
+  },
+  {
+   "year": 2010,
+   "month": 6,
+   "ndvi": 0.27
+  },
+  {
+   "year": 2010,
+   "month": 7,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2010,
+   "month": 8,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2010,
+   "month": 9,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2010,
+   "month": 10,
+   "ndvi": 0.22
+  },
+  {
+   "year": 2010,
+   "month": 11,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2010,
+   "month": 12,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2011,
+   "month": 1,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2011,
+   "month": 2,
+   "ndvi": 0.25
+  },
+  {
+   "year": 2011,
+   "month": 3,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2011,
+   "month": 4,
+   "ndvi": 0.37
+  },
+  {
+   "year": 2011,
+   "month": 5,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2011,
+   "month": 6,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2011,
+   "month": 7,
+   "ndvi": 0.09
+  },
+  {
+   "year": 2011,
+   "month": 8,
+   "ndvi": 0.1
+  },
+  {
+   "year": 2011,
+   "month": 9,
+   "ndvi": 0.09
+  },
+  {
+   "year": 2011,
+   "month": 10,
+   "ndvi": 0.13
+  },
+  {
+   "year": 2011,
+   "month": 11,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2011,
+   "month": 12,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2012,
+   "month": 1,
+   "ndvi": 0.34
+  },
+  {
+   "year": 2012,
+   "month": 2,
+   "ndvi": 0.42
+  },
+  {
+   "year": 2012,
+   "month": 3,
+   "ndvi": 0.55
+  },
+  {
+   "year": 2012,
+   "month": 4,
+   "ndvi": 0.63
+  },
+  {
+   "year": 2012,
+   "month": 5,
+   "ndvi": 0.52
+  },
+  {
+   "year": 2012,
+   "month": 6,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2012,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2012,
+   "month": 8,
+   "ndvi": 0.13
+  },
+  {
+   "year": 2012,
+   "month": 9,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2012,
+   "month": 10,
+   "ndvi": 0.22
+  },
+  {
+   "year": 2012,
+   "month": 11,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2012,
+   "month": 12,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2013,
+   "month": 1,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2013,
+   "month": 2,
+   "ndvi": 0.41
+  },
+  {
+   "year": 2013,
+   "month": 3,
+   "ndvi": 0.57
+  },
+  {
+   "year": 2013,
+   "month": 4,
+   "ndvi": 0.62
+  },
+  {
+   "year": 2013,
+   "month": 5,
+   "ndvi": 0.51
+  },
+  {
+   "year": 2013,
+   "month": 6,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2013,
+   "month": 7,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2013,
+   "month": 8,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2013,
+   "month": 9,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2013,
+   "month": 10,
+   "ndvi": 0.22
+  },
+  {
+   "year": 2013,
+   "month": 11,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2013,
+   "month": 12,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2014,
+   "month": 1,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2014,
+   "month": 2,
+   "ndvi": 0.43
+  },
+  {
+   "year": 2014,
+   "month": 3,
+   "ndvi": 0.57
+  },
+  {
+   "year": 2014,
+   "month": 4,
+   "ndvi": 0.62
+  },
+  {
+   "year": 2014,
+   "month": 5,
+   "ndvi": 0.48
+  },
+  {
+   "year": 2014,
+   "month": 6,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2014,
+   "month": 7,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2014,
+   "month": 8,
+   "ndvi": 0.15
+  },
+  {
+   "year": 2014,
+   "month": 9,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2014,
+   "month": 10,
+   "ndvi": 0.23
+  },
+  {
+   "year": 2014,
+   "month": 11,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2014,
+   "month": 12,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2015,
+   "month": 1,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2015,
+   "month": 2,
+   "ndvi": 0.4
+  },
+  {
+   "year": 2015,
+   "month": 3,
+   "ndvi": 0.56
+  },
+  {
+   "year": 2015,
+   "month": 4,
+   "ndvi": 0.61
+  },
+  {
+   "year": 2015,
+   "month": 5,
+   "ndvi": 0.51
+  },
+  {
+   "year": 2015,
+   "month": 6,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2015,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2015,
+   "month": 8,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2015,
+   "month": 9,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2015,
+   "month": 10,
+   "ndvi": 0.23
+  },
+  {
+   "year": 2015,
+   "month": 11,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2015,
+   "month": 12,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2016,
+   "month": 1,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2016,
+   "month": 2,
+   "ndvi": 0.44
+  },
+  {
+   "year": 2016,
+   "month": 3,
+   "ndvi": 0.53
+  },
+  {
+   "year": 2016,
+   "month": 4,
+   "ndvi": 0.6
+  },
+  {
+   "year": 2016,
+   "month": 5,
+   "ndvi": 0.5
+  },
+  {
+   "year": 2016,
+   "month": 6,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2016,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2016,
+   "month": 8,
+   "ndvi": 0.15
+  },
+  {
+   "year": 2016,
+   "month": 9,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2016,
+   "month": 10,
+   "ndvi": 0.24
+  },
+  {
+   "year": 2016,
+   "month": 11,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2016,
+   "month": 12,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2017,
+   "month": 1,
+   "ndvi": 0.34
+  },
+  {
+   "year": 2017,
+   "month": 2,
+   "ndvi": 0.44
+  },
+  {
+   "year": 2017,
+   "month": 3,
+   "ndvi": 0.55
+  },
+  {
+   "year": 2017,
+   "month": 4,
+   "ndvi": 0.6
+  },
+  {
+   "year": 2017,
+   "month": 5,
+   "ndvi": 0.5
+  },
+  {
+   "year": 2017,
+   "month": 6,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2017,
+   "month": 7,
+   "ndvi": 0.2
+  },
+  {
+   "year": 2017,
+   "month": 8,
+   "ndvi": 0.15
+  },
+  {
+   "year": 2017,
+   "month": 9,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2017,
+   "month": 10,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2017,
+   "month": 11,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2017,
+   "month": 12,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2018,
+   "month": 1,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2018,
+   "month": 2,
+   "ndvi": 0.44
+  },
+  {
+   "year": 2018,
+   "month": 3,
+   "ndvi": 0.56
+  },
+  {
+   "year": 2018,
+   "month": 4,
+   "ndvi": 0.64
+  },
+  {
+   "year": 2018,
+   "month": 5,
+   "ndvi": 0.51
+  },
+  {
+   "year": 2018,
+   "month": 6,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2018,
+   "month": 7,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2018,
+   "month": 8,
+   "ndvi": 0.15
+  },
+  {
+   "year": 2018,
+   "month": 9,
+   "ndvi": 0.15
+  },
+  {
+   "year": 2018,
+   "month": 10,
+   "ndvi": 0.23
+  },
+  {
+   "year": 2018,
+   "month": 11,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2018,
+   "month": 12,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2019,
+   "month": 1,
+   "ndvi": 0.33
+  },
+  {
+   "year": 2019,
+   "month": 2,
+   "ndvi": 0.41
+  },
+  {
+   "year": 2019,
+   "month": 3,
+   "ndvi": 0.55
+  },
+  {
+   "year": 2019,
+   "month": 4,
+   "ndvi": 0.63
+  },
+  {
+   "year": 2019,
+   "month": 5,
+   "ndvi": 0.51
+  },
+  {
+   "year": 2019,
+   "month": 6,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2019,
+   "month": 7,
+   "ndvi": 0.2
+  },
+  {
+   "year": 2019,
+   "month": 8,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2019,
+   "month": 9,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2019,
+   "month": 10,
+   "ndvi": 0.23
+  },
+  {
+   "year": 2019,
+   "month": 11,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2019,
+   "month": 12,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2020,
+   "month": 1,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2020,
+   "month": 2,
+   "ndvi": 0.43
+  },
+  {
+   "year": 2020,
+   "month": 3,
+   "ndvi": 0.53
+  },
+  {
+   "year": 2020,
+   "month": 4,
+   "ndvi": 0.63
+  },
+  {
+   "year": 2020,
+   "month": 5,
+   "ndvi": 0.49
+  },
+  {
+   "year": 2020,
+   "month": 6,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2020,
+   "month": 7,
+   "ndvi": 0.18
+  },
+  {
+   "year": 2020,
+   "month": 8,
+   "ndvi": 0.14
+  },
+  {
+   "year": 2020,
+   "month": 9,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2020,
+   "month": 10,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2020,
+   "month": 11,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2020,
+   "month": 12,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2021,
+   "month": 1,
+   "ndvi": 0.33
+  },
+  {
+   "year": 2021,
+   "month": 2,
+   "ndvi": 0.44
+  },
+  {
+   "year": 2021,
+   "month": 3,
+   "ndvi": 0.55
+  },
+  {
+   "year": 2021,
+   "month": 4,
+   "ndvi": 0.6
+  },
+  {
+   "year": 2021,
+   "month": 5,
+   "ndvi": 0.51
+  },
+  {
+   "year": 2021,
+   "month": 6,
+   "ndvi": 0.27
+  },
+  {
+   "year": 2021,
+   "month": 7,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2021,
+   "month": 8,
+   "ndvi": 0.13
+  },
+  {
+   "year": 2021,
+   "month": 9,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2021,
+   "month": 10,
+   "ndvi": 0.22
+  },
+  {
+   "year": 2021,
+   "month": 11,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2021,
+   "month": 12,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2022,
+   "month": 1,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2022,
+   "month": 2,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2022,
+   "month": 3,
+   "ndvi": 0.34
+  },
+  {
+   "year": 2022,
+   "month": 4,
+   "ndvi": 0.35
+  },
+  {
+   "year": 2022,
+   "month": 5,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2022,
+   "month": 6,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2022,
+   "month": 7,
+   "ndvi": 0.11
+  },
+  {
+   "year": 2022,
+   "month": 8,
+   "ndvi": 0.1
+  },
+  {
+   "year": 2022,
+   "month": 9,
+   "ndvi": 0.13
+  },
+  {
+   "year": 2022,
+   "month": 10,
+   "ndvi": 0.13
+  },
+  {
+   "year": 2022,
+   "month": 11,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2022,
+   "month": 12,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2023,
+   "month": 1,
+   "ndvi": 0.33
+  },
+  {
+   "year": 2023,
+   "month": 2,
+   "ndvi": 0.41
+  },
+  {
+   "year": 2023,
+   "month": 3,
+   "ndvi": 0.55
+  },
+  {
+   "year": 2023,
+   "month": 4,
+   "ndvi": 0.62
+  },
+  {
+   "year": 2023,
+   "month": 5,
+   "ndvi": 0.51
+  },
+  {
+   "year": 2023,
+   "month": 6,
+   "ndvi": 0.27
+  },
+  {
+   "year": 2023,
+   "month": 7,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2023,
+   "month": 8,
+   "ndvi": 0.14
+  },
+  {
+   "year": 2023,
+   "month": 9,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2023,
+   "month": 10,
+   "ndvi": 0.24
+  },
+  {
+   "year": 2023,
+   "month": 11,
+   "ndvi": 0.29
+  },
+  {
+   "year": 2023,
+   "month": 12,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2024,
+   "month": 1,
+   "ndvi": 0.34
+  },
+  {
+   "year": 2024,
+   "month": 2,
+   "ndvi": 0.42
+  },
+  {
+   "year": 2024,
+   "month": 3,
+   "ndvi": 0.55
+  },
+  {
+   "year": 2024,
+   "month": 4,
+   "ndvi": 0.61
+  },
+  {
+   "year": 2024,
+   "month": 5,
+   "ndvi": 0.48
+  },
+  {
+   "year": 2024,
+   "month": 6,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2024,
+   "month": 7,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2024,
+   "month": 8,
+   "ndvi": 0.17
+  },
+  {
+   "year": 2024,
+   "month": 9,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2024,
+   "month": 10,
+   "ndvi": 0.25
+  },
+  {
+   "year": 2024,
+   "month": 11,
+   "ndvi": 0.3
+  },
+  {
+   "year": 2024,
+   "month": 12,
+   "ndvi": 0.28
+  },
+  {
+   "year": 2025,
+   "month": 1,
+   "ndvi": 0.32
+  },
+  {
+   "year": 2025,
+   "month": 2,
+   "ndvi": 0.4
+  },
+  {
+   "year": 2025,
+   "month": 3,
+   "ndvi": 0.56
+  },
+  {
+   "year": 2025,
+   "month": 4,
+   "ndvi": 0.61
+  },
+  {
+   "year": 2025,
+   "month": 5,
+   "ndvi": 0.5
+  },
+  {
+   "year": 2025,
+   "month": 6,
+   "ndvi": 0.26
+  },
+  {
+   "year": 2025,
+   "month": 7,
+   "ndvi": 0.16
+  },
+  {
+   "year": 2025,
+   "month": 8,
+   "ndvi": 0.14
+  },
+  {
+   "year": 2025,
+   "month": 9,
+   "ndvi": 0.19
+  },
+  {
+   "year": 2025,
+   "month": 10,
+   "ndvi": 0.25
+  },
+  {
+   "year": 2025,
+   "month": 11,
+   "ndvi": 0.31
+  },
+  {
+   "year": 2025,
+   "month": 12,
+   "ndvi": 0.31
+  }
+ ],
+ "bareDaysPerYear": [
+  {
+   "year": 2005,
+   "days": 129
+  },
+  {
+   "year": 2006,
+   "days": 243
+  },
+  {
+   "year": 2007,
+   "days": 92
+  },
+  {
+   "year": 2008,
+   "days": 123
+  },
+  {
+   "year": 2009,
+   "days": 92
+  },
+  {
+   "year": 2010,
+   "days": 130
+  },
+  {
+   "year": 2011,
+   "days": 244
+  },
+  {
+   "year": 2012,
+   "days": 123
+  },
+  {
+   "year": 2013,
+   "days": 120
+  },
+  {
+   "year": 2014,
+   "days": 129
+  },
+  {
+   "year": 2015,
+   "days": 125
+  },
+  {
+   "year": 2016,
+   "days": 128
+  },
+  {
+   "year": 2017,
+   "days": 93
+  },
+  {
+   "year": 2018,
+   "days": 127
+  },
+  {
+   "year": 2019,
+   "days": 124
+  },
+  {
+   "year": 2020,
+   "days": 93
+  },
+  {
+   "year": 2021,
+   "days": 122
+  },
+  {
+   "year": 2022,
+   "days": 245
+  },
+  {
+   "year": 2023,
+   "days": 128
+  },
+  {
+   "year": 2024,
+   "days": 99
+  },
+  {
+   "year": 2025,
+   "days": 93
+  }
+ ],
+ "sources": [
+  {
+   "dataset": "NASA POWER",
+   "variable": "temperature, heat stress days",
+   "resolution": "0.5° × 0.625°",
+   "dateRange": "2005-2025"
+  },
+  {
+   "dataset": "GPM IMERG",
+   "variable": "precipitation, heavy storm days",
+   "resolution": "0.1°",
+   "dateRange": "2005-2025"
+  },
+  {
+   "dataset": "SMAP L4",
+   "variable": "soil moisture anomaly",
+   "resolution": "9 km",
+   "dateRange": "2015-2025"
+  },
+  {
+   "dataset": "Landsat 8/9 (HLS)",
+   "variable": "NDVI, bare days",
+   "resolution": "30 m",
+   "dateRange": "2005-2025"
+  },
+  {
+   "dataset": "SRTM",
+   "variable": "slope",
+   "resolution": "30 m",
+   "dateRange": "2000"
+  },
+  {
+   "dataset": "USDA SSURGO",
+   "variable": "soil properties",
+   "resolution": "1:24,000",
+   "dateRange": "2024"
+  },
+  {
+   "dataset": "USDA Cropland Data Layer",
+   "variable": "crop history",
+   "resolution": "30 m",
+   "dateRange": "2016-2025"
+  }
+ ]
+}

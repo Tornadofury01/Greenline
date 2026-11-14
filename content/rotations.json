@@ -1,0 +1,13 @@
+{
+  "_note": "Candidate rotations. A rotation is a list of seasons; each season is one crop id from crops.json. The app scores every candidate with scoreRotation() and suggests the top 2. Names live in i18n under rotations.<id>.",
+  "rotations": [
+    { "id": "wheat_cowpea_sorghum", "crops": ["winter_wheat", "cowpea", "grain_sorghum", "cereal_rye"], "equipment": ["conventional", "no_till_drill"] },
+    { "id": "wheat_sorghum_sudan", "crops": ["winter_wheat", "sorghum_sudangrass", "cereal_rye", "grain_sorghum"], "equipment": ["conventional", "baler"] },
+    { "id": "sorghum_vetch_cotton", "crops": ["grain_sorghum", "hairy_vetch", "cotton", "cereal_rye"], "equipment": ["no_till_drill"] },
+    { "id": "sesame_wheat", "crops": ["sesame", "winter_wheat", "cowpea"], "equipment": ["conventional"] },
+    { "id": "sunflower_rye_sorghum", "crops": ["sunflower", "cereal_rye", "grain_sorghum", "winter_wheat"], "equipment": ["conventional", "no_till_drill"] },
+    { "id": "alfalfa_stand", "crops": ["alfalfa", "alfalfa", "alfalfa"], "equipment": ["baler"] },
+    { "id": "corn_wheat", "crops": ["corn", "winter_wheat", "grain_sorghum"], "equipment": ["conventional"] },
+    { "id": "grazeout_wheat_sudan", "crops": ["winter_wheat", "sorghum_sudangrass"], "equipment": ["conventional"] }
+  ]
+}

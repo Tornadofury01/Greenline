@@ -1,0 +1,216 @@
+{
+  "app": {
+    "title": "Greenline",
+    "tagline": "Compare crop rotations with NASA data",
+    "sampleBadge": "Sample data",
+    "langToggle": "Español",
+    "langToggleLabel": "Switch language to Spanish"
+  },
+  "nav": {
+    "field": "Field",
+    "farm": "Farm",
+    "story": "Story",
+    "compare": "Compare",
+    "handoff": "Expert"
+  },
+  "common": {
+    "next": "Next",
+    "judgmentNote": "Greenline supports your judgment and local experts. It doesn't replace them.",
+    "noField": "Pick a field first to see this screen.",
+    "goPick": "Pick a field",
+    "close": "Close",
+    "glossaryLabel": "What does this mean?",
+    "points": "points",
+    "outOf100": "out of 100",
+    "years": "years"
+  },
+  "pick": {
+    "title": "Pick your field",
+    "hint": "Tap your field on the map. For now, any tap loads a sample field near Denton.",
+    "mapOffline": "The map needs an internet connection. You can still load the sample field.",
+    "loadSample": "Load sample field",
+    "summaryTitle": "Your field",
+    "county": "County",
+    "cell": "Map cell (30 m)",
+    "soil": "Soil",
+    "slope": "Slope",
+    "recentCrops": "Recent crops",
+    "privacy": "We store a 30 m map cell, never your exact location.",
+    "continue": "Tell us about your farm"
+  },
+  "farm": {
+    "title": "Your farm",
+    "currentRotation": "What do you grow now? (tap in order)",
+    "currentHint": "Tap crops to add them in order. Tap a crop in your list to remove it.",
+    "yourList": "Your rotation",
+    "emptyList": "No crops yet",
+    "priorities": "What matters most to you?",
+    "waterMode": "Do you irrigate?",
+    "equipment": "Equipment you have",
+    "budget": "Budget for changes",
+    "waterSource": "Water source",
+    "market": "Where do you sell or use your crops?",
+    "seeResults": "Compare rotations"
+  },
+  "priorities": {
+    "water": "Save water",
+    "erosion": "Stop erosion",
+    "soil": "Improve soil",
+    "income": "Extra income",
+    "cattle": "Feed cattle"
+  },
+  "options": {
+    "waterMode": { "dryland": "Dryland (rain only)", "irrigated": "Irrigated" },
+    "equipment": { "no_till_drill": "No-till drill", "conventional": "Conventional tillage", "baler": "Hay baler", "none": "Nothing special" },
+    "budget": { "low": "Low", "medium": "Medium", "high": "High" },
+    "waterSource": { "rain": "Rain only", "well": "Well", "pond": "Pond or tank", "canal": "Canal or district" },
+    "market": { "elevator": "Grain elevator", "gin": "Cotton gin", "cattle": "My own cattle", "local": "Local buyers" }
+  },
+  "story": {
+    "title": "Your field's story",
+    "chartTitle": "Rain each year, 2005–2025",
+    "chartUnit": "mm of rain",
+    "bareTitle": "When was the ground bare?",
+    "bareHint": "Brown squares are months with little or no plant cover (NDVI below 0.25).",
+    "statDrought": "Drought years",
+    "statRain": "Average rain per year",
+    "statHeat": "Hot days per year (avg)",
+    "statBare": "Bare days per year (avg)",
+    "mm": "mm",
+    "days": "days",
+    "monthsShort": ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"]
+  },
+  "yearType": {
+    "drought": "Drought",
+    "wet": "Wet",
+    "heat": "Heat",
+    "normal": "Normal"
+  },
+  "compare": {
+    "title": "Compare rotations",
+    "current": "What you grow now",
+    "suggested": "Suggested option",
+    "custom": "Your own rotation",
+    "score": "Score",
+    "confidence": "Confidence",
+    "tapForDetails": "Tap for details",
+    "hideDetails": "Hide details",
+    "why": "Why this score",
+    "breakdown": "Score by priority",
+    "evidence": "Evidence (NASA and USDA data)",
+    "benefits": "Benefits",
+    "gaps": "Gaps",
+    "risks": "Risks",
+    "confidenceWhy": "Why this confidence",
+    "none": "Nothing to show",
+    "picked": "you picked this",
+    "buildOwn": "Build my own rotation",
+    "buildHint": "Tap crops in order to build a rotation. It gets scored the same way.",
+    "scoreIt": "Score my rotation",
+    "noCurrent": "Add your current rotation on the Farm screen to compare it."
+  },
+  "confidenceLevel": { "high": "High", "medium": "Medium", "low": "Low" },
+  "tags": {
+    "nitrogen": "Adds nitrogen",
+    "cover": "Covers soil",
+    "deepRoots": "Deep roots",
+    "diverse": "Diverse"
+  },
+  "reasons": {
+    "waterAvg": "Average water need is {value} out of 5.",
+    "droughtHistory": "Your field had {count} drought years since 2005.",
+    "erosionAvg": "Soil protection is {value} out of 5 on average.",
+    "slopeBare": "Your {slope}% slope makes bare seasons riskier.",
+    "nitrogen": "{count} season(s) with a crop that adds nitrogen.",
+    "cover": "{count} season(s) of cover crop.",
+    "variety": "{count} different crops in the rotation.",
+    "cashShare": "{count} of {total} seasons have a crop you can sell.",
+    "marketMatch": "Fits where you sell.",
+    "forageAvg": "Grazing and hay value is {value} out of 5."
+  },
+  "benefits": {
+    "water": "Uses little water.",
+    "erosion": "Keeps soil covered.",
+    "soil": "Builds healthier soil.",
+    "income": "Most seasons bring income.",
+    "cattle": "Good feed for cattle."
+  },
+  "gaps": {
+    "weak": "Weak on \"{priority}\".",
+    "equipment": "Needs equipment you didn't list: {needs}.",
+    "budgetVariety": "{count} different crops may be costly to start with a low budget."
+  },
+  "risks": {
+    "thirstyDryland": "{crops} need a lot of water for dryland.",
+    "heat": "{crops} can suffer in heat. Your field had {count} hot or drought years.",
+    "bare": "Fallow leaves the ground bare."
+  },
+  "confidence": {
+    "longClimate": "{count} years of climate data for your field.",
+    "shortClimate": "Only {count} years of climate data.",
+    "goodHistory": "{count} years of crop history from satellite maps.",
+    "familiarCrops": "Most crops have been grown on this field before.",
+    "someNewCrops": "Some crops are new to this field.",
+    "newCrops": "Most crops are new to this field.",
+    "placeholderTraits": "Crop trait values are early estimates and still being checked."
+  },
+  "handoff": {
+    "title": "Summary for your county extension agent",
+    "intro": "Bring or send this page to your local AgriLife extension office to talk through your options.",
+    "print": "Print or save as PDF",
+    "fieldSection": "Field",
+    "farmSection": "Farm and goals",
+    "resultsSection": "Rotations compared",
+    "climateSection": "Climate history",
+    "questionsSection": "Questions for the expert",
+    "questions": [
+      "Do these crops fit our local market and seed supply?",
+      "What planting dates and seeding rates work here?",
+      "Are there cost-share programs (like NRCS EQIP) for cover crops?",
+      "What risks am I missing for this field?"
+    ],
+    "notesSection": "Notes",
+    "generated": "Made with Greenline on {date}",
+    "sources": "Data sources"
+  },
+  "crops": {
+    "winter_wheat": "Winter wheat",
+    "grain_sorghum": "Grain sorghum",
+    "cotton": "Cotton",
+    "corn": "Corn",
+    "cowpea": "Cowpea",
+    "cereal_rye": "Cereal rye",
+    "hairy_vetch": "Hairy vetch",
+    "sorghum_sudangrass": "Sorghum-sudangrass",
+    "alfalfa": "Alfalfa",
+    "sunflower": "Sunflower",
+    "sesame": "Sesame",
+    "fallow": "Fallow (bare)"
+  },
+  "rotations": {
+    "wheat_cowpea_sorghum": "Wheat, cowpea, sorghum, rye",
+    "wheat_sorghum_sudan": "Wheat with sorghum-sudan grazing",
+    "sorghum_vetch_cotton": "Sorghum, vetch, cotton, rye",
+    "sesame_wheat": "Sesame and wheat",
+    "sunflower_rye_sorghum": "Sunflower, rye, sorghum, wheat",
+    "alfalfa_stand": "Alfalfa hay stand",
+    "corn_wheat": "Corn, wheat, sorghum",
+    "grazeout_wheat_sudan": "Graze-out wheat and sudan"
+  },
+  "soil": {
+    "texture": { "clay": "Clay", "clay_loam": "Clay loam", "loam": "Loam", "sandy_loam": "Sandy loam" },
+    "drainage": { "well drained": "Well drained", "moderately well drained": "Moderately well drained", "poorly drained": "Poorly drained" },
+    "group": "Hydrologic group {group}",
+    "organicMatter": "{value}% organic matter"
+  },
+  "glossary": {
+    "ndvi": { "title": "NDVI (plant greenness)", "text": "A satellite measure of how green and alive plants are, from 0 (bare) to 1 (very green). Placeholder text." },
+    "soilMoisture": { "title": "Soil moisture anomaly", "text": "How much wetter or drier the soil was than usual, from NASA's SMAP satellite. Placeholder text." },
+    "hydrologicGroup": { "title": "Hydrologic group", "text": "How fast water soaks into the soil. Group A soaks fastest, D slowest (more runoff). Placeholder text." },
+    "coverCrop": { "title": "Cover crop", "text": "A crop grown mainly to protect and feed the soil between cash crops. Placeholder text." },
+    "slope": { "title": "Slope", "text": "How steep the field is. More slope means rain can wash soil away faster. From NASA SRTM. Placeholder text." },
+    "confidence": { "title": "Confidence", "text": "How much data backs this score, and how familiar these crops are on your field. Placeholder text." },
+    "score": { "title": "Score", "text": "A 0–100 summary of how well a rotation fits your priorities and limits. Each rule is open and editable. Placeholder text." },
+    "bareDays": { "title": "Bare days", "text": "Days when satellites saw little or no plant cover, so soil was exposed to wind and rain. Placeholder text." }
+  }
+}

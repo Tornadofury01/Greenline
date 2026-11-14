@@ -1,0 +1,216 @@
+{
+  "app": {
+    "title": "Greenline",
+    "tagline": "Compare rotaciones de cultivos con datos de la NASA",
+    "sampleBadge": "Datos de ejemplo",
+    "langToggle": "English",
+    "langToggleLabel": "Cambiar idioma a inglés"
+  },
+  "nav": {
+    "field": "Parcela",
+    "farm": "Granja",
+    "story": "Historia",
+    "compare": "Comparar",
+    "handoff": "Experto"
+  },
+  "common": {
+    "next": "Siguiente",
+    "judgmentNote": "Greenline apoya su criterio y a los expertos locales. No los reemplaza.",
+    "noField": "Primero elija una parcela para ver esta pantalla.",
+    "goPick": "Elegir parcela",
+    "close": "Cerrar",
+    "glossaryLabel": "¿Qué significa esto?",
+    "points": "puntos",
+    "outOf100": "de 100",
+    "years": "años"
+  },
+  "pick": {
+    "title": "Elija su parcela",
+    "hint": "Toque su parcela en el mapa. Por ahora, cualquier toque carga una parcela de ejemplo cerca de Denton.",
+    "mapOffline": "El mapa necesita conexión a internet. Aún puede cargar la parcela de ejemplo.",
+    "loadSample": "Cargar parcela de ejemplo",
+    "summaryTitle": "Su parcela",
+    "county": "Condado",
+    "cell": "Celda del mapa (30 m)",
+    "soil": "Suelo",
+    "slope": "Pendiente",
+    "recentCrops": "Cultivos recientes",
+    "privacy": "Guardamos una celda de 30 m, nunca su ubicación exacta.",
+    "continue": "Cuéntenos sobre su granja"
+  },
+  "farm": {
+    "title": "Su granja",
+    "currentRotation": "¿Qué siembra ahora? (toque en orden)",
+    "currentHint": "Toque los cultivos para agregarlos en orden. Toque un cultivo de su lista para quitarlo.",
+    "yourList": "Su rotación",
+    "emptyList": "Aún no hay cultivos",
+    "priorities": "¿Qué es lo más importante para usted?",
+    "waterMode": "¿Usa riego?",
+    "equipment": "Equipo que tiene",
+    "budget": "Presupuesto para cambios",
+    "waterSource": "Fuente de agua",
+    "market": "¿Dónde vende o usa sus cultivos?",
+    "seeResults": "Comparar rotaciones"
+  },
+  "priorities": {
+    "water": "Ahorrar agua",
+    "erosion": "Frenar la erosión",
+    "soil": "Mejorar el suelo",
+    "income": "Más ingresos",
+    "cattle": "Alimentar ganado"
+  },
+  "options": {
+    "waterMode": { "dryland": "Temporal (solo lluvia)", "irrigated": "Con riego" },
+    "equipment": { "no_till_drill": "Sembradora de labranza cero", "conventional": "Labranza convencional", "baler": "Empacadora de heno", "none": "Nada especial" },
+    "budget": { "low": "Bajo", "medium": "Medio", "high": "Alto" },
+    "waterSource": { "rain": "Solo lluvia", "well": "Pozo", "pond": "Estanque o tanque", "canal": "Canal o distrito" },
+    "market": { "elevator": "Elevador de granos", "gin": "Despepitadora de algodón", "cattle": "Mi propio ganado", "local": "Compradores locales" }
+  },
+  "story": {
+    "title": "La historia de su parcela",
+    "chartTitle": "Lluvia por año, 2005–2025",
+    "chartUnit": "mm de lluvia",
+    "bareTitle": "¿Cuándo estuvo el suelo desnudo?",
+    "bareHint": "Los cuadros cafés son meses con poca o ninguna cobertura vegetal (NDVI menor a 0.25).",
+    "statDrought": "Años de sequía",
+    "statRain": "Lluvia promedio por año",
+    "statHeat": "Días de calor por año (prom.)",
+    "statBare": "Días de suelo desnudo por año (prom.)",
+    "mm": "mm",
+    "days": "días",
+    "monthsShort": ["E", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"]
+  },
+  "yearType": {
+    "drought": "Sequía",
+    "wet": "Húmedo",
+    "heat": "Calor",
+    "normal": "Normal"
+  },
+  "compare": {
+    "title": "Comparar rotaciones",
+    "current": "Lo que siembra ahora",
+    "suggested": "Opción sugerida",
+    "custom": "Su propia rotación",
+    "score": "Puntaje",
+    "confidence": "Confianza",
+    "tapForDetails": "Toque para ver detalles",
+    "hideDetails": "Ocultar detalles",
+    "why": "Por qué este puntaje",
+    "breakdown": "Puntaje por prioridad",
+    "evidence": "Evidencia (datos de NASA y USDA)",
+    "benefits": "Beneficios",
+    "gaps": "Carencias",
+    "risks": "Riesgos",
+    "confidenceWhy": "Por qué esta confianza",
+    "none": "Nada que mostrar",
+    "picked": "usted eligió esto",
+    "buildOwn": "Armar mi propia rotación",
+    "buildHint": "Toque los cultivos en orden para armar una rotación. Se califica de la misma forma.",
+    "scoreIt": "Calificar mi rotación",
+    "noCurrent": "Agregue su rotación actual en la pantalla Granja para compararla."
+  },
+  "confidenceLevel": { "high": "Alta", "medium": "Media", "low": "Baja" },
+  "tags": {
+    "nitrogen": "Aporta nitrógeno",
+    "cover": "Cubre el suelo",
+    "deepRoots": "Raíces profundas",
+    "diverse": "Diversa"
+  },
+  "reasons": {
+    "waterAvg": "La necesidad promedio de agua es {value} de 5.",
+    "droughtHistory": "Su parcela tuvo {count} años de sequía desde 2005.",
+    "erosionAvg": "La protección del suelo es {value} de 5 en promedio.",
+    "slopeBare": "Su pendiente de {slope}% hace más riesgosas las temporadas sin cubierta.",
+    "nitrogen": "{count} temporada(s) con un cultivo que aporta nitrógeno.",
+    "cover": "{count} temporada(s) de cultivo de cobertura.",
+    "variety": "{count} cultivos diferentes en la rotación.",
+    "cashShare": "{count} de {total} temporadas tienen un cultivo que puede vender.",
+    "marketMatch": "Se ajusta a dónde vende.",
+    "forageAvg": "El valor para pastoreo y heno es {value} de 5."
+  },
+  "benefits": {
+    "water": "Usa poca agua.",
+    "erosion": "Mantiene el suelo cubierto.",
+    "soil": "Crea un suelo más sano.",
+    "income": "La mayoría de las temporadas dejan ingresos.",
+    "cattle": "Buen alimento para el ganado."
+  },
+  "gaps": {
+    "weak": "Débil en \"{priority}\".",
+    "equipment": "Necesita equipo que no indicó: {needs}.",
+    "budgetVariety": "{count} cultivos diferentes pueden ser costosos con un presupuesto bajo."
+  },
+  "risks": {
+    "thirstyDryland": "{crops} necesitan mucha agua para temporal.",
+    "heat": "{crops} pueden sufrir con el calor. Su parcela tuvo {count} años de calor o sequía.",
+    "bare": "El barbecho deja el suelo desnudo."
+  },
+  "confidence": {
+    "longClimate": "{count} años de datos climáticos de su parcela.",
+    "shortClimate": "Solo {count} años de datos climáticos.",
+    "goodHistory": "{count} años de historial de cultivos por satélite.",
+    "familiarCrops": "La mayoría de los cultivos ya se sembraron en esta parcela.",
+    "someNewCrops": "Algunos cultivos son nuevos en esta parcela.",
+    "newCrops": "La mayoría de los cultivos son nuevos en esta parcela.",
+    "placeholderTraits": "Los valores de los cultivos son estimaciones iniciales y aún se revisan."
+  },
+  "handoff": {
+    "title": "Resumen para su agente de extensión del condado",
+    "intro": "Lleve o envíe esta página a su oficina local de AgriLife Extension para hablar de sus opciones.",
+    "print": "Imprimir o guardar como PDF",
+    "fieldSection": "Parcela",
+    "farmSection": "Granja y metas",
+    "resultsSection": "Rotaciones comparadas",
+    "climateSection": "Historial climático",
+    "questionsSection": "Preguntas para el experto",
+    "questions": [
+      "¿Estos cultivos se ajustan al mercado y la semilla disponibles aquí?",
+      "¿Qué fechas de siembra y densidades funcionan aquí?",
+      "¿Hay programas de costo compartido (como NRCS EQIP) para cultivos de cobertura?",
+      "¿Qué riesgos no estoy viendo en esta parcela?"
+    ],
+    "notesSection": "Notas",
+    "generated": "Hecho con Greenline el {date}",
+    "sources": "Fuentes de datos"
+  },
+  "crops": {
+    "winter_wheat": "Trigo de invierno",
+    "grain_sorghum": "Sorgo de grano",
+    "cotton": "Algodón",
+    "corn": "Maíz",
+    "cowpea": "Frijol caupí",
+    "cereal_rye": "Centeno",
+    "hairy_vetch": "Veza vellosa",
+    "sorghum_sudangrass": "Sorgo-sudán",
+    "alfalfa": "Alfalfa",
+    "sunflower": "Girasol",
+    "sesame": "Ajonjolí",
+    "fallow": "Barbecho (desnudo)"
+  },
+  "rotations": {
+    "wheat_cowpea_sorghum": "Trigo, caupí, sorgo, centeno",
+    "wheat_sorghum_sudan": "Trigo con pastoreo de sorgo-sudán",
+    "sorghum_vetch_cotton": "Sorgo, veza, algodón, centeno",
+    "sesame_wheat": "Ajonjolí y trigo",
+    "sunflower_rye_sorghum": "Girasol, centeno, sorgo, trigo",
+    "alfalfa_stand": "Alfalfa para heno",
+    "corn_wheat": "Maíz, trigo, sorgo",
+    "grazeout_wheat_sudan": "Trigo de pastoreo y sudán"
+  },
+  "soil": {
+    "texture": { "clay": "Arcilla", "clay_loam": "Franco arcilloso", "loam": "Franco", "sandy_loam": "Franco arenoso" },
+    "drainage": { "well drained": "Buen drenaje", "moderately well drained": "Drenaje moderado", "poorly drained": "Mal drenaje" },
+    "group": "Grupo hidrológico {group}",
+    "organicMatter": "{value}% de materia orgánica"
+  },
+  "glossary": {
+    "ndvi": { "title": "NDVI (verdor de las plantas)", "text": "Una medida satelital de qué tan verdes y vivas están las plantas, de 0 (desnudo) a 1 (muy verde). Texto provisional." },
+    "soilMoisture": { "title": "Anomalía de humedad del suelo", "text": "Qué tan húmedo o seco estuvo el suelo comparado con lo normal, del satélite SMAP de la NASA. Texto provisional." },
+    "hydrologicGroup": { "title": "Grupo hidrológico", "text": "Qué tan rápido el agua entra al suelo. El grupo A es el más rápido, el D el más lento (más escurrimiento). Texto provisional." },
+    "coverCrop": { "title": "Cultivo de cobertura", "text": "Un cultivo sembrado sobre todo para proteger y alimentar el suelo entre cultivos comerciales. Texto provisional." },
+    "slope": { "title": "Pendiente", "text": "Qué tan inclinada es la parcela. Más pendiente significa que la lluvia arrastra el suelo más rápido. De NASA SRTM. Texto provisional." },
+    "confidence": { "title": "Confianza", "text": "Cuántos datos respaldan este puntaje y qué tan conocidos son estos cultivos en su parcela. Texto provisional." },
+    "score": { "title": "Puntaje", "text": "Un resumen de 0 a 100 de qué tan bien se ajusta una rotación a sus prioridades y límites. Cada regla es abierta y editable. Texto provisional." },
+    "bareDays": { "title": "Días de suelo desnudo", "text": "Días en que los satélites vieron poca o ninguna cobertura vegetal, dejando el suelo expuesto al viento y la lluvia. Texto provisional." }
+  }
+}

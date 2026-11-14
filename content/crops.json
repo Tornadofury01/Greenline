@@ -1,0 +1,18 @@
+{
+  "_note": "PLACEHOLDER trait values. Every number must be verified with Texas A&M AgriLife / NRCS before real use. Names and descriptions live in /content/i18n under crops.<id>.",
+  "verified": false,
+  "crops": [
+    { "id": "winter_wheat", "season": "cool", "waterUse": 2, "heatTolerance": 2, "rootDepth": "medium", "nitrogenFixing": false, "coverCrop": false, "forageValue": 4, "erosionProtection": 4, "marketType": "grain" },
+    { "id": "grain_sorghum", "season": "warm", "waterUse": 2, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 3, "erosionProtection": 3, "marketType": "grain" },
+    { "id": "cotton", "season": "warm", "waterUse": 3, "heatTolerance": 4, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 1, "erosionProtection": 1, "marketType": "fiber" },
+    { "id": "corn", "season": "warm", "waterUse": 5, "heatTolerance": 2, "rootDepth": "medium", "nitrogenFixing": false, "coverCrop": false, "forageValue": 3, "erosionProtection": 2, "marketType": "grain" },
+    { "id": "cowpea", "season": "warm", "waterUse": 1, "heatTolerance": 5, "rootDepth": "medium", "nitrogenFixing": true, "coverCrop": true, "forageValue": 3, "erosionProtection": 3, "marketType": "cover" },
+    { "id": "cereal_rye", "season": "cool", "waterUse": 2, "heatTolerance": 1, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": true, "forageValue": 3, "erosionProtection": 5, "marketType": "cover" },
+    { "id": "hairy_vetch", "season": "cool", "waterUse": 2, "heatTolerance": 1, "rootDepth": "medium", "nitrogenFixing": true, "coverCrop": true, "forageValue": 2, "erosionProtection": 3, "marketType": "cover" },
+    { "id": "sorghum_sudangrass", "season": "warm", "waterUse": 2, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": true, "forageValue": 5, "erosionProtection": 4, "marketType": "forage" },
+    { "id": "alfalfa", "season": "perennial", "waterUse": 4, "heatTolerance": 3, "rootDepth": "deep", "nitrogenFixing": true, "coverCrop": false, "forageValue": 5, "erosionProtection": 5, "marketType": "forage" },
+    { "id": "sunflower", "season": "warm", "waterUse": 2, "heatTolerance": 4, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 1, "erosionProtection": 2, "marketType": "oilseed" },
+    { "id": "sesame", "season": "warm", "waterUse": 1, "heatTolerance": 5, "rootDepth": "deep", "nitrogenFixing": false, "coverCrop": false, "forageValue": 1, "erosionProtection": 2, "marketType": "oilseed" },
+    { "id": "fallow", "season": "any", "waterUse": 0, "heatTolerance": 5, "rootDepth": "none", "nitrogenFixing": false, "coverCrop": false, "forageValue": 0, "erosionProtection": 0, "marketType": "none" }
+  ]
+}
