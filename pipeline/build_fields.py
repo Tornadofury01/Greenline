@@ -6,6 +6,7 @@ Run after sample_fields.py and pipeline/models/*:
 """
 import json
 import math
+from datetime import date, timedelta
 from pathlib import Path
 
 import numpy as np
@@ -26,8 +27,9 @@ CDL_TO_CROP = {1: "corn", 2: "cotton", 4: "grain_sorghum", 24: "winter_wheat", 6
                36: "alfalfa", 58: "hairy_vetch", 27: "cereal_rye"}
 
 SOURCES = [
-    {"dataset": "NASA POWER", "variable": "rain, temperature, heat stress days, frost dates", "resolution": "0.5° × 0.625° (~50 km)", "dateRange": "1984-2025"},
-    {"dataset": "GPM IMERG", "variable": "rain, heavy storm days (≥ 25 mm)", "resolution": "0.1° (~11 km)", "dateRange": "2008-2025"},
+    {"dataset": "NASA POWER", "variable": "rain, temperature, heat stress days, frost dates", "resolution": "0.5Â° Ã— 0.625Â° (~50 km)", "dateRange": "1984-2025"},
+    {"dataset": "GPM IMERG", "variable": "rain, heavy storm days (â‰¥ 25 mm)", "resolution": "0.1Â° (~11 km)", "dateRange": "2008-2025"},
+    {"dataset": "PRISM", "variable": "monthly rain and temperature, frost dates, heavy rain days (gauge-based)", "resolution": "4 km", "dateRange": "1984-2025"},
     {"dataset": "SMAP L4", "variable": "root-zone soil moisture", "resolution": "~11 km", "dateRange": "2015-2025"},
     {"dataset": "Landsat 5/7/8/9", "variable": "NDVI (green cover), NDTI, BSI", "resolution": "30 m", "dateRange": "1984-2025"},
     {"dataset": "USDA Cropland Data Layer", "variable": "crop grown each year", "resolution": "30 m", "dateRange": "2008-2025"},
@@ -70,6 +72,36 @@ def land_class(s):
     return f"{int(s.nirrcapcl)}{s.nirrcapscl if isinstance(s.nirrcapscl, str) else ''}"
 
 
+MONTHLY_FROM = 2008  # climateMonthly covers the same years as the SI models (keeps files small)
+
+
+def doy_date(year, doy):
+    if doy is None or pd.isna(doy):
+        return None
+    return (date(year, 1, 1) + timedelta(days=int(doy) - 1)).isoformat()
+
+
+def prism_year(prism_y, fid, year):
+    """PRISM keys for one climateYearly entry (all null if PRISM has no row)."""
+    r = prism_y.loc[(fid, year)] if (fid, year) in prism_y.index else None
+    if r is None:
+        return {k: None for k in ("precipMmPrism", "stormDaysPrism", "lastSpringFrostPrism", "firstFallFrostPrism", "frostFreeDaysPrism")}
+    return {"precipMmPrism": nn(r.precipMm, 0), "stormDaysPrism": nn(int(r.stormDays)),
+            "lastSpringFrostPrism": doy_date(year, r.lastSpringFrostDoy),
+            "firstFallFrostPrism": doy_date(year, r.firstFallFrostDoy),
+            "frostFreeDaysPrism": None if pd.isna(r.frostFreeDays) else int(r.frostFreeDays)}
+
+
+def agreement(pairs):
+    """{years, corr, pct}: correlation and mean difference (b vs a, %) over years where both exist."""
+    pairs = [(a, b) for a, b in pairs if a and b]
+    if len(pairs) < 5:
+        return None
+    a, b = np.array(pairs, dtype=float).T
+    return {"years": len(pairs), "corr": round(float(np.corrcoef(a, b)[0, 1]), 2),
+            "pct": round(float((b.mean() - a.mean()) / a.mean() * 100), 0)}
+
+
 def state(v):
     if v is None or pd.isna(v):
         return None
@@ -105,6 +137,8 @@ def main():
     sm_anom = (gs / gs.groupby(level="fieldId").transform("mean") - 1).round(2)
     storms = st.groupby(["fieldId", "year"]).stormDays.sum()
     imy = im.groupby(["fieldId", "year"]).precipMm.sum()
+    prism_y = pd.read_csv(F / "prism_yearly.csv").set_index(["fieldId", "year"])
+    prism_m = pd.read_csv(F / "prism_monthly.csv").sort_values(["fieldId", "year", "month"])
 
     index = []
     for f in fields.itertuples():
@@ -127,7 +161,11 @@ def main():
             "frostFreeDays": nn(r.frostFreeDays), "soilMoistureAnomaly": nn(sm_anom.get((fid, r.year))),
             "heavyStormDays": nn(storms.get((fid, r.year))), "precipMmImerg": nn(imy.get((fid, r.year)), 0),
             "yearType": ytype.get(int(r.year)),
+            **prism_year(prism_y, fid, int(r.year)),
         } for r in p.itertuples()]
+        pm = prism_m[(prism_m.fieldId == fid) & (prism_m.year >= MONTHLY_FROM)]
+        climate_monthly = [{"year": int(r.year), "month": int(r.month), "precipMm": nn(r.precipMm, 1),
+                            "tMinC": nn(r.tMinC, 1), "tMaxC": nn(r.tMaxC, 1)} for r in pm.itertuples()]
 
         L = ls[ls.fieldId == fid]
         ndvi_monthly = [{"year": int(r.year), "month": int(r.month), "ndvi": nn(r.ndvi, 3)} for r in L.itertuples() if not pd.isna(r.ndvi)]
@@ -173,6 +211,11 @@ def main():
         scored = [y for y in yrs if y["correct"] is not None]
         quality = {
             "rainAgreement": rain_agree,
+            # PRISM is gauge-based, so it's the reference: how far POWER and IMERG are from it (annual totals).
+            "rainVsPrism": {
+                "power": agreement([(x["precipMmPrism"], x["precipMm"]) for x in climate]),
+                "imerg": agreement([(x["precipMmPrism"], x["precipMmImerg"]) for x in climate]),
+            },
             "modelAgreesWithCdlPct": round(100 * sum(y["correct"] for y in scored) / len(scored)) if scored else None,
             "cloudyMonthsPct": round(100 * float(L.ndvi.isna().mean()), 0),
             "climateYears": len(climate), "cropYears": len(crop_hist),
@@ -186,6 +229,7 @@ def main():
             "terrain": {"slopePct": nn(t.slopePct, 1), "elevationM": nn(t.elevationM, 0)},
             "cropHistory": crop_hist,
             "climateYearly": climate,
+            "climateMonthly": climate_monthly,
             "ndviMonthly": ndvi_monthly,
             "coverYearly": cover,
             "bareDaysPerYear": bare,

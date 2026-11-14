@@ -101,6 +101,9 @@ plus a `fieldId` column. 30 m datasets are averaged over a 45 m buffer. Coarse g
 | `imerg_monthly.csv` | `fieldId, year, month, precipMm` | IMERG V07 monthly |
 | `imerg_storms_monthly.csv` | `fieldId, year, month, stormDays` | Days with ≥ 25 mm (half-hourly IMERG summed by UTC day) |
 | `modis_et_monthly.csv` | `fieldId, year, month, composites, etMm, petMm` | MOD16A2GF, sum of 8-day composites starting in the month |
+| `ssurgo.csv` | `fieldId, mukey, compname, drainagecl, hydgrp, comppct_r, om, clay, sand, kwfact, kffact, awc, tfact, nirrcapcl, nirrcapscl, aws0100wta` | Soil Data Access, dominant major component, topsoil horizon |
+| `prism_monthly.csv` | `fieldId, year, month, precipMm, tMeanC, tMinC, tMaxC` | `OREGONSTATE/PRISM/ANm`, 4 km, 1984–2025, sampled at the point |
+| `prism_yearly.csv` | `fieldId, year, days, precipMm, stormDays, lastSpringFrostDoy, firstFallFrostDoy, frostFreeDays` | From `OREGONSTATE/PRISM/ANd` daily, computed server-side. Days run 12:00–12:00 UTC |
 
 ## SI results (`/shared/si/`)
 One small JSON per field (`<fieldId>.json`) plus `index.json`, written by `pipeline/models/export_si.py`.
@@ -159,10 +162,12 @@ How the models work and how accurate they are: `/pipeline/MODELS.md`. `schemaVer
 | `terrain.elevationM` | number | SRTM |
 | `cropHistory[]` | | Adds `cdlCode` and `cdlClass` (model group). `crop` is `"other"` when the CDL crop isn't in `crops.json` |
 | `climateYearly[]` | | 1984–2025 from NASA POWER (`precipMm` is POWER, not IMERG). Adds `precipMmImerg` (2008–). `soilMoistureAnomaly` (2015–) and `heavyStormDays` (IMERG, 2008–) are `null` before their records start. `yearType` from the k-means model |
+| `climateYearly[]` PRISM keys | | `precipMmPrism` (mm), `stormDaysPrism` (days ≥ 25 mm), `lastSpringFrostPrism`, `firstFallFrostPrism` (ISO dates, Tmin ≤ 0 °C split at Jul 1, same rule as POWER), `frostFreeDaysPrism`. PRISM 4 km, gauge-based. Any can be `null` (e.g. no fall frost) |
+| `climateMonthly[]` | array | PRISM, 2008–2025: `{ year, month, precipMm, tMinC, tMaxC }` (°C, monthly means of daily min/max) |
 | `ndviMonthly[]` | | Landsat 5/7/8/9, 1984–2025. Cloudy months are left out |
 | `coverYearly[]` | array | `{ year, months[12], cloudyMonths }`. `months` = `green` / `residue` / `bare` / `null` (no clear image). 2008+ come from model 1 |
 | `bareDaysPerYear[]` | | Adds `greenDays` and `score` (0–100). Years with fewer than 9 clear months are left out |
-| `quality` | object | `rainAgreement { years, corr, imergVsPowerPct }`, `modelAgreesWithCdlPct`, `cloudyMonthsPct`, `climateYears`, `cropYears`. Used by the confidence score |
+| `quality` | object | `rainAgreement { years, corr, imergVsPowerPct }`, `rainVsPrism { power, imerg }` (each `{ years, corr, pct }` or `null`: annual rain vs PRISM, `pct` = how much higher than PRISM), `modelAgreesWithCdlPct`, `cloudyMonthsPct`, `climateYears`, `cropYears`. Used by the confidence score |
 | `si` | object | `{ models, years, replayPresets }`, the same as `/shared/si/<fieldId>.json` (below). `models.seasonCrop.perClass` adds held-out recall/precision per crop |
 
 Known data caveat: Landsat 8 (2013–) reads NDVI slightly higher than Landsat 5/7 and the sensors are not harmonized yet,
