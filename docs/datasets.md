@@ -39,6 +39,29 @@ Status: **Used** = in the field files or models today. **Partly** = used in a na
 | USDA Ag Data Commons | Not used | — | — | — | A catalog, not a dataset |
 | ERA5 | Not used | — | ~31 km | 1940– | Duplicates POWER (POWER is partly built on reanalysis) |
 
+## Future additions
+
+**Worth adding**
+- **NLDAS / GLDAS:** soil moisture before 2015 (NLDAS-2 ~12 km from 1979), so the soil-moisture signal could cover the 2011 drought. Using it in model 2 would mean **retraining model 2** and re-reporting its accuracy.
+- **CoCoRaHS:** volunteer rain gauges, a true ground check of IMERG storm days (PRISM, our current check, is itself a gridded product). Needs station matching within a few km of each field.
+- **HLS (Landsat + Sentinel-2) / Sentinel-2:** 10–30 m every 2–3 days from 2015, so fewer cloudy months, and HLS is already cross-calibrated. That addresses the Landsat 5/7 vs 8/9 NDVI mismatch for recent years. Today it's used for the demo field only.
+- **ECOSTRESS:** 70 m evapotranspiration and surface temperature for crop water stress. The record starts in 2018 with irregular overpass times, and ET carries the same leakage risk we found with MODIS ET.
+
+**Low value for Greenline (checked, not planned)**
+- **GRACE / GRACE-FO:** ~300 km groundwater signal, one number for all of North Texas.
+- **GEDI:** canopy height and biomass, built for forests.
+- **VIIRS / MODIS NDVI:** 250 m–1 km, mixes several fields; Landsat and HLS cover it at 30 m.
+- **NLCD:** land cover every 2–3 years; CDL already gives the crop every year.
+- **NAIP:** 1 m aerial photos every 2–3 years; good for drawing field boundaries, not for trends.
+- **LANDFIRE:** wildfire fuel layers.
+- **OpenET:** western U.S. focus, and ET risks leakage (see MODELS.md).
+- **FAO GAEZ:** global, coarse suitability maps; local soils and weather beat it.
+- **ERA5:** reanalysis that duplicates what POWER already gives us.
+- **USGS NWIS:** few wells and gauges near our mostly dryland fields.
+- **USDA AMS Market News:** daily cash prices; NASS yearly price received is enough for rotation planning.
+- **STATSGO2:** coarse version of SSURGO, which we already use.
+- **USDA Ag Data Commons:** a catalog, not a dataset; search it case by case.
+
 ## NASA
 - SMAP Soil Moisture Active Passive: https://www.earthdata.nasa.gov/data/platforms/space-based-platforms/smap (surface soil moisture and freeze/thaw every 2–3 days; drought stress, infiltration, early crop stress)
 - GPM / IMERG: https://gpm.nasa.gov/data (precipitation rate and accumulation; rainfall reliability, extreme storms, erosion risk)
