@@ -56,7 +56,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       <section className="relative isolate overflow-hidden">
         <VantaTopology className="absolute inset-0 -z-10 opacity-50" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-base-100/20 via-base-100/60 to-base-100" aria-hidden="true" />
-        <div className="mx-auto flex min-h-[78svh] max-w-6xl flex-col justify-center gap-8 px-5 pb-20 pt-16 sm:px-8">
+        <div className="flex min-h-[78svh] w-full flex-col justify-center gap-8 px-5 pb-20 pt-16 sm:px-8 lg:px-12">
           {(sample || placeholders) && <div className="flex flex-col gap-2">{sample && <SampleBanner />}{placeholders && <PlaceholderNotice />}</div>}
           <span className="badge badge-lg badge-outline w-fit bg-base-100/70">{t('pick.fieldName', { id: field?.field?.id ?? '' })}</span>
           <SplitText text={t('optionsScreen.title')} tag="h1" textAlign="left" splitType="chars" delay={45} duration={1}
@@ -94,7 +94,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       </section>
 
       {/* Every rotation side by side */}
-      <section id="compare" className="mx-auto max-w-6xl px-5 py-24 sm:px-8">
+      <section id="compare" className="w-full px-5 py-24 sm:px-8 lg:px-12">
         <AnimatedContent distance={40} duration={0.9}>
           <h2 className="m-0 text-4xl font-bold tracking-tight sm:text-5xl">{t('optionsScreen.sideBySide')}</h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-base-content/75">{t('optionsScreen.compareIntro')}</p>
@@ -124,7 +124,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       </section>
 
       {/* One rotation at a time */}
-      <section id="details" ref={detailsRef} className="mx-auto max-w-6xl px-5 pb-28 pt-8 sm:px-8">
+      <section id="details" ref={detailsRef} className="w-full px-5 pb-28 pt-8 sm:px-8 lg:px-12">
         <h2 className="m-0 text-4xl font-bold tracking-tight sm:text-5xl">{t('optionsScreen.detailsTitle')}</h2>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-base-content/75">{t('optionsScreen.detailsIntro')}</p>
         <div role="tablist" aria-label={t('optionsScreen.detailsTitle')} className="tabs tabs-box mt-10 w-full flex-nowrap overflow-x-auto bg-base-200 sm:w-fit">
@@ -147,7 +147,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
         </AnimatePresence>
       </section>
 
-      <section className="mx-auto max-w-6xl px-5 pb-32 sm:px-8">
+      <section className="w-full px-5 pb-32 sm:px-8 lg:px-12">
         <div role="note" className="alert alert-soft items-start text-base leading-relaxed">
           <Lightbulb size={22} className="text-primary" aria-hidden="true" />
           <span>{t('optionsScreen.takeaway')}</span>
