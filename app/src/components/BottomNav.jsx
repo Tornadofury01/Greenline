@@ -1,4 +1,4 @@
-import { MapPin, Tractor, CloudRain, Scale, ClipboardList } from 'lucide-react';
+import { MapPin, Tractor, CloudRain, Scale, ClipboardList, ListChecks } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 
 // Screen ids in order, with one Lucide icon each.
@@ -6,6 +6,7 @@ export const SCREENS = [
   { id: 'field', Icon: MapPin },
   { id: 'farm', Icon: Tractor },
   { id: 'story', Icon: CloudRain },
+  { id: 'options', Icon: ListChecks },
   { id: 'compare', Icon: Scale },
   { id: 'handoff', Icon: ClipboardList },
 ];

@@ -1107,3 +1107,12 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 .local-list li { display: flex; flex-direction: column; gap: 2px; padding: 10px 0; border-top: var(--border); }
 .local-list li:first-child { border-top: 0; }
 @media (min-width: 640px) { .screen-options { max-width: 720px; margin-inline: auto; width: 100%; } }
+.group-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-1); margin-bottom: var(--s-1); font-size: var(--text-xs); font-weight: var(--weight-bold); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.group-head .pill-placeholder { text-transform: none; letter-spacing: 0; }
+.opt-neighbors { display: flex; align-items: center; gap: 6px; color: var(--color-text-muted); font-size: var(--text-xs); }
+.opt-neighbors svg { flex: none; }
+/* Six tabs on a phone: a little less padding and 12px labels so Spanish labels don't touch. */
+@media (max-width: 420px) {
+  .bottom-nav-inner { padding: 0 2px; }
+  .bottom-nav button { font-size: 0.75rem; }
+}

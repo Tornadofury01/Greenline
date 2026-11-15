@@ -11,6 +11,8 @@ import cropLibrary from '@content/crops.json';
 import rotationLibrary from '@content/rotations.json';
 import outlineFile from '@shared/field-outlines.json';
 import mapLayerFile from '@shared/map-layers.json';
+import placeholderSlots from '@content/model-placeholders.json';
+import { slotModelC } from '@scoring/modelSlots.js';
 import { DEMO_FIELD_ID } from '../config.js';
 
 // Lazy: each field file becomes its own small chunk, fetched only when needed.
@@ -35,8 +37,29 @@ const coverFromNdvi = (rows) => {
   return Object.entries(byYear).map(([year, months]) => ({ year: Number(year), months, cloudyMonths: months.filter((m) => !m).length }));
 };
 
+// v2: nothing in the app may use the earlier model outputs (crop classifier, weather stress signal, year-type model,
+// their accuracy numbers). They are removed here, the ONE place field data enters, so every screen that checks
+// `field.si` simply hides that part, and the year types come from the Model C PLACEHOLDER slot
+// (content/model-placeholders.json: 2000 and 2011 drought, 2015 wet, the rest normal) until the real model is plugged in.
+// Crops per year stay the USDA Cropland Data Layer labels (the Model A placeholder), with no confidence number.
+function withPlaceholderModels(field) {
+  const c = slotModelC(field, null, placeholderSlots);
+  const typeOf = new Map(c.yearTypes.map((r) => [r.year, r.type === 'hot' ? 'heat' : r.type])); // app colors say "heat"
+  return {
+    ...field,
+    si: null,
+    sources: field.sources?.filter((x) => x.id !== 'si'), // the earlier models are not a data source any more
+    quality: field.quality ? { ...field.quality, modelAgreesWithCdlPct: undefined } : field.quality,
+    climateYearly: field.climateYearly.map((y) => ({ ...y, yearType: typeOf.get(y.year) ?? 'normal' })),
+    yearTypesPlaceholder: true,
+  };
+}
+
 // v1 files (the fake sample) lack the v2/v3 extras. Derive what we can so every screen works the same way.
 function withDerived(field) {
+  return withPlaceholderModels(addDerived(field));
+}
+function addDerived(field) {
   if (field.coverYearly) return field;
   return {
     ...field,

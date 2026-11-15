@@ -38,7 +38,7 @@ export function confidenceFor(crops, field, cropLibraryVerified, bareDays = null
   const q = field.quality;
 
   const climateYears = field.climateYearly.length;
-  const longEnough = si ? 30 : 15;
+  const longEnough = 30;
   if (climateYears >= longEnough) { points++; reasons.push(tone('up', 'confidence.longClimate', { count: climateYears }, ['NASA POWER'])); }
   else reasons.push(tone('down', 'confidence.shortClimate', { count: climateYears }, ['NASA POWER']));
 
@@ -61,7 +61,10 @@ export function confidenceFor(crops, field, cropLibraryVerified, bareDays = null
     const per = m.perClass || {};
     const hard = [...new Set(crops.map((c) => c.id))].filter((id) => per[MODEL_CLASS[id]]?.recall < 0.5);
     if (hard.length) { points--; reasons.push(tone('down', 'confidence.cropHardToSee', { crops: hard }, ['Greenline SI models'])); }
+  }
 
+  // Data checks (not model outputs): two NASA rain datasets agree, and agree with the PRISM weather stations.
+  {
     const ra = q?.rainAgreement;
     if (ra && ra.corr >= 0.8 && Math.abs(ra.imergVsPowerPct) <= 15) {
       points++;
@@ -101,8 +104,9 @@ export function confidenceFor(crops, field, cropLibraryVerified, bareDays = null
   // Bare-day shapes for these crops are estimates (no measured record for them on this field).
   if (bareDays?.estimated?.length) reasons.push(tone('note', 'confidence.bareEstimated', { crops: bareDays.estimated }, ['Landsat 8/9']));
 
-  // 5 possible points with SI data, 3 with the old sample format.
-  const [hi, medium] = si ? [4, 2] : [3, 2];
+  // 4 possible points (weather length, crop-map years, familiar crops, rain datasets agree), minus 1 for estimated crop
+  // traits. The earlier crop-model point is gone (v2: no earlier model outputs are used).
+  const [hi, medium] = [3, 2];
   const level = points >= hi ? 'high' : points >= medium ? 'medium' : 'low';
   return { level, points, reasons };
 }

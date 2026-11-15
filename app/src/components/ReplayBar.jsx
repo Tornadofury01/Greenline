@@ -1,8 +1,9 @@
-// Scenario card for the Compare screen: replay a real bad year (presets from the year-pattern model,
-// si.replayPresets) or build a what-if year with the sliders. One scenario at a time.
+// Scenario card for the Compare screen: replay a real bad year (presets: the drought years of the Model C placeholder,
+// not a model result) or build a what-if year with the sliders. One scenario at a time.
 import { History } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { YEAR_COLORS } from '../screens/FieldStory.jsx';
+import { PlaceholderTag } from './PlaceholderTag.jsx';
 import WhatIfSliders, { HypotheticalBanner } from './WhatIfSliders.jsx';
 
 export default function ReplayBar({ embedded = false }) {
@@ -15,7 +16,7 @@ export default function ReplayBar({ embedded = false }) {
       {embedded && whatIf && <HypotheticalBanner />}
       {presets.length > 0 && (
         <>
-          <p className="chart-caption">{t('replayUi.caption')}</p>
+          <p className="chart-caption">{t('replayUi.caption')} {field.yearTypesPlaceholder && <PlaceholderTag />}</p>
           <div className="chips" role="group" aria-label={t('replayUi.pickLabel')}>
             {!embedded && (
               <button type="button" className="chip" aria-pressed={replayYear == null && !whatIf} onClick={() => { setReplayYear(null); setWhatIf(null); }}>

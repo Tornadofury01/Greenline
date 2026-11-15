@@ -23,7 +23,8 @@
     "farm": "Farm",
     "story": "History",
     "compare": "Compare",
-    "handoff": "Expert"
+    "handoff": "Expert",
+    "options": "Options"
   },
   "common": {
     "judgmentNote": "This tool supports your judgment and your local experts. It does not replace them.",
@@ -215,7 +216,7 @@
     },
     "timelineNote": "Crop names start in 2008 (USDA crop maps). Bare and green time before 2013 comes from older satellites and is low confidence.",
     "replayTitle": "Replay a bad year",
-    "replayCaption": "The worst years in 40 years of NASA weather, picked by our year-pattern model. Tap one to see what happened on this field.",
+    "replayCaption": "The worst years in 40 years of NASA weather. The year types are placeholders for now. Tap one to see what happened on this field.",
     "replayHeading": "{year}: {type}",
     "replayRain": "{inches} in of rain ({pct}% vs. normal)",
     "replayHeat": "{n} days over 95°F (normal: {avg})",
@@ -258,7 +259,7 @@
     "cropTitle": "Crop each year",
     "cropNotSure": "not sure, {pct}%",
     "cropModel": "model guess",
-    "cropLegend": "Solid pill: USDA crop map. Dashed pill: a model guess we are not sure about.",
+    "cropLegend": "Each pill is the label from the USDA crop map for that year.",
     "chipAlt": {
       "fewer": "{n} fewer bare days a year with {name}",
       "more": "{n} more bare days a year with {name}",
@@ -522,7 +523,9 @@
     "alfalfa": "Alfalfa",
     "sunflower": "Sunflower",
     "sesame": "Sesame",
-    "fallow": "Fallow (bare)"
+    "fallow": "Fallow (bare)",
+    "soybeans": "Soybeans",
+    "crimson_clover": "Crimson clover"
   },
   "rotations": {
     "wheat_cowpea_sorghum": "Wheat, cowpea, sorghum, rye",
@@ -572,7 +575,7 @@
     },
     "confidence": {
       "title": "Confidence",
-      "text": "High, medium or low. A rotation gains points for 30 or more years of weather data, 8 or more years of crop maps, crops that have grown on your field before, a crop model that was right on years it never saw (balanced accuracy of 70% or more), and two rain datasets that agree. It loses points for crops that are new to the field, crops satellites struggle to recognize, and crop traits that are only estimates. Data detail (30 m maps vs. weather averaged over about 30 miles) adds no points. We state it so nobody over-reads it."
+      "text": "High, medium or low. A rotation gains points for 30 or more years of weather data, 8 or more years of crop maps, crops that have grown on your field before, and two rain datasets that agree. It loses points for crops that are new to the field, and crop traits that are only estimates. Data detail (30 m maps vs. weather averaged over about 30 miles) adds no points. We state it so nobody over-reads it."
     },
     "score": {
       "title": "Score",
@@ -600,7 +603,7 @@
     },
     "frost": {
       "title": "Frost risk and frost-free days",
-      "text": "Frost-free days are the days between the last freeze in spring and the first freeze in fall (a low of 32°F or colder). The frost dates on your field page come from PRISM (4 km, from weather stations): the middle date of the last 10 years. Greenline's year-pattern model uses NASA POWER's frost-free days, which run about 3 days longer on average. They set planting windows and decide whether a cool-season cover crop can finish. Greenline doesn't score frost risk for a rotation yet."
+      "text": "Frost-free days are the days between the last freeze in spring and the first freeze in fall (a low of 32°F or colder). The frost dates on your field page come from PRISM (4 km, from weather stations): the middle date of the last 10 years. NASA POWER's frost-free days run about 3 days longer on average. They set planting windows and decide whether a cool-season cover crop can finish. Greenline doesn't score frost risk for a rotation yet."
     },
     "waterBalance": {
       "title": "Water balance",
@@ -926,7 +929,7 @@
     "typical": "Middle date, {from}–{to}",
     "season": "Frost-free season",
     "seasonValue": "{days} days",
-    "powerNote": "NASA POWER says {days} days. The year-pattern model uses that one.",
+    "powerNote": "NASA POWER says {days} days.",
     "source": "PRISM daily temperatures (4 km, from weather stations), low of 32 °F or colder",
     "seasonLine": "Frost-free season: about {days} days."
   },
@@ -1009,7 +1012,8 @@
     "notYourField": "The replay is a simulation built on published agronomy (FAO-56 water balance, FAO-33 yield response, RUSLE soil loss), not machine learning. Prices, budgets and cost-share rates are estimates to check with your county Extension and NRCS office.",
     "rankingHint": "Average score over {n} scenarios (5 climate views × 2 price sets). This sets the order.",
     "notField": "County-wide simulation on one typical field. Not your field.",
-    "whyDiffers": "Why this is not the same answer as your field's cards ({field}): this study tests its own list of seven rotations on one typical county field, with county costs and climate projections. Here its best is {study}. The cards above use your field's own data and your goals."
+    "whyDiffers": "Why this is not the same answer as your field's cards ({field}): this study tests its own list of seven rotations on one typical county field, with county costs and climate projections. Here its best is {study}. The cards above use your field's own data and your goals.",
+    "modelsPlaceholder": "The field models are being retrained and will be plugged in here. Their accuracy numbers are not shown until then."
   },
   "search": {
     "label": "Find a place",
@@ -1027,7 +1031,105 @@
   },
   "v2": {
     "placeholderTag": "placeholder, model coming",
-    "sampleBanner": "Sample data for testing"
+    "sampleBanner": "Sample data for testing",
+    "noText": "Details are not available yet.",
+    "scores": {
+      "profit": "Profit",
+      "risk": "Low risk",
+      "soil": "Soil",
+      "water": "Water",
+      "nutrients": "Nutrients",
+      "pests": "Pests"
+    },
+    "priorities": {
+      "income": "Income",
+      "soil": "Soil health",
+      "lowRisk": "Low risk",
+      "saveWater": "Save water"
+    },
+    "option": {
+      "current": "What you grow now",
+      "generated": "Option: {crops}"
+    },
+    "fit": {
+      "water": {
+        "pass": "The next crop starts short of water in about {shortYears}% of years.",
+        "warn": "The next crop starts short of water in about {shortYears}% of years.",
+        "fail": "The next crop starts short of water in about {shortYears}% of years, too often."
+      },
+      "disease": {
+        "pass": "No shared pests between back-to-back crops and no same-family repeat.",
+        "warn": "The same crop family two years in a row.",
+        "warnRisingRisk": "Weather-driven pest risk is rising.",
+        "fail": "A cover crop here hosts a serious pest of the next cash crop.",
+        "failGreenBridge": "The {cover} cover hosts a pest of the next cash crop."
+      },
+      "market": {
+        "pass": "Grown on about {acres} acres in the county and nearby.",
+        "passFewBuyers": "Grown on {acres} acres nearby; confirm a buyer.",
+        "warn": "Few acres nearby or a weak local price.",
+        "warnFewAcres": "Only about {acres} acres nearby; confirm a buyer.",
+        "fail": "Almost no acres nearby and no buyer entered."
+      },
+      "season": {
+        "pass": "Finishes before frost and before the next crop in most years.",
+        "warn": "The timing is tight.",
+        "warn2040": "Fits today, but not by 2040.",
+        "fail": "Does not finish before frost or the next crop in more than 1 year in 5."
+      }
+    },
+    "reason": {
+      "profit": {
+        "median": "Median return above variable costs: {usd} per acre.",
+        "nCredit": "Includes {usd} from the nitrogen the legume leaves."
+      },
+      "risk": {
+        "baseline": "Same worst-year result as now.",
+        "worst10": "The worst 10% of seasons are {diffUsd} better than now."
+      },
+      "soil": {
+        "bareDays": "Bare about {days} days a year.",
+        "erosionOverT": "Erosion {erosion} tons per acre a year, above the limit of {t}.",
+        "erosionUnderT": "Erosion {erosion} tons per acre a year, under the limit of {t}."
+      },
+      "water": {
+        "ok": "Leaves enough water for the next crop.",
+        "lowUse": "Uses little water.",
+        "coverUsesWater": "The cover uses about {mm} mm of water."
+      },
+      "nutrients": {
+        "allBought": "All {lb} lb of nitrogen is bought.",
+        "legumeCredit": "A legume saves about {lb} lb of nitrogen."
+      },
+      "pests": {
+        "familiesRotate": "Crop families rotate.",
+        "grassRepeat": "A grass follows a grass.",
+        "greenBridge": "The {cover} cover can pass pests to the next crop."
+      }
+    },
+    "conf": {
+      "placeholderSlots": "{n} of the 5 field models are placeholders for now.",
+      "warnedCheck": "The {check} check is a warning."
+    },
+    "best": {
+      "mostProfitable": "Best expected profit within your limits (typical {usd} per acre).",
+      "bestBalance": "Best balance for your goals.",
+      "safest": "Best result in the worst seasons ({usd} per acre)."
+    },
+    "validation": {
+      "bareDays": "Bare days vs measured",
+      "cropDates": "Crop dates",
+      "erosion": "Erosion",
+      "expertRanking": "Expert ranking",
+      "modelAccuracy": "Model accuracy",
+      "neighborBacktest": "Neighbor fields",
+      "soilMoisture": "Soil moisture",
+      "yields": "Yields vs county yields",
+      "pending": "Waiting for the field models."
+    },
+    "zone": {
+      "steepEdge": "Steeper edge of the field"
+    }
   },
   "optionsScreen": {
     "title": "Options",
@@ -1039,14 +1141,6 @@
     "gradeLabel": "Grade {grade}, {total} out of 100",
     "vsToday": "points vs what you grow now",
     "scoresTitle": "Six scores",
-    "score": {
-      "profit": "Profit",
-      "risk": "Low risk",
-      "soil": "Soil",
-      "water": "Water",
-      "nitrogen": "Nitrogen",
-      "carbon": "Carbon"
-    },
     "fitTitle": "Four fit checks",
     "fit": {
       "name": {
@@ -1074,61 +1168,53 @@
       "title": "Check locally ({count})",
       "who": "Who checks: {who}",
       "item": {
-        "legumeN": {
-          "what": "Nitrogen credit from legumes",
-          "who": "extension agent, soil test"
-        },
         "coverEstablishment": {
           "what": "Will the cover crop come up on your soil?",
           "who": "extension agent, neighbors"
-        },
-        "seedPrice": {
-          "what": "Seed price and availability",
-          "who": "seed dealer"
-        },
-        "buyers": {
-          "what": "Buyers and local price",
-          "who": "you"
         },
         "equipment": {
           "what": "Equipment (no-till drill, second planter)",
           "who": "you"
         },
-        "pests": {
+        "legumeNitrogenCredit": {
+          "what": "Nitrogen credit from legumes",
+          "who": "extension agent, soil test"
+        },
+        "seedPriceAvailability": {
+          "what": "Seed price and availability",
+          "who": "seed dealer"
+        },
+        "buyersLocalPrice": {
+          "what": "Buyers and local price",
+          "who": "you"
+        },
+        "localPests": {
           "what": "Which pests your county really has",
           "who": "extension agent"
         },
-        "water": {
+        "waterRights": {
           "what": "Water rights and irrigation",
           "who": "you, water district"
         },
-        "quirks": {
+        "fieldQuirks": {
           "what": "Field quirks: wet spots, drainage, past management",
           "who": "you"
         },
-        "costShare": {
+        "costShareEligibility": {
           "what": "Cost-share eligibility",
           "who": "local NRCS office"
         }
       }
     },
-    "preview": {
-      "ev": {
-        "waterPass": "The next crop starts short of water in {n} of {total} simulated years.",
-        "waterWarn": "The next crop starts short of water in {n} of {total} simulated years.",
-        "diseasePass": "No shared pests between crops and no same-family repeat.",
-        "diseaseWarn": "The same crop family two years in a row.",
-        "diseaseFail": "The {crop} cover hosts a serious pest of the next cash crop.",
-        "marketPass": "Grown on many acres in the county; local buyers exist.",
-        "marketWarn": "Few {crop} acres nearby; confirm a buyer.",
-        "seasonPass": "Finishes before frost and before the next crop in 38 of 40 years.",
-        "seasonWarn": "Fits today, tight by 2040."
-      },
-      "conf": {
-        "high": "Beats today in {pct}% of what-if runs and no fit check is a fail.",
-        "medium": "Two fit checks are warnings.",
-        "low": "Beats today in only {pct}% of runs, and one fit check fails."
-      }
-    }
+    "loading": "Loading options…",
+    "error": {
+      "network": "We could not load the options. Check your connection and try again.",
+      "invalid": "The options file for this field did not pass our checks, so we are not showing it."
+    },
+    "weightedFor": "Weighted for your goals: {goals}.",
+    "neighbors": "{count} fields within {miles} miles do this."
+  },
+  "placeholder": {
+    "noOutlook": "No outlook yet; the calendar average is used."
   }
 }

@@ -1,44 +1,55 @@
-// One option (or today's rotation) on the Options screen. Props only: no data loading here.
+// One option (or today's rotation) on the Options screen. Props only; data comes from data/v2Options.js.
 //
-// LAYOUT-TIME SHAPE of `option` (will be mapped from docs/v2-data-contract.md by the loader; change only the mapping):
-//   { id, kind: 'current' | 'option', letter?: 'A' | 'B' | ... (options only), crops: [cropId], best?: bool,
-//     grade: 'A'..'D', total: 0-100, deltaTotal?: number (vs today),
-//     scores: [{ id, value: 0-100, placeholder? }]                          (six)
-//     fit: [{ id: 'water'|'disease'|'market'|'season', status: 'pass'|'warn'|'fail',
-//             evidence: { key, params }, placeholder? }]                   (four)
-//     profit: { low, typical, high, beatsCurrent: 0-1 | null, placeholder? }   ($ per acre per year)
-//     soilSaved?: { value, placeholder? }        (tons of soil per acre per year, vs today)
-//     nitrogenSaved?: { value, placeholder? }    (lb N per acre per year, vs today)
-//     confidence: { level: 'high'|'medium'|'low', reason: { key, params } },
-//     checkLocally: [itemId] }
+// `card` (see buildOptionCards): { id, kind: 'current'|'option', letter, best, steps: [[cropId, ...] per year], total, grade,
+//   deltaTotal, scores: [{ id, nameKey, value, placeholder }] (six), fit: [{ id, status, evidence, placeholder }] (four),
+//   profit: { low, typical, high, beatsCurrent, placeholder }, soilSaved / nitrogenSaved: { value, placeholder } | null,
+//   confidence: { level, reasons: [{ key, params }] }, checkLocally: [id], neighbors: { count, radiusMiles } | null }
 // `scale` = { min, max } dollars, the same for every card so the profit bars can be compared.
-// Text: every string goes through t(); evidence and confidence reasons arrive as { key, params }.
-import { useId, useState } from 'react';
-import { ChevronDown, CircleCheck, TriangleAlert, CircleX, Layers, Sprout, MapPinned } from 'lucide-react';
+// Placeholder marks: when every value in a group is a placeholder the group heading carries ONE tag; otherwise each
+// placeholder value carries its own.
+import { useId, useMemo, useState } from 'react';
+import { ChevronDown, ArrowRight, CircleCheck, TriangleAlert, CircleX, Layers, Sprout, MapPinned, Users } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
-import { CropSteps } from './RotationCard.jsx';
+import { makeV2Text } from '../data/v2Text.js';
 import { ConfidenceBadge } from './Small.jsx';
 import { PlaceholderTag } from './PlaceholderTag.jsx';
 
 const FIT_ICON = { pass: CircleCheck, warn: TriangleAlert, fail: CircleX };
 const clamp01 = (x) => Math.max(0, Math.min(1, x));
+const MINUS = '−';
+const signed = (n, digits = 0) => `${n > 0 ? '+' : n < 0 ? MINUS : ''}${Math.abs(n).toFixed(digits)}`;
 
-function useMoney() {
-  const { lang } = useApp();
-  const f = new Intl.NumberFormat(lang, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
-  return (n) => f.format(n);
+function useV2Text() {
+  const { t, lang } = useApp();
+  return useMemo(() => makeV2Text(t, lang), [t, lang]);
 }
 
-function Signed({ n, unit }) {
-  // "+34" / "−12" with a real minus sign.
-  const sign = n > 0 ? '+' : n < 0 ? '−' : '';
-  return <>{sign}{Math.abs(n)}{unit}</>;
+// A group heading, with the one placeholder tag when the whole group is placeholder.
+function GroupHead({ title, all }) {
+  return <h3 className="group-head"><span>{title}</span>{all && <PlaceholderTag />}</h3>;
+}
+
+export function Steps({ steps }) {
+  const { t } = useApp();
+  return (
+    <ol className="steps">
+      {steps.map((crops, i) => (
+        <li key={i}>
+          {i > 0 && <ArrowRight size={16} className="step-arrow" aria-hidden="true" />}
+          <span className="step-crop">
+            <span className="step-n" aria-hidden="true">{i + 1}</span>
+            {crops.map((id) => t(`crops.${id}`)).join(' + ')}
+          </span>
+        </li>
+      ))}
+    </ol>
+  );
 }
 
 export function GradeBadge({ grade, total }) {
   const { t } = useApp();
   return (
-    <div className="grade" aria-label={t('optionsScreen.gradeLabel', { grade, total })}>
+    <div className="grade" role="img" aria-label={t('optionsScreen.gradeLabel', { grade, total })}>
       <span className="grade-letter" aria-hidden="true">{grade}</span>
       <span className="grade-total" aria-hidden="true">{total}</span>
     </div>
@@ -48,62 +59,66 @@ export function GradeBadge({ grade, total }) {
 // Six scores: a number and a thin bar each. The bar is a second cue; the number is always there.
 export function ScoreGrid({ scores }) {
   const { t } = useApp();
+  const all = scores.every((s) => s.placeholder);
   return (
-    <ul className="score-grid" aria-label={t('optionsScreen.scoresTitle')}>
-      {scores.map((s) => (
-        <li key={s.id} className="score-cell">
-          <span className="score-name">{t(`optionsScreen.score.${s.id}`)}</span>
-          <span className="score-num">{Math.round(s.value)}</span>
-          <span className="thin-bar" aria-hidden="true"><span style={{ width: `${clamp01(s.value / 100) * 100}%` }} /></span>
-          {s.placeholder && <PlaceholderTag />}
-        </li>
-      ))}
-    </ul>
+    <section>
+      <GroupHead title={t('optionsScreen.scoresTitle')} all={all} />
+      <ul className="score-grid">
+        {scores.map((s) => (
+          <li key={s.id} className="score-cell">
+            <span className="score-name">{t(s.nameKey)}</span>
+            <span className="score-num">{Math.round(s.value)}</span>
+            <span className="thin-bar" aria-hidden="true"><span style={{ width: `${clamp01(s.value / 100) * 100}%` }} /></span>
+            {s.placeholder && !all && <PlaceholderTag />}
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }
 
 // The four fit checks. A chip (icon + word: never color alone) and one line of evidence.
 export function FitChecks({ fit }) {
   const { t } = useApp();
+  const v2t = useV2Text();
   return (
-    <ul className="fit-list" aria-label={t('optionsScreen.fitTitle')}>
-      {fit.map((c) => {
-        const Icon = FIT_ICON[c.status];
-        return (
-          <li key={c.id} className="fit-row">
-            <span className={`fit-chip fit-${c.status}`}>
-              <Icon size={16} aria-hidden="true" />
-              <span>{t(`optionsScreen.fit.name.${c.id}`)}</span>
-              <span className="fit-status">{t(`optionsScreen.fit.status.${c.status}`)}</span>
-            </span>
-            <span className="fit-line">
-              {t(c.evidence.key, c.evidence.params)}
-              {c.placeholder && <> <PlaceholderTag /></>}
-            </span>
-          </li>
-        );
-      })}
-    </ul>
+    <section>
+      <GroupHead title={t('optionsScreen.fitTitle')} />
+      <ul className="fit-list">
+        {fit.map((c) => {
+          const Icon = FIT_ICON[c.status];
+          return (
+            <li key={c.id} className="fit-row">
+              <span className={`fit-chip fit-${c.status}`}>
+                <Icon size={16} aria-hidden="true" />
+                <span>{t(`optionsScreen.fit.name.${c.id}`)}</span>
+                <span className="fit-status">{t(`optionsScreen.fit.status.${c.status}`)}</span>
+              </span>
+              <span className="fit-line">{v2t(c.evidence)}{c.placeholder && <> <PlaceholderTag /></>}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 
 // Profit as a range, never one promise: a bar from "low" to "high" with a marker at "typical".
 export function ProfitBlock({ profit, scale, isCurrent }) {
-  const { t } = useApp();
-  const money = useMoney();
+  const { t, lang } = useApp();
+  const money = useMemo(() => { const f = new Intl.NumberFormat(lang, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }); return (n) => f.format(n); }, [lang]);
   const span = Math.max(1, scale.max - scale.min);
-  const pos = (v) => `${clamp01((v - scale.min) / span) * 100}%`;
-  const left = clamp01((profit.low - scale.min) / span) * 100;
-  const width = Math.max(2, (clamp01((profit.high - scale.min) / span) * 100) - left);
+  const at = (v) => clamp01((v - scale.min) / span) * 100;
+  const range = t('optionsScreen.profitRange', { low: money(profit.low), high: money(profit.high) });
   return (
     <div className="tile profit-tile">
       <span className="tile-label">{t('optionsScreen.profitLabel')} {profit.placeholder && <PlaceholderTag />}</span>
-      <span className="tile-value">{money(profit.typical)}<span className="tile-unit"> {t('optionsScreen.perAcreYear')}</span></span>
-      <span className="range-bar" role="img" aria-label={t('optionsScreen.profitRange', { low: money(profit.low), high: money(profit.high) })}>
-        <span className="range-span" style={{ left: `${left}%`, width: `${width}%` }} />
-        <span className="range-mark" style={{ left: pos(profit.typical) }} />
+      <span className="tile-value">{money(profit.typical)} <span className="tile-unit">{t('optionsScreen.perAcreYear')}</span></span>
+      <span className="range-bar" role="img" aria-label={range}>
+        <span className="range-span" style={{ left: `${at(profit.low)}%`, width: `${Math.max(2, at(profit.high) - at(profit.low))}%` }} />
+        <span className="range-mark" style={{ left: `${at(profit.typical)}%` }} />
       </span>
-      <span className="tile-note">{t('optionsScreen.profitRange', { low: money(profit.low), high: money(profit.high) })}</span>
+      <span className="tile-note">{range}</span>
       <span className="tile-note">
         {isCurrent || profit.beatsCurrent == null
           ? t('optionsScreen.profitBaseline')
@@ -113,14 +128,12 @@ export function ProfitBlock({ profit, scale, isCurrent }) {
   );
 }
 
-function SavedTile({ Icon, label, saved, unitKey, decimals = 0 }) {
+function SavedTile({ Icon, label, saved, unitKey, digits = 0 }) {
   const { t } = useApp();
-  const v = saved.value;
-  const shown = decimals ? v.toFixed(decimals) : Math.round(v);
   return (
     <div className="tile">
       <span className="tile-label"><Icon size={16} aria-hidden="true" />{label} {saved.placeholder && <PlaceholderTag />}</span>
-      <span className="tile-value">{v > 0 ? '+' : ''}{shown}</span>
+      <span className="tile-value">{signed(saved.value, digits)}</span>
       <span className="tile-unit">{t(unitKey)}</span>
     </div>
   );
@@ -153,41 +166,46 @@ export function CheckLocally({ items }) {
   );
 }
 
-export default function OptionCard({ option, scale }) {
+export default function OptionCard({ card, scale }) {
   const { t } = useApp();
-  const isCurrent = option.kind === 'current';
-  const label = isCurrent ? t('optionsScreen.current') : t('optionsScreen.option', { letter: option.letter });
+  const v2t = useV2Text();
+  const isCurrent = card.kind === 'current';
+  const label = isCurrent ? t('optionsScreen.current') : t('optionsScreen.option', { letter: card.letter });
   return (
-    <article className={`card opt${option.best ? ' is-best' : ''}${isCurrent ? ' is-current' : ''}`} aria-label={label}>
+    <article className={`card opt${card.best ? ' is-best' : ''}${isCurrent ? ' is-current' : ''}`} aria-label={label}>
       <header className="opt-head">
         <div className="opt-title">
           <h2>{label}</h2>
-          {option.best && <span className="pill pill-best">{t('optionsScreen.best')}</span>}
-          <CropSteps crops={option.crops} />
+          {card.best && <span className="pill pill-best">{t('optionsScreen.best')}</span>}
+          <Steps steps={card.steps} />
         </div>
-        <GradeBadge grade={option.grade} total={option.total} />
+        <GradeBadge grade={card.grade} total={card.total} />
       </header>
-      {!isCurrent && option.deltaTotal != null && (
-        <p className="opt-delta"><Signed n={option.deltaTotal} /> {t('optionsScreen.vsToday')}</p>
+      {!isCurrent && card.deltaTotal != null && (
+        <p className="opt-delta">{signed(card.deltaTotal)} {t('optionsScreen.vsToday')}</p>
       )}
 
-      <ScoreGrid scores={option.scores} />
-      <FitChecks fit={option.fit} />
-      <ProfitBlock profit={option.profit} scale={scale} isCurrent={isCurrent} />
+      <ScoreGrid scores={card.scores} />
+      <FitChecks fit={card.fit} />
+      <ProfitBlock profit={card.profit} scale={scale} isCurrent={isCurrent} />
 
-      {!isCurrent && (option.soilSaved || option.nitrogenSaved) && (
+      {!isCurrent && (card.soilSaved || card.nitrogenSaved) && (
         <div className="tiles">
-          {option.soilSaved && <SavedTile Icon={Layers} label={t('optionsScreen.soilSaved')} saved={option.soilSaved} unitKey="optionsScreen.soilUnit" decimals={1} />}
-          {option.nitrogenSaved && <SavedTile Icon={Sprout} label={t('optionsScreen.nitrogenSaved')} saved={option.nitrogenSaved} unitKey="optionsScreen.nitrogenUnit" />}
+          {card.soilSaved && <SavedTile Icon={Layers} label={t('optionsScreen.soilSaved')} saved={card.soilSaved} unitKey="optionsScreen.soilUnit" digits={1} />}
+          {card.nitrogenSaved && <SavedTile Icon={Sprout} label={t('optionsScreen.nitrogenSaved')} saved={card.nitrogenSaved} unitKey="optionsScreen.nitrogenUnit" />}
         </div>
       )}
 
       <div className="opt-conf">
-        <ConfidenceBadge level={option.confidence.level} />
-        <p className="opt-conf-reason">{t(option.confidence.reason.key, option.confidence.reason.params)}</p>
+        <ConfidenceBadge level={card.confidence.level} />
+        {card.confidence.reasons.slice(0, 2).map((r, i) => <p key={i} className="opt-conf-reason">{v2t(r)}</p>)}
       </div>
 
-      <CheckLocally items={option.checkLocally} />
+      {card.neighbors && !isCurrent && (
+        <p className="opt-neighbors"><Users size={16} aria-hidden="true" />{t('optionsScreen.neighbors', { count: card.neighbors.count, miles: card.neighbors.radiusMiles })}</p>
+      )}
+
+      <CheckLocally items={card.checkLocally} />
     </article>
   );
 }

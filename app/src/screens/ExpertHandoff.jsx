@@ -60,7 +60,7 @@ export default function ExpertHandoff() {
           <span className="card-meta">{from}–{to}</span>
         </div>
         <div className="mini-stats">
-          <MiniStat icon={CalendarX} label={t('story.statDrought')} value={s.droughtYears.length} detail={s.droughtYears.join(', ')} src={['NASA POWER', 'Greenline SI models']} />
+          <MiniStat icon={CalendarX} label={t('story.statDrought')} value={s.droughtYears.length} detail={s.droughtYears.join(', ')} src={['NASA POWER']} />
           <MiniStat icon={CloudRain} label={t('story.statRain')} value={s.avgRainIn} unit={t('units.in')} detail={t('story.rainDetail', { mm: s.avgRainMm })} src={['NASA POWER']} />
           <MiniStat icon={Thermometer} label={t('story.statHeat')} value={s.avgHeatDays} detail={t('story.heatDetail')} src={['NASA POWER']} />
           <MiniStat icon={Sun} label={t('handoff.bareLabel')} value={s.avgBareDays} detail={t('handoff.bareDetail')} src={['Landsat 8/9']} />

@@ -14,6 +14,7 @@ import {
   coverRows as allCoverRows, SENSOR_YEAR,
 } from '../display.js';
 import { stressDriverText, modelClassFor, cropForYear } from '../si.js';
+import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
 // import VulnerabilityZonesMap from '../components/future/VulnerabilityZonesMap.jsx'; // FUTURE
 
 // Chart colors follow theme.css meaning: drought = dark orange, heat = amber, wet = water blue.
@@ -129,7 +130,7 @@ function Replay({ year }) {
         ) : year > SENSOR_YEAR && <li className="muted">{t('story.noBareNumber')}</li>}
         {si?.stressMonths && (
           <li>
-            <Receipt src={['Landsat 5/7/8/9', 'Greenline SI models']}>
+            <Receipt src={['Landsat 5/7/8/9']}>
               {si.stressMonths.length
                 ? t('story.replayStress', { months: si.stressMonths.map((m) => months[m - 1]).join(', ') })
                 : t('story.replayNoStress')}
@@ -168,7 +169,7 @@ export default function FieldStory() {
   const last = chartData.at(-1)?.year;
   const presets = field.si?.replayPresets || field.climateYearly.filter((y) => y.yearType === 'drought').slice(-3)
     .map((y) => ({ year: y.year, yearType: y.yearType }));
-  const climateSrc = ['NASA POWER', 'Greenline SI models'];
+  const climateSrc = ['NASA POWER'];
 
   // Header card: the field's measured bare days a year (Landsat 8/9), one mini bar per year.
   const yearly = bareRows(field);
@@ -285,7 +286,7 @@ export default function FieldStory() {
             )}
           </>
         )}
-        <Source datasets={['Landsat 8/9', 'Landsat 5/7/8/9', 'Greenline SI models']} />
+        <Source datasets={['Landsat 8/9', 'Landsat 5/7/8/9']} />
       </section>
 
       <section className="card" aria-labelledby="typ-title">
@@ -315,14 +316,14 @@ export default function FieldStory() {
         </ul>
         <p className="hint small">{t('story.cropLegend')}</p>
         <p className="gap-note"><TriangleAlert size={16} aria-hidden="true" /><Receipt src={['USDA Cropland Data Layer']}>{t('gaps.cdlNoise')}</Receipt></p>
-        <Source datasets={['USDA Cropland Data Layer', 'Greenline SI models']} />
+        <Source datasets={['USDA Cropland Data Layer']} />
       </section>
 
       <SoilGrid field={field} />
 
       <section className="card">
         <h2 className="card-kicker"><History size={18} aria-hidden="true" />{t('story.replayTitle')}</h2>
-        <p className="chart-caption">{t('story.replayCaption')}</p>
+        <p className="chart-caption">{t('story.replayCaption')} {field.yearTypesPlaceholder && <PlaceholderTag />}</p>
         <div className="chips" role="group" aria-label={t('story.replayTitle')}>
           {presets.map((p) => (
             <button key={p.year} type="button" className="chip" aria-pressed={replayYear === p.year}
@@ -344,6 +345,7 @@ export default function FieldStory() {
             <span key={k} className="legend-item"><span className="swatch" style={{ background: YEAR_COLORS[k] }} />{t(`yearType.${k}`)}</span>
           ))}
         </div>
+        {field.yearTypesPlaceholder && <p><PlaceholderTag /></p>}
         <div role="img" aria-label={t('story.chartAlt', { from: first, to: last, years: joinYears(s.droughtYears, t), avg: s.avgRainIn })}>
           <ResponsiveContainer width="100%" height={200}>
             <BarChart data={chartData} margin={{ top: 8, right: 0, left: -20, bottom: 0 }}>
@@ -363,7 +365,7 @@ export default function FieldStory() {
           </ResponsiveContainer>
         </div>
         <Takeaway>{t('story.chartCaption', { years: joinYears(s.droughtYears.slice(-4), t) })}</Takeaway>
-        <Source datasets={['NASA POWER', 'Greenline SI models']} />
+        <Source datasets={['NASA POWER']} />
       </section>
 
       <ModelCard />

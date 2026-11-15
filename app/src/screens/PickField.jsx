@@ -241,7 +241,7 @@ function CropRow({ field }) {
   return (
     <SheetRow icon={Sprout}
       sub={<span className={`pill ${c.notSure ? 'pill-unsure' : ''}`}>{t(`pick.cropSrc.${kind}`, { pct: c.pct ?? '–' })}</span>}>
-      <Receipt src={['USDA Cropland Data Layer', 'Greenline SI models']}>{t('pick.cropThisYear', { crop, year: c.year })}</Receipt>
+      <Receipt src={['USDA Cropland Data Layer']}>{t('pick.cropThisYear', { crop, year: c.year })}</Receipt>
     </SheetRow>
   );
 }
