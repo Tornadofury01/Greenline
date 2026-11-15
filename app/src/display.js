@@ -104,6 +104,15 @@ export function typicalBareMonths(field) {
   });
 }
 
+// Chance (0-1) the ground is green in each month, over the Landsat 8/9 years (same rows as typicalBareMonths).
+export function typicalGreenMonths(field) {
+  const rows = trusted(coverRows(field));
+  return Array.from({ length: 12 }, (_, m) => {
+    const seen = rows.map((r) => r.months[m]).filter(Boolean);
+    return seen.length ? Math.round((100 * seen.filter((s) => s === 'green').length) / seen.length) / 100 : 0;
+  });
+}
+
 // --- Soil (SSURGO) in plain words. Thresholds from docs/app-changes-needed.md. ---
 export function kWord(k) {
   if (k == null) return null;

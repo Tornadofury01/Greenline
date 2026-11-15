@@ -134,9 +134,7 @@
   },
   "story": {
     "title": "Your field's history",
-    "kicker": "Main finding",
-    "headline": "Your field sits bare about {months} months a year.",
-    "headlineDetail": "Usually {months}. Bare ground loses soil and water to wind and heavy rain.",
+    "headlineDetail": "Usually bare in {months}. Bare ground loses soil and water to wind and heavy rain.",
     "statDrought": "Drought years",
     "statRain": "Rain per year",
     "rainDetail": "Average ({mm} mm)",
@@ -145,14 +143,9 @@
     "statBare": "Bare days",
     "bareDetail": "Average per year, 2014 on",
     "chartTitle": "Rain each year since {from}",
-    "chartCaption": "Each bar is one year, colored by year type. Recent drought years: {years}.",
+    "chartCaption": "Each bar is one year. Recent drought years: {years}.",
     "chartAlt": "Bar chart of yearly rain from {from} to {to}. Average about {avg} inches. Drought years: {years}.",
     "tooltipRain": "Rain",
-    "bareTitle": "Green, residue or bare: 40 years from space",
-    "bareCaption": "Each row is a year (newest on top), each square a month. The number is that year’s ground cover score.",
-    "legendBare": "Bare ground",
-    "legendCovered": "Plants growing",
-    "year": "Year",
     "monthsShort": [
       "J",
       "F",
@@ -181,7 +174,7 @@
       "November",
       "December"
     ],
-    "next": "See rotation options",
+    "next": "Compare rotations",
     "droughtDetail": "Years {from}–{to}",
     "statScore": "Ground cover score",
     "scoreDetail": "Last 10 years with a clear count. 100 = never bare",
@@ -192,10 +185,6 @@
       "none": "No clear picture (clouds)",
       "noImage": "No image yet (before Landsat 8)"
     },
-    "scoreCol": "Score",
-    "cropCol": "Crop",
-    "doubleCrop": "CDL: 2 crops",
-    "doubleCropNote": "The crop map says two crops this year. Low confidence: too few examples to check.",
     "timelineNote": "Crop names start in 2008 (USDA crop maps). Bare and green time before 2013 comes from older satellites and is low confidence.",
     "replayTitle": "Replay a bad year",
     "replayCaption": "The worst years in 40 years of NASA weather, picked by our year-pattern model. Tap one to see what happened on this field.",
@@ -208,21 +197,51 @@
     "replayBare": "{days} bare days (score {score}/100)",
     "replayStress": "Greenness below normal in: {months}",
     "replayNoStress": "Greenness stayed near normal all season",
-    "coverChartTitle": "Your ground cover, year by year",
-    "coverChartCaption": "Each bar is one year. Green is time with plants growing, tan is partly covered, and the brown striped part is bare ground.",
-    "coverChartAlt": "Bar chart of ground cover from {from} to {to}. Bare ground averaged {bare}% of the clear months since {since}.",
-    "sensorChange": "Landsat 8",
     "sensorNote": "Before 2013 only older satellites were flying. They read fields as less green, so bare time looks higher than it was. Treat those years as rough.",
-    "typicalTitle": "A typical year on your field",
-    "typicalCaption": "Chance the ground is bare in each month, from the years since {since}.",
-    "typicalBare": "Usually bare: {months}.",
-    "typicalNone": "No month is usually bare.",
+    "typicalTitle": "A typical year",
+    "typicalBare": "Bare in most years: {months}.",
+    "typicalNone": "No month is bare in most years.",
     "partlyNote": "“Partly covered” means sparse plants, stubble or crop residue. Satellites can’t yet tell these apart.",
-    "showAll": "Show all {n} years",
-    "showRecent": "Show the latest 10 years",
-    "coverShare": "{green}% growing, {partly}% partly covered, {bare}% bare",
     "lowConfTag": "Low confidence: older satellite",
-    "noBareNumber": "Too cloudy that year to count bare days."
+    "noBareNumber": "Too cloudy that year to count bare days.",
+    "heroTitle": "Bare soil",
+    "heroUnit": "bare days a year, {from}–{to} average (Landsat 8/9)",
+    "heroBarsAlt": "Bare days each year from {from} to {to}. Most bare: {year}, {days} days.",
+    "undercount": "Whole-field average, may undercount bare soil.",
+    "heroTakeaway": "Most bare: {year}, {days} days. Least: {year2}, {days2} days.",
+    "tlTitle": "Ground cover, month by month",
+    "tlMonths": "{n} months",
+    "tlAlt": "One stripe per month from {from} to {to}: {green}% growing, {partly}% partly covered, {bare}% bare ground.",
+    "tlTakeaway": "Since {since}, the ground was bare in {bare}% of the clear months and green in {green}%.",
+    "showOlder": "Show older years (low confidence)",
+    "hideOlder": "Hide older years",
+    "olderAlt": "One stripe per month from {from} to {to}, from older satellites. Low confidence.",
+    "dot": {
+      "bare": "Bare",
+      "green": "Green"
+    },
+    "dotLegend": {
+      "s": "Rarely",
+      "m": "Some years",
+      "l": "Most years"
+    },
+    "dotNone": "no month",
+    "dotRowAlt": "{what} in most years: {months}.",
+    "cropTitle": "Crop each year",
+    "cropNotSure": "not sure, {pct}%",
+    "cropModel": "model guess",
+    "cropLegend": "Solid pill: USDA crop map. Dashed pill: a model guess we are not sure about.",
+    "chipAlt": {
+      "fewer": "{n} fewer bare days a year with {name}",
+      "more": "{n} more bare days a year with {name}",
+      "same": "Same bare days a year with {name}"
+    },
+    "chipWhy": {
+      "fewer": "{name} would have about {n} fewer bare days a year than what you grow now. Both are estimates from crop calendars, not measurements.",
+      "more": "{name} would have about {n} more bare days a year than what you grow now. Both are estimates from crop calendars, not measurements.",
+      "same": "{name} would have about the same bare days a year as what you grow now. Both are estimates from crop calendars, not measurements."
+    },
+    "tlCloudy": "{cloudy} months were too cloudy to read."
   },
   "compare": {
     "title": "Compare rotations",
@@ -840,7 +859,17 @@
       "c": "climate limits"
     },
     "lccDetail": "Class 1 has the fewest limits for crops, class 8 is not for crops (without irrigation)",
-    "source": "USDA soil survey (SSURGO), main soil on your field"
+    "source": "USDA soil survey (SSURGO), main soil on your field",
+    "grid": {
+      "k": "Erosion risk",
+      "t": "Tolerable soil loss",
+      "water": "Water the soil holds",
+      "lcc": "Land capability"
+    },
+    "kShort": "K factor {k}",
+    "tShort": "{t} tons",
+    "tUnit": "per acre a year (T)",
+    "waterShort": "{cm} cm, top 3.3 ft"
   },
   "frost": {
     "title": "Frost dates",
@@ -851,7 +880,8 @@
     "season": "Frost-free season",
     "seasonValue": "{days} days",
     "powerNote": "NASA POWER says {days} days. The year-pattern model uses that one.",
-    "source": "PRISM daily temperatures (4 km, from weather stations), low of 32 °F or colder"
+    "source": "PRISM daily temperatures (4 km, from weather stations), low of 32 °F or colder",
+    "seasonLine": "Frost-free season: about {days} days."
   },
   "yearTypeYear": {
     "drought": "a drought year",

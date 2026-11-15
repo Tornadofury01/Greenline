@@ -60,18 +60,23 @@ export function modelSummary(field) {
   };
 }
 
-// The crop on the field in the latest year, with how sure we are (Model 1, see /shared/data-format.md "years[]").
+// The crop on the field in one year, with how sure we are (Model 1, see /shared/data-format.md "years[]").
 // source 'usda' = the USDA crop map has a label; 'model' = the model's guess, with its probability.
 // A model guess under LOW_CROP_CONF is shown as "not sure" (dashed pill).
 export const LOW_CROP_CONF = 0.6;
-export function cropThisYear(field) {
-  const y = field?.si?.years?.at(-1);
-  const h = field?.cropHistory?.at(-1);
-  if (!y?.cropFinal) return h ? { year: h.year, cropId: h.crop === 'other' ? null : h.crop, cls: h.cdlClass || 'other', source: 'usda', pct: null, notSure: false } : null;
-  const sameYear = h && h.year === y.year && h.crop !== 'other' && y.cropSource === 'usda';
+export function cropForYear(field, year) {
+  const y = field?.si?.years?.find((r) => r.year === year);
+  const h = field?.cropHistory?.find((r) => r.year === year);
+  if (!y?.cropFinal) return h ? { year, cropId: h.crop === 'other' ? null : h.crop, cls: h.cdlClass || 'other', source: 'usda', pct: null, notSure: false } : null;
+  const named = h && h.crop !== 'other' && y.cropSource === 'usda';
   return {
-    year: y.year, cropId: sameYear ? h.crop : null, cls: y.cropFinal, source: y.cropSource,
+    year, cropId: named ? h.crop : null, cls: y.cropFinal, source: y.cropSource,
     pct: y.confidence == null ? null : Math.round(y.confidence * 100),
     notSure: y.cropSource !== 'usda' && y.confidence != null && y.confidence < LOW_CROP_CONF,
   };
+}
+// The latest year we have a crop for.
+export function cropThisYear(field) {
+  const year = field?.si?.years?.at(-1)?.year ?? field?.cropHistory?.at(-1)?.year;
+  return year == null ? null : cropForYear(field, year);
 }

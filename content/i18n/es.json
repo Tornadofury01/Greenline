@@ -134,9 +134,7 @@
   },
   "story": {
     "title": "El historial de su parcela",
-    "kicker": "Hallazgo principal",
-    "headline": "Su parcela se queda con el suelo desnudo unos {months} meses al año.",
-    "headlineDetail": "Por lo general en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
+    "headlineDetail": "Suele estar desnudo en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
     "statDrought": "Años de sequía",
     "statRain": "Lluvia por año",
     "rainDetail": "Promedio ({mm} mm)",
@@ -145,14 +143,9 @@
     "statBare": "Días de suelo desnudo",
     "bareDetail": "Promedio por año, desde 2014",
     "chartTitle": "Lluvia de cada año desde {from}",
-    "chartCaption": "Cada barra es un año, con el color del tipo de año. Sequías recientes: {years}.",
+    "chartCaption": "Cada barra es un año. Años de sequía recientes: {years}.",
     "chartAlt": "Gráfica de barras de la lluvia anual de {from} a {to}. Promedio de unas {avg} pulgadas. Años de sequía: {years}.",
     "tooltipRain": "Lluvia",
-    "bareTitle": "Verde, rastrojo o desnudo: 40 años desde el espacio",
-    "bareCaption": "Cada fila es un año (el más reciente arriba), cada cuadro un mes. El número es el puntaje de cobertura de ese año.",
-    "legendBare": "Suelo desnudo",
-    "legendCovered": "Con plantas",
-    "year": "Año",
     "monthsShort": [
       "E",
       "F",
@@ -181,7 +174,7 @@
       "noviembre",
       "diciembre"
     ],
-    "next": "Ver opciones de rotación",
+    "next": "Comparar rotaciones",
     "droughtDetail": "Años {from}–{to}",
     "statScore": "Puntaje de cobertura",
     "scoreDetail": "Últimos 10 años con datos claros. 100 = nunca desnudo",
@@ -192,10 +185,6 @@
       "none": "Sin imagen clara (nubes)",
       "noImage": "Sin imagen (antes de Landsat 8)"
     },
-    "scoreCol": "Puntaje",
-    "cropCol": "Cultivo",
-    "doubleCrop": "CDL: 2 cultivos",
-    "doubleCropNote": "El mapa de cultivos dice dos cultivos este año. Confianza baja: hay muy pocos ejemplos para comprobarlo.",
     "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). El tiempo desnudo y verde antes de 2013 viene de satélites antiguos y es de baja confianza.",
     "replayTitle": "Revivir un mal año",
     "replayCaption": "Los peores años en 40 años de clima de la NASA, escogidos por nuestro modelo de tipos de año. Toque uno para ver qué pasó en esta parcela.",
@@ -208,21 +197,51 @@
     "replayBare": "{days} días desnudo (puntaje {score}/100)",
     "replayStress": "Verdor por debajo de lo normal en: {months}",
     "replayNoStress": "El verdor se mantuvo cerca de lo normal toda la temporada",
-    "coverChartTitle": "La cobertura de su suelo, año por año",
-    "coverChartCaption": "Cada barra es un año. El verde es el tiempo con plantas creciendo, el beige es cobertura parcial y la parte café con rayas es suelo desnudo.",
-    "coverChartAlt": "Gráfica de barras de la cobertura del suelo de {from} a {to}. El suelo desnudo promedió {bare}% de los meses despejados desde {since}.",
-    "sensorChange": "Landsat 8",
     "sensorNote": "Antes de 2013 solo había satélites antiguos. Ven las parcelas menos verdes, así que el tiempo desnudo parece mayor de lo que fue. Tome esos años como aproximados.",
-    "typicalTitle": "Un año típico en su parcela",
-    "typicalCaption": "Probabilidad de suelo desnudo en cada mes, según los años desde {since}.",
-    "typicalBare": "Casi siempre desnudo: {months}.",
-    "typicalNone": "Ningún mes suele estar desnudo.",
+    "typicalTitle": "Un año típico",
+    "typicalBare": "Desnudo casi todos los años: {months}.",
+    "typicalNone": "Ningún mes está desnudo casi todos los años.",
     "partlyNote": "“Parcialmente cubierto” significa plantas dispersas, rastrojo o residuos del cultivo. Los satélites todavía no pueden distinguirlos.",
-    "showAll": "Ver los {n} años",
-    "showRecent": "Ver los últimos 10 años",
-    "coverShare": "{green}% creciendo, {partly}% parcialmente cubierto, {bare}% desnudo",
     "lowConfTag": "Baja confianza: satélite antiguo",
-    "noBareNumber": "Ese año hubo demasiadas nubes para contar los días desnudos."
+    "noBareNumber": "Ese año hubo demasiadas nubes para contar los días desnudos.",
+    "heroTitle": "Suelo desnudo",
+    "heroUnit": "días desnudos al año, promedio {from}–{to} (Landsat 8/9)",
+    "heroBarsAlt": "Días desnudos cada año de {from} a {to}. El más desnudo: {year}, {days} días.",
+    "undercount": "Promedio de todo el campo; puede contar menos suelo desnudo del que hay.",
+    "heroTakeaway": "El más desnudo: {year}, {days} días. El menos: {year2}, {days2} días.",
+    "tlTitle": "Cobertura del suelo, mes por mes",
+    "tlMonths": "{n} meses",
+    "tlAlt": "Una franja por mes de {from} a {to}: {green}% creciendo, {partly}% parcialmente cubierto, {bare}% suelo desnudo.",
+    "tlTakeaway": "Desde {since}, el suelo estuvo desnudo en el {bare}% de los meses despejados y verde en el {green}%.",
+    "showOlder": "Ver años anteriores (baja confianza)",
+    "hideOlder": "Ocultar años anteriores",
+    "olderAlt": "Una franja por mes de {from} a {to}, de satélites antiguos. Baja confianza.",
+    "dot": {
+      "bare": "Desnudo",
+      "green": "Verde"
+    },
+    "dotLegend": {
+      "s": "Rara vez",
+      "m": "Algunos años",
+      "l": "Casi todos los años"
+    },
+    "dotNone": "ningún mes",
+    "dotRowAlt": "{what} casi todos los años: {months}.",
+    "cropTitle": "Cultivo de cada año",
+    "cropNotSure": "no es seguro, {pct}%",
+    "cropModel": "estimación del modelo",
+    "cropLegend": "Etiqueta sólida: mapa de cultivos del USDA. Etiqueta punteada: una estimación del modelo de la que no estamos seguros.",
+    "chipAlt": {
+      "fewer": "{n} días desnudos menos al año con la {name}",
+      "more": "{n} días desnudos más al año con la {name}",
+      "same": "Los mismos días desnudos al año con la {name}"
+    },
+    "chipWhy": {
+      "fewer": "La {name} tendría unos {n} días desnudos menos al año que lo que siembra ahora. Las dos son estimaciones de calendarios de cultivo, no mediciones.",
+      "more": "La {name} tendría unos {n} días desnudos más al año que lo que siembra ahora. Las dos son estimaciones de calendarios de cultivo, no mediciones.",
+      "same": "La {name} tendría más o menos los mismos días desnudos al año que lo que siembra ahora. Las dos son estimaciones de calendarios de cultivo, no mediciones."
+    },
+    "tlCloudy": "{cloudy} meses estuvieron demasiado nublados para leerlos."
   },
   "compare": {
     "title": "Comparar rotaciones",
@@ -840,7 +859,17 @@
       "c": "límites por clima"
     },
     "lccDetail": "La clase 1 tiene menos límites para cultivos; la clase 8 no es para cultivos (sin riego)",
-    "source": "Estudio de suelos del USDA (SSURGO), suelo principal de su campo"
+    "source": "Estudio de suelos del USDA (SSURGO), suelo principal de su campo",
+    "grid": {
+      "k": "Riesgo de erosión",
+      "t": "Pérdida de suelo tolerable",
+      "water": "Agua que guarda el suelo",
+      "lcc": "Capacidad de la tierra"
+    },
+    "kShort": "Factor K {k}",
+    "tShort": "{t} toneladas",
+    "tUnit": "por acre al año (T)",
+    "waterShort": "{cm} cm, primeros 3.3 pies"
   },
   "frost": {
     "title": "Fechas de helada",
@@ -851,7 +880,8 @@
     "season": "Temporada sin heladas",
     "seasonValue": "{days} días",
     "powerNote": "NASA POWER indica {days} días. El modelo de tipos de año usa ese dato.",
-    "source": "Temperaturas diarias de PRISM (4 km, de estaciones meteorológicas), mínima de 32 °F o menos"
+    "source": "Temperaturas diarias de PRISM (4 km, de estaciones meteorológicas), mínima de 32 °F o menos",
+    "seasonLine": "Temporada sin heladas: unos {days} días."
   },
   "yearTypeYear": {
     "drought": "un año de sequía",

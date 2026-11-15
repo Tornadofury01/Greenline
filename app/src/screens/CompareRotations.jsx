@@ -1,27 +1,16 @@
 // Screen 4: a scoreboard (one row per rotation), a Normal year / Bad year switch, then one card per rotation.
 // "Build my own" is scored by the same scoreRotation() function. The Ellis County study sits below the field's own
 // cards, clearly marked as a county-wide simulation (not this field).
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Award, Tractor, Lightbulb, Send } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useScores } from '../state/useScores.js';
+import { useWide } from '../state/useWide.js';
 import RotationCard from '../components/RotationCard.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
 import ReplayBar from '../components/ReplayBar.jsx';
 import FieldShiftStudy from '../components/FieldShiftStudy.jsx';
 import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
-
-// True on desktop, where rotation cards sit side by side.
-function useWide(query = '(min-width: 1024px)') {
-  const [wide, setWide] = useState(() => window.matchMedia(query).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const on = () => setWide(mq.matches);
-    mq.addEventListener('change', on);
-    return () => mq.removeEventListener('change', on);
-  }, [query]);
-  return wide;
-}
 
 // One plain sentence under a table or chart.
 function Takeaway({ children }) {
