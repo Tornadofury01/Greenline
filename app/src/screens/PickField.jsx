@@ -1,7 +1,7 @@
 // Screen 1: a full-screen satellite map of the 300 Ellis County study fields. Tap an outline to load that field;
 // a card slides up over the map with the field at a glance.
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { MapContainer, TileLayer, Polygon, Polyline, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, Polyline, Marker, useMap, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
@@ -14,7 +14,7 @@ import { Receipt } from '../components/Small.jsx';
 import { slopeWord } from '../display.js';
 import { fieldOutlines, outlineFor, mapLayers, insideStudyArea, nearestTo, fieldIndex } from '../data/loadField.js';
 import { nearestTownTo } from '../data/geocode.js';
-import MapSearch from '../components/MapSearch.jsx';
+import MapSearch, { SearchPrivacy } from '../components/MapSearch.jsx';
 import { cropThisYear } from '../si.js';
 // import FieldWalkMode from '../components/future/FieldWalkMode.jsx';  // FUTURE
 // import MemoryPins from '../components/future/MemoryPins.jsx';        // FUTURE
@@ -31,19 +31,99 @@ const HULL_BOUNDS = L.latLngBounds(mapLayers.studyHull);
 // Everything outside the study area is dimmed: a world-sized polygon with the study hull cut out as a hole.
 const WORLD = [[-89, -179], [-89, 179], [89, 179], [89, -179]];
 // Public-domain imagery from the USGS National Map. Its tile cache stops at zoom 16; Leaflet stretches it beyond that.
-const USGS_IMAGERY = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}';
+// Label-free imagery: our own town labels are the only place names, so each name shows once.
+const USGS_IMAGERY = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}';
 const CLOSE_DRAG_PX = 70; // drag the card down this far to close it
 const OUTLINE_ZOOM = 12;  // below this zoom the 300 outlines collapse into one "300 fields" marker
 const TOWN_ZOOM = { 1: 9, 2: 10, 3: 10.5 }; // bigger towns get their labels at lower zoom
 
 // Text-only map labels (towns, "Our 300 fields"). Our font, a dark halo; never interactive.
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const labelIcon = (html, cls) => L.divIcon({ className: 'map-label-wrap', html: `<span class="map-label ${cls}">${html}</span>`, iconSize: [0, 0] });
+const labelIcon = (html, cls, dx = 0, dy = 0) => L.divIcon({
+  className: 'map-label-wrap', iconSize: [0, 0],
+  html: `<span class="map-label ${cls}" style="margin-left:${dx}px;margin-top:${dy}px">${html}</span>`,
+});
+// One icon per town and offset, made once.
+const TOWN_ICONS = new Map();
+const townIcon = (tw, [dx, dy]) => {
+  const k = `${tw.geoid}:${dx}:${dy}`;
+  if (!TOWN_ICONS.has(k)) TOWN_ICONS.set(k, labelIcon(esc(tw.name), `tier-${tw.tier}`, dx, dy));
+  return TOWN_ICONS.get(k);
+};
+
+// County boundary as sample points (each segment split in 4), for placing the "Ellis County" label.
+const COUNTY_POINTS = mapLayers.county.flatMap((ring) => ring.flatMap((pt, i) => {
+  const nx = ring[(i + 1) % ring.length];
+  return [0, 0.25, 0.5, 0.75].map((f) => [pt[0] + (nx[0] - pt[0]) * f, pt[1] + (nx[1] - pt[1]) * f]);
+}));
+
+// Place the map's text labels so none overlap each other, the "300 fields" marker, or anything floating over the
+// map (header, search box, notes, buttons, card). Biggest towns first; a label that doesn't fit is skipped.
+// The "Ellis County" label goes on the free stretch of the boundary nearest the study area.
+// Recomputed after every zoom or pan. Label boxes are estimated from the text length.
+function usePlacedLabels(zoom, countyText, hullText) {
+  const map = useMap();
+  const [placed, setPlaced] = useState({ towns: new Map(), county: null, hull: false });
+  useEffect(() => {
+    const place = () => {
+      const z = map.getZoom();
+      const box = map.getContainer().getBoundingClientRect();
+      const W = box.width; const H = box.height;
+      const hit = (b, o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1];
+      const boxes = [...document.querySelectorAll('.header-inner > *, .map-top > *:not(.map-chips), .map-notes > *, .map-bottom > *')]
+        .map((el) => el.getBoundingClientRect()).filter((r) => r.width && r.height)
+        .map((r) => [r.left - box.left - 4, r.top - box.top - 4, r.right - box.left + 4, r.bottom - box.top + 4]);
+      const fits = (b) => b[0] >= 4 && b[1] >= 4 && b[2] <= W - 4 && b[3] <= H - 4 && !boxes.some((o) => hit(b, o));
+      const c = map.latLngToContainerPoint(mapLayers.studyCenter);
+      if (z < OUTLINE_ZOOM) boxes.push([c.x - 40, c.y - 40, c.x + 40, c.y + 40]);
+      // "Our 300 fields" (zoomed in): above the hull's top point
+      let hull = false;
+      if (z >= OUTLINE_ZOOM) {
+        const h = map.latLngToContainerPoint(mapLayers.studyLabel);
+        const w = hullText.length * 7.5 + 24;
+        const hb = [h.x - w / 2, h.y - 34, h.x + w / 2, h.y - 8];
+        if (fits(hb)) { boxes.push(hb); hull = true; }
+      }
+      // town id -> label offset [dx, dy] in px. Centered on the town if it fits, else beside, above or below it.
+      const towns = new Map();
+      [...mapLayers.towns].sort((x, y) => x.tier - y.tier).forEach((tw) => {
+        if (z < TOWN_ZOOM[tw.tier]) return;
+        const pt = map.latLngToContainerPoint([tw.lat, tw.lon]);
+        const w = tw.name.length * (tw.tier === 1 ? 9 : 8) + 8;
+        const spots = [[0, 0], [w / 2 + 6, 0], [-w / 2 - 6, 0], [0, -20], [0, 20]];
+        for (const [dx, dy] of spots) {
+          const tb = [pt.x + dx - w / 2, pt.y + dy - 11, pt.x + dx + w / 2, pt.y + dy + 11];
+          if (!fits(tb)) continue;
+          boxes.push(tb);
+          towns.set(tw.geoid, [Math.round(dx), dy]);
+          break;
+        }
+      });
+      let county = null;
+      if (z < 13) {
+        const w = countyText.length * 7.5 + 8;
+        let best = Infinity;
+        for (const ll of COUNTY_POINTS) {
+          const pt = map.latLngToContainerPoint(ll);
+          const cb = [pt.x - w / 2, pt.y - 10, pt.x + w / 2, pt.y + 10];
+          const d = (pt.x - c.x) ** 2 + (pt.y - c.y) ** 2;
+          if (d < best && fits(cb)) { best = d; county = ll; }
+        }
+      }
+      setPlaced({ towns, county, hull });
+    };
+    place();
+    map.on('zoomend moveend resize', place);
+    return () => { map.off('zoomend moveend resize', place); };
+  }, [map, zoom, countyText, hullText]);
+  return placed;
+}
 
 function MapContext({ zoom, t, onCluster }) {
+  const placed = usePlacedLabels(zoom, t('pick.countyLabel'), t('pick.hullLabel'));
+  const shown = placed.towns;
   const icons = useMemo(() => ({
-    towns: mapLayers.towns.map((tw) => labelIcon(esc(tw.name), `tier-${tw.tier}`)),
-    dallas: labelIcon(`${esc(t('pick.dallas'))} <b aria-hidden="true">↑</b>`, 'tier-1 map-label-dir'),
+    county: labelIcon(esc(t('pick.countyLabel')), 'map-label-county'),
     hull: labelIcon(esc(t('pick.hullLabel')), 'map-label-hull'),
     cluster: L.divIcon({ className: 'map-label-wrap', html: `<span class="map-cluster"><b>${OUTLINES.length}</b><small>${esc(t('pick.clusterUnit'))}</small></span>`, iconSize: [0, 0] }),
   }), [t]);
@@ -52,11 +132,11 @@ function MapContext({ zoom, t, onCluster }) {
       <Polygon positions={[WORLD, mapLayers.studyHull]} className="map-mask" interactive={false} />
       {mapLayers.county.map((ring, i) => <Polyline key={i} positions={[...ring, ring[0]]} className="county-line" interactive={false} />)}
       <Polygon positions={mapLayers.studyHull} className="study-hull" interactive={false} />
-      {mapLayers.towns.map((tw, i) => zoom >= TOWN_ZOOM[tw.tier] && (
-        <Marker key={tw.geoid} position={[tw.lat, tw.lon]} icon={icons.towns[i]} interactive={false} keyboard={false} />
+      {mapLayers.towns.map((tw) => shown.has(tw.geoid) && (
+        <Marker key={tw.geoid} position={[tw.lat, tw.lon]} icon={townIcon(tw, shown.get(tw.geoid))} interactive={false} keyboard={false} />
       ))}
-      {zoom < 13 && <Marker position={[mapLayers.dallas.lat, mapLayers.dallas.lon]} icon={icons.dallas} interactive={false} keyboard={false} />}
-      {zoom >= OUTLINE_ZOOM && <Marker position={mapLayers.studyLabel} icon={icons.hull} interactive={false} keyboard={false} />}
+      {placed.county && <Marker position={placed.county} icon={icons.county} interactive={false} keyboard={false} />}
+      {placed.hull && <Marker position={mapLayers.studyLabel} icon={icons.hull} interactive={false} keyboard={false} />}
       {zoom < OUTLINE_ZOOM && (
         <Marker position={mapLayers.studyCenter} icon={icons.cluster} title={t('pick.clusterTap')} alt={t('pick.clusterTap')}
           eventHandlers={{ click: onCluster }} />
@@ -286,11 +366,19 @@ export default function PickField() {
 
       <div className="map-top" ref={topRef}>
       <MapSearch online={online} onChoose={searchPick} />
+      <SearchPrivacy />
       {/* Reserved for the map view chips (built later). Nothing else may sit here. */}
       <div className="map-chips" aria-hidden="true" />
       <div className="map-notes">
         <p>{t('pick.note300')}</p>
-        <p>{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
+        <div className="map-top-row">
+          <p>{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
+          {zoom < 13 && (
+            <p className="map-dallas" role="note" aria-label={t('pick.dallasAlt', { km: mapLayers.dallas.km })}>
+              <span aria-hidden="true">↑</span>{t('pick.dallasTop', { km: mapLayers.dallas.km })}
+            </p>
+          )}
+        </div>
         {legend && (
           <div className="map-legend" id="map-legend" role="region" aria-label={t('pick.legendTitle')}>
             <div className="map-legend-head">

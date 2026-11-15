@@ -10,7 +10,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 
 const TIGER = 'https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb';
 const COUNTY_GEOID = '48139'; // Ellis County, TX
-const TOWNS = ['Waxahachie', 'Ennis', 'Midlothian', 'Red Oak', 'Ferris', 'Palmer', 'Bardwell', 'Italy', 'Maypearl'];
+const TOWNS = ['Waxahachie', 'Ennis', 'Midlothian', 'Red Oak', 'Ferris', 'Palmer', 'Bardwell', 'Italy', 'Maypearl', 'Lancaster'];
 const SIMPLIFY_DEG = 0.002;   // ~200 m: plenty for a thin county line
 const HULL_PAD_M = 450;       // padding around the fields' convex hull
 const FRAME_TOWNS = 3;        // the opening view includes the study area and its 3 nearest towns

@@ -117,7 +117,6 @@
     "closeSheet": "Cerrar la tarjeta del campo (o arrástrela hacia abajo)",
     "fieldTitle": "Campo {id} · {acres} acres",
     "soilSub": "{slope} · {pct}% de inclinación promedio",
-    "dallas": "Dallas",
     "hullLabel": "Nuestros 300 campos",
     "clusterUnit": "campos",
     "clusterTap": "300 campos: toque para acercar",
@@ -125,7 +124,7 @@
     "legendHull": "Área con nuestros 300 campos (lo de afuera se ve más oscuro)",
     "legendField": "Un campo con datos (acerque el mapa para verlos)",
     "legendSelected": "El campo que eligió",
-    "legendCounty": "Límite del condado de Ellis",
+    "legendCounty": "Línea punteada = condado de Ellis",
     "outsideTitle": "Aún no hay datos aquí",
     "outsideText": "Tenemos datos de {n} campos cerca de {town}. Toque uno de ellos o abra el campo de demostración.",
     "outsideNotCropland": "El lugar que tocó no parece tierra de cultivo en el mapa de cultivos del USDA.",
@@ -136,7 +135,10 @@
     "searchOutTitle": "Aún no tenemos datos de ese lugar",
     "searchOutText": "El campo más cercano que tenemos está a {mi} millas, cerca de {town}.",
     "searchOpen": "Abrir ese campo",
-    "searchBack": "Volver"
+    "searchBack": "Volver",
+    "countyLabel": "Condado de Ellis",
+    "dallasTop": "Dallas {km} km",
+    "dallasAlt": "Dallas está a {km} km al norte, fuera del mapa"
   },
   "farm": {
     "title": "Su granja",

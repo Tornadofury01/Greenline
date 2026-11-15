@@ -3,6 +3,12 @@
 // Nothing is saved, put in the URL or logged (see data/geocode.js).
 import { useEffect, useId, useRef, useState } from 'react';
 import { Search, X, MapPin, Building2, LoaderCircle, Lock, WifiOff } from 'lucide-react';
+
+// The only privacy text under the box, always visible (PickField puts it next to the Dallas pointer).
+export function SearchPrivacy() {
+  const { t } = useApp();
+  return <p className="map-search-note"><Lock size={12} aria-hidden="true" />{t('search.privacy')}</p>;
+}
 import { useApp } from '../state/AppContext.jsx';
 import { matchTowns, geocodeAddress } from '../data/geocode.js';
 
@@ -91,8 +97,6 @@ export default function MapSearch({ online, onChoose }) {
           {(!online || status === 'offline') && <p className="map-search-msg"><WifiOff size={14} aria-hidden="true" />{t('search.offline')}</p>}
         </div>
       )}
-      {/* The only privacy text under the box, always visible. */}
-      <p className="map-search-note"><Lock size={12} aria-hidden="true" />{t('search.privacy')}</p>
     </div>
   );
 }

@@ -117,7 +117,6 @@
     "closeSheet": "Close the field card (or drag it down)",
     "fieldTitle": "Field {id} · {acres} acres",
     "soilSub": "{slope} · {pct}% average grade",
-    "dallas": "Dallas",
     "hullLabel": "Our 300 fields",
     "clusterUnit": "fields",
     "clusterTap": "300 fields: tap to zoom in",
@@ -125,7 +124,7 @@
     "legendHull": "Area with our 300 fields (outside is dimmed)",
     "legendField": "A field we have data for (zoom in to see them)",
     "legendSelected": "The field you picked",
-    "legendCounty": "Ellis County line",
+    "legendCounty": "Dashed line = Ellis County",
     "outsideTitle": "No data here yet",
     "outsideText": "We have data for {n} fields near {town}. Tap one of them, or open the demo field.",
     "outsideNotCropland": "The spot you tapped doesn't look like cropland on the USDA crop map.",
@@ -136,7 +135,10 @@
     "searchOutTitle": "We don't have data there yet",
     "searchOutText": "The nearest field we have is {mi} miles away near {town}.",
     "searchOpen": "Open that field",
-    "searchBack": "Go back"
+    "searchBack": "Go back",
+    "countyLabel": "Ellis County",
+    "dallasTop": "Dallas {km} km",
+    "dallasAlt": "Dallas is {km} km north, off the top of the map"
   },
   "farm": {
     "title": "Your farm",
