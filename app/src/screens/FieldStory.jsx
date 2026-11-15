@@ -2,7 +2,7 @@
 // month), a typical year, the crop each year, soil facts, bad-year replay and 40 years of rain.
 import { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer, CartesianGrid } from 'recharts';
-import { Sun, CloudRain, Thermometer, CalendarX, ArrowRight, ArrowDown, ArrowUp, Minus, History, Gauge, TriangleAlert, Layers, CalendarDays, Wheat, Lightbulb } from 'lucide-react';
+import { Sun, CloudRain, Thermometer, CalendarX, ArrowRight, ArrowDown, ArrowUp, Minus, History, Gauge, TriangleAlert, Layers, CalendarDays, Wheat, Lightbulb, ThermometerSun } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useScores } from '../state/useScores.js';
 import { useWide } from '../state/useWide.js';
@@ -371,6 +371,10 @@ export default function FieldStory() {
       <ModelCard />
 
       <JudgmentNote />
+
+      <button type="button" className="btn btn-block" onClick={() => setScreen('risks')}>
+        <ThermometerSun size={20} aria-hidden="true" />{t('story.seeRisks')}
+      </button>
 
       <button type="button" className="btn btn-primary btn-block btn-cta" onClick={() => setScreen('compare')}>
         {t('story.next')}<ArrowRight size={20} aria-hidden="true" />

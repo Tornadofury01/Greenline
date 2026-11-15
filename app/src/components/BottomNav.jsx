@@ -3,14 +3,14 @@ import { MapPin, Tractor, CloudRain, Scale, ClipboardList, ListChecks, Trophy, T
 import { useApp } from '../state/AppContext.jsx';
 
 // Screen ids in order, with one Lucide icon each. `more: true` = lives in the "More" menu on phones and tablets
-// (eight tabs do not fit at 375 px); the desktop header shows all of them.
+// (eight tabs do not fit at 375 px; the Farm simulator joins this menu when it exists); the desktop header shows all of them.
 export const SCREENS = [
   { id: 'field', Icon: MapPin },
-  { id: 'farm', Icon: Tractor, more: true },
+  { id: 'farm', Icon: Tractor },
   { id: 'story', Icon: CloudRain },
-  { id: 'risks', Icon: ThermometerSun },
   { id: 'options', Icon: ListChecks },
   { id: 'plans', Icon: Trophy },
+  { id: 'risks', Icon: ThermometerSun, more: true },
   { id: 'compare', Icon: Scale, more: true },
   { id: 'handoff', Icon: ClipboardList, more: true },
 ];

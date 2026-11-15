@@ -1208,3 +1208,9 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 .climate-change { align-self: flex-start; }
 .climate-up { background: var(--color-warn-soft); border-color: var(--color-warn-fill); color: var(--color-warn); }
 .climate-down { background: var(--color-water-soft); border-color: var(--color-water); color: var(--color-water); }
+/* Eight header tabs in Spanish need the room at 1024-1199 px: labels only, no brand word. */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .top-nav button svg, .brand-name { display: none; }
+  .top-nav button { padding: 0 8px; }
+  .top-nav button[aria-current="page"]::after { left: 8px; right: 8px; }
+}

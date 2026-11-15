@@ -31,6 +31,7 @@
     "moreLabel": "More screens",
     "farmLong": "Your farm",
     "compareLong": "Compare rotations",
+    "risksLong": "Field risks",
     "handoffLong": "Expert handoff"
   },
   "common": {
@@ -169,6 +170,7 @@
     "privacy": "Your answers stay on this phone and reset when you close the app."
   },
   "story": {
+    "seeRisks": "See this field's risks",
     "title": "Your field's history",
     "headlineDetail": "Usually bare in {months}. Bare ground loses soil and water to wind and heavy rain.",
     "statDrought": "Drought years",

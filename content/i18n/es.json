@@ -31,6 +31,7 @@
     "moreLabel": "Más pantallas",
     "farmLong": "Su granja",
     "compareLong": "Comparar rotaciones",
+    "risksLong": "Riesgos del campo",
     "handoffLong": "Entrega al experto"
   },
   "common": {
@@ -169,6 +170,7 @@
     "privacy": "Sus respuestas se quedan en este teléfono y se borran al cerrar la app."
   },
   "story": {
+    "seeRisks": "Ver los riesgos de este campo",
     "title": "El historial de su parcela",
     "headlineDetail": "Suele estar desnudo en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
     "statDrought": "Años de sequía",
