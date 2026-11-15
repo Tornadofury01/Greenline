@@ -52,12 +52,13 @@ export default defineConfig(({ mode }) => {
         workbox: {
           // App shell + bundled JSON are precached; map tiles are NOT (they need a connection).
           globPatterns: ['**/*.{js,css,html,svg,png,json}'],
-          globIgnores: ['**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js'],
+          // v1 field files (assets/fields/) and v2 field files (assets/ec-NNN-*.js): precache only the demo field.
+          globIgnores: ['**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js', '**/assets/ec-!(' + DEMO_FIELD_ID.slice(3) + ')-*.js'],
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
           runtimeCaching: [{
-            urlPattern: ({ url }) => url.pathname.includes('/assets/fields/'),
+            urlPattern: ({ url }) => url.pathname.includes('/assets/fields/') || /\/assets\/ec-\d+-/.test(url.pathname),
             handler: 'CacheFirst',
-            options: { cacheName: 'greenline-fields', expiration: { maxEntries: 60 } },
+            options: { cacheName: 'greenline-fields', expiration: { maxEntries: 80 } },
           }],
         },
       }),

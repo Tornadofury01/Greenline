@@ -118,6 +118,7 @@ export function ProfitBlock({ profit, scale, isCurrent }) {
         <span className="range-mark" style={{ left: `${at(profit.typical)}%` }} />
       </span>
       <span className="tile-note">{range}</span>
+      <span className="tile-note">{t('v2.honest.costShare')} {t('v2.honest.fixedCosts')}</span>
       <span className="tile-note">
         {isCurrent || profit.beatsCurrent == null
           ? t('optionsScreen.profitBaseline')
@@ -165,6 +166,22 @@ export function CheckLocally({ items }) {
   );
 }
 
+// Why the confidence badge cannot say "high" yet, and what the current rotation assumes about tillage.
+export function ConfidenceNotes({ capped, isCurrent }) {
+  const { t, setScreen } = useApp();
+  return (
+    <>
+      {capped && <p className="opt-conf-reason">{t('v2.honest.confCap')}</p>}
+      {isCurrent && (
+        <p className="opt-conf-reason">
+          {t('v2.honest.tillage')}{' '}
+          <button type="button" className="btn-text" onClick={() => setScreen('sim')}>{t('v2.honest.tillageTry')}</button>
+        </p>
+      )}
+    </>
+  );
+}
+
 export default function OptionCard({ card, scale }) {
   const { t } = useApp();
   const v2t = useV2Text();
@@ -201,6 +218,7 @@ export default function OptionCard({ card, scale }) {
       <div className="opt-conf">
         <ConfidenceBadge level={card.confidence.level} />
         {card.confidence.reasons.slice(0, 2).map((r, i) => <p key={i} className="opt-conf-reason">{v2t(r)}</p>)}
+        <ConfidenceNotes capped={card.confidence.capped} isCurrent={isCurrent} />
       </div>
 
       {card.neighbors && !isCurrent && (

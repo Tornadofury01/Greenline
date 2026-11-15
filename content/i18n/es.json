@@ -227,7 +227,7 @@
     },
     "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). El tiempo desnudo y verde antes de 2013 viene de satélites antiguos y es de baja confianza.",
     "replayTitle": "Revivir un mal año",
-    "replayCaption": "Los peores años en 40 años de clima de la NASA. Los tipos de año son provisionales por ahora. Toque uno para ver qué pasó en esta parcela.",
+    "replayCaption": "Los peores años en el registro de clima de la NASA. Los tipos de año son provisionales por ahora. Toque uno para ver qué pasó en esta parcela.",
     "replayHeading": "{year}: {type}",
     "replayRain": "{inches} pulg. de lluvia ({pct}% frente a lo normal)",
     "replayHeat": "{n} días de más de 95°F (normal: {avg})",
@@ -658,7 +658,7 @@
     },
     "seasonReplay": {
       "title": "Repaso de temporadas",
-      "text": "Sembramos cada rotación en papel y la pasamos día por día por cada temporada real desde 1985, con el clima de la NASA. Un balance de agua diario sigue el agua del suelo, factores de cultivo publicados convierten la falta de agua en rendimiento, y la fórmula RUSLE estima la pérdida de suelo. Para 2040 movemos esas temporadas reales según el cambio que proyectan ocho modelos de clima de la NASA. Luego cada rotación se califica en cobertura del suelo, erosión, ganancia, aguante en años malos, nitrógeno y plagas. Es una simulación basada en ciencia agrícola publicada, no un modelo entrenado, y es un punto de partida para hablar con su agente de Extensión, no una receta."
+      "text": "Sembramos cada rotación en papel y la pasamos día por día por cada temporada de 1985 a 2025, con el clima de la NASA. Un balance de agua diario sigue el agua del suelo, factores de cultivo publicados convierten la falta de agua en rendimiento, y la fórmula RUSLE estima la pérdida de suelo. Para 2040 movemos esas temporadas reales según los escenarios climáticos de la NASA. Luego cada rotación se califica en cobertura del suelo, erosión, ganancia, aguante en años malos, nitrógeno y plagas. Es una simulación basada en ciencia agrícola publicada, no un modelo entrenado, y es un punto de partida para hablar con su agente de Extensión, no una receta."
     },
     "privacy": {
       "title": "Privacidad",
@@ -976,7 +976,7 @@
   },
   "fieldShift": {
     "title": "Repaso de temporadas en el condado de Ellis",
-    "intro": "Un estudio en {n} campos del condado de Ellis: siete rotaciones repasadas día por día en cada temporada de 1985 a 2025 y con las proyecciones del clima de 2040, y luego calificadas en seis metas. Usa un campo típico y un solo punto de clima, así que no cambia los puntajes de su campo de arriba.",
+    "intro": "Un estudio en {n} campos del condado de Ellis: siete rotaciones repasadas día por día en cada temporada de 1985 a 2025 y con los escenarios climáticos de 2040, y luego calificadas en seis metas. Usa un campo típico y un solo punto de clima, así que no cambia los puntajes de su campo de arriba.",
     "priorityLabel": "Lo que más le importa",
     "preset": {
       "balanced": "Equilibrado",
@@ -1060,12 +1060,14 @@
     },
     "option": {
       "current": "Lo que siembra ahora",
-      "generated": "Opción: {crops}"
+      "generated": "Opción: {crops}",
+      "rotation": "{crops}",
+      "rotationWithCover": "{crops} con {covers}"
     },
     "fit": {
       "water": {
         "pass": "El siguiente cultivo empieza con poca agua en cerca del {shortYears}% de los años.",
-        "warn": "El siguiente cultivo empieza con poca agua en cerca del {shortYears}% de los años.",
+        "warn": "El siguiente cultivo empieza con poca agua en cerca de {shortYears}% de los años ({waterCostMm} mm menos que la rotación de hoy).",
         "fail": "El siguiente cultivo empieza con poca agua en cerca del {shortYears}% de los años, demasiado seguido."
       },
       "disease": {
@@ -1073,54 +1075,83 @@
         "warn": "La misma familia de cultivos dos años seguidos.",
         "warnRisingRisk": "Sube el riesgo de plagas por el clima.",
         "fail": "Un cultivo de cobertura aquí hospeda una plaga grave del siguiente cultivo comercial.",
-        "failGreenBridge": "La cobertura de {cover} hospeda una plaga del siguiente cultivo comercial."
+        "failGreenBridge": "{cover} pasaría {pest}, una plaga grave, a {nextCrop}.",
+        "warnFamilyRepeat": "Después de {crop} sigue {nextCrop}, de la misma familia, lo que mantiene vivas las plagas.",
+        "warnSharedHost": "{crop} y {nextCrop} comparten {pest}.",
+        "warnGreenBridge": "{cover} puede pasar {pest} a {nextCrop} (un riesgo pequeño).",
+        "warnWeatherRisk": "Las pérdidas por plagas ligadas al clima son {ratio} veces mayores en condiciones de 2040."
       },
       "market": {
-        "pass": "Se siembra en unos {acres} acres del condado y alrededores.",
+        "pass": "Los {crops} cultivos comerciales se siembran cerca.",
         "passFewBuyers": "Se siembra en {acres} acres cercanos; confirme un comprador.",
         "warn": "Pocos acres cercanos o un precio local débil.",
-        "warnFewAcres": "Solo unos {acres} acres cercanos; confirme un comprador.",
-        "fail": "Casi no hay acres cercanos y no hay comprador anotado."
+        "warnFewAcres": "Pocos campos cercanos siembran {crop} ({share}% de los campos del estudio).",
+        "fail": "Casi nadie cerca siembra {crop}, no hay registro del condado y no se anotó ningún comprador.",
+        "warnNoCountyRecord": "No hay registro de rendimiento del condado para {crop}; unos pocos campos cercanos lo siembran ({share}%).",
+        "warnWeakPrice": "El último precio de {crop} es {ratio}% de su mediana de 10 años."
       },
       "season": {
-        "pass": "Termina antes de la helada y del siguiente cultivo en la mayoría de los años.",
+        "pass": "Cada cultivo termina antes del siguiente o de la helada.",
         "warn": "El calendario es justo.",
-        "warn2040": "Cabe hoy, pero no hacia 2040.",
-        "fail": "No termina antes de la helada ni del siguiente cultivo en más de 1 año de cada 5."
+        "warn2040": "Cabe hoy, pero no terminaría en {share2040}% de las temporadas con los escenarios climáticos de 2040.",
+        "fail": "{crop} no termina en más de 1 de cada 5 temporadas simuladas.",
+        "warnTight": "{crop} no terminó (o se heló) en {share}% de las temporadas simuladas: poco margen de tiempo."
       }
     },
     "reason": {
       "profit": {
-        "median": "Ganancia mediana sobre costos variables: {usd} por acre.",
-        "nCredit": "Incluye {usd} por el nitrógeno que deja la leguminosa."
+        "median": "Retorno mediano sobre costos variables: {usd} por acre al año.",
+        "nCredit": "Incluye {usd} de fertilizante ahorrado por el nitrógeno de las leguminosas.",
+        "vsCurrent": "{usd} al año frente a su rotación actual."
       },
       "risk": {
         "baseline": "El mismo resultado en el peor año que ahora.",
-        "worst10": "El 10% de las peores temporadas es {diffUsd} mejor que ahora."
+        "worst10": "En el 10% de las peores temporadas: {usd} por acre.",
+        "vsCurrent": "El resultado del peor 10% es {usd} frente a su rotación actual."
       },
       "soil": {
         "bareDays": "Suelo desnudo unos {days} días al año.",
-        "erosionOverT": "Erosión de {erosion} toneladas por acre al año, sobre el límite de {t}.",
-        "erosionUnderT": "Erosión de {erosion} toneladas por acre al año, bajo el límite de {t}."
+        "erosionOverT": "Erosión simulada de {erosion} toneladas por acre al año, sobre el límite del suelo de {t}.",
+        "erosionUnderT": "Erosión simulada de {erosion} toneladas por acre al año, bajo el límite del suelo de {t}.",
+        "somUp": "La materia orgánica del suelo sube unos {pct} puntos por década.",
+        "somDown": "La materia orgánica del suelo baja unos {pct} puntos por década."
       },
       "water": {
         "ok": "Deja suficiente agua para el siguiente cultivo.",
         "lowUse": "Usa poca agua.",
-        "coverUsesWater": "La cobertura usa unos {mm} mm de agua."
+        "coverUsesWater": "La cobertura usa unos {mm} mm de agua.",
+        "atPlanting": "Al sembrar, el suelo tiene {share}% del agua que puede guardar.",
+        "supply": "Los cultivos recibieron {ratio}% del agua que necesitaban."
       },
       "nutrients": {
         "allBought": "Se compran las {lb} lb de nitrógeno.",
-        "legumeCredit": "Una leguminosa ahorra unas {lb} lb de nitrógeno."
+        "legumeCredit": "Una leguminosa ahorra unas {lb} lb de nitrógeno.",
+        "bought": "Unas {lb} lb de nitrógeno compradas por acre al año.",
+        "noneBought": "No hace falta fertilizante de nitrógeno.",
+        "fixed": "Las leguminosas aportan unas {lb} lb de nitrógeno por acre al año.",
+        "mining": "Cada año sale del campo {lb} lb más de nitrógeno de lo que entra."
       },
       "pests": {
-        "familiesRotate": "Las familias de cultivos rotan.",
+        "familiesRotate": "Las familias de cultivos rotan, lo que rompe los ciclos de plagas.",
         "grassRepeat": "Una gramínea sigue a otra gramínea.",
-        "greenBridge": "La cobertura de {cover} puede pasar plagas al siguiente cultivo."
+        "greenBridge": "{cover} puede pasar {pest} a {nextCrop}.",
+        "lowLoss": "La pérdida simulada por plagas es baja: {pct}% del rendimiento.",
+        "loss": "Pérdida simulada por plagas: {pct}% del rendimiento.",
+        "familyRepeat": "{share}% de los cambios de cultivo se quedan en la misma familia."
       }
     },
     "conf": {
       "placeholderSlots": "{n} de los 5 modelos del campo son provisionales por ahora.",
-      "warnedCheck": "La prueba de {check} da un aviso."
+      "warnedCheck": "La prueba de {check} da un aviso.",
+      "beatsOften": "Supera su rotación actual en {share}% de las simulaciones de qué pasaría si.",
+      "beatsSometimes": "Supera su rotación actual en {share}% de las simulaciones: a veces, no siempre.",
+      "beatsRarely": "Supera su rotación actual en solo {share}% de las simulaciones.",
+      "isCurrent": "Su rotación actual: no se compara consigo misma.",
+      "climateDisagree": "Se sostiene en solo {agree} de {of} escenarios climáticos de 2040 (cambios simples de calor y menos lluvia).",
+      "warnedChecks": "{n} revisión(es) de ajuste muestran una advertencia.",
+      "cappedByPlaceholders": "La confianza se mantiene en media porque {slots} aún usan valores por defecto.",
+      "currentRotationGuess": "El mapa de cultivos nombra solo {known} cultivo(s) en este campo en los últimos años, así que \"su rotación de hoy\" es una suposición. Por favor revísela.",
+      "currentRotationNoHistory": "No se encontró historial de cultivos (probablemente pasto o heno); la rotación actual es una suposición."
     },
     "best": {
       "mostProfitable": "Mayor ganancia esperada dentro de sus límites (típica {usd} por acre).",
@@ -1139,7 +1170,8 @@
       "pending": "Esperando los modelos del campo."
     },
     "zone": {
-      "steepEdge": "Borde más empinado del campo"
+      "steepEdge": "Borde más empinado del campo",
+      "wholeField": "Todo el campo (una zona; aún no hay datos por zona)"
     },
     "notice": "Algunos números usan valores provisionales hasta que nuestros modelos del campo estén listos.",
     "placeholderShort": "provisional",
@@ -1150,6 +1182,88 @@
       "modelC": "Modelo C, tipos de año",
       "modelD": "Modelo D, humedad del suelo",
       "calibrationE": "Calibración E, rendimientos"
+    },
+    "risk": {
+      "dryMonths": "Seco en {share}% de los años (menos de 60% de la lluvia normal).",
+      "hotMonths": "1.5 °C más caliente de lo normal en {share}% de los años.",
+      "calmMonth": "Sin problemas regulares de clima este mes.",
+      "noData": "Sin datos para este mes.",
+      "peakErosionMonth": "La mayor erosión simulada es en {month}: {share}% del total del año.",
+      "warmingOffset": "La comparación de 2040 suma {warmC} °C de calor. Es un cálculo con escenarios climáticos simples.",
+      "rainVariabilitySame": "La variabilidad de la lluvia en 2040 se muestra igual que hoy: aún no tenemos una proyección."
+    },
+    "pest": {
+      "cereal-rust": "roya de los cereales",
+      "grass-foliar-disease": "enfermedad foliar de pastos",
+      "cotton-root-rot": "pudrición de raíz del algodón",
+      "root-knot-nematode": "nematodo agallador",
+      "charcoal-rot": "pudrición carbonosa",
+      "sugarcane-aphid": "pulgón de la caña de azúcar"
+    },
+    "honest": {
+      "confCap": "La confianza no puede ser alta hasta que nuestros modelos del campo estén listos.",
+      "tillage": "Supone labranza reducida; no sabemos cómo labra usted.",
+      "tillageTry": "Probar otra labranza en el simulador de la finca",
+      "costShare": "Costos compartidos: no estimados.",
+      "fixedCosts": "Costos fijos: valores provisionales."
+    },
+    "val": {
+      "title": "Boleta de validación",
+      "intro": "Ocho pruebas del simulador contra datos medidos, en {n} campos del condado de Ellis. Mostramos todos los resultados, incluso los que fallaron.",
+      "misses": "Estos errores vienen sobre todo de valores provisionales que los modelos del campo van a reemplazar.",
+      "target": "Meta",
+      "measured": "Medido",
+      "status": {
+        "pass": "Aprobada",
+        "fail": "Fallada",
+        "partial": "En parte",
+        "pending-model": "Esperando modelos",
+        "not-run": "Aún no se hace"
+      },
+      "n": "{n} comparaciones",
+      "check1": {
+        "name": "Precisión de los modelos",
+        "target": "Los modelos del campo puntúan bien en años que nunca vieron.",
+        "needsModels": "Necesita los modelos del campo."
+      },
+      "check2": {
+        "name": "Días desnudos vs satélite",
+        "target": "Al menos {share}% de los campos a menos de {days} días de los días desnudos del satélite.",
+        "note": "Los días desnudos del satélite vienen del promedio de todo el contorno con Landsat 8/9 y pueden subestimar el suelo desnudo. La labranza es una suposición."
+      },
+      "check3": {
+        "name": "Fechas de cultivo",
+        "target": "Fechas de cultivo simuladas a menos de {days} días de las del satélite.",
+        "note": "Se compara con el mes de mayor verdor, una medida aproximada."
+      },
+      "check4": {
+        "name": "Rendimientos vs los del condado",
+        "target": "Correlación año a año de al menos {correlation} y rendimiento a menos de {ratioError}% del rendimiento del condado.",
+        "note": "Todavía no se ajustó nada a los rendimientos; la calibración de rendimiento es provisional."
+      },
+      "check5": {
+        "name": "Erosión",
+        "target": "Erosión simulada cercana a la erosión medida.",
+        "needsMeasurements": "Necesita datos de erosión medida."
+      },
+      "check6": {
+        "name": "Humedad del suelo",
+        "target": "Humedad simulada cercana a la humedad medida por satélite.",
+        "needsModelD": "Necesita el modelo de humedad del suelo (D)."
+      },
+      "check7": {
+        "name": "Prueba con vecinos",
+        "target": "Los planes coinciden con lo que hicieron vecinos con campos parecidos.",
+        "needsModelA": "Necesita el modelo de historial de cultivos (A)."
+      },
+      "check8": {
+        "name": "Ranking de expertos",
+        "target": "Los expertos locales ordenan las opciones igual.",
+        "needsInterview": "Necesita una entrevista con expertos locales."
+      },
+      "res2": "{share}% de los campos a menos de 15 días. Simulado {sim} vs medido {meas} días desnudos al año.",
+      "res3": "Error promedio: {days} días.",
+      "res4crop": "{crop}: rendimiento simulado {ratio}% del rendimiento del condado."
     }
   },
   "optionsScreen": {

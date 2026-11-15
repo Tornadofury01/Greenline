@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { ArrowLeft, BookOpen, Lightbulb, Database } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { PageHead, JudgmentNote } from '../components/Small.jsx';
+import ValidationCard from '../components/ValidationCard.jsx';
 
 // Terms in reading order, with the datasets behind each (dataset names are not translated).
 const TERMS = [
@@ -78,6 +79,8 @@ export default function HowWeKnow() {
         <h2 id="how-notes" className="card-kicker"><Lightbulb size={18} aria-hidden="true" />{t('how.notesTitle')}</h2>
         {NOTES.map((x) => <Entry key={x.id} {...x} />)}
       </section>
+
+      <ValidationCard />
 
       <JudgmentNote />
 

@@ -1251,3 +1251,7 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 .sim-log li { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
 .sim-log-date { color: var(--color-text-muted); min-width: 72px; font-variant-numeric: tabular-nums; }
 .sim-band { display: flex; flex-direction: column; gap: var(--s-1); }
+
+/* validation report card */
+.val-fail { background: color-mix(in srgb, #c0392b 25%, transparent); }
+.val-partial { background: color-mix(in srgb, #d4a017 25%, transparent); }

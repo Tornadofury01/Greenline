@@ -6,7 +6,7 @@ import { Lightbulb, ShieldCheck, Trophy, Scale, Umbrella } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { buildBestPlans } from '../data/v2Plans.js';
 import { makeV2Text } from '../data/v2Text.js';
-import { Steps, ProfitBlock, CheckLocally } from '../components/OptionCard.jsx';
+import { Steps, ProfitBlock, CheckLocally, ConfidenceNotes } from '../components/OptionCard.jsx';
 import { ConfidenceBadge, PageHead } from '../components/Small.jsx';
 import { SampleBanner, PlaceholderNotice, PlaceholderCardTag, PlaceholderPanel } from '../components/PlaceholderTag.jsx';
 import V2Gate from '../components/V2Gate.jsx';
@@ -115,6 +115,7 @@ function PlanCard({ plan, scale, money }) {
       <div className="opt-conf">
         <ConfidenceBadge level={c.confidence.level} />
         {c.confidence.reasons.slice(0, 2).map((r, i) => <p key={i} className="opt-conf-reason">{v2t(r)}</p>)}
+        <ConfidenceNotes capped={c.confidence.capped} />
       </div>
       <CheckLocally items={c.checkLocally} />
     </article>

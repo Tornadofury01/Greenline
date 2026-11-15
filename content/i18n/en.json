@@ -227,7 +227,7 @@
     },
     "timelineNote": "Crop names start in 2008 (USDA crop maps). Bare and green time before 2013 comes from older satellites and is low confidence.",
     "replayTitle": "Replay a bad year",
-    "replayCaption": "The worst years in 40 years of NASA weather. The year types are placeholders for now. Tap one to see what happened on this field.",
+    "replayCaption": "The worst years in the NASA weather record. The year types are placeholders for now. Tap one to see what happened on this field.",
     "replayHeading": "{year}: {type}",
     "replayRain": "{inches} in of rain ({pct}% vs. normal)",
     "replayHeat": "{n} days over 95°F (normal: {avg})",
@@ -658,7 +658,7 @@
     },
     "seasonReplay": {
       "title": "Season replay",
-      "text": "We plant each rotation on paper and run it day by day through every real season since 1985, using NASA weather. A daily water balance tracks soil water, published crop factors turn water stress into yield, and the RUSLE formula estimates soil loss. For 2040 we shift those real seasons by the change that eight NASA climate models project. Each rotation is then graded on soil cover, erosion, profit, bad-year resilience, nitrogen and pests. It is a simulation built on published farm science, not a trained model, and a starting point for a talk with your Extension agent, not a prescription."
+      "text": "We plant each rotation on paper and run it day by day through every season from 1985 to 2025, using NASA weather. A daily water balance tracks soil water, published crop factors turn water stress into yield, and the RUSLE formula estimates soil loss. For 2040 we shift those real seasons by the change that NASA climate scenarios project. Each rotation is then graded on soil cover, erosion, profit, bad-year resilience, nitrogen and pests. It is a simulation built on published farm science, not a trained model, and a starting point for a talk with your Extension agent, not a prescription."
     },
     "privacy": {
       "title": "Privacy",
@@ -976,7 +976,7 @@
   },
   "fieldShift": {
     "title": "Ellis County season replay",
-    "intro": "A study on {n} Ellis County fields: seven rotations replayed day by day through every season from 1985 to 2025 and through 2040 climate projections, then graded on six goals. It uses one typical field and one weather point, so it doesn't change your field's scores above.",
+    "intro": "A study on {n} Ellis County fields: seven rotations replayed day by day through every season from 1985 to 2025 and through 2040 climate scenarios, then graded on six goals. It uses one typical field and one weather point, so it doesn't change your field's scores above.",
     "priorityLabel": "What matters most",
     "preset": {
       "balanced": "Balanced",
@@ -1023,7 +1023,7 @@
     "notYourField": "The replay is a simulation built on published agronomy (FAO-56 water balance, FAO-33 yield response, RUSLE soil loss), not machine learning. Prices, budgets and cost-share rates are estimates to check with your county Extension and NRCS office.",
     "rankingHint": "Average score over {n} scenarios (5 climate views × 2 price sets). This sets the order.",
     "notField": "County-wide simulation on one typical field. Not your field.",
-    "whyDiffers": "Why this is not the same answer as your field's cards ({field}): this study tests its own list of seven rotations on one typical county field, with county costs and climate projections. Here its best is {study}. The cards above use your field's own data and your goals.",
+    "whyDiffers": "Why this is not the same answer as your field's cards ({field}): this study tests its own list of seven rotations on one typical county field, with county costs and climate scenarios. Here its best is {study}. The cards above use your field's own data and your goals.",
     "modelsPlaceholder": "The field models are being retrained and will be plugged in here. Their accuracy numbers are not shown until then."
   },
   "search": {
@@ -1060,12 +1060,14 @@
     },
     "option": {
       "current": "What you grow now",
-      "generated": "Option: {crops}"
+      "generated": "Option: {crops}",
+      "rotation": "{crops}",
+      "rotationWithCover": "{crops} with {covers}"
     },
     "fit": {
       "water": {
         "pass": "The next crop starts short of water in about {shortYears}% of years.",
-        "warn": "The next crop starts short of water in about {shortYears}% of years.",
+        "warn": "The next crop starts short of water in about {shortYears}% of years ({waterCostMm} mm less than today's rotation).",
         "fail": "The next crop starts short of water in about {shortYears}% of years, too often."
       },
       "disease": {
@@ -1073,54 +1075,83 @@
         "warn": "The same crop family two years in a row.",
         "warnRisingRisk": "Weather-driven pest risk is rising.",
         "fail": "A cover crop here hosts a serious pest of the next cash crop.",
-        "failGreenBridge": "The {cover} cover hosts a pest of the next cash crop."
+        "failGreenBridge": "{cover} would carry {pest}, a serious pest, over to {nextCrop}.",
+        "warnFamilyRepeat": "{crop} is followed by {nextCrop}, the same crop family, which keeps pests alive.",
+        "warnSharedHost": "{crop} and {nextCrop} share {pest}.",
+        "warnGreenBridge": "{cover} can carry {pest} over to {nextCrop} (a small risk).",
+        "warnWeatherRisk": "Weather-driven pest losses are {ratio} times higher in 2040 conditions."
       },
       "market": {
-        "pass": "Grown on about {acres} acres in the county and nearby.",
+        "pass": "All {crops} cash crops are grown nearby.",
         "passFewBuyers": "Grown on {acres} acres nearby; confirm a buyer.",
         "warn": "Few acres nearby or a weak local price.",
-        "warnFewAcres": "Only about {acres} acres nearby; confirm a buyer.",
-        "fail": "Almost no acres nearby and no buyer entered."
+        "warnFewAcres": "Few fields nearby grow {crop} ({share}% of the study fields).",
+        "fail": "Almost nobody nearby grows {crop}, there is no county record and no buyer was entered.",
+        "warnNoCountyRecord": "No county yield record for {crop}; a few fields nearby grow it ({share}%).",
+        "warnWeakPrice": "The latest {crop} price is {ratio}% of its 10-year median."
       },
       "season": {
-        "pass": "Finishes before frost and before the next crop in most years.",
+        "pass": "Every crop finishes before the next one or the frost.",
         "warn": "The timing is tight.",
-        "warn2040": "Fits today, but not by 2040.",
-        "fail": "Does not finish before frost or the next crop in more than 1 year in 5."
+        "warn2040": "Fits today, but would not finish in {share2040}% of seasons under 2040 climate scenarios.",
+        "fail": "{crop} does not finish in more than 1 simulated season in 5.",
+        "warnTight": "{crop} did not finish (or froze) in {share}% of the simulated seasons: tight timing."
       }
     },
     "reason": {
       "profit": {
-        "median": "Median return above variable costs: {usd} per acre.",
-        "nCredit": "Includes {usd} from the nitrogen the legume leaves."
+        "median": "Median return above variable costs: {usd} per acre a year.",
+        "nCredit": "Includes {usd} of fertilizer saved by legume nitrogen.",
+        "vsCurrent": "{usd} a year compared with your current rotation."
       },
       "risk": {
         "baseline": "Same worst-year result as now.",
-        "worst10": "The worst 10% of seasons are {diffUsd} better than now."
+        "worst10": "In the worst 10% of seasons: {usd} per acre.",
+        "vsCurrent": "Worst-10% result is {usd} compared with your current rotation."
       },
       "soil": {
-        "bareDays": "Bare about {days} days a year.",
-        "erosionOverT": "Erosion {erosion} tons per acre a year, above the limit of {t}.",
-        "erosionUnderT": "Erosion {erosion} tons per acre a year, under the limit of {t}."
+        "bareDays": "Bare soil about {days} days a year.",
+        "erosionOverT": "Simulated erosion {erosion} tons per acre a year, above the soil's limit of {t}.",
+        "erosionUnderT": "Simulated erosion {erosion} tons per acre a year, under the soil's limit of {t}.",
+        "somUp": "Soil organic matter rises about {pct} points a decade.",
+        "somDown": "Soil organic matter falls about {pct} points a decade."
       },
       "water": {
         "ok": "Leaves enough water for the next crop.",
         "lowUse": "Uses little water.",
-        "coverUsesWater": "The cover uses about {mm} mm of water."
+        "coverUsesWater": "The cover uses about {mm} mm of water.",
+        "atPlanting": "The soil holds {share}% of the water it can at planting.",
+        "supply": "Crops got {ratio}% of the water they needed."
       },
       "nutrients": {
         "allBought": "All {lb} lb of nitrogen is bought.",
-        "legumeCredit": "A legume saves about {lb} lb of nitrogen."
+        "legumeCredit": "A legume saves about {lb} lb of nitrogen.",
+        "bought": "About {lb} lb of nitrogen bought per acre a year.",
+        "noneBought": "No nitrogen fertilizer needed.",
+        "fixed": "Legumes add about {lb} lb of nitrogen per acre a year.",
+        "mining": "{lb} lb more nitrogen a year leaves the field than goes in."
       },
       "pests": {
-        "familiesRotate": "Crop families rotate.",
+        "familiesRotate": "Crop families rotate, which breaks pest cycles.",
         "grassRepeat": "A grass follows a grass.",
-        "greenBridge": "The {cover} cover can pass pests to the next crop."
+        "greenBridge": "{cover} can carry {pest} over to {nextCrop}.",
+        "lowLoss": "Simulated pest loss is low: {pct}% of yield.",
+        "loss": "Simulated pest loss: {pct}% of yield.",
+        "familyRepeat": "{share}% of crop changes stay in the same family."
       }
     },
     "conf": {
       "placeholderSlots": "{n} of the 5 field models are placeholders for now.",
-      "warnedCheck": "The {check} check is a warning."
+      "warnedCheck": "The {check} check is a warning.",
+      "beatsOften": "Beats your current rotation in {share}% of what-if runs.",
+      "beatsSometimes": "Beats your current rotation in {share}% of what-if runs: sometimes, not always.",
+      "beatsRarely": "Beats your current rotation in only {share}% of what-if runs.",
+      "isCurrent": "Your current rotation: not compared with itself.",
+      "climateDisagree": "Holds in only {agree} of {of} 2040 climate scenarios (simple warming and drier-rain offsets).",
+      "warnedChecks": "{n} fit check(s) show a warning.",
+      "cappedByPlaceholders": "Confidence is held at medium because {slots} still use default values.",
+      "currentRotationGuess": "The crop map names only {known} crop(s) on this field in recent years, so \"your rotation today\" is a guess. Please check it.",
+      "currentRotationNoHistory": "No crop history found (likely pasture or hay); the current rotation is a guess."
     },
     "best": {
       "mostProfitable": "Best expected profit within your limits (typical {usd} per acre).",
@@ -1139,7 +1170,8 @@
       "pending": "Waiting for the field models."
     },
     "zone": {
-      "steepEdge": "Steeper edge of the field"
+      "steepEdge": "Steeper edge of the field",
+      "wholeField": "Whole field (one zone; no zone data yet)"
     },
     "notice": "Some numbers use placeholder values until our field models are ready.",
     "placeholderShort": "placeholder",
@@ -1150,6 +1182,88 @@
       "modelC": "Model C, year types",
       "modelD": "Model D, soil moisture",
       "calibrationE": "Calibration E, yields"
+    },
+    "risk": {
+      "dryMonths": "Dry in {share}% of years (under 60% of normal rain).",
+      "hotMonths": "1.5 °C hotter than normal in {share}% of years.",
+      "calmMonth": "No regular weather trouble this month.",
+      "noData": "No data for this month.",
+      "peakErosionMonth": "Most simulated erosion is in {month}: {share}% of the year's total.",
+      "warmingOffset": "The 2040 comparison adds {warmC} °C of warming. It is an estimate from simple climate scenarios.",
+      "rainVariabilitySame": "Rain variability in 2040 is shown the same as today: we have no projection for it yet."
+    },
+    "pest": {
+      "cereal-rust": "cereal rust",
+      "grass-foliar-disease": "grass leaf disease",
+      "cotton-root-rot": "cotton root rot",
+      "root-knot-nematode": "root-knot nematode",
+      "charcoal-rot": "charcoal rot",
+      "sugarcane-aphid": "sugarcane aphid"
+    },
+    "honest": {
+      "confCap": "Confidence can't be high until our field models are ready.",
+      "tillage": "Assumes reduced tillage; we don't know your tillage.",
+      "tillageTry": "Try other tillage in the farm simulator",
+      "costShare": "Cost-share: not estimated.",
+      "fixedCosts": "Fixed costs: placeholder values."
+    },
+    "val": {
+      "title": "Validation report card",
+      "intro": "Eight checks of the simulator against measured data, run on {n} Ellis County fields. We show every result, including the ones that failed.",
+      "misses": "These misses come mainly from placeholder values the field models will replace.",
+      "target": "Target",
+      "measured": "Measured",
+      "status": {
+        "pass": "Passed",
+        "fail": "Failed",
+        "partial": "Partly",
+        "pending-model": "Waiting for models",
+        "not-run": "Not run yet"
+      },
+      "n": "{n} comparisons",
+      "check1": {
+        "name": "Model accuracy",
+        "target": "Field models score well on years they never saw.",
+        "needsModels": "Needs the field models."
+      },
+      "check2": {
+        "name": "Bare days vs satellite",
+        "target": "At least {share}% of fields within {days} days of the satellite's bare days.",
+        "note": "Satellite bare days come from the whole-outline Landsat 8/9 average and may undercount bare soil. Tillage is assumed."
+      },
+      "check3": {
+        "name": "Crop dates",
+        "target": "Simulated crop dates within {days} days of the satellite's.",
+        "note": "Compared with the month of peak greenness, which is a rough measure."
+      },
+      "check4": {
+        "name": "Yields vs county yields",
+        "target": "Year-to-year correlation of at least {correlation} and yield within {ratioError}% of the county yield.",
+        "note": "Nothing was fitted to yields yet; the yield calibration is a placeholder."
+      },
+      "check5": {
+        "name": "Erosion",
+        "target": "Simulated erosion close to measured erosion.",
+        "needsMeasurements": "Needs measured erosion data."
+      },
+      "check6": {
+        "name": "Soil moisture",
+        "target": "Simulated soil moisture close to satellite soil moisture.",
+        "needsModelD": "Needs the soil moisture model (D)."
+      },
+      "check7": {
+        "name": "Neighbor backtest",
+        "target": "Plans match what neighbors with similar fields actually did.",
+        "needsModelA": "Needs the crop history model (A)."
+      },
+      "check8": {
+        "name": "Expert ranking",
+        "target": "Local experts rank the options the same way.",
+        "needsInterview": "Needs an interview with local experts."
+      },
+      "res2": "{share}% of fields within 15 days. Simulated {sim} vs measured {meas} bare days a year.",
+      "res3": "Average miss: {days} days.",
+      "res4crop": "{crop}: simulated yield {ratio}% of the county yield."
     }
   },
   "optionsScreen": {

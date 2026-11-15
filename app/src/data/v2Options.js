@@ -78,7 +78,13 @@ function card(o, data, i, currentTotal, bestId) {
         { labelKey: 'optionsScreen.nitrogenSaved', slots: waitingFor(FEEDS.nitrogenSaved, ph) },
       ]),
     ].filter((x) => x.slots.length),
-    confidence: { level: o.confidence.level, reasons: o.confidence.reasons || [] },
+    // Held at medium while any model slot is a placeholder, even if a file says "high". A guess about the current
+    // rotation goes first so it is never cut off the card face.
+    confidence: {
+      level: o.confidence.level === 'high' && ph.size ? 'medium' : o.confidence.level,
+      capped: ph.size > 0,
+      reasons: [...(o.confidence.reasons || [])].sort((a, b) => (b.key === 'v2.conf.currentRotationGuess') - (a.key === 'v2.conf.currentRotationGuess')),
+    },
     checkLocally: o.checkLocally || [],
     neighbors: o.neighbors || null,
   };
