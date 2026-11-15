@@ -8,6 +8,12 @@ Current stage: running on **real data for the 300 Field Shift study fields** in 
 and the three Field Shift models (crop classifier, leak-free stress model, year types; see `pipeline/MODELS.md`), plus the season replay + recommender.
 The fake `shared/sample-field.json` is only used in development (`npm run dev`) when a field file is missing; production never shows it.
 
+## v2 (in progress, branch `pranav-work`)
+Field Shift v2 is a rebuild, not an extension of the code below. The plan is Pranav's "Field Shift v2: Complete Design Plan": per-field option builder, four fit checks, a daily simulator engine shared by the recommender and the farm simulator, Models A–D + Calibration E, and validation on every run.
+- **Scope: North Texas only** (decided Nov 14 2026). That means 6 Blackland Prairie counties: Ellis, Hill (held out), Navarro, Kaufman, Johnson and McLennan (Riesel). 300 CSB fields each.
+  Not "any US field" or 8–10 US regions.
+- Data list: `docs/v2-data-exports.md`. Earth Engine exports: `v2/ee_exports/` (6 accounts, tiered, sized to finish in 3–4 h; see its README).
+
 ## Stack
 - Vite + React (JavaScript, no TypeScript), Leaflet (react-leaflet 4), Recharts, vite-plugin-pwa
 - No backend. All data comes from static JSON.

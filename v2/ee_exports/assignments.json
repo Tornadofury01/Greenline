@@ -1,0 +1,2971 @@
+{
+ "nAccounts": 6,
+ "nFields": 1800,
+ "includeOptional": false,
+ "accounts": {
+  "1": [
+   {
+    "ds": "hlss30",
+    "year": 2016,
+    "name": "hlss30_2016",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "hlss30",
+    "year": 2022,
+    "name": "hlss30_2022",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2004,
+    "name": "imerg_2004",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2010,
+    "name": "imerg_2010",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2016,
+    "name": "imerg_2016",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2022,
+    "name": "imerg_2022",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "cmip6",
+    "model": "ACCESS-CM2",
+    "run": "ssp245",
+    "name": "cmip6_ACCESS-CM2_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "EC-Earth3",
+    "run": "ssp245",
+    "name": "cmip6_EC-Earth3_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "INM-CM5-0",
+    "run": "ssp245",
+    "name": "cmip6_INM-CM5-0_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MPI-ESM1-2-HR",
+    "run": "ssp245",
+    "name": "cmip6_MPI-ESM1-2-HR_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "ls5",
+    "year": 1986,
+    "name": "ls5_1986",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1992,
+    "name": "ls5_1992",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1998,
+    "name": "ls5_1998",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2004,
+    "name": "ls5_2004",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2010,
+    "name": "ls5_2010",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2016,
+    "name": "ls8_2016",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2022,
+    "name": "ls8_2022",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls9",
+    "year": 2023,
+    "name": "ls9_2023",
+    "tier": 1,
+    "minutes": 6.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1990,
+    "name": "daymet_1990",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1996,
+    "name": "daymet_1996",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2002,
+    "name": "daymet_2002",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2008,
+    "name": "daymet_2008",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2014,
+    "name": "daymet_2014",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2020,
+    "name": "daymet_2020",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1985,
+    "name": "gridmet_1985",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1991,
+    "name": "gridmet_1991",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1997,
+    "name": "gridmet_1997",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2003,
+    "name": "gridmet_2003",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2009,
+    "name": "gridmet_2009",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2015,
+    "name": "gridmet_2015",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2021,
+    "name": "gridmet_2021",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2016,
+    "name": "smapl4_2016",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2022,
+    "name": "smapl4_2022",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1988,
+    "name": "gmdrought_1988",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1994,
+    "name": "gmdrought_1994",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2000,
+    "name": "gmdrought_2000",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2006,
+    "name": "gmdrought_2006",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2012,
+    "name": "gmdrought_2012",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2018,
+    "name": "gmdrought_2018",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2024,
+    "name": "gmdrought_2024",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2005,
+    "name": "mod16_2005",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2011,
+    "name": "mod16_2011",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2017,
+    "name": "mod16_2017",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2023,
+    "name": "mod16_2023",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2018,
+    "name": "smapl3_2018",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2024,
+    "name": "smapl3_2024",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "s1",
+    "year": 2021,
+    "name": "s1_2021",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2014,
+    "name": "hlsl30_2014",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2017,
+    "name": "hlsl30_2017",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2023,
+    "name": "hlsl30_2023",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2002,
+    "name": "ls7more_2002",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2008,
+    "name": "ls7more_2008",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2015,
+    "name": "ls7more_2015",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2021,
+    "name": "ls7more_2021",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2004,
+    "name": "modlst_2004",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2010,
+    "name": "modlst_2010",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2016,
+    "name": "modlst_2016",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2022,
+    "name": "modlst_2022",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "prism",
+    "year": 1987,
+    "name": "prism_1987",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1992,
+    "name": "prism_1992",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1998,
+    "name": "prism_1998",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2004,
+    "name": "prism_2004",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2010,
+    "name": "prism_2010",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2016,
+    "name": "prism_2016",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2022,
+    "name": "prism_2022",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2002,
+    "name": "mod13q1_2002",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2007,
+    "name": "mod13q1_2007",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2013,
+    "name": "mod13q1_2013",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2019,
+    "name": "mod13q1_2019",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2025,
+    "name": "mod13q1_2025",
+    "tier": 2,
+    "minutes": 1.0
+   }
+  ],
+  "2": [
+   {
+    "ds": "hlss30",
+    "year": 2017,
+    "name": "hlss30_2017",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "hlss30",
+    "year": 2023,
+    "name": "hlss30_2023",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2005,
+    "name": "imerg_2005",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2011,
+    "name": "imerg_2011",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2017,
+    "name": "imerg_2017",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2023,
+    "name": "imerg_2023",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "cmip6",
+    "model": "ACCESS-CM2",
+    "run": "ssp585",
+    "name": "cmip6_ACCESS-CM2_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "EC-Earth3",
+    "run": "ssp585",
+    "name": "cmip6_EC-Earth3_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "INM-CM5-0",
+    "run": "ssp585",
+    "name": "cmip6_INM-CM5-0_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MPI-ESM1-2-HR",
+    "run": "ssp585",
+    "name": "cmip6_MPI-ESM1-2-HR_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "ls5",
+    "year": 1987,
+    "name": "ls5_1987",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1993,
+    "name": "ls5_1993",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1999,
+    "name": "ls5_1999",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2005,
+    "name": "ls5_2005",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2011,
+    "name": "ls5_2011",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2017,
+    "name": "ls8_2017",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2023,
+    "name": "ls8_2023",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls9",
+    "year": 2024,
+    "name": "ls9_2024",
+    "tier": 1,
+    "minutes": 6.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1991,
+    "name": "daymet_1991",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1997,
+    "name": "daymet_1997",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2003,
+    "name": "daymet_2003",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2009,
+    "name": "daymet_2009",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2015,
+    "name": "daymet_2015",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2021,
+    "name": "daymet_2021",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1986,
+    "name": "gridmet_1986",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1992,
+    "name": "gridmet_1992",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1998,
+    "name": "gridmet_1998",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2004,
+    "name": "gridmet_2004",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2010,
+    "name": "gridmet_2010",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2016,
+    "name": "gridmet_2016",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2022,
+    "name": "gridmet_2022",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2017,
+    "name": "smapl4_2017",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2023,
+    "name": "smapl4_2023",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1989,
+    "name": "gmdrought_1989",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1995,
+    "name": "gmdrought_1995",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2001,
+    "name": "gmdrought_2001",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2007,
+    "name": "gmdrought_2007",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2013,
+    "name": "gmdrought_2013",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2019,
+    "name": "gmdrought_2019",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2025,
+    "name": "gmdrought_2025",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2006,
+    "name": "mod16_2006",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2012,
+    "name": "mod16_2012",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2018,
+    "name": "mod16_2018",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2024,
+    "name": "mod16_2024",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2019,
+    "name": "smapl3_2019",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2025,
+    "name": "smapl3_2025",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "s1",
+    "year": 2022,
+    "name": "s1_2022",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2015,
+    "name": "hlsl30_2015",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2018,
+    "name": "hlsl30_2018",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2024,
+    "name": "hlsl30_2024",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2003,
+    "name": "ls7more_2003",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2009,
+    "name": "ls7more_2009",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2016,
+    "name": "ls7more_2016",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2022,
+    "name": "ls7more_2022",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2005,
+    "name": "modlst_2005",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2011,
+    "name": "modlst_2011",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2017,
+    "name": "modlst_2017",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2023,
+    "name": "modlst_2023",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "prism",
+    "year": 1988,
+    "name": "prism_1988",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1993,
+    "name": "prism_1993",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1999,
+    "name": "prism_1999",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2005,
+    "name": "prism_2005",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2011,
+    "name": "prism_2011",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2017,
+    "name": "prism_2017",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2023,
+    "name": "prism_2023",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2003,
+    "name": "mod13q1_2003",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2008,
+    "name": "mod13q1_2008",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2014,
+    "name": "mod13q1_2014",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2020,
+    "name": "mod13q1_2020",
+    "tier": 2,
+    "minutes": 1.0
+   }
+  ],
+  "3": [
+   {
+    "ds": "hlss30",
+    "year": 2018,
+    "name": "hlss30_2018",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "hlss30",
+    "year": 2024,
+    "name": "hlss30_2024",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2006,
+    "name": "imerg_2006",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2012,
+    "name": "imerg_2012",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2018,
+    "name": "imerg_2018",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2024,
+    "name": "imerg_2024",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "cmip6",
+    "model": "CanESM5",
+    "run": "historical",
+    "name": "cmip6_CanESM5_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "GFDL-ESM4",
+    "run": "historical",
+    "name": "cmip6_GFDL-ESM4_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MIROC6",
+    "run": "historical",
+    "name": "cmip6_MIROC6_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MRI-ESM2-0",
+    "run": "historical",
+    "name": "cmip6_MRI-ESM2-0_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "ls5",
+    "year": 1988,
+    "name": "ls5_1988",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1994,
+    "name": "ls5_1994",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2000,
+    "name": "ls5_2000",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2006,
+    "name": "ls5_2006",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7",
+    "year": 2012,
+    "name": "ls7_2012",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2018,
+    "name": "ls8_2018",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2024,
+    "name": "ls8_2024",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls9",
+    "year": 2025,
+    "name": "ls9_2025",
+    "tier": 1,
+    "minutes": 6.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1992,
+    "name": "daymet_1992",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1998,
+    "name": "daymet_1998",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2004,
+    "name": "daymet_2004",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2010,
+    "name": "daymet_2010",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2016,
+    "name": "daymet_2016",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2022,
+    "name": "daymet_2022",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1987,
+    "name": "gridmet_1987",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1993,
+    "name": "gridmet_1993",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1999,
+    "name": "gridmet_1999",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2005,
+    "name": "gridmet_2005",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2011,
+    "name": "gridmet_2011",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2017,
+    "name": "gridmet_2017",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2023,
+    "name": "gridmet_2023",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2018,
+    "name": "smapl4_2018",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2024,
+    "name": "smapl4_2024",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1990,
+    "name": "gmdrought_1990",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1996,
+    "name": "gmdrought_1996",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2002,
+    "name": "gmdrought_2002",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2008,
+    "name": "gmdrought_2008",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2014,
+    "name": "gmdrought_2014",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2020,
+    "name": "gmdrought_2020",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2001,
+    "name": "mod16_2001",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2007,
+    "name": "mod16_2007",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2013,
+    "name": "mod16_2013",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2019,
+    "name": "mod16_2019",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2025,
+    "name": "mod16_2025",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2020,
+    "name": "smapl3_2020",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "s1",
+    "year": 2017,
+    "name": "s1_2017",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "s1",
+    "year": 2023,
+    "name": "s1_2023",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2019,
+    "name": "hlsl30_2019",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2025,
+    "name": "hlsl30_2025",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2006,
+    "name": "ls7more_2006",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2013,
+    "name": "ls7more_2013",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2019,
+    "name": "ls7more_2019",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2000,
+    "name": "modlst_2000",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2002,
+    "name": "modlst_2002",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2007,
+    "name": "modlst_2007",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2013,
+    "name": "modlst_2013",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2019,
+    "name": "modlst_2019",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2025,
+    "name": "modlst_2025",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "prism",
+    "year": 1994,
+    "name": "prism_1994",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2000,
+    "name": "prism_2000",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2006,
+    "name": "prism_2006",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2012,
+    "name": "prism_2012",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2018,
+    "name": "prism_2018",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2024,
+    "name": "prism_2024",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2004,
+    "name": "mod13q1_2004",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2009,
+    "name": "mod13q1_2009",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2015,
+    "name": "mod13q1_2015",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2021,
+    "name": "mod13q1_2021",
+    "tier": 2,
+    "minutes": 1.0
+   }
+  ],
+  "4": [
+   {
+    "ds": "hlss30",
+    "year": 2019,
+    "name": "hlss30_2019",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "hlss30",
+    "year": 2025,
+    "name": "hlss30_2025",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2007,
+    "name": "imerg_2007",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2013,
+    "name": "imerg_2013",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2019,
+    "name": "imerg_2019",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2025,
+    "name": "imerg_2025",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "cmip6",
+    "model": "CanESM5",
+    "run": "ssp245",
+    "name": "cmip6_CanESM5_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "GFDL-ESM4",
+    "run": "ssp245",
+    "name": "cmip6_GFDL-ESM4_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MIROC6",
+    "run": "ssp245",
+    "name": "cmip6_MIROC6_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MRI-ESM2-0",
+    "run": "ssp245",
+    "name": "cmip6_MRI-ESM2-0_ssp245",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "ls5",
+    "year": 1989,
+    "name": "ls5_1989",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1995,
+    "name": "ls5_1995",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2001,
+    "name": "ls5_2001",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2007,
+    "name": "ls5_2007",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2013,
+    "name": "ls8_2013",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2019,
+    "name": "ls8_2019",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2025,
+    "name": "ls8_2025",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1985,
+    "name": "daymet_1985",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1987,
+    "name": "daymet_1987",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1993,
+    "name": "daymet_1993",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1999,
+    "name": "daymet_1999",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2005,
+    "name": "daymet_2005",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2011,
+    "name": "daymet_2011",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2017,
+    "name": "daymet_2017",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2023,
+    "name": "daymet_2023",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1988,
+    "name": "gridmet_1988",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1994,
+    "name": "gridmet_1994",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2000,
+    "name": "gridmet_2000",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2006,
+    "name": "gridmet_2006",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2012,
+    "name": "gridmet_2012",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2018,
+    "name": "gridmet_2018",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2024,
+    "name": "gridmet_2024",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2019,
+    "name": "smapl4_2019",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2025,
+    "name": "smapl4_2025",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1991,
+    "name": "gmdrought_1991",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1997,
+    "name": "gmdrought_1997",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2003,
+    "name": "gmdrought_2003",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2009,
+    "name": "gmdrought_2009",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2015,
+    "name": "gmdrought_2015",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2021,
+    "name": "gmdrought_2021",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2002,
+    "name": "mod16_2002",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2008,
+    "name": "mod16_2008",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2014,
+    "name": "mod16_2014",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2020,
+    "name": "mod16_2020",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2015,
+    "name": "smapl3_2015",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2021,
+    "name": "smapl3_2021",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "s1",
+    "year": 2018,
+    "name": "s1_2018",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "s1",
+    "year": 2024,
+    "name": "s1_2024",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2020,
+    "name": "hlsl30_2020",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 1999,
+    "name": "ls7more_1999",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2004,
+    "name": "ls7more_2004",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2010,
+    "name": "ls7more_2010",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2017,
+    "name": "ls7more_2017",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2023,
+    "name": "ls7more_2023",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2008,
+    "name": "modlst_2008",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2014,
+    "name": "modlst_2014",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2020,
+    "name": "modlst_2020",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "prism",
+    "year": 1985,
+    "name": "prism_1985",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1989,
+    "name": "prism_1989",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1995,
+    "name": "prism_1995",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2001,
+    "name": "prism_2001",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2007,
+    "name": "prism_2007",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2013,
+    "name": "prism_2013",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2019,
+    "name": "prism_2019",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2025,
+    "name": "prism_2025",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2010,
+    "name": "mod13q1_2010",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2016,
+    "name": "mod13q1_2016",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2022,
+    "name": "mod13q1_2022",
+    "tier": 2,
+    "minutes": 1.0
+   }
+  ],
+  "5": [
+   {
+    "ds": "hlss30",
+    "year": 2020,
+    "name": "hlss30_2020",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "cdl",
+    "name": "cdl",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2002,
+    "name": "imerg_2002",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2008,
+    "name": "imerg_2008",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2014,
+    "name": "imerg_2014",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2020,
+    "name": "imerg_2020",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "terrain",
+    "name": "terrain",
+    "tier": 1,
+    "minutes": 10.0
+   },
+   {
+    "ds": "cmip6",
+    "model": "EC-Earth3",
+    "run": "historical",
+    "name": "cmip6_EC-Earth3_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "INM-CM5-0",
+    "run": "historical",
+    "name": "cmip6_INM-CM5-0_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MPI-ESM1-2-HR",
+    "run": "historical",
+    "name": "cmip6_MPI-ESM1-2-HR_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "ls5",
+    "year": 1985,
+    "name": "ls5_1985",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1991,
+    "name": "ls5_1991",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1997,
+    "name": "ls5_1997",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2003,
+    "name": "ls5_2003",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2009,
+    "name": "ls5_2009",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2015,
+    "name": "ls8_2015",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2021,
+    "name": "ls8_2021",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls9",
+    "year": 2021,
+    "name": "ls9_2021",
+    "tier": 1,
+    "minutes": 6.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1986,
+    "name": "daymet_1986",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1988,
+    "name": "daymet_1988",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1994,
+    "name": "daymet_1994",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2000,
+    "name": "daymet_2000",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2006,
+    "name": "daymet_2006",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2012,
+    "name": "daymet_2012",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2018,
+    "name": "daymet_2018",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2024,
+    "name": "daymet_2024",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1989,
+    "name": "gridmet_1989",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1995,
+    "name": "gridmet_1995",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2001,
+    "name": "gridmet_2001",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2007,
+    "name": "gridmet_2007",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2013,
+    "name": "gridmet_2013",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2019,
+    "name": "gridmet_2019",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2025,
+    "name": "gridmet_2025",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2020,
+    "name": "smapl4_2020",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "grace",
+    "name": "grace",
+    "tier": 1,
+    "minutes": 2
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1986,
+    "name": "gmdrought_1986",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1992,
+    "name": "gmdrought_1992",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1998,
+    "name": "gmdrought_1998",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2004,
+    "name": "gmdrought_2004",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2010,
+    "name": "gmdrought_2010",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2016,
+    "name": "gmdrought_2016",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2022,
+    "name": "gmdrought_2022",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2003,
+    "name": "mod16_2003",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2009,
+    "name": "mod16_2009",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2015,
+    "name": "mod16_2015",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2021,
+    "name": "mod16_2021",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2016,
+    "name": "smapl3_2016",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2022,
+    "name": "smapl3_2022",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "s1",
+    "year": 2019,
+    "name": "s1_2019",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "s1",
+    "year": 2025,
+    "name": "s1_2025",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2021,
+    "name": "hlsl30_2021",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2000,
+    "name": "ls7more_2000",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2005,
+    "name": "ls7more_2005",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2011,
+    "name": "ls7more_2011",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2018,
+    "name": "ls7more_2018",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "irrmapper",
+    "name": "irrmapper",
+    "tier": 2,
+    "minutes": 4.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2001,
+    "name": "modlst_2001",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2006,
+    "name": "modlst_2006",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2012,
+    "name": "modlst_2012",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2018,
+    "name": "modlst_2018",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2024,
+    "name": "modlst_2024",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "prism",
+    "year": 1990,
+    "name": "prism_1990",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1996,
+    "name": "prism_1996",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2002,
+    "name": "prism_2002",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2008,
+    "name": "prism_2008",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2014,
+    "name": "prism_2014",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2020,
+    "name": "prism_2020",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2000,
+    "name": "mod13q1_2000",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2005,
+    "name": "mod13q1_2005",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2011,
+    "name": "mod13q1_2011",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2017,
+    "name": "mod13q1_2017",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2023,
+    "name": "mod13q1_2023",
+    "tier": 2,
+    "minutes": 1.0
+   }
+  ],
+  "6": [
+   {
+    "ds": "hlss30",
+    "year": 2021,
+    "name": "hlss30_2021",
+    "tier": 1,
+    "minutes": 20.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2001,
+    "name": "imerg_2001",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2003,
+    "name": "imerg_2003",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2009,
+    "name": "imerg_2009",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2015,
+    "name": "imerg_2015",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "imerg",
+    "year": 2021,
+    "name": "imerg_2021",
+    "tier": 1,
+    "minutes": 12.0
+   },
+   {
+    "ds": "cmip6",
+    "model": "ACCESS-CM2",
+    "run": "historical",
+    "name": "cmip6_ACCESS-CM2_historical",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "CanESM5",
+    "run": "ssp585",
+    "name": "cmip6_CanESM5_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "GFDL-ESM4",
+    "run": "ssp585",
+    "name": "cmip6_GFDL-ESM4_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MIROC6",
+    "run": "ssp585",
+    "name": "cmip6_MIROC6_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "cmip6",
+    "model": "MRI-ESM2-0",
+    "run": "ssp585",
+    "name": "cmip6_MRI-ESM2-0_ssp585",
+    "tier": 1,
+    "minutes": 8
+   },
+   {
+    "ds": "ls5",
+    "year": 1990,
+    "name": "ls5_1990",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 1996,
+    "name": "ls5_1996",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2002,
+    "name": "ls5_2002",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls5",
+    "year": 2008,
+    "name": "ls5_2008",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2014,
+    "name": "ls8_2014",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls8",
+    "year": 2020,
+    "name": "ls8_2020",
+    "tier": 1,
+    "minutes": 8.0
+   },
+   {
+    "ds": "gldas",
+    "name": "gldas",
+    "tier": 1,
+    "minutes": 6
+   },
+   {
+    "ds": "ls9",
+    "year": 2022,
+    "name": "ls9_2022",
+    "tier": 1,
+    "minutes": 6.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1989,
+    "name": "daymet_1989",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 1995,
+    "name": "daymet_1995",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2001,
+    "name": "daymet_2001",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2007,
+    "name": "daymet_2007",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2013,
+    "name": "daymet_2013",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2019,
+    "name": "daymet_2019",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "daymet",
+    "year": 2025,
+    "name": "daymet_2025",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1990,
+    "name": "gridmet_1990",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 1996,
+    "name": "gridmet_1996",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2002,
+    "name": "gridmet_2002",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2008,
+    "name": "gridmet_2008",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2014,
+    "name": "gridmet_2014",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gridmet",
+    "year": 2020,
+    "name": "gridmet_2020",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2015,
+    "name": "smapl4_2015",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "smapl4",
+    "year": 2021,
+    "name": "smapl4_2021",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1985,
+    "name": "gmdrought_1985",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1987,
+    "name": "gmdrought_1987",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1993,
+    "name": "gmdrought_1993",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 1999,
+    "name": "gmdrought_1999",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2005,
+    "name": "gmdrought_2005",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2011,
+    "name": "gmdrought_2011",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2017,
+    "name": "gmdrought_2017",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "gmdrought",
+    "year": 2023,
+    "name": "gmdrought_2023",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2004,
+    "name": "mod16_2004",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2010,
+    "name": "mod16_2010",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2016,
+    "name": "mod16_2016",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod16",
+    "year": 2022,
+    "name": "mod16_2022",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2017,
+    "name": "smapl3_2017",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "smapl3",
+    "year": 2023,
+    "name": "smapl3_2023",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "s1",
+    "year": 2020,
+    "name": "s1_2020",
+    "tier": 2,
+    "minutes": 15.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2013,
+    "name": "hlsl30_2013",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2016,
+    "name": "hlsl30_2016",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "hlsl30",
+    "year": 2022,
+    "name": "hlsl30_2022",
+    "tier": 2,
+    "minutes": 10.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2001,
+    "name": "ls7more_2001",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2007,
+    "name": "ls7more_2007",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2014,
+    "name": "ls7more_2014",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "ls7more",
+    "year": 2020,
+    "name": "ls7more_2020",
+    "tier": 2,
+    "minutes": 8.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2003,
+    "name": "modlst_2003",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2009,
+    "name": "modlst_2009",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2015,
+    "name": "modlst_2015",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2021,
+    "name": "modlst_2021",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "prism",
+    "year": 1986,
+    "name": "prism_1986",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1991,
+    "name": "prism_1991",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 1997,
+    "name": "prism_1997",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2003,
+    "name": "prism_2003",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2009,
+    "name": "prism_2009",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2015,
+    "name": "prism_2015",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2021,
+    "name": "prism_2021",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2001,
+    "name": "mod13q1_2001",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2006,
+    "name": "mod13q1_2006",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2012,
+    "name": "mod13q1_2012",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2018,
+    "name": "mod13q1_2018",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2024,
+    "name": "mod13q1_2024",
+    "tier": 2,
+    "minutes": 1.0
+   }
+  ]
+ }
+}
