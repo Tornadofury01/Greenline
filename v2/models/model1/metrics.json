@@ -1,0 +1,378 @@
+{
+ "unseenYears_clean": {
+  "model": {
+   "n": 7418,
+   "accuracy": 0.784,
+   "balancedAccuracy": 0.537,
+   "groupedAccuracy": 0.852,
+   "groupedBalancedAccuracy": 0.561
+  },
+  "mostCommonCrop": {
+   "n": 7418,
+   "accuracy": 0.225,
+   "balancedAccuracy": 0.111,
+   "groupedAccuracy": 0.264,
+   "groupedBalancedAccuracy": 0.143
+  },
+  "sameAsLastYear": {
+   "n": 7418,
+   "accuracy": 0.432,
+   "balancedAccuracy": 0.351,
+   "groupedAccuracy": 0.458,
+   "groupedBalancedAccuracy": 0.307
+  },
+  "curveRules": {
+   "n": 7418,
+   "accuracy": 0.465,
+   "balancedAccuracy": 0.235,
+   "groupedAccuracy": 0.536,
+   "groupedBalancedAccuracy": 0.305
+  },
+  "perClass": {
+   "corn": {
+    "recall": 0.9,
+    "precision": 0.901,
+    "n": 2728
+   },
+   "cotton": {
+    "recall": 0.74,
+    "precision": 0.821,
+    "n": 703
+   },
+   "fallow": {
+    "recall": 0.148,
+    "precision": 0.396,
+    "n": 357
+   },
+   "hay_grass": {
+    "recall": 0.748,
+    "precision": 0.837,
+    "n": 1134
+   },
+   "small_grain": {
+    "recall": 0.341,
+    "precision": 0.625,
+    "n": 293
+   },
+   "sorghum": {
+    "recall": 0.639,
+    "precision": 0.419,
+    "n": 429
+   },
+   "soybeans": {
+    "recall": 0.4,
+    "precision": 0.239,
+    "n": 85
+   },
+   "sunflower": {
+    "recall": 0.0,
+    "precision": 0.0,
+    "n": 21
+   },
+   "wheat": {
+    "recall": 0.918,
+    "precision": 0.785,
+    "n": 1668
+   }
+  },
+  "confusion": {
+   "labels": [
+    "corn",
+    "cotton",
+    "fallow",
+    "hay_grass",
+    "small_grain",
+    "sorghum",
+    "soybeans",
+    "sunflower",
+    "wheat"
+   ],
+   "matrix": [
+    [
+     2456,
+     7,
+     6,
+     14,
+     1,
+     218,
+     8,
+     5,
+     13
+    ],
+    [
+     20,
+     520,
+     12,
+     14,
+     2,
+     53,
+     72,
+     0,
+     10
+    ],
+    [
+     66,
+     51,
+     53,
+     56,
+     7,
+     33,
+     19,
+     0,
+     72
+    ],
+    [
+     32,
+     11,
+     37,
+     848,
+     22,
+     43,
+     0,
+     0,
+     141
+    ],
+    [
+     8,
+     0,
+     0,
+     16,
+     100,
+     4,
+     0,
+     0,
+     165
+    ],
+    [
+     92,
+     26,
+     4,
+     13,
+     1,
+     274,
+     8,
+     0,
+     11
+    ],
+    [
+     14,
+     15,
+     1,
+     3,
+     0,
+     10,
+     34,
+     0,
+     8
+    ],
+    [
+     20,
+     0,
+     0,
+     0,
+     0,
+     1,
+     0,
+     0,
+     0
+    ],
+    [
+     17,
+     3,
+     21,
+     49,
+     27,
+     18,
+     1,
+     0,
+     1532
+    ]
+   ]
+  }
+ },
+ "unseenYears_all": {
+  "model": {
+   "n": 8309,
+   "accuracy": 0.745,
+   "balancedAccuracy": 0.511,
+   "groupedAccuracy": 0.814,
+   "groupedBalancedAccuracy": 0.539
+  },
+  "mostCommonCrop": {
+   "n": 8309,
+   "accuracy": 0.224,
+   "balancedAccuracy": 0.111,
+   "groupedAccuracy": 0.267,
+   "groupedBalancedAccuracy": 0.143
+  },
+  "sameAsLastYear": {
+   "n": 8309,
+   "accuracy": 0.429,
+   "balancedAccuracy": 0.347,
+   "groupedAccuracy": 0.458,
+   "groupedBalancedAccuracy": 0.306
+  },
+  "curveRules": {
+   "n": 8309,
+   "accuracy": 0.438,
+   "balancedAccuracy": 0.231,
+   "groupedAccuracy": 0.511,
+   "groupedBalancedAccuracy": 0.299
+  }
+ },
+ "unseenCounty_Hill_clean": {
+  "model": {
+   "n": 4993,
+   "accuracy": 0.928,
+   "balancedAccuracy": 0.578,
+   "groupedAccuracy": 0.962,
+   "groupedBalancedAccuracy": 0.614
+  },
+  "mostCommonCrop": {
+   "n": 4993,
+   "accuracy": 0.228,
+   "balancedAccuracy": 0.111,
+   "groupedAccuracy": 0.235,
+   "groupedBalancedAccuracy": 0.143
+  },
+  "sameAsLastYear": {
+   "n": 4993,
+   "accuracy": 0.33,
+   "balancedAccuracy": 0.283,
+   "groupedAccuracy": 0.4,
+   "groupedBalancedAccuracy": 0.293
+  },
+  "curveRules": {
+   "n": 4993,
+   "accuracy": 0.626,
+   "balancedAccuracy": 0.263,
+   "groupedAccuracy": 0.699,
+   "groupedBalancedAccuracy": 0.339
+  }
+ },
+ "unseenCounty_Hill_all": {
+  "model": {
+   "n": 5400,
+   "accuracy": 0.909,
+   "balancedAccuracy": 0.559,
+   "groupedAccuracy": 0.949,
+   "groupedBalancedAccuracy": 0.597
+  },
+  "mostCommonCrop": {
+   "n": 5400,
+   "accuracy": 0.229,
+   "balancedAccuracy": 0.111,
+   "groupedAccuracy": 0.239,
+   "groupedBalancedAccuracy": 0.143
+  },
+  "sameAsLastYear": {
+   "n": 5400,
+   "accuracy": 0.332,
+   "balancedAccuracy": 0.276,
+   "groupedAccuracy": 0.406,
+   "groupedBalancedAccuracy": 0.293
+  },
+  "curveRules": {
+   "n": 5400,
+   "accuracy": 0.603,
+   "balancedAccuracy": 0.256,
+   "groupedAccuracy": 0.684,
+   "groupedBalancedAccuracy": 0.33
+  }
+ },
+ "unseenCounty_Hill_unseenYears_clean": {
+  "model": {
+   "n": 1722,
+   "accuracy": 0.906,
+   "balancedAccuracy": 0.674,
+   "groupedAccuracy": 0.95,
+   "groupedBalancedAccuracy": 0.82
+  },
+  "mostCommonCrop": {
+   "n": 1722,
+   "accuracy": 0.191,
+   "balancedAccuracy": 0.143,
+   "groupedAccuracy": 0.197,
+   "groupedBalancedAccuracy": 0.2
+  },
+  "sameAsLastYear": {
+   "n": 1722,
+   "accuracy": 0.449,
+   "balancedAccuracy": 0.366,
+   "groupedAccuracy": 0.461,
+   "groupedBalancedAccuracy": 0.352
+  },
+  "curveRules": {
+   "n": 1722,
+   "accuracy": 0.651,
+   "balancedAccuracy": 0.35,
+   "groupedAccuracy": 0.667,
+   "groupedBalancedAccuracy": 0.49
+  }
+ },
+ "cvByYear_trainingYears": {
+  "folds": [
+   0.749,
+   0.77,
+   0.833,
+   0.743
+  ],
+  "mean": 0.774
+ },
+ "redEdge": {
+  "trainYears": [
+   2016,
+   2019
+  ],
+  "testYears": [
+   2020,
+   2021,
+   2022,
+   2023,
+   2025
+  ],
+  "landsatOnly": {
+   "n": 6179,
+   "accuracy": 0.777,
+   "balancedAccuracy": 0.543,
+   "groupedAccuracy": 0.85,
+   "groupedBalancedAccuracy": 0.578
+  },
+  "plusSentinel2RedEdge": {
+   "n": 6179,
+   "accuracy": 0.787,
+   "balancedAccuracy": 0.54,
+   "groupedAccuracy": 0.859,
+   "groupedBalancedAccuracy": 0.565
+  },
+  "cornVsSorghum": {
+   "n": 2706,
+   "landsatOnly": 0.848,
+   "plusSentinel2RedEdge": 0.856
+  }
+ },
+ "meta": {
+  "trainRows": 14784,
+  "finalRows": 27195,
+  "features": 70,
+  "minPurity": 0.7,
+  "holdoutCounty": "48217",
+  "trainYears": [
+   2008,
+   2019
+  ],
+  "testYears": [
+   2020,
+   2021,
+   2022,
+   2023,
+   2024,
+   2025
+  ],
+  "nFields": 1711,
+  "predictedYears": [
+   1985,
+   2025
+  ]
+ }
+}

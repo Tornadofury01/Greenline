@@ -51,3 +51,6 @@ Thumbs.db
 
 # Vercel (project link + pulled settings, per machine)
 .vercel/
+
+# v2 data (large, from Earth Engine exports and downloads)
+v2/data/

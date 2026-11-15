@@ -1,3 +1,5 @@
 accounts.json
 fields_upload/
 __pycache__/
+creds/
+standalone/

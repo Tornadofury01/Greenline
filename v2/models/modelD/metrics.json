@@ -1,0 +1,46 @@
+{
+ "cellDates": 21612,
+ "cells": 73,
+ "unseenCells": {
+  "model": {
+   "r2": 0.934,
+   "mae": 0.0134
+  },
+  "rainSeasonOnly": {
+   "r2": 0.932,
+   "mae": 0.0137
+  },
+  "radarOnly": {
+   "r2": 0.249,
+   "mae": 0.0501
+  },
+  "cellClimatology": {
+   "r2": 0.257,
+   "mae": 0.0513
+  }
+ },
+ "unseenYears": {
+  "model": {
+   "r2": 0.75,
+   "mae": 0.0278
+  },
+  "rainSeasonOnly": {
+   "r2": 0.696,
+   "mae": 0.0306
+  },
+  "radarOnly": {
+   "r2": 0.326,
+   "mae": 0.0486
+  },
+  "cellClimatology": {
+   "r2": 0.291,
+   "mae": 0.0506
+  }
+ },
+ "plausibility": {
+  "fieldSpreadWithinCell_sd": 0.0116,
+  "corr_fieldWetness_vs_TWI": 0.058,
+  "corr_fieldWetness_vs_heightAboveDrainage": 0.049,
+  "corr_fieldWetness_vs_clay": 0.231
+ }
+}

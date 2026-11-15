@@ -24,7 +24,7 @@ N_FIELDS = FIELDS_PER_COUNTY * len(COUNTIES)
 # USDA Crop Sequence Boundaries 2016-2023 in the awesome-gee community catalog (same asset the v1 notebooks used)
 CSB_ASSET = "projects/sat-io/open-datasets/USDA/CSB_1623"
 # prepare_fields_ee.py writes the buffered sample here (in account 1's Cloud project) and makes it world-readable
-FIELDS_ASSET = "projects/CHANGE-ME/assets/fieldshift_v2_fields"
+FIELDS_ASSET = "projects/green-line-514704/assets/fieldshift_v2_fields"
 
 N_ACCOUNTS = 6
 

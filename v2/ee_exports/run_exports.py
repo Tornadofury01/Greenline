@@ -1,6 +1,6 @@
 """Submit one account's share of the exports (from assignments.json) as Earth Engine batch tasks.
 
-  earthengine authenticate          # sign in as THIS account (add --force to switch accounts)
+  python auth.py --account 3        # once per account: browser sign-in, saved in creds/
   python run_exports.py --account 3 --dry-run     # list what would be submitted
   python run_exports.py --account 3 --limit 1     # one small test task: check where the file lands
   python run_exports.py --account 3               # everything else
@@ -16,17 +16,11 @@ from pathlib import Path
 
 import ee
 
+import auth
 import config
 from jobs import Job
 
 HERE = Path(__file__).resolve().parent
-
-
-def load_accounts():
-    p = HERE / "accounts.json"
-    if not p.exists():
-        sys.exit("accounts.json missing: copy accounts.example.json and fill in each account's Cloud project id")
-    return json.loads(p.read_text())
 
 
 def existing_tasks():
@@ -56,6 +50,7 @@ def main():
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--limit", type=int, default=None, help="submit at most this many new tasks")
     ap.add_argument("--only", default=None, help="comma-separated dataset keys, e.g. ls8,daymet")
+    ap.add_argument("--redo", default="", help="comma-separated job names to resubmit even if they succeeded")
     a = ap.parse_args()
 
     if "CHANGE-ME" in config.FIELDS_ASSET:
@@ -68,8 +63,7 @@ def main():
     # tier first; within a tier the longest jobs first, so slow ones aren't left for the end
     jobs.sort(key=lambda j: (j.tier, -j.minutes, j.name))
 
-    acct = load_accounts()[a.account]
-    ee.Initialize(project=acct["project"])
+    acct = auth.init(a.account)
     from datasets import build  # after Initialize: ee.Reducer etc. exist only then
 
     try:
@@ -79,7 +73,8 @@ def main():
         jobs = [j for j in jobs if not j.needs_fields]
 
     have = existing_tasks()
-    todo = [j for j in jobs if have.get(j.name) not in ("PENDING", "RUNNING", "SUCCEEDED")]
+    redo = set(filter(None, a.redo.split(",")))
+    todo = [j for j in jobs if j.name in redo or have.get(j.name) not in ("PENDING", "RUNNING", "SUCCEEDED")]
     print(f"account {a.account} ({acct['project']}): {len(jobs)} jobs, {len(jobs) - len(todo)} already queued or done, "
           f"{len(todo)} to submit, ~{sum(j.minutes for j in todo) / 60:.1f} h estimated")
     if a.limit is not None:

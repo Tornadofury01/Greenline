@@ -388,114 +388,317 @@
    },
    {
     "ds": "modlst",
-    "year": 2004,
-    "name": "modlst_2004",
+    "year": 2005,
+    "name": "modlst_2005",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2010,
-    "name": "modlst_2010",
+    "year": 2011,
+    "name": "modlst_2011",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2016,
-    "name": "modlst_2016",
+    "year": 2017,
+    "name": "modlst_2017",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2022,
-    "name": "modlst_2022",
+    "year": 2023,
+    "name": "modlst_2023",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "prism",
-    "year": 1987,
-    "name": "prism_1987",
+    "year": 1988,
+    "name": "prism_1988",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1992,
-    "name": "prism_1992",
+    "year": 1994,
+    "name": "prism_1994",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1998,
-    "name": "prism_1998",
+    "year": 2000,
+    "name": "prism_2000",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2004,
-    "name": "prism_2004",
+    "year": 2006,
+    "name": "prism_2006",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2010,
-    "name": "prism_2010",
+    "year": 2012,
+    "name": "prism_2012",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2016,
-    "name": "prism_2016",
+    "year": 2018,
+    "name": "prism_2018",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2022,
-    "name": "prism_2022",
+    "year": 2024,
+    "name": "prism_2024",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "mod13q1",
-    "year": 2002,
-    "name": "mod13q1_2002",
+    "year": 2005,
+    "name": "mod13q1_2005",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2007,
-    "name": "mod13q1_2007",
+    "year": 2011,
+    "name": "mod13q1_2011",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2013,
-    "name": "mod13q1_2013",
+    "year": 2017,
+    "name": "mod13q1_2017",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2019,
-    "name": "mod13q1_2019",
+    "year": 2023,
+    "name": "mod13q1_2023",
     "tier": 2,
     "minutes": 1.0
    },
    {
-    "ds": "mod13q1",
-    "year": 2025,
-    "name": "mod13q1_2025",
-    "tier": 2,
+    "ds": "openet",
+    "year": 2000,
+    "name": "openet_2000",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2003,
+    "name": "openet_2003",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2006,
+    "name": "openet_2006",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2009,
+    "name": "openet_2009",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2012,
+    "name": "openet_2012",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2015,
+    "name": "openet_2015",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2018,
+    "name": "openet_2018",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2021,
+    "name": "openet_2021",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2024,
+    "name": "openet_2024",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2005,
+    "name": "disalexi_2005",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2008,
+    "name": "disalexi_2008",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2011,
+    "name": "disalexi_2011",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2014,
+    "name": "disalexi_2014",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2017,
+    "name": "disalexi_2017",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2020,
+    "name": "disalexi_2020",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2023,
+    "name": "disalexi_2023",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1986,
+    "name": "terraclimate_1986",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1988,
+    "name": "terraclimate_1988",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1991,
+    "name": "terraclimate_1991",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1994,
+    "name": "terraclimate_1994",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1997,
+    "name": "terraclimate_1997",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2000,
+    "name": "terraclimate_2000",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2003,
+    "name": "terraclimate_2003",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2006,
+    "name": "terraclimate_2006",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2009,
+    "name": "terraclimate_2009",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2012,
+    "name": "terraclimate_2012",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2015,
+    "name": "terraclimate_2015",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2018,
+    "name": "terraclimate_2018",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2021,
+    "name": "terraclimate_2021",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2024,
+    "name": "terraclimate_2024",
+    "tier": 1,
     "minutes": 1.0
    }
   ],
@@ -884,107 +1087,310 @@
    },
    {
     "ds": "modlst",
-    "year": 2005,
-    "name": "modlst_2005",
+    "year": 2006,
+    "name": "modlst_2006",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2011,
-    "name": "modlst_2011",
+    "year": 2012,
+    "name": "modlst_2012",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2017,
-    "name": "modlst_2017",
+    "year": 2018,
+    "name": "modlst_2018",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2023,
-    "name": "modlst_2023",
+    "year": 2024,
+    "name": "modlst_2024",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "prism",
-    "year": 1988,
-    "name": "prism_1988",
+    "year": 1989,
+    "name": "prism_1989",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1993,
-    "name": "prism_1993",
+    "year": 1995,
+    "name": "prism_1995",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1999,
-    "name": "prism_1999",
+    "year": 2001,
+    "name": "prism_2001",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2005,
-    "name": "prism_2005",
+    "year": 2007,
+    "name": "prism_2007",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2011,
-    "name": "prism_2011",
+    "year": 2013,
+    "name": "prism_2013",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2017,
-    "name": "prism_2017",
+    "year": 2019,
+    "name": "prism_2019",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2023,
-    "name": "prism_2023",
+    "year": 2025,
+    "name": "prism_2025",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "mod13q1",
+    "year": 2006,
+    "name": "mod13q1_2006",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2012,
+    "name": "mod13q1_2012",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2018,
+    "name": "mod13q1_2018",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2024,
+    "name": "mod13q1_2024",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "openet",
+    "year": 2001,
+    "name": "openet_2001",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2004,
+    "name": "openet_2004",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2007,
+    "name": "openet_2007",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2010,
+    "name": "openet_2010",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2013,
+    "name": "openet_2013",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2016,
+    "name": "openet_2016",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2019,
+    "name": "openet_2019",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2022,
+    "name": "openet_2022",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2001,
+    "name": "disalexi_2001",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
     "year": 2003,
-    "name": "mod13q1_2003",
-    "tier": 2,
+    "name": "disalexi_2003",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2006,
+    "name": "disalexi_2006",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2009,
+    "name": "disalexi_2009",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2012,
+    "name": "disalexi_2012",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2015,
+    "name": "disalexi_2015",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2018,
+    "name": "disalexi_2018",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2021,
+    "name": "disalexi_2021",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2024,
+    "name": "disalexi_2024",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1989,
+    "name": "terraclimate_1989",
+    "tier": 1,
     "minutes": 1.0
    },
    {
-    "ds": "mod13q1",
-    "year": 2008,
-    "name": "mod13q1_2008",
-    "tier": 2,
+    "ds": "terraclimate",
+    "year": 1992,
+    "name": "terraclimate_1992",
+    "tier": 1,
     "minutes": 1.0
    },
    {
-    "ds": "mod13q1",
-    "year": 2014,
-    "name": "mod13q1_2014",
-    "tier": 2,
+    "ds": "terraclimate",
+    "year": 1995,
+    "name": "terraclimate_1995",
+    "tier": 1,
     "minutes": 1.0
    },
    {
-    "ds": "mod13q1",
-    "year": 2020,
-    "name": "mod13q1_2020",
-    "tier": 2,
+    "ds": "terraclimate",
+    "year": 1998,
+    "name": "terraclimate_1998",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2001,
+    "name": "terraclimate_2001",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2004,
+    "name": "terraclimate_2004",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2007,
+    "name": "terraclimate_2007",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2010,
+    "name": "terraclimate_2010",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2013,
+    "name": "terraclimate_2013",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2016,
+    "name": "terraclimate_2016",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2019,
+    "name": "terraclimate_2019",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2022,
+    "name": "terraclimate_2022",
+    "tier": 1,
     "minutes": 1.0
    }
   ],
@@ -1359,114 +1765,331 @@
    },
    {
     "ds": "modlst",
-    "year": 2000,
-    "name": "modlst_2000",
+    "year": 2001,
+    "name": "modlst_2001",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2002,
-    "name": "modlst_2002",
+    "year": 2003,
+    "name": "modlst_2003",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2007,
-    "name": "modlst_2007",
+    "year": 2008,
+    "name": "modlst_2008",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2013,
-    "name": "modlst_2013",
+    "year": 2014,
+    "name": "modlst_2014",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2019,
-    "name": "modlst_2019",
-    "tier": 2,
-    "minutes": 3.0
-   },
-   {
-    "ds": "modlst",
-    "year": 2025,
-    "name": "modlst_2025",
+    "year": 2020,
+    "name": "modlst_2020",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "prism",
-    "year": 1994,
-    "name": "prism_1994",
+    "year": 1985,
+    "name": "prism_1985",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2000,
-    "name": "prism_2000",
+    "year": 1991,
+    "name": "prism_1991",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2006,
-    "name": "prism_2006",
+    "year": 1997,
+    "name": "prism_1997",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2012,
-    "name": "prism_2012",
+    "year": 2003,
+    "name": "prism_2003",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2018,
-    "name": "prism_2018",
-    "tier": 2,
-    "minutes": 2.0
-   },
-   {
-    "ds": "prism",
-    "year": 2024,
-    "name": "prism_2024",
-    "tier": 2,
-    "minutes": 2.0
-   },
-   {
-    "ds": "mod13q1",
-    "year": 2004,
-    "name": "mod13q1_2004",
-    "tier": 2,
-    "minutes": 1.0
-   },
-   {
-    "ds": "mod13q1",
     "year": 2009,
-    "name": "mod13q1_2009",
+    "name": "prism_2009",
     "tier": 2,
-    "minutes": 1.0
+    "minutes": 2.0
    },
    {
-    "ds": "mod13q1",
+    "ds": "prism",
     "year": 2015,
-    "name": "mod13q1_2015",
+    "name": "prism_2015",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2021,
+    "name": "prism_2021",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2001,
+    "name": "mod13q1_2001",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2021,
-    "name": "mod13q1_2021",
+    "year": 2007,
+    "name": "mod13q1_2007",
     "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2013,
+    "name": "mod13q1_2013",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2019,
+    "name": "mod13q1_2019",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2025,
+    "name": "mod13q1_2025",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "openet",
+    "year": 2002,
+    "name": "openet_2002",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2005,
+    "name": "openet_2005",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2008,
+    "name": "openet_2008",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2011,
+    "name": "openet_2011",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2014,
+    "name": "openet_2014",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2017,
+    "name": "openet_2017",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2020,
+    "name": "openet_2020",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "openet",
+    "year": 2023,
+    "name": "openet_2023",
+    "tier": 1,
+    "minutes": 3.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2002,
+    "name": "disalexi_2002",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2004,
+    "name": "disalexi_2004",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2007,
+    "name": "disalexi_2007",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2010,
+    "name": "disalexi_2010",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2013,
+    "name": "disalexi_2013",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2016,
+    "name": "disalexi_2016",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2019,
+    "name": "disalexi_2019",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "disalexi",
+    "year": 2022,
+    "name": "disalexi_2022",
+    "tier": 1,
+    "minutes": 2.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1985,
+    "name": "terraclimate_1985",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1987,
+    "name": "terraclimate_1987",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1990,
+    "name": "terraclimate_1990",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1993,
+    "name": "terraclimate_1993",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1996,
+    "name": "terraclimate_1996",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 1999,
+    "name": "terraclimate_1999",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2002,
+    "name": "terraclimate_2002",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2005,
+    "name": "terraclimate_2005",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2008,
+    "name": "terraclimate_2008",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2011,
+    "name": "terraclimate_2011",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2014,
+    "name": "terraclimate_2014",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2017,
+    "name": "terraclimate_2017",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2020,
+    "name": "terraclimate_2020",
+    "tier": 1,
+    "minutes": 1.0
+   },
+   {
+    "ds": "terraclimate",
+    "year": 2023,
+    "name": "terraclimate_2023",
+    "tier": 1,
     "minutes": 1.0
    }
   ],
@@ -1855,99 +2478,99 @@
    },
    {
     "ds": "modlst",
-    "year": 2008,
-    "name": "modlst_2008",
+    "year": 2009,
+    "name": "modlst_2009",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2014,
-    "name": "modlst_2014",
+    "year": 2015,
+    "name": "modlst_2015",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2020,
-    "name": "modlst_2020",
+    "year": 2021,
+    "name": "modlst_2021",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "prism",
-    "year": 1985,
-    "name": "prism_1985",
+    "year": 1986,
+    "name": "prism_1986",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1989,
-    "name": "prism_1989",
+    "year": 1992,
+    "name": "prism_1992",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1995,
-    "name": "prism_1995",
+    "year": 1998,
+    "name": "prism_1998",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2001,
-    "name": "prism_2001",
+    "year": 2004,
+    "name": "prism_2004",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2007,
-    "name": "prism_2007",
-    "tier": 2,
-    "minutes": 2.0
-   },
-   {
-    "ds": "prism",
-    "year": 2013,
-    "name": "prism_2013",
-    "tier": 2,
-    "minutes": 2.0
-   },
-   {
-    "ds": "prism",
-    "year": 2019,
-    "name": "prism_2019",
-    "tier": 2,
-    "minutes": 2.0
-   },
-   {
-    "ds": "prism",
-    "year": 2025,
-    "name": "prism_2025",
-    "tier": 2,
-    "minutes": 2.0
-   },
-   {
-    "ds": "mod13q1",
     "year": 2010,
-    "name": "mod13q1_2010",
+    "name": "prism_2010",
     "tier": 2,
-    "minutes": 1.0
+    "minutes": 2.0
    },
    {
-    "ds": "mod13q1",
+    "ds": "prism",
     "year": 2016,
-    "name": "mod13q1_2016",
+    "name": "prism_2016",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "prism",
+    "year": 2022,
+    "name": "prism_2022",
+    "tier": 2,
+    "minutes": 2.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2002,
+    "name": "mod13q1_2002",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2022,
-    "name": "mod13q1_2022",
+    "year": 2008,
+    "name": "mod13q1_2008",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2014,
+    "name": "mod13q1_2014",
+    "tier": 2,
+    "minutes": 1.0
+   },
+   {
+    "ds": "mod13q1",
+    "year": 2020,
+    "name": "mod13q1_2020",
     "tier": 2,
     "minutes": 1.0
    }
@@ -2339,43 +2962,44 @@
     "minutes": 8.0
    },
    {
-    "ds": "irrmapper",
-    "name": "irrmapper",
-    "tier": 2,
-    "minutes": 4.0
-   },
-   {
     "ds": "modlst",
-    "year": 2001,
-    "name": "modlst_2001",
+    "year": 2000,
+    "name": "modlst_2000",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2006,
-    "name": "modlst_2006",
+    "year": 2002,
+    "name": "modlst_2002",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2012,
-    "name": "modlst_2012",
+    "year": 2007,
+    "name": "modlst_2007",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2018,
-    "name": "modlst_2018",
+    "year": 2013,
+    "name": "modlst_2013",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2024,
-    "name": "modlst_2024",
+    "year": 2019,
+    "name": "modlst_2019",
+    "tier": 2,
+    "minutes": 3.0
+   },
+   {
+    "ds": "modlst",
+    "year": 2025,
+    "name": "modlst_2025",
     "tier": 2,
     "minutes": 3.0
    },
@@ -2430,29 +3054,29 @@
    },
    {
     "ds": "mod13q1",
-    "year": 2005,
-    "name": "mod13q1_2005",
+    "year": 2003,
+    "name": "mod13q1_2003",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2011,
-    "name": "mod13q1_2011",
+    "year": 2009,
+    "name": "mod13q1_2009",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2017,
-    "name": "mod13q1_2017",
+    "year": 2015,
+    "name": "mod13q1_2015",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2023,
-    "name": "mod13q1_2023",
+    "year": 2021,
+    "name": "mod13q1_2021",
     "tier": 2,
     "minutes": 1.0
    }
@@ -2856,113 +3480,106 @@
    },
    {
     "ds": "modlst",
-    "year": 2003,
-    "name": "modlst_2003",
+    "year": 2004,
+    "name": "modlst_2004",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2009,
-    "name": "modlst_2009",
+    "year": 2010,
+    "name": "modlst_2010",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2015,
-    "name": "modlst_2015",
+    "year": 2016,
+    "name": "modlst_2016",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "modlst",
-    "year": 2021,
-    "name": "modlst_2021",
+    "year": 2022,
+    "name": "modlst_2022",
     "tier": 2,
     "minutes": 3.0
    },
    {
     "ds": "prism",
-    "year": 1986,
-    "name": "prism_1986",
+    "year": 1987,
+    "name": "prism_1987",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1991,
-    "name": "prism_1991",
+    "year": 1993,
+    "name": "prism_1993",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 1997,
-    "name": "prism_1997",
+    "year": 1999,
+    "name": "prism_1999",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2003,
-    "name": "prism_2003",
+    "year": 2005,
+    "name": "prism_2005",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2009,
-    "name": "prism_2009",
+    "year": 2011,
+    "name": "prism_2011",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2015,
-    "name": "prism_2015",
+    "year": 2017,
+    "name": "prism_2017",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "prism",
-    "year": 2021,
-    "name": "prism_2021",
+    "year": 2023,
+    "name": "prism_2023",
     "tier": 2,
     "minutes": 2.0
    },
    {
     "ds": "mod13q1",
-    "year": 2001,
-    "name": "mod13q1_2001",
+    "year": 2004,
+    "name": "mod13q1_2004",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2006,
-    "name": "mod13q1_2006",
+    "year": 2010,
+    "name": "mod13q1_2010",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2012,
-    "name": "mod13q1_2012",
+    "year": 2016,
+    "name": "mod13q1_2016",
     "tier": 2,
     "minutes": 1.0
    },
    {
     "ds": "mod13q1",
-    "year": 2018,
-    "name": "mod13q1_2018",
-    "tier": 2,
-    "minutes": 1.0
-   },
-   {
-    "ds": "mod13q1",
-    "year": 2024,
-    "name": "mod13q1_2024",
+    "year": 2022,
+    "name": "mod13q1_2022",
     "tier": 2,
     "minutes": 1.0
    }

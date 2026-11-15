@@ -19,6 +19,7 @@ from pathlib import Path
 
 import ee
 
+import auth
 import config
 
 HERE = Path(__file__).resolve().parent
@@ -69,8 +70,7 @@ def main():
     a = ap.parse_args()
     if "CHANGE-ME" in config.FIELDS_ASSET:
         sys.exit("set config.FIELDS_ASSET to projects/<account 1's Cloud project>/assets/fieldshift_v2_fields first")
-    acct = json.loads((HERE / "accounts.json").read_text())[a.account]
-    ee.Initialize(project=acct["project"])
+    auth.init(a.account)
 
     if a.share:
         ee.data.setAssetAcl(config.FIELDS_ASSET, json.dumps({"all_users_can_read": True}))

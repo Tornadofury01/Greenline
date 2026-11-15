@@ -1,0 +1,218 @@
+{
+ "WHEAT": {
+  "unit": "BU / ACRE",
+  "countyYears": {
+   "train": 154,
+   "test": 62
+  },
+  "testYears": [
+   2013,
+   2025
+  ],
+  "scores": {
+   "trendOnly": {
+    "r2_deviation": -0.0,
+    "r2_yield": 0.2,
+    "mae_yield": 7.3,
+    "corr_deviation": null
+   },
+   "greennessLine": {
+    "r2_deviation": -0.125,
+    "r2_yield": 0.092,
+    "mae_yield": 7.7,
+    "corr_deviation": 0.234
+   },
+   "ridge": {
+    "r2_deviation": -0.801,
+    "r2_yield": -0.479,
+    "mae_yield": 9.9,
+    "corr_deviation": -0.045
+   },
+   "trees": {
+    "r2_deviation": 0.174,
+    "r2_yield": 0.299,
+    "mae_yield": 6.6,
+    "corr_deviation": 0.51
+   }
+  },
+  "targets": {
+   "yieldPctPerGreennessZ": 20.1,
+   "ridgePerUnit": {
+    "z_key": 24.414,
+    "z_worst": -6.492,
+    "rain_season": -0.0,
+    "hot_season": -0.799,
+    "spei_end": -13.173,
+    "def_end": -0.003,
+    "et_ratio_key": 86.96
+   }
+  },
+  "worstTestYear": {
+   "year": 2022,
+   "actualDevPct": -52.1
+  },
+  "best": "trees"
+ },
+ "CORN": {
+  "unit": "BU / ACRE",
+  "countyYears": {
+   "train": 140,
+   "test": 61
+  },
+  "testYears": [
+   2013,
+   2025
+  ],
+  "scores": {
+   "trendOnly": {
+    "r2_deviation": -0.068,
+    "r2_yield": -0.4,
+    "mae_yield": 19.7,
+    "corr_deviation": null
+   },
+   "greennessLine": {
+    "r2_deviation": 0.377,
+    "r2_yield": 0.085,
+    "mae_yield": 15.3,
+    "corr_deviation": 0.629
+   },
+   "ridge": {
+    "r2_deviation": 0.12,
+    "r2_yield": -0.409,
+    "mae_yield": 19.2,
+    "corr_deviation": 0.505
+   },
+   "trees": {
+    "r2_deviation": -0.099,
+    "r2_yield": -0.763,
+    "mae_yield": 20.8,
+    "corr_deviation": 0.353
+   }
+  },
+  "targets": {
+   "yieldPctPerGreennessZ": 43.0,
+   "ridgePerUnit": {
+    "z_key": 33.25,
+    "z_worst": 0.212,
+    "rain_season": -0.047,
+    "hot_season": -0.205,
+    "spei_end": 15.802,
+    "def_end": 0.011,
+    "et_ratio_key": 3.54
+   }
+  },
+  "worstTestYear": {
+   "year": 2015,
+   "actualDevPct": -44.7
+  },
+  "best": "greennessLine"
+ },
+ "SORGHUM": {
+  "unit": "BU / ACRE",
+  "countyYears": {
+   "train": 146,
+   "test": 36
+  },
+  "testYears": [
+   2013,
+   2023
+  ],
+  "scores": {
+   "trendOnly": {
+    "r2_deviation": -0.026,
+    "r2_yield": -0.18,
+    "mae_yield": 16.2,
+    "corr_deviation": null
+   },
+   "greennessLine": {
+    "r2_deviation": -0.051,
+    "r2_yield": -0.232,
+    "mae_yield": 15.8,
+    "corr_deviation": 0.318
+   },
+   "ridge": {
+    "r2_deviation": -0.275,
+    "r2_yield": -0.492,
+    "mae_yield": 17.2,
+    "corr_deviation": 0.17
+   },
+   "trees": {
+    "r2_deviation": -0.551,
+    "r2_yield": -0.773,
+    "mae_yield": 19.9,
+    "corr_deviation": 0.226
+   }
+  },
+  "targets": {
+   "yieldPctPerGreennessZ": 18.5,
+   "ridgePerUnit": {
+    "z_key": 13.984,
+    "z_worst": 1.226,
+    "rain_season": -0.031,
+    "hot_season": -0.194,
+    "spei_end": 3.274,
+    "def_end": 0.011,
+    "et_ratio_key": -32.363
+   }
+  },
+  "worstTestYear": {
+   "year": 2018,
+   "actualDevPct": -74.2
+  },
+  "best": "greennessLine"
+ },
+ "COTTON": {
+  "unit": "LB / ACRE",
+  "countyYears": {
+   "train": 121,
+   "test": 46
+  },
+  "testYears": [
+   2013,
+   2025
+  ],
+  "scores": {
+   "trendOnly": {
+    "r2_deviation": -0.018,
+    "r2_yield": 0.044,
+    "mae_yield": 193.8,
+    "corr_deviation": null
+   },
+   "greennessLine": {
+    "r2_deviation": 0.452,
+    "r2_yield": 0.493,
+    "mae_yield": 136.2,
+    "corr_deviation": 0.766
+   },
+   "ridge": {
+    "r2_deviation": 0.317,
+    "r2_yield": 0.394,
+    "mae_yield": 155.5,
+    "corr_deviation": 0.632
+   },
+   "trees": {
+    "r2_deviation": 0.311,
+    "r2_yield": 0.376,
+    "mae_yield": 142.3,
+    "corr_deviation": 0.578
+   }
+  },
+  "targets": {
+   "yieldPctPerGreennessZ": 24.9,
+   "ridgePerUnit": {
+    "z_key": 11.914,
+    "z_worst": 7.971,
+    "rain_season": 0.007,
+    "hot_season": -0.136,
+    "spei_end": 4.364,
+    "def_end": 0.006,
+    "et_ratio_key": 0.521
+   }
+  },
+  "worstTestYear": {
+   "year": 2023,
+   "actualDevPct": -69.9
+  },
+  "best": "greennessLine"
+ }
+}

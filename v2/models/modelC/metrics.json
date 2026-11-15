@@ -1,0 +1,320 @@
+{
+ "silhouetteByK": {
+  "3": 0.29,
+  "4": 0.278,
+  "5": 0.296,
+  "6": 0.282
+ },
+ "k": 4,
+ "agreement": {
+  "kmeans_vs_gmm_ARI": 0.931,
+  "kmeans_vs_hmm_ARI": 0.918
+ },
+ "hmmStayProbability": [
+  0.5,
+  0.35,
+  0.36,
+  0.0
+ ],
+ "centersZ": {
+  "hot": {
+   "rain_mm": -0.74,
+   "heat_days": 0.95,
+   "heavy_rain_days": -0.51,
+   "tmax_mean": 0.9,
+   "deficit_mm": 0.89,
+   "frost_free_days": 0.4
+  },
+  "normal": {
+   "rain_mm": -0.43,
+   "heat_days": -0.37,
+   "heavy_rain_days": -0.66,
+   "tmax_mean": -0.44,
+   "deficit_mm": 0.14,
+   "frost_free_days": -0.52
+  },
+  "wet": {
+   "rain_mm": 1.06,
+   "heat_days": -0.49,
+   "heavy_rain_days": 1.09,
+   "tmax_mean": -0.43,
+   "deficit_mm": -0.95,
+   "frost_free_days": 0.29
+  },
+  "drought": {
+   "rain_mm": -2.1,
+   "heat_days": 3.39,
+   "heavy_rain_days": -1.24,
+   "tmax_mean": 4.07,
+   "deficit_mm": 3.35,
+   "frost_free_days": -0.69
+  }
+ },
+ "centersRaw": {
+  "hot": {
+   "rain_mm": 568.9,
+   "heat_days": 76.7,
+   "heavy_rain_days": 4.6,
+   "tmax_mean": 30.7,
+   "deficit_mm": 875.5,
+   "frost_free_days": 266.1
+  },
+  "normal": {
+   "rain_mm": 625.4,
+   "heat_days": 46.1,
+   "heavy_rain_days": 4.1,
+   "tmax_mean": 29.3,
+   "deficit_mm": 680.4,
+   "frost_free_days": 246.6
+  },
+  "wet": {
+   "rain_mm": 891.7,
+   "heat_days": 43.5,
+   "heavy_rain_days": 10.3,
+   "tmax_mean": 29.3,
+   "deficit_mm": 394.6,
+   "frost_free_days": 263.8
+  },
+  "drought": {
+   "rain_mm": 325.5,
+   "heat_days": 133.0,
+   "heavy_rain_days": 2.0,
+   "tmax_mean": 33.8,
+   "deficit_mm": 1520.4,
+   "frost_free_days": 243.0
+  }
+ },
+ "years": {
+  "drought": [
+   2011
+  ],
+  "wet": [
+   1986,
+   1989,
+   1991,
+   1995,
+   2004,
+   2007,
+   2009,
+   2015,
+   2016,
+   2018,
+   2019,
+   2020,
+   2021,
+   2024,
+   2025
+  ],
+  "hot": [
+   1985,
+   1998,
+   1999,
+   2000,
+   2005,
+   2006,
+   2012,
+   2013,
+   2022,
+   2023
+  ],
+  "normal": [
+   1987,
+   1988,
+   1990,
+   1992,
+   1993,
+   1994,
+   1996,
+   1997,
+   2001,
+   2002,
+   2003,
+   2008,
+   2010,
+   2014,
+   2017
+  ]
+ },
+ "checks": {
+  "byType": {
+   "drought": {
+    "usdm_d2plus_pct": 76.38,
+    "rma_drought_heat_musd": 35.96,
+    "area_greenness_z": -0.66,
+    "yield_dev_wheat_pct": -13.87,
+    "yield_dev_corn_pct": -43.98,
+    "yield_dev_sorghum_pct": -24.44,
+    "yield_dev_cotton_pct": -45.28
+   },
+   "hot": {
+    "usdm_d2plus_pct": 42.45,
+    "rma_drought_heat_musd": 11.74,
+    "area_greenness_z": -0.13,
+    "yield_dev_wheat_pct": 7.17,
+    "yield_dev_corn_pct": 0.33,
+    "yield_dev_sorghum_pct": 6.09,
+    "yield_dev_cotton_pct": -10.59
+   },
+   "normal": {
+    "usdm_d2plus_pct": 6.42,
+    "rma_drought_heat_musd": 2.77,
+    "area_greenness_z": 0.02,
+    "yield_dev_wheat_pct": 1.99,
+    "yield_dev_corn_pct": -1.08,
+    "yield_dev_sorghum_pct": 1.37,
+    "yield_dev_cotton_pct": 4.3
+   },
+   "wet": {
+    "usdm_d2plus_pct": 5.25,
+    "rma_drought_heat_musd": 5.04,
+    "area_greenness_z": 0.33,
+    "yield_dev_wheat_pct": -5.3,
+    "yield_dev_corn_pct": 2.88,
+    "yield_dev_sorghum_pct": -6.42,
+    "yield_dev_cotton_pct": 7.56
+   }
+  },
+  "nYearsByType": {
+   "wet": 15,
+   "normal": 15,
+   "hot": 10,
+   "drought": 1
+  }
+ },
+ "2040": {
+  "observed1985_2025": {
+   "wet": 0.366,
+   "normal": 0.366,
+   "hot": 0.244,
+   "drought": 0.024
+  },
+  "ssp245": {
+   "meanShare": {
+    "hot": 0.662,
+    "wet": 0.223,
+    "drought": 0.095,
+    "normal": 0.021
+   },
+   "minShare": {
+    "hot": 0.512,
+    "wet": 0.073,
+    "drought": 0.024,
+    "normal": 0.0
+   },
+   "maxShare": {
+    "hot": 0.805,
+    "wet": 0.366,
+    "drought": 0.171,
+    "normal": 0.122
+   },
+   "nModels": 8,
+   "modelsWithMoreDroughtThanToday": 7,
+   "climateChange": {
+    "ACCESS-CM2": {
+     "rainChangePct": 11.7,
+     "tmaxChangeC": 1.9,
+     "tminChangeC": 1.91
+    },
+    "CanESM5": {
+     "rainChangePct": -7.8,
+     "tmaxChangeC": 2.78,
+     "tminChangeC": 2.15
+    },
+    "EC-Earth3": {
+     "rainChangePct": 8.2,
+     "tmaxChangeC": 1.82,
+     "tminChangeC": 2.06
+    },
+    "GFDL-ESM4": {
+     "rainChangePct": -12.4,
+     "tmaxChangeC": 1.91,
+     "tminChangeC": 1.16
+    },
+    "INM-CM5-0": {
+     "rainChangePct": 1.9,
+     "tmaxChangeC": 1.42,
+     "tminChangeC": 1.34
+    },
+    "MIROC6": {
+     "rainChangePct": -1.1,
+     "tmaxChangeC": 2.81,
+     "tminChangeC": 2.13
+    },
+    "MPI-ESM1-2-HR": {
+     "rainChangePct": -5.3,
+     "tmaxChangeC": 1.72,
+     "tminChangeC": 1.44
+    },
+    "MRI-ESM2-0": {
+     "rainChangePct": 8.1,
+     "tmaxChangeC": 1.78,
+     "tminChangeC": 1.86
+    }
+   }
+  },
+  "ssp585": {
+   "meanShare": {
+    "hot": 0.732,
+    "wet": 0.14,
+    "drought": 0.125,
+    "normal": 0.003
+   },
+   "minShare": {
+    "hot": 0.659,
+    "wet": 0.049,
+    "drought": 0.073,
+    "normal": 0.0
+   },
+   "maxShare": {
+    "hot": 0.854,
+    "wet": 0.268,
+    "drought": 0.171,
+    "normal": 0.024
+   },
+   "nModels": 8,
+   "modelsWithMoreDroughtThanToday": 8,
+   "climateChange": {
+    "ACCESS-CM2": {
+     "rainChangePct": 5.0,
+     "tmaxChangeC": 2.11,
+     "tminChangeC": 2.03
+    },
+    "CanESM5": {
+     "rainChangePct": 0.3,
+     "tmaxChangeC": 2.85,
+     "tminChangeC": 2.68
+    },
+    "EC-Earth3": {
+     "rainChangePct": 3.9,
+     "tmaxChangeC": 2.41,
+     "tminChangeC": 2.6
+    },
+    "GFDL-ESM4": {
+     "rainChangePct": -14.7,
+     "tmaxChangeC": 2.2,
+     "tminChangeC": 1.46
+    },
+    "INM-CM5-0": {
+     "rainChangePct": -0.8,
+     "tmaxChangeC": 1.94,
+     "tminChangeC": 1.6
+    },
+    "MIROC6": {
+     "rainChangePct": 5.1,
+     "tmaxChangeC": 2.55,
+     "tminChangeC": 2.17
+    },
+    "MPI-ESM1-2-HR": {
+     "rainChangePct": -14.6,
+     "tmaxChangeC": 1.92,
+     "tminChangeC": 1.67
+    },
+    "MRI-ESM2-0": {
+     "rainChangePct": 0.4,
+     "tmaxChangeC": 2.53,
+     "tminChangeC": 2.17
+    }
+   }
+  }
+ }
+}

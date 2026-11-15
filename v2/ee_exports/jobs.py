@@ -53,10 +53,12 @@ DATASETS = {
     "prism":     dict(unit="year", years=yrs(1985, 2025), minutes=2, tier=2),   # cross-check of Daymet
     "modlst":    dict(unit="year", years=yrs(2000, 2025), minutes=3, tier=2),   # Model B / D
     "mod13q1":   dict(unit="year", years=yrs(2000, 2025), minutes=1, tier=2),
-    "irrmapper": dict(unit="once", minutes=4, tier=2),
+    # ---- added after submission (ECOSTRESS dropped): appended to accounts 1-3 by add_jobs.py ----
+    "disalexi":  dict(unit="year", years=yrs(2001, 2024), minutes=2, tier=1),
+    "openet":    dict(unit="year", years=yrs(2000, 2024), minutes=3, tier=1),
+    "terraclimate": dict(unit="year", years=yrs(1985, 2024), minutes=1, tier=1),
     # ---- tier 3: optional ----
     "s2sr":      dict(unit="year", years=yrs(2017, 2025), minutes=20, tier=3),
-    "openet":    dict(unit="once", minutes=8, tier=3),
 }
 
 

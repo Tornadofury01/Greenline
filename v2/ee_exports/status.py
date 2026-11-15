@@ -9,6 +9,7 @@ from pathlib import Path
 
 import ee
 
+import auth
 from jobs import DATASETS, Job
 
 HERE = Path(__file__).resolve().parent
@@ -23,8 +24,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--account", required=True)
     a = ap.parse_args()
-    acct = json.loads((HERE / "accounts.json").read_text())[a.account]
-    ee.Initialize(project=acct["project"])
+    auth.init(a.account)
     mine = {Job.from_dict(d).name: Job.from_dict(d) for d in json.loads((HERE / "assignments.json").read_text())["accounts"][a.account]}
 
     latest = {}

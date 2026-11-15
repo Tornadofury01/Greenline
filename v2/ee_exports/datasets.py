@@ -61,7 +61,7 @@ def _indices(sr):
 
 # ---------- per scene: optical ----------
 
-def _optical(job, col, prep, bands, scale, sensor, props):
+def _optical(job, col, prep, bands, scale, sensor, props, clip_to_scene=True, crs=None):
     """prep(img) -> (data with `bands`, clear mask, footprint mask, snow mask)."""
     fc = fields()
     col = col.filterBounds(region()).filterDate(*_year_range(job.year))
@@ -72,7 +72,8 @@ def _optical(job, col, prep, bands, scale, sensor, props):
         stack = ee.Image.cat([data.updateMask(clear.And(foot)),
                               ee.Image.constant(1).rename("tot").updateMask(foot),
                               snow.And(foot).selfMask().rename("snow")])
-        out = stack.reduceRegions(collection=fc.filterBounds(img.geometry()), reducer=red, scale=scale, tileScale=4)
+        target = fc.filterBounds(img.geometry()) if clip_to_scene else fc
+        out = stack.reduceRegions(collection=target, reducer=red, scale=scale, crs=crs, tileScale=4)
         meta = {"date": img.date().format("YYYY-MM-dd"), "scene": img.get("system:index"), "sensor": sensor}
         meta.update({k: img.get(v) for k, v in props.items()})
         return _set(out, meta)
@@ -128,7 +129,8 @@ def hls(job):
         return data, clear, foot, snow
 
     bands = SR6 + ["ndvi", "ndti", "bsi"] + (["re1", "re2", "re3", "ndre", "cire"] if s30 else [])
-    return _optical(job, ee.ImageCollection(cid), prep, bands, 30, job.ds, {"cloud_cover": "CLOUD_COVERAGE"})
+    return _optical(job, ee.ImageCollection(cid), prep, bands, 30, job.ds, {"cloud_cover": "CLOUD_COVERAGE"},
+                    clip_to_scene=False, crs="EPSG:32614")  # HLS: own footprints/projection fail to transform; UTM 14N covers the area
 
 
 def s2sr(job):
@@ -209,6 +211,8 @@ def _monthly(job, month_col, bands, scale):
         nd = calendar.monthrange(job.year, m)[1]
         s = ee.Date.fromYMD(job.year, m, 1)
         img = _stack(month_col(s, s.advance(1, "month"), nd))
+        # a month with no images (SMAP before Apr 2015, a dataset's last months) -> empty columns, not a failed job
+        img = ee.Image(ee.Algorithms.If(img.bandNames().size().gt(0), img, ee.Image.constant(0).rename("empty").updateMask(0)))
         out = img.reduceRegions(collection=fc, reducer=ee.Reducer.mean(), scale=scale, tileScale=2)
         parts.append(_set(out, {"year": job.year, "month": m}))
     sel = ["fid", "cfips", "year", "month"] + [f"d{d:02d}_{b}" for d in range(1, 32) for b in bands]
@@ -230,7 +234,8 @@ DAILY = {
     # gridMET temperatures are in kelvin; eto = grass reference ET (mm)
     "gridmet": (_simple("IDAHO_EPSCOR/GRIDMET", ["pr", "tmmx", "tmmn", "rmax", "rmin", "vs", "srad", "eto", "vpd"]),
                 ["pr", "tmmx", "tmmn", "rmax", "rmin", "vs", "srad", "eto", "vpd"], 4638.3),
-    "prism": (_simple("OREGONSTATE/PRISM/AN81d", ["ppt", "tmean", "tmax", "tmin", "vpdmax", "vpdmin"]),
+    # PRISM AN81d stops at 2020-12-30; ANd runs to the present with the same bands
+    "prism": (_simple("OREGONSTATE/PRISM/ANd", ["ppt", "tmean", "tmax", "tmin", "vpdmax", "vpdmin"]),
               ["ppt", "tmean", "tmax", "tmin", "vpdmax", "vpdmin"], 4638.3),
     # one image every 5 days
     "gmdrought": (_simple("GRIDMET/DROUGHT", ["pdsi", "z", "spi30d", "spi90d", "spi180d", "spi1y",
@@ -239,8 +244,8 @@ DAILY = {
                    "spei30d", "spei90d", "spei180d", "spei1y", "eddi30d", "eddi90d"], 4638.3),
     # bit 0 of the retrieval flag = not recommended quality
     "smapl3": (_simple("NASA/SMAP/SPL3SMP_E/006", None, fn=lambda i: ee.Image.cat([
-        i.select("soil_moisture_am").updateMask(i.select("retrieval_qual_flag_am").bitwiseAnd(1).eq(0)).rename("sm_am"),
-        i.select("soil_moisture_pm").updateMask(i.select("retrieval_qual_flag_pm").bitwiseAnd(1).eq(0)).rename("sm_pm")])),
+        i.select("soil_moisture_am").updateMask(i.select("retrieval_qual_flag_am").toInt().bitwiseAnd(1).eq(0)).rename("sm_am"),
+        i.select("soil_moisture_pm").updateMask(i.select("retrieval_qual_flag_pm").toInt().bitwiseAnd(1).eq(0)).rename("sm_pm")])),
         ["sm_am", "sm_pm"], 9000),
     "mod13q1": (_simple("MODIS/061/MOD13Q1", None, fn=lambda i: i.select(["NDVI", "EVI"], ["ndvi", "evi"])
                         .multiply(1e-4).updateMask(i.select("SummaryQA").lte(1))),
@@ -252,7 +257,7 @@ DAILY = {
 
 
 def smapl4_month(s, e, nd):
-    col = ee.ImageCollection("NASA/SMAP/SPL4SMGP/007").filterDate(s, e).select(["sm_surface", "sm_rootzone", "sm_profile"])
+    col = ee.ImageCollection("NASA/SMAP/SPL4SMGP/008").filterDate(s, e).select(["sm_surface", "sm_rootzone", "sm_profile"])
     return _daily(col, s, nd, lambda c: c.mean())
 
 
@@ -284,9 +289,13 @@ DAILY["imerg"] = (imerg_month, ["rain", "i30", "wethh"], 11132)
 DAILY["modlst"] = (lst_month, ["t_day", "t_night", "a_day", "a_night"], 1000)
 
 
+DAILY_SCALE = 250   # m. Reading a 1-10 km grid at its native scale returns nothing for fields smaller than a cell;
+                    # at 250 m each field gets the value(s) of the cell(s) it sits in, area-weighted.
+
+
 def daily(job):
-    month_col, bands, scale = DAILY[job.ds]
-    return _monthly(job, month_col, bands, scale)
+    month_col, bands, _native = DAILY[job.ds]
+    return _monthly(job, month_col, bands, min(_native, DAILY_SCALE))
 
 
 # ---------- per field: static and yearly layers ----------
@@ -312,17 +321,17 @@ def terrain(job):
 
 
 def cdl(job):
-    """USDA CDL 2008+ per field-year: pixel histogram (-> majority crop and purity), mode, mean CDL confidence."""
+    """USDA CDL 2008+ per field-year: pixel histogram (-> majority crop and purity) and mode."""
     fc = fields()
-    red = (ee.Reducer.frequencyHistogram().combine(ee.Reducer.mode(), sharedInputs=True)
-           .combine(ee.Reducer.mean(), sharedInputs=True).unweighted())
-    col = ee.ImageCollection("USDA/NASS/CDL").filterDate("2008-01-01", "2026-01-01").select(["cropland", "confidence"])
+    red = (ee.Reducer.frequencyHistogram().combine(ee.Reducer.mode(), sharedInputs=True).unweighted()
+           .setOutputs(["cropland_histogram", "cropland_mode"]))
+    col = ee.ImageCollection("USDA/NASS/CDL").filterDate("2008-01-01", "2026-01-01").select(["cropland"])
 
     def per(img):
         out = img.reduceRegions(collection=fc, reducer=red, scale=30, tileScale=4)
         return _set(out, {"year": img.date().get("year")})
 
-    return col.map(per).flatten(), ["fid", "cfips", "year", "cropland_histogram", "cropland_mode", "confidence_mean"]
+    return col.map(per).flatten(), ["fid", "cfips", "year", "cropland_histogram", "cropland_mode"]
 
 
 def irrmapper(job):
@@ -338,16 +347,30 @@ def irrmapper(job):
     return col.map(per).flatten(), ["fid", "cfips", "year", "irr_frac", "irr_px"]
 
 
-def openet(job):
-    """Optional: OpenET ensemble monthly ET (mm), 30 m."""
-    fc = fields()
-    col = ee.ImageCollection("OpenET/ENSEMBLE/CONUS/GRIDMET/MONTHLY/v2_0").filterBounds(region()).select("et_ensemble_mad")
+# ---------- per field-year: monthly products (ECOSTRESS substitutes) ----------
 
-    def per(img):
-        out = img.reduceRegions(collection=fc, reducer=ee.Reducer.mean().setOutputs(["et_mm"]), scale=30, tileScale=4)
-        return _set(out, {"date": img.date().format("YYYY-MM")})
+MONTHLY = {
+    # key: (collection, bands, scale). OpenET collections are tiled: mosaic each month.
+    # DisALEXI = thermal (ALEXI) ET, the ECOSTRESS-ESI method family; et / gridMET eto = ESI-like stress ratio.
+    "disalexi": ("projects/openet/assets/disalexi/conus/gridmet/monthly/v2_0", ["et", "count"], 30),
+    "openet": ("projects/openet/assets/ensemble/conus/gridmet/monthly/v2_0",
+               ["et_ensemble_mad", "et_ensemble_mad_min", "et_ensemble_mad_max", "et_ensemble_mad_count", "et_ensemble_sam"], 30),
+    "terraclimate": ("IDAHO_EPSCOR/TERRACLIMATE", ["aet", "def", "pet", "soil", "pdsi", "vpd", "pr", "ro"], 250),
+}
 
-    return col.map(per).flatten(), ["fid", "cfips", "date", "et_mm"]
+
+def monthly(job):
+    """One row per field per year, columns mMM_<band> (mm per month for ET)."""
+    cid, bands, scale = MONTHLY[job.ds]
+    reg = region()
+    imgs = []
+    for m in range(1, 13):
+        s = ee.Date.fromYMD(job.year, m, 1)
+        imgs.append(ee.ImageCollection(cid).filterBounds(reg).filterDate(s, s.advance(1, "month")).select(bands)
+                    .mosaic().rename([f"m{m:02d}_{b}" for b in bands]))
+    out = ee.Image.cat(imgs).reduceRegions(collection=fields(), reducer=ee.Reducer.mean(), scale=scale, tileScale=4)
+    sel = ["fid", "cfips", "year"] + [f"m{m:02d}_{b}" for m in range(1, 13) for b in bands]
+    return _set(out, {"year": job.year}), sel
 
 
 # ---------- per point: very coarse grids ----------
@@ -385,7 +408,8 @@ def cmip6(job):
 
 
 BUILDERS = {**{k: landsat for k in LANDSAT}, "ls7more": landsat, "hlsl30": hls, "hlss30": hls, "s2sr": s2sr, "s1": s1,
-            **{k: daily for k in DAILY}, "terrain": terrain, "cdl": cdl, "irrmapper": irrmapper, "openet": openet,
+            **{k: daily for k in DAILY}, "terrain": terrain, "cdl": cdl, "irrmapper": irrmapper,
+            **{k: monthly for k in MONTHLY},
             "grace": grace, "gldas": gldas, "cmip6": cmip6}
 
 

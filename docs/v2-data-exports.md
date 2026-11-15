@@ -20,6 +20,8 @@ Scripts and the 6-account split are in `v2/ee_exports/` (see its README).
 | QA columns | `tot_count` (field pixels in the footprint), `<band>_count` (clear pixels), `snow_count`, `sensor`, `cloud_cover`. Gaps stay missing, never zero. |
 | Format | CSV from EE; the cube builder converts it to Parquet. |
 
+**Not used:** ECOSTRESS (decided 2026-11-14). It is only on NASA AppEEARS, and the point requests hit its size limit. In its place: **OpenET DisALEXI** (30 m monthly thermal ET, 2001–2024; DisALEXI ET / gridMET ETo = an ESI-like stress ratio), the **OpenET ensemble** (2000–2024), and **TerraClimate** (monthly deficit / AET / PET / soil water, 1985–2024). Landsat surface temperature, MODIS ET and land surface temperature, and SMAP cover the rest. ECOSTRESS is listed as a data limit.
+
 **What North Texas changes below:**
 - **Tier 2 (only if time):** Landsat 7 outside 2012, HLS L30 (same scenes as Landsat 8/9), Sentinel-1, PRISM, MODIS land surface temperature and NDVI, IrrMapper.
 - **Tier 3 (off by default):** Sentinel-2 SR, OpenET, POLARIS, LANID.
