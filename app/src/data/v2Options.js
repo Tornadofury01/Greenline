@@ -6,7 +6,8 @@ export const TOP_OPTIONS = 3;
 const LETTERS = 'ABCDEFGHIJ';
 
 // Which model slots feed each number on screen (docs/v2-data-contract.md section 1, "Feeds"). A number is tagged
-// "placeholder, model coming" when ANY slot that feeds it was a placeholder when the option was run.
+// a placeholder when ANY slot that feeds it was a placeholder when the option was run. The card shows ONE tag; tapping it
+// lists these numbers and the slots they wait for (`placeholders` below).
 // The market check feeds on NASS county data, not on a model slot, so it is never tagged.
 export const FEEDS = {
   score: { profit: ['calibrationE', 'modelB'], risk: ['modelB', 'modelC'], soil: ['modelA'], water: ['modelB', 'modelD'], nutrients: ['calibrationE'], pests: ['modelA'] },
@@ -28,6 +29,8 @@ export function totalFrom(scores, weights) {
 }
 
 const isPlaceholder = (feeds, placeholderSlots) => feeds.some((s) => placeholderSlots.has(s));
+// The slots (in contract order) that a number is still waiting for.
+const waitingFor = (feeds, placeholderSlots) => feeds.filter((s) => placeholderSlots.has(s));
 
 function card(o, data, i, currentTotal, bestId) {
   const ph = new Set(o.placeholderSlots ?? data.slots.placeholderSlots);
@@ -60,6 +63,16 @@ function card(o, data, i, currentTotal, bestId) {
       : { value: o.soilSaved.savedVsCurrentTonsPerAcreYear, placeholder: isPlaceholder(FEEDS.soilSaved, ph) },
     nitrogenSaved: o.nitrogenSaved?.savedVsCurrentLb == null ? null
       : { value: o.nitrogenSaved.savedVsCurrentLb, placeholder: isPlaceholder(FEEDS.nitrogenSaved, ph) },
+    // Every number on this card that rests on a placeholder: { labelKey, slots[] }.
+    placeholders: [
+      ...scoresConfig.scores.map((s) => ({ labelKey: s.nameKey, slots: waitingFor(FEEDS.score[s.id] ?? [], ph) })),
+      ...['water', 'disease', 'market', 'season'].map((id) => ({ labelKey: 'optionsScreen.checkOf', nameKey: `optionsScreen.fit.name.${id}`, slots: waitingFor(FEEDS.fit[id], ph) })),
+      { labelKey: 'optionsScreen.profitLabel', slots: waitingFor(FEEDS.profit, ph) },
+      ...(isCurrent ? [] : [
+        { labelKey: 'optionsScreen.soilSaved', slots: waitingFor(FEEDS.soilSaved, ph) },
+        { labelKey: 'optionsScreen.nitrogenSaved', slots: waitingFor(FEEDS.nitrogenSaved, ph) },
+      ]),
+    ].filter((x) => x.slots.length),
     confidence: { level: o.confidence.level, reasons: o.confidence.reasons || [] },
     checkLocally: o.checkLocally || [],
     neighbors: o.neighbors || null,

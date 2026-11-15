@@ -6,7 +6,7 @@ import { useApp } from '../state/AppContext.jsx';
 import { useV2 } from '../state/useV2.js';
 import { buildOptionCards } from '../data/v2Options.js';
 import OptionCard from '../components/OptionCard.jsx';
-import { SampleBanner } from '../components/PlaceholderTag.jsx';
+import { SampleBanner, PlaceholderNotice } from '../components/PlaceholderTag.jsx';
 import { NeedField, PageHead } from '../components/Small.jsx';
 
 // The cards themselves (props only, so a preview or test can feed them anything).
@@ -22,6 +22,7 @@ export function OptionsView({ cards, sample = false }) {
   return (
     <div className="screen screen-options">
       {sample && <SampleBanner />}
+      {all.some((c) => c.placeholders.length > 0) && <PlaceholderNotice />}
       <PageHead title={t('optionsScreen.title')} intro={t('optionsScreen.intro')} />
       {cards.goals.length > 0 && (
         <p className="takeaway small"><Target size={18} aria-hidden="true" /><span>{t('optionsScreen.weightedFor', { goals: cards.goals.map((k) => t(k)).join(', ') })}</span></p>

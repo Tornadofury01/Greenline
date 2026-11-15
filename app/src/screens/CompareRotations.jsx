@@ -1,6 +1,6 @@
 // Screen 4: a scoreboard (one row per rotation), a Normal year / Bad year switch, then one card per rotation.
-// "Build my own" is scored by the same scoreRotation() function. The Ellis County study sits below the field's own
-// cards, clearly marked as a county-wide simulation (not this field).
+// "Build my own" is scored by the same scoreRotation() function. (The Ellis County study card, components/FieldShiftStudy.jsx,
+// is no longer shown: v2 Options and Best plans replace it.)
 import { useMemo, useState } from 'react';
 import { Award, Tractor, Lightbulb, Send } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
@@ -9,7 +9,6 @@ import { useWide } from '../state/useWide.js';
 import RotationCard from '../components/RotationCard.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
 import ReplayBar from '../components/ReplayBar.jsx';
-import FieldShiftStudy from '../components/FieldShiftStudy.jsx';
 import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
 
 // One plain sentence under a table or chart.
@@ -172,7 +171,6 @@ export default function CompareRotations() {
         )}
       </div>
 
-      <FieldShiftStudy fieldBest={best ? `${best.label}: ${best.name}` : current ? current.label : null} />
 
       <JudgmentNote />
 
