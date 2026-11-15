@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { fileURLToPath } from 'node:url';
 
@@ -32,6 +33,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
+      tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
         includeAssets: ['icon.svg'],
@@ -39,8 +41,8 @@ export default defineConfig(({ mode }) => {
           name: 'Greenline',
           short_name: 'Greenline',
           description: 'Compare crop rotations for North Texas fields using NASA Earth data.',
-          theme_color: '#234233',
-          background_color: '#172c23',
+          theme_color: '#f3eee1',
+          background_color: '#f3eee1',
           display: 'standalone',
           start_url: '/',
           icons: [
