@@ -1,0 +1,1919 @@
+{
+  "_note": "Crop library for the v2 engine. Format: docs/v2-data-contract.md section 3. Built by scoring/tools/build_crop_library.mjs: edit the table there, not this file. Numbers are rounded and written from the cited references without re-fetching them, so every record is \"verified\": false until checked with AgriLife / NRCS. Costs and default prices are rough Blackland Prairie dryland levels, not current budgets. Field-specific values (calendar, sensitivity, typical yield) come from scoring/modelSlots.js, never from here.",
+  "schemaVersion": 1,
+  "verified": false,
+  "sourceRefs": {
+    "fao-56": "FAO Irrigation and Drainage Paper 56 (Allen et al. 1998): Table 12 crop coefficients and heights, Table 22 rooting depth and depletion fraction p. https://www.fao.org/3/x0490e/x0490e0b.htm",
+    "fao-33": "FAO Irrigation and Drainage Paper 33 (Doorenbos and Kassam 1979), Yield response to water: yield response factor Ky. https://www.fao.org/3/y4263e/y4263e00.htm",
+    "fao-66": "FAO Irrigation and Drainage Paper 66 (Steduto et al. 2012), AquaCrop: normalized water productivity WP*, reference harvest index, canopy cover, GDD-driven stages. https://www.fao.org/3/i2800e/i2800e.pdf",
+    "ecocrop": "FAO ECOCROP crop environmental requirements database (temperature limits). https://gaez.fao.org/pages/ecocrop-search",
+    "agrilife": "Texas A&M AgriLife Extension crop production guides and enterprise budgets for the Blackland Prairie (planting dates, N rates, yield conversions, cost levels). https://agrilifeextension.tamu.edu",
+    "sare": "SARE, Managing Cover Crops Profitably, 3rd ed.: cover crop N fixation, residue C:N, hardiness. https://www.sare.org/resources/managing-cover-crops-profitably-3rd-edition/",
+    "nrcs": "USDA NRCS: Cowpea and cover crop fact sheets, Conservation Practice Standard 340 (Cover Crop), RUSLE2 residue and cover tables, Plant Guides.",
+    "nass": "USDA NASS Quick Stats, Texas / Ellis County 2021-2025 (yield and price levels; the engine prefers each field file's own NASS values)."
+  },
+  "crops": [
+    {
+      "id": "winter_wheat",
+      "kind": "cash",
+      "family": "grass",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 4,
+        "optMinC": 15,
+        "optMaxC": 23,
+        "maxGrowthC": 32,
+        "killTempC": -18,
+        "frostTolerant": true,
+        "flowerFrostC": -2
+      },
+      "season": {
+        "baseTempC": 4,
+        "gddToMaturity": 2400,
+        "stageFractions": {
+          "emerge": 0.05,
+          "canopyFull": 0.55,
+          "flowerStart": 0.62,
+          "flowerEnd": 0.7,
+          "senescence": 0.78
+        },
+        "daysToMaturity": {
+          "short": 200,
+          "full": 235
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 288,
+        "latestDoy": 320
+      },
+      "water": {
+        "kc": {
+          "ini": 0.7,
+          "mid": 1.15,
+          "end": 0.3
+        },
+        "droughtKy": 1,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          450,
+          650
+        ],
+        "rootDepthM": 1.5,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0.48,
+        "heightM": 1,
+        "rootShootRatio": 0.2
+      },
+      "groundCover": {
+        "ini": 0.1,
+        "mid": 0.9,
+        "end": 0.6
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.014,
+        "removalPerYieldUnit": {
+          "n": 1.2,
+          "p2o5": 0.6,
+          "k2o": 0.3
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.52,
+        "carbonFraction": 0.4,
+        "cnRatio": 80,
+        "coverCoeffPerLb": 0.00035
+      },
+      "pests": {
+        "hosts": [
+          "cereal-rust"
+        ],
+        "breaks": [
+          "cotton-root-rot",
+          "root-knot-nematode",
+          "charcoal-rot"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "bu/acre",
+        "lbPerYieldUnit": 60,
+        "harvestMoisture": 0.135,
+        "turnout": 1,
+        "nRateLbPerAcre": 60,
+        "priceUsdPerUnit": 6.6,
+        "priceUnit": "$/bu",
+        "costUsdPerAcre": {
+          "seed": 24,
+          "chemicals": 14,
+          "plantingOps": 14,
+          "harvestOps": 28,
+          "other": 16
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife",
+          "fao-66"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66",
+          "nrcs"
+        ],
+        "nitrogen": [
+          "agrilife"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "corn",
+      "kind": "cash",
+      "family": "grass",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 10,
+        "optMinC": 18,
+        "optMaxC": 27,
+        "maxGrowthC": 35,
+        "killTempC": -2,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 10,
+        "gddToMaturity": 1450,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.5,
+          "flowerStart": 0.52,
+          "flowerEnd": 0.6,
+          "senescence": 0.75
+        },
+        "daysToMaturity": {
+          "short": 105,
+          "full": 130
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 51,
+        "latestDoy": 100
+      },
+      "water": {
+        "kc": {
+          "ini": 0.3,
+          "mid": 1.2,
+          "end": 0.6
+        },
+        "droughtKy": 1.25,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          500,
+          800
+        ],
+        "rootDepthM": 1.7,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 33.7,
+        "harvestIndex": 0.48,
+        "heightM": 2,
+        "rootShootRatio": 0.15
+      },
+      "groundCover": {
+        "ini": 0.08,
+        "mid": 0.95,
+        "end": 0.6
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.012,
+        "removalPerYieldUnit": {
+          "n": 0.9,
+          "p2o5": 0.37,
+          "k2o": 0.27
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.5,
+        "carbonFraction": 0.4,
+        "cnRatio": 60,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "grass-foliar-disease",
+          "charcoal-rot"
+        ],
+        "breaks": [
+          "cotton-root-rot"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "bu/acre",
+        "lbPerYieldUnit": 56,
+        "harvestMoisture": 0.155,
+        "turnout": 1,
+        "nRateLbPerAcre": 80,
+        "priceUsdPerUnit": 5.7,
+        "priceUnit": "$/bu",
+        "costUsdPerAcre": {
+          "seed": 70,
+          "chemicals": 30,
+          "plantingOps": 14,
+          "harvestOps": 36,
+          "other": 20
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife",
+          "fao-66"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66",
+          "nrcs"
+        ],
+        "nitrogen": [
+          "agrilife"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "grain_sorghum",
+      "kind": "cash",
+      "family": "grass",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 12,
+        "optMinC": 22,
+        "optMaxC": 30,
+        "maxGrowthC": 38,
+        "killTempC": -2,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 10,
+        "gddToMaturity": 1350,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.5,
+          "flowerStart": 0.52,
+          "flowerEnd": 0.6,
+          "senescence": 0.78
+        },
+        "daysToMaturity": {
+          "short": 95,
+          "full": 120
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 75,
+        "latestDoy": 120
+      },
+      "water": {
+        "kc": {
+          "ini": 0.3,
+          "mid": 1.05,
+          "end": 0.55
+        },
+        "droughtKy": 0.9,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          450,
+          650
+        ],
+        "rootDepthM": 1.5,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 33.7,
+        "harvestIndex": 0.4,
+        "heightM": 1.5,
+        "rootShootRatio": 0.15
+      },
+      "groundCover": {
+        "ini": 0.08,
+        "mid": 0.92,
+        "end": 0.55
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.013,
+        "removalPerYieldUnit": {
+          "n": 1,
+          "p2o5": 0.4,
+          "k2o": 0.27
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.55,
+        "carbonFraction": 0.4,
+        "cnRatio": 55,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "grass-foliar-disease",
+          "sugarcane-aphid",
+          "charcoal-rot"
+        ],
+        "breaks": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "bu/acre",
+        "lbPerYieldUnit": 56,
+        "harvestMoisture": 0.14,
+        "turnout": 1,
+        "nRateLbPerAcre": 60,
+        "priceUsdPerUnit": 5.2,
+        "priceUnit": "$/bu",
+        "costUsdPerAcre": {
+          "seed": 18,
+          "chemicals": 30,
+          "plantingOps": 14,
+          "harvestOps": 30,
+          "other": 15
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife",
+          "fao-66"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66",
+          "nrcs"
+        ],
+        "nitrogen": [
+          "agrilife"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "cotton",
+      "kind": "cash",
+      "family": "other",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 15,
+        "optMinC": 22,
+        "optMaxC": 32,
+        "maxGrowthC": 38,
+        "killTempC": 0,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 15.6,
+        "gddToMaturity": 1300,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.45,
+          "flowerStart": 0.45,
+          "flowerEnd": 0.7,
+          "senescence": 0.8
+        },
+        "daysToMaturity": {
+          "short": 140,
+          "full": 170
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 95,
+        "latestDoy": 140
+      },
+      "water": {
+        "kc": {
+          "ini": 0.35,
+          "mid": 1.175,
+          "end": 0.6
+        },
+        "droughtKy": 0.85,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          700,
+          1300
+        ],
+        "rootDepthM": 1.3,
+        "depletionFractionP": 0.65
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0.35,
+        "heightM": 1.35,
+        "rootShootRatio": 0.2
+      },
+      "groundCover": {
+        "ini": 0.06,
+        "mid": 0.85,
+        "end": 0.5
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.018,
+        "removalPerYieldUnit": {
+          "n": 0.065,
+          "p2o5": 0.028,
+          "k2o": 0.04
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.65,
+        "carbonFraction": 0.4,
+        "cnRatio": 70,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ],
+        "breaks": [
+          "cereal-rust",
+          "grass-foliar-disease",
+          "sugarcane-aphid"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb lint/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0.08,
+        "turnout": 0.4,
+        "nRateLbPerAcre": 50,
+        "priceUsdPerUnit": 0.73,
+        "priceUnit": "$/lb",
+        "costUsdPerAcre": {
+          "seed": 55,
+          "chemicals": 45,
+          "plantingOps": 14,
+          "harvestOps": 40,
+          "other": 30
+        },
+        "harvestUsdPerYieldUnit": 0.13
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife",
+          "fao-66"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66",
+          "nrcs"
+        ],
+        "nitrogen": [
+          "agrilife"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "soybeans",
+      "kind": "cash",
+      "family": "legume",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 10,
+        "optMinC": 20,
+        "optMaxC": 30,
+        "maxGrowthC": 38,
+        "killTempC": 0,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 10,
+        "gddToMaturity": 1650,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.5,
+          "flowerStart": 0.35,
+          "flowerEnd": 0.65,
+          "senescence": 0.8
+        },
+        "daysToMaturity": {
+          "short": 110,
+          "full": 135
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 105,
+        "latestDoy": 170
+      },
+      "water": {
+        "kc": {
+          "ini": 0.4,
+          "mid": 1.15,
+          "end": 0.5
+        },
+        "droughtKy": 0.85,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          450,
+          700
+        ],
+        "rootDepthM": 1.3,
+        "depletionFractionP": 0.5
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0.4,
+        "heightM": 0.75,
+        "rootShootRatio": 0.15
+      },
+      "groundCover": {
+        "ini": 0.08,
+        "mid": 0.9,
+        "end": 0.5
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          50,
+          150
+        ],
+        "fixFractionOfUptake": 0.5,
+        "nContentOfBiomass": 0.028,
+        "removalPerYieldUnit": {
+          "n": 3.5,
+          "p2o5": 0.8,
+          "k2o": 1.2
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.6,
+        "carbonFraction": 0.4,
+        "cnRatio": 30,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode",
+          "charcoal-rot"
+        ],
+        "breaks": [
+          "cereal-rust",
+          "grass-foliar-disease",
+          "sugarcane-aphid"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "bu/acre",
+        "lbPerYieldUnit": 60,
+        "harvestMoisture": 0.13,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": 11.3,
+        "priceUnit": "$/bu",
+        "costUsdPerAcre": {
+          "seed": 35,
+          "chemicals": 35,
+          "plantingOps": 14,
+          "harvestOps": 28,
+          "other": 15
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife",
+          "fao-66"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66",
+          "nrcs"
+        ],
+        "nitrogen": [
+          "agrilife",
+          "sare"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "sunflower",
+      "kind": "cash",
+      "family": "other",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 8,
+        "optMinC": 18,
+        "optMaxC": 27,
+        "maxGrowthC": 35,
+        "killTempC": -2,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 7,
+        "gddToMaturity": 1700,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.5,
+          "flowerStart": 0.55,
+          "flowerEnd": 0.68,
+          "senescence": 0.78
+        },
+        "daysToMaturity": {
+          "short": 95,
+          "full": 125
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 50,
+        "latestDoy": 135
+      },
+      "water": {
+        "kc": {
+          "ini": 0.35,
+          "mid": 1.075,
+          "end": 0.35
+        },
+        "droughtKy": 0.95,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          600,
+          1000
+        ],
+        "rootDepthM": 1.5,
+        "depletionFractionP": 0.45
+      },
+      "growth": {
+        "wpStarGPerM2": 18,
+        "harvestIndex": 0.35,
+        "heightM": 2,
+        "rootShootRatio": 0.2
+      },
+      "groundCover": {
+        "ini": 0.06,
+        "mid": 0.85,
+        "end": 0.45
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.015,
+        "removalPerYieldUnit": {
+          "n": 0.03,
+          "p2o5": 0.015,
+          "k2o": 0.012
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.65,
+        "carbonFraction": 0.4,
+        "cnRatio": 60,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "charcoal-rot"
+        ],
+        "breaks": [
+          "cereal-rust",
+          "grass-foliar-disease",
+          "sugarcane-aphid"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0.09,
+        "turnout": 1,
+        "nRateLbPerAcre": 40,
+        "priceUsdPerUnit": 0.2564,
+        "priceUnit": "$/lb",
+        "costUsdPerAcre": {
+          "seed": 35,
+          "chemicals": 28,
+          "plantingOps": 14,
+          "harvestOps": 30,
+          "other": 15
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife",
+          "fao-66"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66",
+          "nrcs"
+        ],
+        "nitrogen": [
+          "agrilife"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "sesame",
+      "kind": "cash",
+      "family": "other",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 15,
+        "optMinC": 25,
+        "optMaxC": 30,
+        "maxGrowthC": 38,
+        "killTempC": 0,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 12,
+        "gddToMaturity": 1400,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.5,
+          "flowerStart": 0.3,
+          "flowerEnd": 0.7,
+          "senescence": 0.8
+        },
+        "daysToMaturity": {
+          "short": 90,
+          "full": 115
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 135,
+        "latestDoy": 180
+      },
+      "water": {
+        "kc": {
+          "ini": 0.35,
+          "mid": 1.1,
+          "end": 0.25
+        },
+        "droughtKy": 0.8,
+        "droughtKyBasis": "analog:safflower (FAO-33)",
+        "seasonalMm": [
+          300,
+          500
+        ],
+        "rootDepthM": 1,
+        "depletionFractionP": 0.6
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0.25,
+        "heightM": 1,
+        "rootShootRatio": 0.2
+      },
+      "groundCover": {
+        "ini": 0.05,
+        "mid": 0.8,
+        "end": 0.4
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.02,
+        "removalPerYieldUnit": {
+          "n": 0.04,
+          "p2o5": 0.02,
+          "k2o": 0.015
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.75,
+        "carbonFraction": 0.4,
+        "cnRatio": 50,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode",
+          "charcoal-rot"
+        ],
+        "breaks": [
+          "cereal-rust",
+          "grass-foliar-disease",
+          "sugarcane-aphid"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0.06,
+        "turnout": 1,
+        "nRateLbPerAcre": 40,
+        "priceUsdPerUnit": 0.55,
+        "priceUnit": "$/lb",
+        "costUsdPerAcre": {
+          "seed": 8,
+          "chemicals": 25,
+          "plantingOps": 14,
+          "harvestOps": 30,
+          "other": 15
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "agrilife"
+        ],
+        "nitrogen": [
+          "agrilife"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "alfalfa",
+      "kind": "cash",
+      "family": "legume",
+      "marketType": "sold",
+      "temperature": {
+        "minGrowthC": 5,
+        "optMinC": 15,
+        "optMaxC": 25,
+        "maxGrowthC": 35,
+        "killTempC": -25,
+        "frostTolerant": true,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 5,
+        "gddToMaturity": 700,
+        "perennial": true,
+        "maxCuts": 4,
+        "regrowthCanopyShare": 0.25,
+        "stageFractions": {
+          "emerge": 0.05,
+          "canopyFull": 0.55,
+          "flowerStart": 0.8,
+          "flowerEnd": 0.95,
+          "senescence": 0.97
+        },
+        "daysToMaturity": {
+          "short": 28,
+          "full": 40
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 258,
+        "latestDoy": 300
+      },
+      "water": {
+        "kc": {
+          "ini": 0.4,
+          "mid": 1.2,
+          "end": 1.15
+        },
+        "droughtKy": 1.1,
+        "droughtKyBasis": "listed",
+        "seasonalMm": [
+          800,
+          1600
+        ],
+        "rootDepthM": 1.5,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0.85,
+        "heightM": 0.7,
+        "rootShootRatio": 0.3
+      },
+      "groundCover": {
+        "ini": 0.25,
+        "mid": 0.95,
+        "end": 0.9
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          100,
+          250
+        ],
+        "fixFractionOfUptake": 0.7,
+        "nContentOfBiomass": 0.03,
+        "removalPerYieldUnit": {
+          "n": 50,
+          "p2o5": 12,
+          "k2o": 50
+        }
+      },
+      "residue": {
+        "stoverFraction": 0.15,
+        "carbonFraction": 0.4,
+        "cnRatio": 15,
+        "coverCoeffPerLb": 0.0004
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ],
+        "breaks": [
+          "cereal-rust",
+          "grass-foliar-disease"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "tons hay/acre",
+        "lbPerYieldUnit": 2000,
+        "harvestMoisture": 0.12,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": 200,
+        "priceUnit": "$/ton",
+        "costUsdPerAcre": {
+          "seed": 20,
+          "chemicals": 25,
+          "plantingOps": 8,
+          "harvestOps": 40,
+          "other": 20
+        },
+        "harvestUsdPerYieldUnit": 18
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "fao-66"
+        ],
+        "nitrogen": [
+          "agrilife",
+          "sare"
+        ],
+        "residue": [
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife",
+          "nass"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "cowpea",
+      "kind": "cover",
+      "family": "legume",
+      "marketType": "not-sold",
+      "temperature": {
+        "minGrowthC": 15,
+        "optMinC": 25,
+        "optMaxC": 32,
+        "maxGrowthC": 38,
+        "killTempC": 0,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 10,
+        "gddToMaturity": 1200,
+        "stageFractions": {
+          "emerge": 0.07,
+          "canopyFull": 0.5,
+          "flowerStart": 0.45,
+          "flowerEnd": 0.7,
+          "senescence": 0.85
+        },
+        "daysToMaturity": {
+          "short": 70,
+          "full": 90
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 150,
+        "latestDoy": 210
+      },
+      "water": {
+        "kc": {
+          "ini": 0.4,
+          "mid": 1.1,
+          "end": 0.4
+        },
+        "droughtKy": 0.7,
+        "droughtKyBasis": "analog:groundnut (FAO-33)",
+        "seasonalMm": [
+          250,
+          400
+        ],
+        "rootDepthM": 1,
+        "depletionFractionP": 0.5
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0,
+        "heightM": 0.5,
+        "rootShootRatio": 0.2
+      },
+      "groundCover": {
+        "ini": 0.1,
+        "mid": 0.85,
+        "end": 0.6
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          40,
+          100
+        ],
+        "fixFractionOfUptake": 0.6,
+        "nContentOfBiomass": 0.028,
+        "removalPerYieldUnit": {
+          "n": 0,
+          "p2o5": 0,
+          "k2o": 0
+        }
+      },
+      "residue": {
+        "stoverFraction": 1,
+        "carbonFraction": 0.4,
+        "cnRatio": 18,
+        "coverCoeffPerLb": 0.0004
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode",
+          "charcoal-rot"
+        ],
+        "breaks": [
+          "cereal-rust",
+          "grass-foliar-disease",
+          "sugarcane-aphid"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb biomass/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": null,
+        "priceUnit": null,
+        "costUsdPerAcre": {
+          "seed": 14,
+          "planting": 9,
+          "termination": 8
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop",
+          "nrcs"
+        ],
+        "season": [
+          "nrcs",
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "nrcs",
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "sare"
+        ],
+        "nitrogen": [
+          "sare",
+          "nrcs"
+        ],
+        "residue": [
+          "sare",
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "sare",
+          "agrilife"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "sorghum_sudangrass",
+      "kind": "cover",
+      "family": "grass",
+      "marketType": "not-sold",
+      "temperature": {
+        "minGrowthC": 15,
+        "optMinC": 25,
+        "optMaxC": 35,
+        "maxGrowthC": 40,
+        "killTempC": 0,
+        "frostTolerant": false,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 10,
+        "gddToMaturity": 1100,
+        "stageFractions": {
+          "emerge": 0.06,
+          "canopyFull": 0.45,
+          "flowerStart": 0.8,
+          "flowerEnd": 0.9,
+          "senescence": 0.95
+        },
+        "daysToMaturity": {
+          "short": 60,
+          "full": 85
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 120,
+        "latestDoy": 200
+      },
+      "water": {
+        "kc": {
+          "ini": 0.5,
+          "mid": 1.15,
+          "end": 1
+        },
+        "droughtKy": 0.9,
+        "droughtKyBasis": "analog:sorghum (FAO-33)",
+        "seasonalMm": [
+          300,
+          500
+        ],
+        "rootDepthM": 1.2,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 33.7,
+        "harvestIndex": 0,
+        "heightM": 1.5,
+        "rootShootRatio": 0.25
+      },
+      "groundCover": {
+        "ini": 0.08,
+        "mid": 0.92,
+        "end": 0.8
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.015,
+        "removalPerYieldUnit": {
+          "n": 0,
+          "p2o5": 0,
+          "k2o": 0
+        }
+      },
+      "residue": {
+        "stoverFraction": 1,
+        "carbonFraction": 0.4,
+        "cnRatio": 40,
+        "coverCoeffPerLb": 0.0003
+      },
+      "pests": {
+        "hosts": [
+          "sugarcane-aphid",
+          "grass-foliar-disease"
+        ],
+        "breaks": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb biomass/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": null,
+        "priceUnit": null,
+        "costUsdPerAcre": {
+          "seed": 12,
+          "planting": 9,
+          "termination": 9
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop"
+        ],
+        "season": [
+          "sare",
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "sare",
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "sare"
+        ],
+        "nitrogen": [
+          "sare"
+        ],
+        "residue": [
+          "sare",
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "sare",
+          "agrilife"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "cereal_rye",
+      "kind": "cover",
+      "family": "grass",
+      "marketType": "not-sold",
+      "temperature": {
+        "minGrowthC": 2,
+        "optMinC": 10,
+        "optMaxC": 20,
+        "maxGrowthC": 30,
+        "killTempC": -30,
+        "frostTolerant": true,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 2,
+        "gddToMaturity": 2500,
+        "stageFractions": {
+          "emerge": 0.04,
+          "canopyFull": 0.55,
+          "flowerStart": 0.8,
+          "flowerEnd": 0.88,
+          "senescence": 0.92
+        },
+        "daysToMaturity": {
+          "short": 200,
+          "full": 240
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 273,
+        "latestDoy": 320
+      },
+      "water": {
+        "kc": {
+          "ini": 0.4,
+          "mid": 1.15,
+          "end": 0.4
+        },
+        "droughtKy": 1,
+        "droughtKyBasis": "analog:winter wheat (FAO-33)",
+        "seasonalMm": [
+          300,
+          450
+        ],
+        "rootDepthM": 1.5,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0,
+        "heightM": 1.2,
+        "rootShootRatio": 0.3
+      },
+      "groundCover": {
+        "ini": 0.1,
+        "mid": 0.9,
+        "end": 0.6
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          0,
+          0
+        ],
+        "fixFractionOfUptake": 0,
+        "nContentOfBiomass": 0.02,
+        "removalPerYieldUnit": {
+          "n": 0,
+          "p2o5": 0,
+          "k2o": 0
+        }
+      },
+      "residue": {
+        "stoverFraction": 1,
+        "carbonFraction": 0.4,
+        "cnRatio": 40,
+        "coverCoeffPerLb": 0.00035
+      },
+      "pests": {
+        "hosts": [
+          "cereal-rust"
+        ],
+        "breaks": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb biomass/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": null,
+        "priceUnit": null,
+        "costUsdPerAcre": {
+          "seed": 16,
+          "planting": 9,
+          "termination": 8
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop",
+          "sare"
+        ],
+        "season": [
+          "sare",
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "sare",
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "sare"
+        ],
+        "nitrogen": [
+          "sare"
+        ],
+        "residue": [
+          "sare",
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "sare",
+          "agrilife"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "crimson_clover",
+      "kind": "cover",
+      "family": "legume",
+      "marketType": "not-sold",
+      "temperature": {
+        "minGrowthC": 3,
+        "optMinC": 15,
+        "optMaxC": 22,
+        "maxGrowthC": 30,
+        "killTempC": -12,
+        "frostTolerant": true,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 4,
+        "gddToMaturity": 1900,
+        "stageFractions": {
+          "emerge": 0.05,
+          "canopyFull": 0.8,
+          "flowerStart": 0.85,
+          "flowerEnd": 0.93,
+          "senescence": 0.96
+        },
+        "daysToMaturity": {
+          "short": 180,
+          "full": 220
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 258,
+        "latestDoy": 300
+      },
+      "water": {
+        "kc": {
+          "ini": 0.4,
+          "mid": 0.9,
+          "end": 0.85
+        },
+        "droughtKy": 1.1,
+        "droughtKyBasis": "analog:alfalfa (FAO-33)",
+        "seasonalMm": [
+          250,
+          400
+        ],
+        "rootDepthM": 0.9,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0,
+        "heightM": 0.6,
+        "rootShootRatio": 0.25
+      },
+      "groundCover": {
+        "ini": 0.1,
+        "mid": 0.85,
+        "end": 0.6
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          70,
+          130
+        ],
+        "fixFractionOfUptake": 0.6,
+        "nContentOfBiomass": 0.03,
+        "removalPerYieldUnit": {
+          "n": 0,
+          "p2o5": 0,
+          "k2o": 0
+        }
+      },
+      "residue": {
+        "stoverFraction": 1,
+        "carbonFraction": 0.4,
+        "cnRatio": 16,
+        "coverCoeffPerLb": 0.0004
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ],
+        "breaks": [
+          "cereal-rust"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb biomass/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": null,
+        "priceUnit": null,
+        "costUsdPerAcre": {
+          "seed": 22,
+          "planting": 9,
+          "termination": 8
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop",
+          "sare"
+        ],
+        "season": [
+          "sare",
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "sare",
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "sare"
+        ],
+        "nitrogen": [
+          "sare"
+        ],
+        "residue": [
+          "sare",
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "sare",
+          "agrilife"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "hairy_vetch",
+      "kind": "cover",
+      "family": "legume",
+      "marketType": "not-sold",
+      "temperature": {
+        "minGrowthC": 2,
+        "optMinC": 10,
+        "optMaxC": 20,
+        "maxGrowthC": 30,
+        "killTempC": -18,
+        "frostTolerant": true,
+        "flowerFrostC": null
+      },
+      "season": {
+        "baseTempC": 4,
+        "gddToMaturity": 2100,
+        "stageFractions": {
+          "emerge": 0.05,
+          "canopyFull": 0.8,
+          "flowerStart": 0.86,
+          "flowerEnd": 0.94,
+          "senescence": 0.97
+        },
+        "daysToMaturity": {
+          "short": 190,
+          "full": 230
+        }
+      },
+      "plantingWindow": {
+        "earliestDoy": 258,
+        "latestDoy": 305
+      },
+      "water": {
+        "kc": {
+          "ini": 0.4,
+          "mid": 0.9,
+          "end": 0.85
+        },
+        "droughtKy": 1.1,
+        "droughtKyBasis": "analog:alfalfa (FAO-33)",
+        "seasonalMm": [
+          250,
+          400
+        ],
+        "rootDepthM": 1,
+        "depletionFractionP": 0.55
+      },
+      "growth": {
+        "wpStarGPerM2": 15,
+        "harvestIndex": 0,
+        "heightM": 0.6,
+        "rootShootRatio": 0.2
+      },
+      "groundCover": {
+        "ini": 0.08,
+        "mid": 0.85,
+        "end": 0.6
+      },
+      "nitrogen": {
+        "fixesLbPerAcre": [
+          90,
+          150
+        ],
+        "fixFractionOfUptake": 0.65,
+        "nContentOfBiomass": 0.035,
+        "removalPerYieldUnit": {
+          "n": 0,
+          "p2o5": 0,
+          "k2o": 0
+        }
+      },
+      "residue": {
+        "stoverFraction": 1,
+        "carbonFraction": 0.4,
+        "cnRatio": 14,
+        "coverCoeffPerLb": 0.0004
+      },
+      "pests": {
+        "hosts": [
+          "cotton-root-rot",
+          "root-knot-nematode"
+        ],
+        "breaks": [
+          "cereal-rust"
+        ]
+      },
+      "defaults": {
+        "yieldUnit": "lb biomass/acre",
+        "lbPerYieldUnit": 1,
+        "harvestMoisture": 0,
+        "turnout": 1,
+        "nRateLbPerAcre": 0,
+        "priceUsdPerUnit": null,
+        "priceUnit": null,
+        "costUsdPerAcre": {
+          "seed": 28,
+          "planting": 9,
+          "termination": 8
+        },
+        "harvestUsdPerYieldUnit": 0
+      },
+      "sources": {
+        "temperature": [
+          "ecocrop",
+          "sare"
+        ],
+        "season": [
+          "sare",
+          "agrilife"
+        ],
+        "plantingWindow": [
+          "sare",
+          "agrilife"
+        ],
+        "water": [
+          "fao-56",
+          "fao-33"
+        ],
+        "growth": [
+          "fao-66",
+          "fao-56"
+        ],
+        "groundCover": [
+          "sare"
+        ],
+        "nitrogen": [
+          "sare"
+        ],
+        "residue": [
+          "sare",
+          "nrcs"
+        ],
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "sare",
+          "agrilife"
+        ]
+      },
+      "verified": false
+    },
+    {
+      "id": "fallow",
+      "kind": "fallow",
+      "family": "none",
+      "marketType": "not-sold",
+      "pests": {
+        "hosts": [],
+        "breaks": []
+      },
+      "defaults": {
+        "yieldUnit": null,
+        "costUsdPerAcre": {
+          "weedControl": 22
+        }
+      },
+      "sources": {
+        "pests": [
+          "agrilife"
+        ],
+        "defaults": [
+          "agrilife"
+        ]
+      },
+      "verified": false
+    }
+  ]
+}

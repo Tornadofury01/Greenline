@@ -11,7 +11,7 @@ Contract version: **schemaVersion 1**. If any shape below changes, bump it and u
 ```
 content/model-placeholders.json     the placeholders (same for every field), the only place to edit them
 content/v2-scores.json              the six scores, weights, priority boosts, grade cut-offs (provisional)
-content/crop-library.json           crop library (step B2, format in section 3)
+content/crop-library.json           crop library (built by scoring/tools/build_crop_library.mjs, format in section 3)
 shared/v2/models/<field-id>.json    Pranav's model outputs (section 1)    <- plugged in later
 shared/v2/fields/<field-id>.json    engine output the app reads (section 2)
 shared/v2/validation.json           report card, eight checks (section 2.4)
@@ -181,7 +181,7 @@ Built by the engine (step B3). Sample: `shared/v2-sample/sample-field.json` (inv
 
 ---
 
-## 3. Crop library record: `content/crop-library.json` (built in step B2)
+## 3. Crop library record: `content/crop-library.json` (built in step B2; engine guide: `docs/v2-engine.md`)
 
 `content/crops.json` (v1 traits) stays as it is. The library is a new file. One record per crop; every value carries a source and `"verified": false` until checked with AgriLife / NRCS.
 
@@ -204,6 +204,16 @@ Built by the engine (step B3). Sample: `shared/v2-sample/sample-field.json` (inv
   "verified": false
 }
 ```
+**Added in B2 (the engine needs them; unknown keys are ignored by older readers):**
+- `kind` also takes `"fallow"` (a minimal record: pests, costs only; `family: "none"`).
+- `temperature.optMinC`, `optMaxC` (ECOCROP optimum), `flowerFrostC` (freeze that hurts flowering of frost-tolerant crops, or null).
+- `season.stageFractions` { emerge, canopyFull, flowerStart, flowerEnd, senescence } as shares of the heat sum; `season.perennial`, `maxCuts`, `regrowthCanopyShare` (alfalfa: `gddToMaturity` is one cutting cycle).
+- `water.droughtKyBasis` (`"listed"` or `"analog:<crop>"` when FAO-33 does not list the crop), `rootDepthM`, `depletionFractionP` (FAO-56 Table 22).
+- `growth` { wpStarGPerM2 (AquaCrop WP*), harvestIndex, heightM, rootShootRatio }. `groundCover.ini/mid/end` is the canopy cover curve.
+- `nitrogen.fixFractionOfUptake`, `nContentOfBiomass`; `residue.stoverFraction`, `coverCoeffPerLb` (Gregory residue cover).
+- `defaults.lbPerYieldUnit`, `harvestMoisture`, `turnout` (cotton lint), `nRateLbPerAcre`, `harvestUsdPerYieldUnit`; `defaults.costUsdPerAcre` keys: seed, chemicals, plantingOps / planting, harvestOps, other, termination, weedControl. `priceUsdPerUnit` is per yield unit.
+- Top level: `sourceRefs` (full citation per source id; each group's `sources` lists ids from it).
+
 Field-specific values (calendar, sensitivity, typical yield) do **not** live here; the engine gets them through `scoring/modelSlots.js`, so replacing a placeholder with a model never touches the library.
 
 ## Cross-checks that run in the selftests
