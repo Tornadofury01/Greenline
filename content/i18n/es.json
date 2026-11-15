@@ -15,7 +15,8 @@
     "theme": {
       "light": "Cambiar a modo claro (más fácil de leer a pleno sol)",
       "dark": "Cambiar a modo oscuro"
-    }
+    },
+    "home": "Inicio de Greenline: volver al mapa"
   },
   "nav": {
     "label": "Principal",
@@ -1212,8 +1213,8 @@
     },
     "honest": {
       "confCap": "La confianza no puede ser alta hasta que nuestros modelos del campo estén listos.",
-      "tillage": "Supone labranza reducida; no sabemos cómo labra usted.",
-      "tillageTry": "Cámbiela en la pantalla Granja",
+      "tillage": "Estas cifras suponen labranza reducida.",
+      "tillageTry": "Su ajuste de labranza se usa en el simulador de la granja.",
       "costShare": "Costos compartidos: no estimados.",
       "fixedCosts": "Costos fijos: valores provisionales."
     },

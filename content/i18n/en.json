@@ -15,7 +15,8 @@
     "theme": {
       "light": "Switch to light mode (easier to read in bright sun)",
       "dark": "Switch to dark mode"
-    }
+    },
+    "home": "Greenline home: back to the map"
   },
   "nav": {
     "label": "Main",
@@ -1212,8 +1213,8 @@
     },
     "honest": {
       "confCap": "Confidence can't be high until our field models are ready.",
-      "tillage": "Assumes reduced tillage; we don't know your tillage.",
-      "tillageTry": "Change it on the Farm screen",
+      "tillage": "These numbers assume reduced tillage.",
+      "tillageTry": "Your tillage setting is used in the farm simulator.",
       "costShare": "Cost-share: not estimated.",
       "fixedCosts": "Fixed costs: placeholder values."
     },
