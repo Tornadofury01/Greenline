@@ -33,7 +33,7 @@ export function rotationText(t, card) {
 
 // A section heading inside the details: one size, generous space above.
 function Heading({ children }) {
-  return <h3 className="mb-4 mt-10 text-xl font-semibold tracking-tight text-base-content sm:text-2xl">{children}</h3>;
+  return <h3 className="mb-5 mt-0 text-xl font-semibold tracking-tight text-base-content sm:text-2xl">{children}</h3>;
 }
 
 export default function OptionSlice({ card, scale }) {
@@ -48,9 +48,9 @@ export default function OptionSlice({ card, scale }) {
   const p = card.profit;
 
   return (
-    <div className="option-detail">
+    <div className="option-detail flex flex-col gap-5">
       {/* Name, crop order, score */}
-      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="gl-card flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <span className="badge badge-lg badge-outline">{optionLabel(t, card)}</span>
@@ -78,16 +78,17 @@ export default function OptionSlice({ card, scale }) {
             <span className="badge badge-secondary badge-lg mt-2 font-bold">{card.grade}</span>
           </div>
           {!isCurrent && card.deltaTotal != null && (
-            <span className={`badge badge-lg gap-1 ${card.deltaTotal > 0 ? 'badge-success' : 'badge-ghost'}`} aria-hidden="true">
+            <span className={`badge badge-lg h-auto gap-1 whitespace-normal py-1 text-left ${card.deltaTotal > 0 ? 'badge-success' : 'badge-ghost'}`} aria-hidden="true">
               {card.deltaTotal > 0 ? <ArrowUp size={16} aria-hidden="true" /> : <ArrowDown size={16} aria-hidden="true" />}
               {signed(card.deltaTotal)} {t('optionsScreen.vsToday')}
             </span>
           )}
         </div>
       </div>
-      {phOpen && <div className="mt-6"><PlaceholderPanel items={card.placeholders} id={phId} /></div>}
+      {phOpen && <div><PlaceholderPanel items={card.placeholders} id={phId} /></div>}
 
       {/* Six scores: a number and a bar each, three to a row on wide screens */}
+      <section className="gl-card">
       <Heading>{t('optionsScreen.scoresTitle')}</Heading>
       <ul className="grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
         {card.scores.map((s) => (
@@ -100,8 +101,10 @@ export default function OptionSlice({ card, scale }) {
           </li>
         ))}
       </ul>
+      </section>
 
       {/* Four fit checks, two to a row */}
+      <section className="gl-card">
       <Heading>{t('optionsScreen.fitTitle')}</Heading>
       <ul className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2">
         {card.fit.map((c) => {
@@ -120,8 +123,10 @@ export default function OptionSlice({ card, scale }) {
           );
         })}
       </ul>
+      </section>
 
       {/* Money and what the rotation saves */}
+      <section className="gl-card">
       <Heading>{t('optionsScreen.profitLabel')}</Heading>
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.4fr_1fr]">
         <div className="flex flex-col gap-4">
@@ -158,8 +163,10 @@ export default function OptionSlice({ card, scale }) {
           </div>
         )}
       </div>
+      </section>
 
       {/* How sure, and what to check locally */}
+      <section className="gl-card">
       <Heading>{t('compare.confidenceBadge', { level: t(`confidenceLevel.${card.confidence.level}`) })}</Heading>
       <div className="flex max-w-3xl flex-col gap-3 text-lg leading-relaxed">
         {card.confidence.reasons.slice(0, 2).map((r, i) => <p key={i}>{v2t(r)}</p>)}
@@ -174,7 +181,7 @@ export default function OptionSlice({ card, scale }) {
         )}
       </div>
       {card.checkLocally?.length > 0 && (
-        <div className="collapse collapse-arrow mt-6 rounded-box border border-base-300 bg-base-200/60">
+        <div className="collapse collapse-arrow mt-6 rounded-none border border-base-300 bg-base-200/50">
           <input type="checkbox" aria-label={t('optionsScreen.local.title', { count: card.checkLocally.length })} />
           <div className="collapse-title flex items-center gap-3 text-lg font-semibold">
             <MapPinned size={20} className="text-primary" aria-hidden="true" />{t('optionsScreen.local.title', { count: card.checkLocally.length })}
@@ -191,6 +198,7 @@ export default function OptionSlice({ card, scale }) {
           </div>
         </div>
       )}
+      </section>
     </div>
   );
 }

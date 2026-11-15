@@ -73,7 +73,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
             <button type="button" className="btn btn-ghost btn-lg rounded-full px-6" onClick={() => scrollToId('compare')}>{t('optionsScreen.heroCompare')}</button>
           </div>
           </div>
-          <div className="stats stats-horizontal w-full auto-cols-[minmax(0,1fr)] overflow-visible bg-base-100/75 [&_.stat-title]:whitespace-normal [&_.stat-title]:text-sm sm:[&_.stat-title]:text-base [&_.stat]:px-3 sm:[&_.stat]:px-6 [&_.stat-desc]:whitespace-normal [&_.stat-value]:text-3xl sm:[&_.stat-value]:text-4xl">
+          <div className="stats stats-horizontal gl-card rounded-none w-full auto-cols-[minmax(0,1fr)] overflow-visible !p-0 [&_.stat-title]:whitespace-normal [&_.stat-title]:text-sm sm:[&_.stat-title]:text-base [&_.stat]:px-3 sm:[&_.stat]:px-6 [&_.stat-desc]:whitespace-normal [&_.stat-value]:text-3xl sm:[&_.stat-value]:text-4xl">
             <div className="stat">
               <div className="stat-title text-base">{t('optionsScreen.statBest')}</div>
               <div className="stat-value text-primary"><CountUp to={Math.round(best.total)} duration={1.6} /></div>
@@ -101,11 +101,11 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
           <h2 className="m-0 text-3xl font-bold tracking-tight sm:text-4xl">{t('optionsScreen.sideBySide')}</h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-base-content/75">{t('optionsScreen.compareIntro')}</p>
         </AnimatedContent>
-        <ol className="m-0 mt-6 grid list-none p-0 snap-x snap-mandatory auto-cols-[minmax(250px,1fr)] grid-flow-col overflow-x-auto pb-4 lg:overflow-visible">
+        <ol className="m-0 mt-6 grid list-none snap-x snap-mandatory auto-cols-[minmax(250px,1fr)] grid-flow-col gap-4 overflow-x-auto px-0.5 pb-5 pt-0.5 lg:overflow-visible">
           {all.map((c) => (
-            <li key={c.id} className="snap-start border-l border-base-300 first:border-l-0">
+            <li key={c.id} className={`gl-card snap-start !p-0 transition-colors duration-300 ${selected === c.id ? '!border-primary' : ''}`}>
               <button type="button" onClick={() => open(c.id)}
-                className={`group flex h-full w-full flex-col gap-4 rounded-box border-0 bg-transparent shadow-none px-6 py-6 text-left transition-colors duration-300 hover:bg-base-200 ${selected === c.id ? 'bg-base-200' : ''}`}>
+                className="group flex h-full w-full flex-col gap-4 rounded-none border-0 bg-transparent px-6 py-6 text-left shadow-none transition-colors duration-300 hover:bg-base-200/60">
                 <span className="flex flex-wrap items-center gap-2">
                   <span className="text-base font-semibold">{optionLabel(t, c)}</span>
                   {c.best && <span className="badge badge-primary badge-sm">{t('optionsScreen.best')}</span>}
@@ -129,7 +129,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       <section id="details" ref={detailsRef} className="w-full px-5 pb-12 pt-4 sm:px-8 lg:px-12">
         <h2 className="m-0 text-3xl font-bold tracking-tight sm:text-4xl">{t('optionsScreen.detailsTitle')}</h2>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-base-content/75">{t('optionsScreen.detailsIntro')}</p>
-        <div role="tablist" aria-label={t('optionsScreen.detailsTitle')} className="tabs tabs-box mt-6 w-full flex-nowrap overflow-x-auto bg-base-200 sm:w-fit">
+        <div role="tablist" aria-label={t('optionsScreen.detailsTitle')} className="tabs tabs-box mt-6 w-full flex-nowrap overflow-x-auto rounded-none border border-base-300 bg-base-200 sm:w-fit [&_.tab]:rounded-none">
           {all.map((c) => (
             <button key={c.id} type="button" role="tab" aria-selected={selected === c.id} aria-controls="option-panel"
               className={`tab h-11 whitespace-nowrap px-5 text-base ${selected === c.id ? 'tab-active font-semibold' : ''}`}
@@ -150,7 +150,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       </section>
 
       <section className="w-full px-5 pb-14 sm:px-8 lg:px-12">
-        <div role="note" className="alert alert-soft items-start text-base leading-relaxed">
+        <div role="note" className="gl-card flex items-start gap-3 text-base leading-relaxed">
           <Lightbulb size={22} className="text-primary" aria-hidden="true" />
           <span>{t('optionsScreen.takeaway')}</span>
         </div>
