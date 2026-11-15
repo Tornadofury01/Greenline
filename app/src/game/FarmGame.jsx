@@ -13,9 +13,10 @@ import { GameCanvas } from './GameCanvas.jsx';
 import { Toolbar } from './Toolbar.jsx';
 import { SeasonView } from './SeasonView.jsx';
 import { Scoreboard } from './Scoreboard.jsx';
+import { EndScreen, Stars } from './EndScreen.jsx';
 import { runSeason, USING_MOCK } from './runSource.js';
 import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
-import { YEARS, PLOTS, BUDGET_PER_PLOT, CHALLENGES, emptyPlot, fillPlot } from './plots.js';
+import { YEARS, PLOTS, BUDGET_PER_PLOT, CHALLENGES, emptyPlot, fillPlot, starsFor, loadStars, saveStars } from './plots.js';
 import './game.css';
 
 const rand = (n) => Math.floor(Math.random() * n);
@@ -45,6 +46,7 @@ const accentColor = () => {
 // ---------------------------------------------------------------------------------------------------------------- start screen
 function StartScreen({ loaded, avail, sound, setSound, onStart }) {
   const { t } = useApp();
+  const best = useMemo(loadStars, []);
   const ok = (c) => c.years.every((y) => avail.includes(y));
   return (
     <section className="card gm-card">
@@ -63,7 +65,7 @@ function StartScreen({ loaded, avail, sound, setSound, onStart }) {
         {CHALLENGES.filter(ok).map((c) => (
           <li key={c.id}>
             <button type="button" className="btn btn-block gm-challenge" onClick={() => onStart({ kind: 'challenge', id: c.id }, c.years)}>
-              <strong>{t(`game.challenge.${c.id}.name`)}</strong>
+              <span className="gm-challenge-top"><strong>{t(`game.challenge.${c.id}.name`)}</strong><Stars n={best[c.id] ?? 0} label={t('game.end.stars', { n: best[c.id] ?? 0 })} /></span>
               <span className="small">{t(`game.challenge.${c.id}.goal`)}</span>
             </button>
           </li>
@@ -106,6 +108,7 @@ export default function FarmGame() {
   const [playing, setPlaying] = useState(true);
   const [month, setMonth] = useState(0);
   const [error, setError] = useState(null);
+  const [ending, setEnding] = useState(null);     // { runs, stars, outOfMoney, played, coins }
   const lastRuns = useRef(null);
   const hudRef = useRef(null), barRef = useRef(null), api = useRef(null), coinRef = useRef(null);
   const accent = useMemo(accentColor, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -145,12 +148,14 @@ export default function FarmGame() {
     return { ...filled, crops: filled.crops.map((c, yi) => (yi < k ? x.crops[yi] : sim.crops[yi % sim.crops.length])) };
   }));
 
-  function startGame(nextMode, ys) {
+  function startGame(nextMode, ys, keepPlots = false) {
     setMode(nextMode); setYears(ys); setK(0); setSel(0);
-    setCoins(PLOTS * BUDGET_PER_PLOT); setSeason(null); lastRuns.current = null; setError(null);
-    let ps = Array.from({ length: PLOTS }, (_, i) => emptyPlot(i, baseTillage));
-    if (loadedSim) ps = ps.map((p, i) => (i === 0 ? fillPlot(p, loadedSim.crops, loadedSim.controls, 'loaded') : p));
-    setPlots(ps);
+    setCoins(PLOTS * BUDGET_PER_PLOT); setSeason(null); lastRuns.current = null; setError(null); setEnding(null);
+    if (!keepPlots) {
+      let ps = Array.from({ length: PLOTS }, (_, i) => emptyPlot(i, baseTillage));
+      if (loadedSim) ps = ps.map((p, i) => (i === 0 ? fillPlot(p, loadedSim.crops, loadedSim.controls, 'loaded') : p));
+      setPlots(ps);
+    }
     setPhase('setup');
   }
 
@@ -174,7 +179,15 @@ export default function FarmGame() {
     lastRuns.current = season.runs;
     const total = season.runs.reduce((a, r) => a + BUDGET_PER_PLOT + r.money.reduce((x, y) => x + y, 0), 0);
     setCoins(Math.round(total));
-    if (k >= YEARS - 1) { setPhase('start'); return; }   // end screen comes in step (d)
+    const outOfMoney = total < 0;
+    if (outOfMoney || k >= YEARS - 1) {
+      const start = PLOTS * BUDGET_PER_PLOT;
+      const stars = mode.kind === 'challenge' ? starsFor(mode.id, season.runs, season.today, { outOfMoney, coinsEnd: total, coinsStart: start }) : 0;
+      if (mode.kind === 'challenge' && stars > 0) saveStars(mode.id, stars);
+      setEnding({ runs: season.runs, stars, outOfMoney, played: k + 1, coins: Math.round(total) });
+      setPhase('end');
+      return;
+    }
     setK(k + 1); setSeason(null); setPhase('setup');
   }
 
@@ -199,7 +212,7 @@ export default function FarmGame() {
 
   return (
     <div className="gm-full" role="region" aria-label={t('game.title')}>
-      {phase !== 'season' && <GameCanvas getFrame={getFrame} onTap={setSel} pads={pads} api={api} label={t('game.scene.alt')} />}
+      {phase !== 'season' && phase !== 'end' && <GameCanvas getFrame={getFrame} onTap={setSel} pads={pads} api={api} label={t('game.scene.alt')} />}
       <div className="gm-hud" ref={hudRef}>
         <div className="gm-hud-row">
           <button type="button" className="gm-icon-btn" aria-label={t('game.hud.exit')} onClick={() => setPhase('start')}><X size={22} aria-hidden="true" /></button>
@@ -235,6 +248,11 @@ export default function FarmGame() {
         <SeasonView runs={season.runs} prevRuns={season.prevRuns} coinsBefore={season.coinsBefore} plots={plots} labels={plots.map(plotLabel)}
           playing={playing} setPlaying={setPlaying} onMonth={setMonth} onCoins={setCoins} onDone={() => { setSeasonDone(true); setPlaying(false); }}
           sound={sound} calm={calm} accent={accent} hudRef={hudRef} coinRef={coinRef} usd={usd} done={seasonDone} />
+      )}
+      {phase === 'end' && ending && (
+        <EndScreen runs={ending.runs} mode={mode} stars={ending.stars} outOfMoney={ending.outOfMoney} played={ending.played} coins={ending.coins} usd={usd}
+          top={(hudRef.current?.offsetHeight ?? 100) + 4}
+          onAgain={() => startGame(mode, years, true)} onNew={() => setPhase('start')} />
       )}
       {phase === 'season' && seasonDone && <Scoreboard runs={season.runs} k={k} last={k >= YEARS - 1} onNext={endSeason} usd={usd} top={(hudRef.current?.offsetHeight ?? 100) + 4} />}
 

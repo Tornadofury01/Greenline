@@ -1855,17 +1855,12 @@
     "running": "Growing the season…",
     "error": "The season could not be run.",
     "weatherOf": "weather of {year}",
-    "sign": "{county} County · {acres} ac",
     "perAcre": "/acre",
-    "meters": {
-      "title": "Your farm meters"
-    },
     "meter": {
       "money": {
         "name": "Money",
         "what": "Money left after the costs the model counts (seed, fertilizer, field passes, harvest), per acre. Land rent and your own labor are not counted.",
-        "src": "Source: the simulator's money ledger, with USDA NASS prices for this county.",
-        "value": "last year {year}, all years {total}"
+        "src": "Source: the simulator's money ledger, with USDA NASS prices for this county."
       },
       "risk": {
         "name": "Risk",
@@ -1890,8 +1885,7 @@
       "pests": {
         "name": "Pests & disease",
         "what": "Pest loss in the simulation and crops of the same family back to back (0 to 100).",
-        "src": "Source: the simulator's pest counters and the crop library.",
-        "oneYear": "With one year played, the checks treat it as the same crop grown every year."
+        "src": "Source: the simulator's pest counters and the crop library."
       },
       "market": {
         "name": "Market",
@@ -1902,8 +1896,7 @@
         "name": "Season",
         "what": "Whether every crop finished before frost or harvest.",
         "src": "Source: the simulator's crop stages and frost days."
-      },
-      "score": "score {n} of 100"
+      }
     },
     "word": {
       "good": "Good",
@@ -1913,13 +1906,7 @@
       "loss": "Loss",
       "pass": "Pass",
       "warn": "Warning",
-      "fail": "Fail",
-      "none": "Not played"
-    },
-    "trend": {
-      "up": "up from last year",
-      "down": "down from last year",
-      "same": "same as last year"
+      "fail": "Fail"
     },
     "scene": {
       "alt": "Your field split into 4 plots, drawn from the simulation"
@@ -1928,22 +1915,7 @@
       "play": "Play",
       "pause": "Pause",
       "speed": "Speed",
-      "skip": "Skip to harvest",
-      "results": "See the results"
-    },
-    "choose": {
-      "title": "Year {n} of {total}: your choices",
-      "hidden": "The weather is a real past year on this field. You will see which one when the season plays.",
-      "mode": "How many choices",
-      "simple": "Simple",
-      "expert": "Expert",
-      "crop": "Crop this year",
-      "cover": "Winter cover crop before it",
-      "tillage": "Tillage",
-      "dryland": "Irrigation is hidden because your farm is dryland (Farm page).",
-      "lockNote": "Tillage and the expert choices stay the same for all 5 years: the model runs one way of farming for the whole plan.",
-      "locked": "Tillage and the expert choices were set in year 1 and stay the same for all 5 years.",
-      "go": "Plant and play the season"
+      "skip": "Skip to harvest"
     },
     "why": {
       "noCash": "No cash crop this year, so no harvest money.",
@@ -1954,18 +1926,6 @@
       "steady": "A steady season: {crop} at {pct}% of a typical yield."
     },
     "results": {
-      "title": "Year {n}: the weather of {year}",
-      "vsTypical": "{pct}% of typical",
-      "yield": "Yield",
-      "money": "Money",
-      "perAcre": "per acre, after counted costs",
-      "soil": "Soil lost",
-      "vsT": "tons per acre; the soil can tolerate {t}",
-      "rain": "Rain",
-      "bare": "{n} bare days",
-      "yieldPh": "Yields use default crop settings until the field models are plugged in.",
-      "src": "Source: the simulator with the real monthly weather of {year} on this field (NASA POWER, GPM IMERG); the daily pattern inside each month is simulated.",
-      "srcClimatology": "Source: the simulator. {year} has no full weather record here, so the field's average weather was used.",
       "next": "Next year",
       "end": "See the results"
     },
@@ -1974,22 +1934,6 @@
       "hot": "Hot year",
       "wet": "Wet year",
       "normal": "Normal year"
-    },
-    "event": {
-      "water": "Wilting: the next crop starts short of water.",
-      "disease": "Disease risk is up in this rotation.",
-      "diseaseRepeat": "{crop} then {nextCrop}: same crop family, more disease.",
-      "marketFail": "No buyer or county record nearby for {crop}. Price is not discounted in the model; this is a warning only.",
-      "marketWarn": "Market warning for {crop}.",
-      "season": "Frost or a short season thinned the stand."
-    },
-    "eventSrc": {
-      "water": "Water fit check: simulator water balance on SSURGO soil.",
-      "disease": "Disease fit check: crop library hosts and the simulator's pest counters.",
-      "diseaseRepeat": "Disease fit check: crop families from the crop library.",
-      "marketFail": "Market fit check: USDA NASS Quick Stats county records.",
-      "marketWarn": "Market fit check: USDA NASS Quick Stats county records and Texas prices.",
-      "season": "Season fit check: simulated crop stages and frost days."
     },
     "challenge": {
       "drought": {
@@ -2027,21 +1971,25 @@
       "off": "Sound off"
     },
     "end": {
-      "title": "Your report card",
-      "goalMet": "Goal met: {goal}",
-      "goalMissed": "Goal missed: {goal}",
-      "sameWeather": "All three plans ran on the same weather years: {years}.",
-      "meter": "Meter",
-      "col": {
-        "you": "Your plan",
-        "today": "Your farm today",
-        "best": "Best balance"
-      },
-      "noBest": "The best-balance plan is not available for this field yet.",
-      "moneyNote": "Money is the total for the 5 years, per acre, after the costs the model counts.",
-      "phNote": "Some numbers use default model values until the field models are plugged in.",
+      "title": "Five seasons done",
+      "sameWeather": "All four plots ran on the same weather years: {years}.",
+      "moneyNote": "Money is the total for the seasons played, per acre, after the costs the model counts. Land rent and your own labor are not counted.",
       "again": "Play the same weather again",
-      "another": "Try another plan"
+      "another": "Try another setup",
+      "broke": "Out of money",
+      "brokeWhy": "After {n} seasons your coins are at {usd}. A farm can't plant the next season like this.",
+      "stars": "{n} of 3 stars",
+      "free": "Free play: no goal. Compare the plots below.",
+      "money": "Money",
+      "soil": "Soil lost/yr",
+      "soilVal": "{t} of {max} t",
+      "bare": "Bare days/yr",
+      "som": "Organic matter",
+      "starRule": {
+        "drought": "1 star: don't run out of money. 2: end with more coins than you started. 3: a plot beats your current rotation on money.",
+        "soil": "1 star: a plot averages under the soil's limit. 2: a plot stays under it every year. 3: and keeps its organic matter.",
+        "beat": "1 star: a plot beats your current rotation on money. 2: and on soil. 3: and on water."
+      }
     },
     "plotN": "Plot {n}",
     "plotEmpty": "No seed",

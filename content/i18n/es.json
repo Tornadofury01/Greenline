@@ -1855,17 +1855,12 @@
     "running": "Creciendo la temporada…",
     "error": "No se pudo simular la temporada.",
     "weatherOf": "clima de {year}",
-    "sign": "Condado de {county} · {acres} acres",
     "perAcre": "/acre",
-    "meters": {
-      "title": "Los medidores de su granja"
-    },
     "meter": {
       "money": {
         "name": "Dinero",
         "what": "Dinero que queda después de los costos que cuenta el modelo (semilla, fertilizante, pasadas, cosecha), por acre. No incluye la renta de la tierra ni su propio trabajo.",
-        "src": "Fuente: el registro de dinero del simulador, con precios de USDA NASS para este condado.",
-        "value": "último año {year}, todos los años {total}"
+        "src": "Fuente: el registro de dinero del simulador, con precios de USDA NASS para este condado."
       },
       "risk": {
         "name": "Riesgo",
@@ -1890,8 +1885,7 @@
       "pests": {
         "name": "Plagas y enfermedades",
         "what": "Pérdida por plagas en la simulación y cultivos de la misma familia seguidos (0 a 100).",
-        "src": "Fuente: los contadores de plagas del simulador y la biblioteca de cultivos.",
-        "oneYear": "Con un solo año jugado, las revisiones lo tratan como el mismo cultivo sembrado cada año."
+        "src": "Fuente: los contadores de plagas del simulador y la biblioteca de cultivos."
       },
       "market": {
         "name": "Mercado",
@@ -1902,8 +1896,7 @@
         "name": "Temporada",
         "what": "Si cada cultivo terminó antes de la helada o la cosecha.",
         "src": "Fuente: las etapas del cultivo y los días de helada del simulador."
-      },
-      "score": "puntuación {n} de 100"
+      }
     },
     "word": {
       "good": "Bien",
@@ -1913,13 +1906,7 @@
       "loss": "Pérdida",
       "pass": "Aprueba",
       "warn": "Aviso",
-      "fail": "Falla",
-      "none": "Sin jugar"
-    },
-    "trend": {
-      "up": "sube respecto al año pasado",
-      "down": "baja respecto al año pasado",
-      "same": "igual que el año pasado"
+      "fail": "Falla"
     },
     "scene": {
       "alt": "Su campo dividido en 4 parcelas, dibujado con la simulación"
@@ -1928,22 +1915,7 @@
       "play": "Seguir",
       "pause": "Pausa",
       "speed": "Velocidad",
-      "skip": "Ir a la cosecha",
-      "results": "Ver los resultados"
-    },
-    "choose": {
-      "title": "Año {n} de {total}: sus decisiones",
-      "hidden": "El clima es un año real del pasado en este campo. Verá cuál es cuando se juegue la temporada.",
-      "mode": "Cuántas decisiones",
-      "simple": "Sencillo",
-      "expert": "Experto",
-      "crop": "Cultivo de este año",
-      "cover": "Cultivo de cobertura de invierno antes",
-      "tillage": "Labranza",
-      "dryland": "El riego no aparece porque su granja es de temporal (página Granja).",
-      "lockNote": "La labranza y las decisiones de experto se mantienen los 5 años: el modelo usa una sola forma de trabajar para todo el plan.",
-      "locked": "La labranza y las decisiones de experto se fijaron en el año 1 y se mantienen los 5 años.",
-      "go": "Sembrar y jugar la temporada"
+      "skip": "Ir a la cosecha"
     },
     "why": {
       "noCash": "No hubo cultivo comercial este año, así que no hay dinero de cosecha.",
@@ -1954,18 +1926,6 @@
       "steady": "Una temporada estable: {crop} al {pct}% de un rendimiento típico."
     },
     "results": {
-      "title": "Año {n}: el clima de {year}",
-      "vsTypical": "{pct}% de lo típico",
-      "yield": "Rendimiento",
-      "money": "Dinero",
-      "perAcre": "por acre, después de los costos contados",
-      "soil": "Suelo perdido",
-      "vsT": "toneladas por acre; el suelo tolera {t}",
-      "rain": "Lluvia",
-      "bare": "{n} días de suelo desnudo",
-      "yieldPh": "Los rendimientos usan valores por defecto hasta que se conecten los modelos del campo.",
-      "src": "Fuente: el simulador con el clima mensual real de {year} en este campo (NASA POWER, GPM IMERG); el patrón diario dentro de cada mes es simulado.",
-      "srcClimatology": "Fuente: el simulador. {year} no tiene un registro completo de clima aquí, así que se usó el clima promedio del campo.",
       "next": "Año siguiente",
       "end": "Ver los resultados"
     },
@@ -1974,22 +1934,6 @@
       "hot": "Año caluroso",
       "wet": "Año húmedo",
       "normal": "Año normal"
-    },
-    "event": {
-      "water": "Marchitez: el siguiente cultivo empieza con falta de agua.",
-      "disease": "El riesgo de enfermedad sube en esta rotación.",
-      "diseaseRepeat": "{crop} y luego {nextCrop}: la misma familia de cultivo, más enfermedad.",
-      "marketFail": "No hay comprador ni registro del condado cerca para {crop}. El modelo no rebaja el precio; es solo un aviso.",
-      "marketWarn": "Aviso de mercado para {crop}.",
-      "season": "Una helada o una temporada corta raleó el cultivo."
-    },
-    "eventSrc": {
-      "water": "Revisión de agua: balance de agua del simulador con suelo SSURGO.",
-      "disease": "Revisión de enfermedades: hospederos de la biblioteca de cultivos y contadores de plagas del simulador.",
-      "diseaseRepeat": "Revisión de enfermedades: familias de cultivos de la biblioteca de cultivos.",
-      "marketFail": "Revisión de mercado: registros del condado de USDA NASS Quick Stats.",
-      "marketWarn": "Revisión de mercado: registros del condado de USDA NASS Quick Stats y precios de Texas.",
-      "season": "Revisión de temporada: etapas simuladas del cultivo y días de helada."
     },
     "challenge": {
       "drought": {
@@ -2027,21 +1971,25 @@
       "off": "Sonido apagado"
     },
     "end": {
-      "title": "Su boleta de calificaciones",
-      "goalMet": "Meta cumplida: {goal}",
-      "goalMissed": "Meta no cumplida: {goal}",
-      "sameWeather": "Los tres planes usaron los mismos años de clima: {years}.",
-      "meter": "Medidor",
-      "col": {
-        "you": "Su plan",
-        "today": "Su granja hoy",
-        "best": "Mejor equilibrio"
-      },
-      "noBest": "El plan de mejor equilibrio aún no está disponible para este campo.",
-      "moneyNote": "El dinero es el total de los 5 años, por acre, después de los costos que cuenta el modelo.",
-      "phNote": "Algunos números usan valores por defecto hasta que se conecten los modelos del campo.",
+      "title": "Cinco temporadas terminadas",
+      "sameWeather": "Las cuatro parcelas usaron los mismos años de clima: {years}.",
+      "moneyNote": "El dinero es el total de las temporadas jugadas, por acre, después de los costos que cuenta el modelo. No incluye la renta de la tierra ni su propio trabajo.",
       "again": "Jugar el mismo clima otra vez",
-      "another": "Probar otro plan"
+      "another": "Probar otra preparación",
+      "broke": "Sin dinero",
+      "brokeWhy": "Después de {n} temporadas sus monedas están en {usd}. Así un campo no puede sembrar la temporada siguiente.",
+      "stars": "{n} de 3 estrellas",
+      "free": "Juego libre: sin meta. Compare las parcelas abajo.",
+      "money": "Dinero",
+      "soil": "Suelo perdido/año",
+      "soilVal": "{t} de {max} t",
+      "bare": "Días sin cubrir/año",
+      "som": "Materia orgánica",
+      "starRule": {
+        "drought": "1 estrella: no quedarse sin dinero. 2: terminar con más monedas que al inicio. 3: una parcela gana a su rotación actual en dinero.",
+        "soil": "1 estrella: una parcela queda en promedio bajo el límite del suelo. 2: una parcela queda bajo el límite cada año. 3: y mantiene su materia orgánica.",
+        "beat": "1 estrella: una parcela gana a su rotación actual en dinero. 2: y en suelo. 3: y en agua."
+      }
     },
     "plotN": "Parcela {n}",
     "plotEmpty": "Sin semilla",

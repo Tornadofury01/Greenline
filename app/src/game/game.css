@@ -45,7 +45,7 @@
 .gm-hud-sub { justify-self: start; margin: 0; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(12, 22, 15, 0.7); font-size: 12px; }
 
 /* bottom bar (setup) */
-.gm-bottom { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; padding: 0 8px 8px; display: grid; gap: 6px; }
+.gm-bottom { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; max-width: 760px; margin: 0 auto; padding: 0 8px 8px; display: grid; gap: 6px; }
 .gm-actions { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .gm-plotpick { display: flex; gap: 4px; }
 .gm-plotpick button {
@@ -152,5 +152,22 @@
 .gm-panel { padding: 8px; border-radius: 12px; background: var(--color-surface-sunken); }
 .gm-panel p { margin: 0 0 4px; }
 .gm-reasons { margin: 0 0 4px; padding-left: 1.2em; font-size: 14px; }
+
+/* end */
+.gm-endgoal { display: grid; gap: 4px; padding: 10px; border-radius: 16px; background: var(--color-surface); color: var(--color-text); }
+.gm-endgoal p { margin: 0; }
+.gm-endgoal .gm-stars { margin-left: 0; }
+.gm-endgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+@media (min-width: 900px) { .gm-endgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.gm-endcard { padding: 8px; gap: 6px; }
+.gm-endstats { margin: 0; display: grid; gap: 4px; }
+.gm-endstats div { display: flex; justify-content: space-between; gap: 4px; font-size: 12px; }
+.gm-endstats dt { color: var(--color-text-muted); }
+.gm-endstats dd { margin: 0; font-weight: 800; font-size: 14px; }
+.gm-endwords { list-style: none; margin: 0; padding: 6px 0 0; border-top: var(--border); display: grid; gap: 2px; font-size: 12px; }
+.gm-endwords li { display: flex; justify-content: space-between; gap: 4px; }
+.gm-endfoot { display: grid; gap: 6px; justify-items: stretch; }
+.gm-endfoot .btn { width: 100%; max-width: 720px; min-height: 48px; margin: 0 auto; }
+@media (min-width: 600px) { .gm-endfoot { grid-template-columns: 1fr 1fr; } }
 
 @media (prefers-reduced-motion: reduce) { .gm-full * { transition: none !important; animation: none !important; } }

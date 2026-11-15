@@ -118,3 +118,10 @@ All 8 animate from the worker's daily arrays.
 - **Placeholder year types:** they're placeholders, "hot" is never assigned, and the two SSP choices behave the same as a random draw.
 - **Cover end date, variety and double crop** stay out until the engine or plan builder supports them.
 - **Time:** build the meters and the engine wiring first, then the animated scene.
+
+## G2b: the playable 4-plot game (Nov 15 2026)
+- **Shape:** full-screen isometric canvas (`game/scene.js`, `GameCanvas.jsx`) with 4 plots. Toolbar (`Toolbar.jsx`): seeds, cover, tillage / fertilizer / water (set in year 1, locked after: the engine runs one management per plot run), quick fill. Season playback per plot (`season.js`, `SeasonView.jsx`), pop-ups with source, tap a plot for live meters. Harvest coins + scoreboard (`Scoreboard.jsx`). Challenges with stars saved on the device, end screen (`EndScreen.jsx`, rules in `plots.js`).
+- **Numbers are MOCK for now** (user decision, so the UI can be reviewed first): `game/runSource.js` is the one plug-in point and returns `game/mockRuns.js` output. The game shows a "Mock numbers" tag while `USING_MOCK` is true. **Do not deploy with the mock on.**
+- **To wire the engine:** follow the steps at the top of `runSource.js`. `gameWorker.js` already runs one plot through the engine and returns the same shape (day arrays incl. N supply share and expected pest loss read from the engine state, ledger events, seasons, metrics, played-years structure).
+- **Year-1 disease fix:** `playedStructure()` in `plots.js` compares only played years in order (year 1 vs the field's last CDL crop), instead of `structureOf()`'s loop that compared a one-year plan with itself. Used by the worker for both the disease check and the pest score.
+- **Scene rules:** a plot with a live crop is never drawn as bare soil (minimum seed / sprout); dust, cracks and gullies only on plots the run marks bare.
