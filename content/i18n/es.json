@@ -1896,6 +1896,45 @@
       "water": "Fuente: el balance de agua del simulador en suelo SSURGO, clima NASA POWER y GPM IMERG.",
       "yield": "Fuente: el rendimiento simulado comparado con un rendimiento típico del condado (USDA NASS)."
     },
-    "noData": "Aún no hay datos aquí"
+    "noData": "Aún no hay datos aquí",
+    "startState": {
+      "title": "Condiciones al inicio",
+      "intro": "Cada parcela empieza como está su campo hoy: pasamos por el simulador sus cultivos y el clima reales de {from} a {to}.",
+      "introNoHistory": "Este campo no tiene historial de cultivos, así que cada parcela empieza con los valores por defecto del simulador.",
+      "loading": "Calculando cómo está su campo hoy…",
+      "water": "Agua en el suelo",
+      "waterVal": "{pct} de lo que el cultivo puede usar",
+      "n": "Nitrógeno en el suelo",
+      "nVal": "{lb} lb N/acre",
+      "som": "Materia orgánica",
+      "somVal": "{pct}%",
+      "residue": "Rastrojo en el suelo",
+      "residueVal": "cubre {pct}",
+      "pests": "Plagas que quedan",
+      "pestVal": "{pest}: {pct}",
+      "lastCrop": "Último cultivo",
+      "none": "Ninguno",
+      "src": {
+        "modelD": "Humedad del suelo NASA SMAP (modelo del campo)",
+        "history": "Simulado con sus cultivos y su clima",
+        "default": "Valor por defecto",
+        "input": "Dato suyo",
+        "ssurgo": "Estudio de suelos USDA SSURGO",
+        "ssurgoHistory": "USDA SSURGO y luego su historial de cultivos",
+        "cdl": "Capa de datos de cultivos del USDA (CDL)",
+        "modelA": "Modelo del campo (historial de cultivos)"
+      },
+      "waterNote": "La humedad del suelo por satélite para su campo (NASA SMAP) viene pronto; mientras tanto sale de su historial de cultivos y clima.",
+      "nNote": "Sin medición: el nitrógeno es simulado. Un análisis de suelo es mejor.",
+      "edit": "Yo sé más",
+      "lastCropQ": "¿Qué sembró la temporada pasada?",
+      "soilTestQ": "Nitrato del análisis de suelo (lb N/acre, opcional)",
+      "soilTestPh": "p. ej. 25",
+      "inputNote": "Sus respuestas solo se usan en este juego. No se guardan ni se envían.",
+      "reset": "Volver a los datos",
+      "challengeNote": "Los retos siempre usan los datos de su campo, así todos tienen la misma prueba. En Juego libre puede corregir el último cultivo y el nitrógeno.",
+      "go": "Preparar mis parcelas",
+      "open": "Inicio"
+    }
   }
 }

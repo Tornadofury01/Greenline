@@ -1896,6 +1896,45 @@
       "water": "Source: the simulator's water balance on SSURGO soil, NASA POWER and GPM IMERG weather.",
       "yield": "Source: the simulator's yield compared with a typical yield for this county (USDA NASS)."
     },
-    "noData": "No data here yet"
+    "noData": "No data here yet",
+    "startState": {
+      "title": "Starting conditions",
+      "intro": "Every plot starts from your field as it is today: we ran your real crops and weather from {from} to {to} through the simulator.",
+      "introNoHistory": "No crop history for this field, so every plot starts from the simulator's default values.",
+      "loading": "Working out your field today…",
+      "water": "Soil water",
+      "waterVal": "{pct} of what the crop can use",
+      "n": "Nitrogen in the soil",
+      "nVal": "{lb} lb N/acre",
+      "som": "Organic matter",
+      "somVal": "{pct}%",
+      "residue": "Residue on the ground",
+      "residueVal": "covers {pct}",
+      "pests": "Pest carry-over",
+      "pestVal": "{pest}: {pct}",
+      "lastCrop": "Last crop",
+      "none": "None",
+      "src": {
+        "modelD": "NASA SMAP soil moisture (field model)",
+        "history": "Simulated from your crops and weather",
+        "default": "Default value",
+        "input": "Your input",
+        "ssurgo": "USDA SSURGO soil survey",
+        "ssurgoHistory": "USDA SSURGO, then your crop history",
+        "cdl": "USDA Cropland Data Layer",
+        "modelA": "Field model (crop history)"
+      },
+      "waterNote": "Satellite soil moisture for your field (NASA SMAP) is coming; until then it comes from your crop and weather history.",
+      "nNote": "No measurement: nitrogen is simulated. A soil test is better.",
+      "edit": "I know better",
+      "lastCropQ": "What did you grow last season?",
+      "soilTestQ": "Soil-test nitrate (lb N/acre, optional)",
+      "soilTestPh": "e.g. 25",
+      "inputNote": "Your answers are only used in this game. They are not saved or sent.",
+      "reset": "Back to the data",
+      "challengeNote": "Challenges always use your field's data, so everyone gets the same test. In Free play you can correct the last crop and nitrogen.",
+      "go": "Set up my plots",
+      "open": "Start"
+    }
   }
 }

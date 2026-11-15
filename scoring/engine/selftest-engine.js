@@ -8,6 +8,7 @@ import { loadLibrary, loadField, loadEconomics } from './node.js';
 import * as E from './index.js';
 import { makeWeather, makeWeatherFromDaily, daysInYear, daysInMonth } from './weather.js';
 import { lsFactor } from './soilWater.js';
+import { somPercent } from './soilOrganic.js';
 
 let failed = 0;
 const check = (ok, msg) => { console.log(ok ? 'ok  ' : 'FAIL', msg); if (!ok) failed++; };
@@ -267,6 +268,29 @@ const rotation = (slots, ids, startYear = 2015) => {
   const ms40 = performance.now() - t2;
   console.log(`speed: 40 seasons in one run (rotation of 6 repeated, 1985-2024): ${ms40.toFixed(0)} ms`);
   check(ms40 < 4000 && r40.yearly.length >= 40, `speed: a 40-season run takes ${ms40.toFixed(0)} ms (under 4 s)`);
+}
+
+// =================================================================================== initialState (start from a field's history)
+{
+  const plan = rotation(slots1, ['cotton', 'grain_sorghum', 'winter_wheat'], 2008);
+  const base = run(f1, slots1, plan, { years: 6 });
+  const same = run(f1, slots1, plan, { years: 6, initialState: undefined });
+  check(JSON.stringify(base) === JSON.stringify(same), 'initialState: leaving it out changes nothing');
+  // End state of an 18-year history run, fed into a new run
+  const hist = E.createSimulation({ field: f1, slots: slots1, library: lib, plan: monoPlan(slots1, 'grain_sorghum'), economics: eco });
+  hist.run();
+  const H = hist.state;
+  const init = { soilW: [...H.soil.w], organic: { ...H.organic }, pests: JSON.parse(JSON.stringify(H.pests)) };
+  const next = E.createSimulation({ field: f1, slots: slots1, library: lib, plan: monoPlan(slots1, 'corn', { years: [2026, 2027, 2028] }), economics: eco, initialState: init });
+  const N = next.state;
+  check(N.soil.w.every((v, i) => near(v, H.soil.w[i], 1e-9)) && near(N.organic.nMin, H.organic.nMin, 1e-9) && near(N.organic.cSlow, H.organic.cSlow, 1e-9) && near(N.organic.residueLb, H.organic.residueLb, 1e-9),
+    'initialState: soil water, mineral N, slow carbon and residue start where the history run ended');
+  check(Object.keys(H.pests).every((id) => near(N.pests[id].pressure, H.pests[id].pressure, 1e-12)), 'initialState: pest pressure carries over');
+  const sum = next.run();
+  check(near(sum.soil.somStartPct, somPercent(init.organic), 1e-3), `initialState: the SOM trend starts from the carried state (${sum.soil.somStartPct} %)`);
+  check(Math.abs(sum.balances.waterResidualMm) < 1e-6 && Math.abs(sum.balances.nitrogenResidualLb) < 1e-6, 'initialState: water and nitrogen balances still close');
+  const bad = E.createSimulation({ field: f1, slots: slots1, library: lib, plan, years: 1, economics: eco, initialState: { soilW: [-5, NaN, 1e9], organic: { nMin: -1 }, pests: { nope: { pressure: 1 } } } });
+  check(bad.state.soil.w[0] >= 0 && Number.isFinite(bad.state.soil.w[1]) && bad.state.soil.w[2] <= bad.state.soil.cap[2] && bad.state.organic.nMin >= 0, 'initialState: bad values are ignored or capped');
 }
 
 console.log(failed ? `\n${failed} check(s) FAILED` : '\nall engine checks passed');

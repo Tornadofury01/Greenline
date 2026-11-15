@@ -3,7 +3,7 @@
 // grow from ITS OWN daily engine run. Every number comes from the engine (gameWorker.js); the scene only draws those numbers.
 // Lazy: this file, the scene and the workers load only when the Farm simulator screen opens (screens/FarmSimulator.jsx).
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { X, Volume2, VolumeX, Coins, Pause, Play } from 'lucide-react';
+import { X, Volume2, VolumeX, Coins, Pause, Play, ClipboardList } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useV2 } from '../state/useV2.js';
 import { slotsFor, todayCrops, pastYears } from '../sim/simSetup.js';
@@ -16,7 +16,8 @@ import { Scoreboard } from './Scoreboard.jsx';
 import { EndScreen } from './EndScreen.jsx';
 import { StartScreen } from './StartScreen.jsx';
 import { makeV2Text } from '../data/v2Text.js';
-import { runSeason, setupCosts } from './runSource.js';
+import { runSeason, setupCosts, startConditions } from './runSource.js';
+import { StartConditions } from './StartConditions.jsx';
 import { loadModelFile } from '../data/loadModels.js';
 import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
 import { YEARS, PLOTS, BUDGET_PER_PLOT, emptyPlot, fillPlot, starsFor, saveStars } from './plots.js';
@@ -80,6 +81,10 @@ export default function FarmGame() {
   const [playing, setPlaying] = useState(true);
   const [month, setMonth] = useState(0);
   const [error, setError] = useState(null);
+  // Starting conditions: the field today (spun-up history); free play may correct the last crop and soil-test N.
+  const [fix, setFix] = useState({ lastCrop: null, soilTestNLb: null });
+  const [showStart, setShowStart] = useState(false);
+  const [startInfo, setStartInfo] = useState({ info: null, error: false });
   const [ending, setEnding] = useState(null);     // { runs, stars, outOfMoney, played, coins }
   const lastRuns = useRef(null);
   const hudRef = useRef(null), barRef = useRef(null), api = useRef(null), coinRef = useRef(null);
@@ -127,7 +132,9 @@ export default function FarmGame() {
   function startGame(nextMode, ys, keepPlots = false) {
     setMode(nextMode); setYears(ys); setK(0); setSel(0);
     setCoins(PLOTS * BUDGET_PER_PLOT); setSeason(null); lastRuns.current = null; setError(null); setEnding(null);
+    setShowStart(true);
     if (!keepPlots) {
+      setFix({ lastCrop: null, soilTestNLb: null });
       let ps = Array.from({ length: PLOTS }, (_, i) => emptyPlot(i, baseTillage));
       if (loadedSim) ps = ps.map((p, i) => (i === 0 ? fillPlot(p, loadedSim.crops, loadedSim.controls, 'loaded') : p));
       setPlots(ps);
@@ -135,7 +142,17 @@ export default function FarmGame() {
     setPhase('setup');
   }
 
-  const prevCrop = slots?.slots.A.cropByYear?.at(-1)?.crop ?? null;
+  const free = mode.kind === 'free';
+  const startOpts = useMemo(() => ({ tillage: baseTillage, lastCrop: free ? fix.lastCrop : null, soilTestNLb: free ? fix.soilTestNLb : null }), [baseTillage, free, fix]);
+  const prevCrop = startOpts.lastCrop ?? slots?.slots.A.cropByYear?.at(-1)?.crop ?? null;
+
+  useEffect(() => {
+    if (!showStart || !field || !slots) return undefined;
+    let live = true;
+    setStartInfo({ info: null, error: false });
+    startConditions({ field, modelFile, start: startOpts }).then((info) => { if (live) setStartInfo({ info, error: false }); }, () => { if (live) setStartInfo({ info: null, error: true }); });
+    return () => { live = false; };
+  }, [showStart, field, slots, modelFile, startOpts]);
 
   // Setup cost per plot for this season, from engine runs of the plots as set (debounced; "—" until it arrives).
   const [costs, setCosts] = useState(null);
@@ -144,16 +161,16 @@ export default function FarmGame() {
     let live = true;
     setCosts(null);
     const id = setTimeout(() => {
-      setupCosts({ field, modelFile, plots, years: years.slice(0, k + 1), prevCrop }).then((c) => { if (live) setCosts(c); }, () => { if (live) setCosts(null); });
+      setupCosts({ field, modelFile, plots, years: years.slice(0, k + 1), prevCrop, start: startOpts }).then((c) => { if (live) setCosts(c); }, () => { if (live) setCosts(null); });
     }, 250);
     return () => { live = false; clearTimeout(id); };
-  }, [phase, field, slots, modelFile, plots, years, k, prevCrop]);
+  }, [phase, field, slots, modelFile, plots, years, k, prevCrop, startOpts]);
 
   async function startSeason() {
     setPhase('growing'); setError(null);
     try {
       const shown = new Promise((r) => setTimeout(r, calm ? 0 : 400)); // let the "growing" sprout show for a moment
-      const [res] = await Promise.all([runSeason({ field, modelFile, plots, today: todaySim, years: years.slice(0, k + 1), prevCrop }), shown]);
+      const [res] = await Promise.all([runSeason({ field, modelFile, plots, today: todaySim, years: years.slice(0, k + 1), prevCrop, start: startOpts }), shown]);
       if (import.meta.env.DEV) console.info(`[game] season ${k + 1}: ${res.ms} ms for ${plots.length} plots + baseline (worker runs: ${res.runs.map((r) => r.ms).join(', ')} ms)`);
       const prevRuns = lastRuns.current;
       const coinsBefore = plots.map((_, i) => BUDGET_PER_PLOT + (prevRuns ? prevRuns[i].money.reduce((a, x) => a + x, 0) : 0));
@@ -215,6 +232,9 @@ export default function FarmGame() {
           <span className="gm-pill">{t('game.progress', { n: k + 1, total: YEARS })}</span>
           <span className={`gm-pill gm-coins${coins < 0 ? ' is-low' : ''}`} ref={coinRef} aria-label={t('game.hud.coins', { usd: usd(coins) })}><Coins size={16} aria-hidden="true" />{usd(coins)}</span>
           <span className="gm-spacer" />
+          {phase === 'setup' && k === 0 && !showStart && (
+            <button type="button" className="gm-icon-btn" aria-label={t('game.startState.title')} title={t('game.startState.title')} onClick={() => setShowStart(true)}><ClipboardList size={20} aria-hidden="true" /></button>
+          )}
           {phase === 'season' && (
             <button type="button" className="gm-icon-btn" aria-label={t(playing ? 'game.play.pause' : 'game.play.play')} disabled={seasonDone} onClick={() => setPlaying(!playing)}>
               {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
@@ -233,7 +253,11 @@ export default function FarmGame() {
           </p>
         )}
       </div>
-      {(phase === 'setup' || phase === 'growing') && (
+      {phase === 'setup' && showStart && (
+        <StartConditions info={startInfo.info} error={startInfo.error} editable={free} fix={fix} setFix={setFix} onClose={() => setShowStart(false)}
+          top={(hudRef.current?.offsetHeight ?? 100) + 4} />
+      )}
+      {(phase === 'setup' || phase === 'growing') && !(phase === 'setup' && showStart) && (
         <Toolbar k={k} plots={plots} sel={sel} setSel={setSel} setPlot={setPlot} irrigated={irrigated} fills={fills} usd={usd} barRef={barRef} costs={costs}
           onStart={phase === 'setup' ? startSeason : null} />
       )}

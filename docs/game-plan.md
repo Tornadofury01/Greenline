@@ -2,7 +2,7 @@
 
 "Try a plan on your own field, one season at a time." The **Farm simulator** (More → Farm simulator, screen id `sim`) IS this isometric (2.5D) farm game; the old chart-based simulator (plan editor, line charts, 2040 weather choices, profit band) was removed in G2d. It runs on the farmer's real field, with real past monthly weather, through the existing engine.
 
-The game **only reads** `scoring/engine/`, `scoring/modelSlots.js`, `content/model-placeholders.json`, `/pipeline` and `/shared`. It changes none of them.
+The game **only reads** `scoring/modelSlots.js`, `content/model-placeholders.json`, `/pipeline` and `/shared`. One engine change was approved in G2e: the optional `initialState` input of `createSimulation` (runs without it are unchanged).
 
 ## How the engine runs for the game
 - **Screen:** `app/src/screens/FarmSimulator.jsx` (screen id `sim`, in the "More" menu) lazy-loads `game/FarmGame.jsx`. Its start screen (`game/StartScreen.jsx`) is the landing page: hero preview, how it works, Free play, challenges.
@@ -138,4 +138,11 @@ All 8 animate from the worker's daily arrays.
   - `shared/v2/fields/<id>.json` via `data/loadV2.js` (quick fill + baseline only)
   - A field without monthly weather shows "No data here yet".
 - **Speed:** one plot-season in the worker takes 8–32 ms on the dev laptop (5 seasons replayed in year 5); the 4 plots + baseline run in parallel. The "Growing the season…" sprout shows for at least 0.4 s.
+
+## G2e: start from "your field today" (Nov 15 2026)
+- **Engine:** `createSimulation(cfg.initialState)` (optional; `scoring/engine/simulator.js`): `{ soilW[3], organic: { cFast, cSlow, nMin, nRes, residueLb, residueCoeff }, pests }`. Applied before the start-of-run water / N / SOM values are taken, so balances and the SOM trend cover only the run. Without it the engine output is byte-identical (old selftest output diffed); 6 new checks in `selftest-engine.js`.
+- **Spin-up** (`game/startState.js`, run in `gameWorker.js`, cached per worker): the field's real crop years (slot A, ec-251: USDA CDL 2008–2025) on the real monthly weather of those years, with the farm's tillage, up to the day before the first played planting. Its end state starts every plot and the baseline. ec-251: 44 % soil water (vs the old flat 50 %), 29 lb mineral N (vs 40), 53 % residue cover, charcoal rot carry-over 0.73 (vs 0.3), last crop grain sorghum. About 90 ms once per field; runs after that stay at 7–12 ms.
+- **Soil water:** Model D when the model file gives it (SMAP as of its `asOf`), otherwise the spun-up water (tagged "placeholder, model coming").
+- **Starting conditions card** (`game/StartConditions.jsx`): shown before year 1 (button in the HUD to reopen), every value with its source. Free play: "I know better" can change the last crop and add a soil-test nitrate number; these stay only in memory (not saved, not sent). Challenges are read only.
+- No crop history or weather = engine defaults, labeled "Default value".
 

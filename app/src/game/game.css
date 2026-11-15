@@ -236,3 +236,13 @@
 @media (min-width: 600px) { .gm-endfoot { grid-template-columns: 1fr 1fr; } }
 
 @media (prefers-reduced-motion: reduce) { .gm-full * { transition: none !important; animation: none !important; } }
+/* Starting conditions card */
+.gm-start-list { display: grid; gap: 8px; margin: 0; }
+.gm-start-row { display: grid; gap: 2px; padding-bottom: 8px; border-bottom: var(--border); }
+.gm-start-row:last-child { border-bottom: 0; padding-bottom: 0; }
+.gm-start-row dt { font-size: 13px; color: var(--color-text-muted); }
+.gm-start-row dd { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+.gm-start-src { font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--color-surface-sunken); color: var(--color-text-muted); }
+.gm-start-src.src-input { background: var(--color-accent); color: var(--color-on-accent); }
+.gm-start-n { display: grid; gap: 4px; margin-top: 8px; }
+.gm-start-n input { min-height: 44px; font-size: 16px; padding: 0 12px; border-radius: 12px; border: var(--border); background: var(--color-surface); color: var(--color-text); }

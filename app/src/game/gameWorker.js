@@ -4,6 +4,9 @@
 //          weatherYears: [y1..yk], prevCrop, animate }
 //        `field` (the app's field object, data/loadField.js) and `modelFile` (shared/v2/models/<id>.json or null, data/loadModels.js)
 //        are sent only when this worker has not seen `fieldKey` yet; the worker keeps the slots, weather and prices for it.
+//        `start` = { tillage, lastCrop?, soilTestNLb? }: every plot starts year 1 from the field's spun-up history
+//        (startState.js; the farm's tillage, plus the farmer's corrections in free play). run.start = what was used.
+//   in : { type: 'start', reqId, fieldKey, field?, modelFile?, start }  -> { type: 'start', reqId, start } (the card's numbers)
 //   out: { type: 'result', reqId, run }  or  { type: 'error', reqId, message }
 // Every number the game shows comes from here. Nothing is invented: when a value can't be computed it is null.
 // Model values come only through makeSlots (scoring/modelSlots.js): placeholder slots are listed in run.placeholderSlots.
@@ -16,15 +19,27 @@ import { BIOMASS_G_M2_TO_LB_AC } from '@scoring/engine/constants.js';
 import { metricsOf } from '@scoring/v2/metrics.js';
 import { buildPlan, START_YEAR, libById } from '../sim/simSetup.js';
 import { playedStructure, isSetupItem } from './plots.js';
+import { spinUp, startStateFor } from './startState.js';
 
 const DAY_KEYS = ['rain', 'tmax', 'rz', 'rzCap', 'stress', 'canopy', 'ground', 'residue', 'stage', 'eros', 'nShare', 'pest', 'irr', 'bare'];
 
-function runOne(field, slots, weather, prices, p, weatherYears, animate) {
+// Starting state for a played run that starts the day after `stopDay`, cached per (tillage, last crop, stop day).
+function startFor(c, start, stopDay, probeState) {
+  const key = `${start?.tillage ?? ''}|${start?.lastCrop ?? ''}|${stopDay}`;
+  if (!c.spun.has(key)) c.spun.set(key, spinUp(c, { tillage: start?.tillage, lastCrop: start?.lastCrop ?? null }, stopDay));
+  return startStateFor({ slots: c.slots, probeState, spun: c.spun.get(key), opts: { lastCrop: start?.lastCrop ?? null, soilTestNLb: start?.soilTestNLb } });
+}
+
+function runOne(c, p, weatherYears, animate, start) {
+  const { field, slots, weather, prices } = c;
   const k = weatherYears.length;
   const controls = { tillage: p.controls.tillage, irrigation: p.controls.irrigation ?? 'none', nitrogen: 'default', shiftDays: p.controls.shiftDays ?? 0, maturity: 'full', termination: 'at-planting' };
   const plan = buildPlan(slots, p.crops.slice(0, k), controls, p.id);
   plan.management.nitrogenScale = p.controls.nScale ?? 1;
-  const sim = createSimulation({ field, slots, library, plan, years: k, startYear: START_YEAR, weather, weatherYears, prices, economics });
+  const cfg = { field, slots, library, plan, years: k, startYear: START_YEAR, weather, weatherYears, prices, economics };
+  const probe = createSimulation(cfg); // defaults: gives the first day and the soil's capacity
+  const st = startFor(c, start, probe.state.dayNum, probe.state);
+  const sim = createSimulation({ ...cfg, initialState: st.init });
   const lastYear = START_YEAR + k - 1;
   const cols = {};
   const cropIds = [];
@@ -58,7 +73,7 @@ function runOne(field, slots, weather, prices, p, weatherYears, animate) {
     dayCrop.push(idx);
   }
   const sum = sim.summary();
-  return { plan, sum, cols, cropIds, dayCrop, pestTop, lastYear };
+  return { plan, sum, cols, cropIds, dayCrop, pestTop, lastYear, start: st.show };
 }
 
 const bucketOf = (iso, k) => Math.min(k - 1, Math.max(0, Number(iso.slice(0, 4)) - START_YEAR));
@@ -135,12 +150,20 @@ self.onmessage = (e) => {
     if (m.field) {
       const field = m.field;
       const slots = makeSlots({ field, modelFile: m.modelFile ?? null, placeholders });
-      ctx = { key: m.fieldKey, field, slots, weather: makeWeather(field, { seed: 1 }), prices: pricesFromField(field, library) };
+      ctx = { key: m.fieldKey, field, slots, weather: makeWeather(field, { seed: 1 }), prices: pricesFromField(field, library), spun: new Map() };
     }
     if (!ctx || ctx.key !== m.fieldKey) throw new Error('field not loaded in worker');
-    const { field, slots, weather, prices } = ctx;
+    const { slots } = ctx;
+    if (m.type === 'start') {
+      // The card: a year-1 start on Jan 1 (a fallow probe), same spin-up and corrections as the runs.
+      const plan = buildPlan(slots, [{ main: 'fallow', cover: null }], { tillage: m.start?.tillage ?? 'reduced', irrigation: 'none', nitrogen: 'default', shiftDays: 0, maturity: 'full', termination: 'at-planting' }, 'probe');
+      const probe = createSimulation({ field: ctx.field, slots, library, plan, years: 1, startYear: START_YEAR, weather: ctx.weather, prices: ctx.prices, economics });
+      const st = startFor(ctx, m.start, probe.state.dayNum, probe.state);
+      self.postMessage({ type: 'start', reqId: m.reqId, start: { ...st.show, ms: Math.round(performance.now() - t0) } });
+      return;
+    }
     const k = m.weatherYears.length;
-    const r = runOne(field, slots, weather, prices, m.plan, m.weatherYears, m.animate);
+    const r = runOne(ctx, m.plan, m.weatherYears, m.animate, m.start);
     const seasons = seasonDetails(r.sum, k, m.weatherYears);
     const day = m.animate ? Object.fromEntries(DAY_KEYS.map((x) => [x, Float32Array.from(r.cols[x])])) : null;
     const run = {
@@ -157,6 +180,7 @@ self.onmessage = (e) => {
       events: m.animate ? dayEvents(r.sum, r.lastYear, k) : null,
       yearType: slots.slots.C.yearTypes?.find((x) => x.year === m.weatherYears[k - 1])?.type ?? null,
       setupUsd: setupOf(r.sum, k),
+      start: r.start,
       ms: Math.round(performance.now() - t0),
     };
     const transfer = day ? [...Object.values(day).map((a) => a.buffer), run.dayCrop.buffer] : [];
