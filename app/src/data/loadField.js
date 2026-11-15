@@ -10,6 +10,7 @@
 import cropLibrary from '@content/crops.json';
 import rotationLibrary from '@content/rotations.json';
 import outlineFile from '@shared/field-outlines.json';
+import mapLayerFile from '@shared/map-layers.json';
 import { DEMO_FIELD_ID } from '../config.js';
 
 // Lazy: each field file becomes its own small chunk, fetched only when needed.
@@ -95,6 +96,20 @@ export const fieldOutlines = () => outlineFile.fields;
 const OUTLINE_BY_ID = new Map(outlineFile.fields.map((f) => [f.id, f]));
 export const outlineFor = (id) => OUTLINE_BY_ID.get(id) || null;
 
+// Map context (shared/map-layers.json, built by pipeline/build_map_layers.mjs): county line, town labels, the padded
+// outline around the 300 fields and the opening view. Bundled, so it works offline.
+export const mapLayers = mapLayerFile;
+// Is this point inside the area that holds our 300 fields? (ray casting on the padded study hull)
+export function insideStudyArea(lat, lon) {
+  const r = mapLayerFile.studyHull;
+  let inside = false;
+  for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+    const [yi, xi] = r[i]; const [yj, xj] = r[j];
+    if ((yi > lat) !== (yj > lat) && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
+
 // ---- Cropland mask (shared/cropland-mask.json, built by pipeline/build_cropland_mask.py): ~400 m cells over North
 // Texas, 1 = USDA CDL cropland. Lazy chunk (precached by the service worker, so it works offline).
 let maskPromise = null;
@@ -136,20 +151,32 @@ function km(aLat, aLon, bLat, bLon) {
   return 12742 * Math.asin(Math.sqrt(h));
 }
 
-// Tap -> the nearest sampled field. Real per-cell data for every 30 m cell is on the roadmap.
-export async function loadFieldAt(lat, lon) {
+// Point -> { id, nearestKm, notCropland } for the nearest sampled field. Only this summary is kept, never the point.
+export async function nearestTo(lat, lon) {
   const idx = loadIndex();
-  if (!idx.length) return fallback('missing');
+  if (!idx.length) return null;
   let best = idx[0];
   let bestKm = Infinity;
   for (const f of idx) {
     const d = km(lat, lon, f.lat, f.lon);
     if (d < bestKm) { best = f; bestKm = d; }
   }
-  const [field, cropland] = await Promise.all([loadFieldById(best.id), croplandAt(lat, lon)]);
-  if (field.error || field.fallbackReason) return field;
+  const cropland = await croplandAt(lat, lon);
   // Within 500 m of a sampled field counts as cropland (small fields can fall under the mask's 25 % cell rule).
-  return { ...field, nearestKm: Math.round(bestKm * 10) / 10, notCropland: cropland === false && bestKm > 0.5 };
+  return { id: best.id, nearestKm: Math.round(bestKm * 10) / 10, notCropland: cropland === false && bestKm > 0.5 };
+}
+
+// Load the field found by nearestTo(), with its distance and cropland warning.
+export async function loadNearest(info) {
+  if (!info) return fallback('missing');
+  const field = await loadFieldById(info.id);
+  if (field.error || field.fallbackReason) return field;
+  return { ...field, nearestKm: info.nearestKm, notCropland: info.notCropland };
+}
+
+// Tap -> the nearest sampled field. Real per-cell data for every 30 m cell is on the roadmap.
+export async function loadFieldAt(lat, lon) {
+  return loadNearest(await nearestTo(lat, lon));
 }
 
 // Default "current rotation" guess: distinct library crops from the last 4 years, oldest first.

@@ -2,7 +2,7 @@
 // Only the language is saved in localStorage (it can be empty or blocked). Farm answers are not kept between visits.
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { makeT } from '../i18n.js';
-import { loadFieldAt, loadFieldById, loadDemoField, guessCurrentRotation } from '../data/loadField.js';
+import { loadFieldAt, loadFieldById, loadDemoField, loadNearest, guessCurrentRotation } from '../data/loadField.js';
 
 const AppContext = createContext(null);
 const STORAGE_KEY = 'greenline:v1';
@@ -88,13 +88,15 @@ export function AppProvider({ children }) {
   const pickField = (lat, lon) => loadInto(() => loadFieldAt(lat, lon));
   const pickFieldById = (id) => loadInto(() => loadFieldById(id));
   const pickDemo = () => loadInto(loadDemoField);
+  // A nearest-field summary from nearestTo() ({ id, nearestKm, notCropland }); no coordinates.
+  const pickNearest = (info) => loadInto(() => loadNearest(info));
   // Retry by field id (no coordinates are kept for this).
   const retryLoad = () => loadError?.id && pickFieldById(loadError.id);
 
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, retryLoad, loadError, loading, farm, updateFarm };
+  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, pickNearest, retryLoad, loadError, loading, farm, updateFarm };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

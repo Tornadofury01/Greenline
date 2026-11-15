@@ -1,18 +1,18 @@
 // Screen 1: a full-screen satellite map of the 300 Ellis County study fields. Tap an outline to load that field;
 // a card slides up over the map with the field at a glance.
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { MapContainer, TileLayer, Polygon, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Polygon, Polyline, Marker, useMapEvents } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
   Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw,
-  Plus, Minus, Scan, X, ChevronUp, Sprout,
+  Plus, Minus, Scan, X, ChevronUp, Sprout, Info, Compass,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
 import { Receipt } from '../components/Small.jsx';
 import { slopeWord } from '../display.js';
-import { fieldOutlines, outlineFor } from '../data/loadField.js';
+import { fieldOutlines, outlineFor, mapLayers, insideStudyArea, nearestTo } from '../data/loadField.js';
 import { cropThisYear } from '../si.js';
 // import FieldWalkMode from '../components/future/FieldWalkMode.jsx';  // FUTURE
 // import MemoryPins from '../components/future/MemoryPins.jsx';        // FUTURE
@@ -23,15 +23,56 @@ const GEO_ERROR = { 1: 'denied', 2: 'unavailable', 3: 'timeout' };
 
 // The 300 Field Shift study fields: public USDA field outlines within ~4 km of 32.25 N, 96.75 W (Ellis County, TX).
 const OUTLINES = fieldOutlines();
-const ALL_BOUNDS = L.latLngBounds(OUTLINES.flatMap((f) => f.rings[0]));
+// Opening view: the study area plus its nearest towns (built in pipeline/build_map_layers.mjs).
+const FRAME = L.latLngBounds(mapLayers.frame);
+const HULL_BOUNDS = L.latLngBounds(mapLayers.studyHull);
+// Everything outside the study area is dimmed: a world-sized polygon with the study hull cut out as a hole.
+const WORLD = [[-89, -179], [-89, 179], [89, 179], [89, -179]];
 // Public-domain imagery from the USGS National Map. Its tile cache stops at zoom 16; Leaflet stretches it beyond that.
-const USGS_IMAGERY = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}';
+const USGS_IMAGERY = 'https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}';
 const CLOSE_DRAG_PX = 70; // drag the card down this far to close it
+const OUTLINE_ZOOM = 12;  // below this zoom the 300 outlines collapse into one "300 fields" marker
+const TOWN_ZOOM = { 1: 9, 2: 10, 3: 10.5 }; // bigger towns get their labels at lower zoom
 
-// All 300 outlines. Colors come from CSS (.field-outline in styles.css), so they follow the tokens.
+// Text-only map labels (towns, "Our 300 fields"). Our font, a dark halo; never interactive.
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const labelIcon = (html, cls) => L.divIcon({ className: 'map-label-wrap', html: `<span class="map-label ${cls}">${html}</span>`, iconSize: [0, 0] });
+
+function MapContext({ zoom, t, onCluster }) {
+  const icons = useMemo(() => ({
+    towns: mapLayers.towns.map((tw) => labelIcon(esc(tw.name), `tier-${tw.tier}`)),
+    dallas: labelIcon(`${esc(t('pick.dallas'))} <b aria-hidden="true">↑</b>`, 'tier-1 map-label-dir'),
+    hull: labelIcon(esc(t('pick.hullLabel')), 'map-label-hull'),
+    cluster: L.divIcon({ className: 'map-label-wrap', html: `<span class="map-cluster"><b>${OUTLINES.length}</b><small>${esc(t('pick.clusterUnit'))}</small></span>`, iconSize: [0, 0] }),
+  }), [t]);
+  return (
+    <>
+      <Polygon positions={[WORLD, mapLayers.studyHull]} className="map-mask" interactive={false} />
+      {mapLayers.county.map((ring, i) => <Polyline key={i} positions={[...ring, ring[0]]} className="county-line" interactive={false} />)}
+      <Polygon positions={mapLayers.studyHull} className="study-hull" interactive={false} />
+      {mapLayers.towns.map((tw, i) => zoom >= TOWN_ZOOM[tw.tier] && (
+        <Marker key={tw.geoid} position={[tw.lat, tw.lon]} icon={icons.towns[i]} interactive={false} keyboard={false} />
+      ))}
+      {zoom < 13 && <Marker position={[mapLayers.dallas.lat, mapLayers.dallas.lon]} icon={icons.dallas} interactive={false} keyboard={false} />}
+      {zoom >= OUTLINE_ZOOM && <Marker position={mapLayers.studyLabel} icon={icons.hull} interactive={false} keyboard={false} />}
+      {zoom < OUTLINE_ZOOM && (
+        <Marker position={mapLayers.studyCenter} icon={icons.cluster} title={t('pick.clusterTap')} alt={t('pick.clusterTap')}
+          eventHandlers={{ click: onCluster }} />
+      )}
+    </>
+  );
+}
+
+function ZoomWatch({ onZoom }) {
+  const map = useMapEvents({ zoomend: () => onZoom(map.getZoom()) });
+  useEffect(() => { onZoom(map.getZoom()); }, [map, onZoom]);
+  return null;
+}
+
+// All 300 outlines (only the selected one when zoomed out). Colors come from CSS (.field-outline in styles.css).
 // A tap inside an outline loads exactly that field and does not reach the map's own tap handler.
-function Outlines({ selectedId, onPick }) {
-  return OUTLINES.map((f) => (
+function Outlines({ selectedId, onPick, all }) {
+  return OUTLINES.filter((f) => all || f.id === selectedId).map((f) => (
     // className must be a direct prop: react-leaflet applies pathOptions with setStyle(), which ignores className.
     // The key changes with the selection so the shape is re-created with the new class.
     <Polygon key={`${f.id}${f.id === selectedId ? '-on' : ''}`} positions={f.rings}
@@ -124,7 +165,7 @@ function CropRow({ field }) {
 }
 
 export default function PickField() {
-  const { t, field, pickField, pickFieldById, pickDemo, retryLoad, loadError, loading, setScreen } = useApp();
+  const { t, field, pickField, pickFieldById, pickDemo, pickNearest, retryLoad, loadError, loading, setScreen } = useApp();
   const online = useOnline();
   const [map, setMap] = useState(null);
   // How the current field was picked ('tap' | 'gps' | 'outline') and the state of the GPS button. No coordinates are kept here.
@@ -135,8 +176,34 @@ export default function PickField() {
   const dragStart = useRef(null);
   const bottomRef = useRef(null);
 
-  const tapPick = (lat, lon) => { setVia('tap'); setGeo(null); setOpen(true); pickField(lat, lon); };
-  const outlinePick = (id) => { setVia('outline'); setGeo(null); setOpen(true); pickFieldById(id); };
+  const [zoom, setZoom] = useState(11);
+  const [legend, setLegend] = useState(false);
+  // A tap outside the study area: { id, nearestKm, notCropland } of the nearest field (never the point itself).
+  const [outside, setOutside] = useState(null);
+
+  // Taps inside the study area keep the old behavior (nearest field + warnings). Outside it, first say where our
+  // data is; the farmer can still open the nearest field from there.
+  const tapPick = async (lat, lon) => {
+    setGeo(null); setOpen(true);
+    if (insideStudyArea(lat, lon)) { setOutside(null); setVia('tap'); pickField(lat, lon); return; }
+    setOutside(await nearestTo(lat, lon));
+  };
+  const outlinePick = (id) => { setVia('outline'); setGeo(null); setOutside(null); setOpen(true); pickFieldById(id); };
+  const openNearest = () => { setVia('tap'); pickNearest(outside); setOutside(null); };
+  const openDemo = () => { setVia('outline'); setOutside(null); pickDemo(); };
+  // Frame a box in the part of the map that isn't covered by the header, notes and the bottom card.
+  // sheetClosed: the card is being folded away, so only the map buttons (46 px) sit above the nav.
+  const framePadding = (sheetClosed = false) => {
+    const wide = window.matchMedia('(min-width: 1024px)').matches;
+    const card = sheetClosed ? 46 + 8 : (bottomRef.current?.offsetHeight || 0);
+    return { paddingTopLeft: [wide ? 440 : 16, 150], paddingBottomRight: [16, wide ? 24 : card + 96] };
+  };
+  // "Show the study area": fold the card away so the whole area fits (the reopen pill brings it back).
+  const showStudy = () => {
+    const wide = window.matchMedia('(min-width: 1024px)').matches;
+    if (!wide) { setOpen(false); setOutside(null); }
+    map?.flyToBounds(FRAME, { ...framePadding(!wide), duration: 0.8 });
+  };
 
   // Privacy: the GPS point exists only inside this callback. It goes to pickField() to find the nearest sampled
   // field and is never put in state, storage, a URL or a request. Low accuracy is enough (nearest of 300 fields).
@@ -145,7 +212,7 @@ export default function PickField() {
     if (!navigator.geolocation || !window.isSecureContext) { setGeo('unsupported'); return; }
     setGeo('locating');
     navigator.geolocation.getCurrentPosition(
-      (pos) => { setVia('gps'); setGeo(null); pickField(pos.coords.latitude, pos.coords.longitude); },
+      (pos) => { setVia('gps'); setGeo(null); setOutside(null); pickField(pos.coords.latitude, pos.coords.longitude); },
       (err) => setGeo(GEO_ERROR[err.code] || 'unavailable'),
       { enableHighAccuracy: false, maximumAge: 600000, timeout: 10000 },
     );
@@ -161,6 +228,11 @@ export default function PickField() {
     ro.observe(map.getContainer());
     return () => ro.disconnect();
   }, [map]);
+
+  // Opening view (no field yet): the study area and its nearest towns, clear of the header and the card.
+  useEffect(() => {
+    if (map && !field) map.fitBounds(FRAME, framePadding());
+  }, [map]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // When a field loads, zoom to its outline, leaving room for the header and the card.
   useEffect(() => {
@@ -187,12 +259,14 @@ export default function PickField() {
   return (
     <div className="map-screen">
       <section className="map-wrap" aria-label={t('pick.mapLabel')}>
-        <MapContainer ref={setMap} bounds={ALL_BOUNDS} boundsOptions={{ padding: [16, 16] }} minZoom={9} maxZoom={18}
+        <MapContainer ref={setMap} bounds={FRAME} boundsOptions={{ padding: [24, 24] }} minZoom={9} maxZoom={18}
           zoomControl={false} attributionControl={false} scrollWheelZoom zoomSnap={0.5} zoomDelta={1}
           wheelPxPerZoomLevel={100} className="map">
           <TileLayer url={USGS_IMAGERY} maxNativeZoom={16} maxZoom={18} className="map-imagery" />
+          <ZoomWatch onZoom={setZoom} />
           <ClickToPick onPick={tapPick} />
-          <Outlines selectedId={id} onPick={outlinePick} />
+          <MapContext zoom={zoom} t={t} onCluster={() => map?.flyToBounds(HULL_BOUNDS, { ...framePadding(), duration: 0.8 })} />
+          <Outlines selectedId={id} onPick={outlinePick} all={zoom >= OUTLINE_ZOOM} />
         </MapContainer>
       </section>
 
@@ -202,6 +276,20 @@ export default function PickField() {
       <div className="map-notes">
         <p>{t('pick.note300')}</p>
         <p>{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
+        {legend && (
+          <div className="map-legend" id="map-legend" role="region" aria-label={t('pick.legendTitle')}>
+            <div className="map-legend-head">
+              <strong>{t('pick.legendTitle')}</strong>
+              <button type="button" className="map-sheet-close" aria-label={t('common.close')} onClick={() => setLegend(false)}><X size={18} aria-hidden="true" /></button>
+            </div>
+            <ul>
+              <li><span className="lg-swatch lg-hull" aria-hidden="true" />{t('pick.legendHull')}</li>
+              <li><span className="lg-swatch lg-field" aria-hidden="true" />{t('pick.legendField')}</li>
+              <li><span className="lg-swatch lg-selected" aria-hidden="true" />{t('pick.legendSelected')}</li>
+              <li><span className="lg-swatch lg-county" aria-hidden="true" />{t('pick.legendCounty')}</li>
+            </ul>
+          </div>
+        )}
       </div>
 
       <div className="map-bottom" ref={bottomRef}>
@@ -210,13 +298,16 @@ export default function PickField() {
             <button type="button" aria-label={t('pick.zoomIn')} title={t('pick.zoomIn')} onClick={() => map?.zoomIn()}><Plus size={20} aria-hidden="true" /></button>
             <button type="button" aria-label={t('pick.zoomOut')} title={t('pick.zoomOut')} onClick={() => map?.zoomOut()}><Minus size={20} aria-hidden="true" /></button>
           </div>
-          <button type="button" className="map-ctrl-btn" aria-label={t('pick.showAll')} title={t('pick.showAll')}
-            onClick={() => map?.flyToBounds(ALL_BOUNDS, { padding: [16, 16], duration: 0.8 })}>
+          <button type="button" className="map-ctrl-btn" aria-label={t('pick.showAll')} title={t('pick.showAll')} onClick={showStudy}>
             <Scan size={20} aria-hidden="true" />
           </button>
           <button type="button" className="map-ctrl-btn" aria-label={t('pick.useLocation')} title={t('pick.useLocation')}
             disabled={geo === 'locating' || loading} onClick={locateMe}>
             {geo === 'locating' ? <LoaderCircle size={20} className="spin" aria-hidden="true" /> : <LocateFixed size={20} aria-hidden="true" />}
+          </button>
+          <button type="button" className="map-ctrl-btn" aria-label={t('pick.legendTitle')} title={t('pick.legendTitle')}
+            aria-expanded={legend} aria-controls="map-legend" onClick={() => setLegend(!legend)}>
+            <Info size={20} aria-hidden="true" />
           </button>
           {!open && (
             <button type="button" className="map-reopen" onClick={() => setOpen(true)}>
@@ -237,8 +328,8 @@ export default function PickField() {
             <div className="map-sheet-head">
               <span className="map-sheet-mark"><MapPin size={20} aria-hidden="true" /></span>
               <div className="map-sheet-title">
-                <h1>{!field ? t('pick.title') : acres != null ? t('pick.fieldTitle', { id, acres }) : t('pick.fieldName', { id })}</h1>
-                {field && (
+                <h1>{outside ? t('pick.outsideTitle') : !field ? t('pick.title') : acres != null ? t('pick.fieldTitle', { id, acres }) : t('pick.fieldName', { id })}</h1>
+                {field && !outside && (
                   <p>{t(acres != null ? 'pick.fieldSub' : 'pick.countyValue', { county: field.field.county, state: field.field.state })}</p>
                 )}
               </div>
@@ -263,17 +354,33 @@ export default function PickField() {
               </button>
             )}
 
-            {!field && (
+            {outside && (
               <>
-                <p className="map-sheet-text">{t('pick.emptySummary')}</p>
-                <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('pick.privacy')}</span></p>
-                <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={() => { setVia('outline'); pickDemo(); }}>
+                <p className="map-sheet-text">{t('pick.outsideText', { n: OUTLINES.length, town: mapLayers.nearestTown })}</p>
+                {outside.notCropland && <p className="sheet-note sheet-warn"><TriangleAlert size={18} aria-hidden="true" /><span>{t('pick.outsideNotCropland')}</span></p>}
+                <button type="button" className="btn btn-block" onClick={showStudy}>
+                  <Compass size={20} aria-hidden="true" />{t('pick.outsideShow')}
+                </button>
+                <button type="button" className="btn btn-block" disabled={loading} onClick={openNearest}>
+                  {t('pick.outsideNearest', { km: outside.nearestKm })}
+                </button>
+                <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={openDemo}>
                   {loading ? t('pick.loading') : t('pick.loadDemo')}
                 </button>
               </>
             )}
 
-            {field && (
+            {!field && !outside && (
+              <>
+                <p className="map-sheet-text">{t('pick.emptySummary')}</p>
+                <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('pick.privacy')}</span></p>
+                <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={openDemo}>
+                  {loading ? t('pick.loading') : t('pick.loadDemo')}
+                </button>
+              </>
+            )}
+
+            {field && !outside && (
               <>
                 {field.nearestKm > 0 && via !== 'outline' && (
                   <p className="sheet-note">{t(via === 'gps' ? 'pick.nearestGps' : 'pick.nearest', { km: field.nearestKm, id })}</p>

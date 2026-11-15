@@ -291,3 +291,17 @@ Boundaries, public data; never a farmer's position). Bundled with the app so the
 | `fields[].id` | string | `ec-000` … `ec-299`, same ids as `/shared/fields/` |
 | `fields[].acres` | number | Area of the USDA outline, 1 decimal |
 | `fields[].rings` | number[][][] | `[lat, lon]` points rounded to 5 decimals (~1 m). First ring = outline, the rest = holes |
+
+## Map context layers (`/shared/map-layers.json`)
+Built by `node pipeline/build_map_layers.mjs` (after `build_field_outlines.mjs`; needs internet once). US Census TIGER
+(public domain) from the TIGERweb REST service, plus a hull around the USDA field outlines. Bundled (~3.5 kB), works offline.
+
+| Key | Type | Notes |
+|---|---|---|
+| `county` | number[][][] | Ellis County boundary rings, `[lat, lon]`, simplified to ~200 m |
+| `towns[]` | object | `name`, `geoid`, `lat`, `lon` (Census internal point), `tier` 1–3 by land area (1 = biggest, labeled at lower zoom). Names are not translated |
+| `dallas` | object | `lat`, `lon` (on the county's north edge toward Dallas), `km` from the study centre |
+| `studyHull` | number[][] | Convex hull of the 300 outlines, padded 450 m |
+| `studyCenter`, `studyLabel` | number[] | Mean of the outline points; the hull's northmost point (label anchor) |
+| `nearestTown` | string | Town nearest the study centre (used in "data near ...") |
+| `frame` | number[][] | Opening map view: the hull plus its 3 nearest towns |
