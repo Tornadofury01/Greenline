@@ -18,6 +18,9 @@ shared/v2/validation.json           report card, eight checks (section 2.4)
 shared/v2-sample/sample-field.json  sample of the output (invented numbers, isSampleData: true)
 scoring/modelSlots.js               reads slots: model value if present, else placeholder
 scoring/v2Contract.js               checks an output file against section 2
+scoring/v2/                         option builder, fit checks, optimizer, scores, confidence (docs/v2-options.md)
+scoring/tools/precompute_v2.mjs     writes shared/v2/fields/<id>.json and shared/v2/validation.json
+docs/v2-i18n-keys.md                every i18n key the engine emits, with params
 ```
 
 ## Conventions (all files)
@@ -140,8 +143,10 @@ Built by the engine (step B3). Sample: `shared/v2-sample/sample-field.json` (inv
 | `options` | Option[] (at most 30) | Generated options that passed the fit checks or only warn (kind `generated`) |
 | `bestPlans` | see 2.3 | Three answers |
 | `fieldRisks` | see 2.3 | Stress calendar, erosion, water, climate |
-| `validation` | `{ reportFile, bareDays{}, cropDates{} }` | Field-level validation; `status` `pending-model` until Model A is plugged in |
+| `validation` | `{ reportFile, bareDays{}, cropDates{} }` | Field-level validation, run on what the field really grew (B3): `bareDays` `{ status pass/fail/not-run, simulatedPerYear, measuredPerYear, differenceDays, years }`, `cropDates` `{ status, meanAbsErrorDays, n }`. `not-run` when the crop map names fewer than 3 crops with a calendar (pasture, hay). The calendars are placeholders until Model A is plugged in |
 | `sources` | `{ id, name, resolution, scale }[]` | Datasets behind the numbers (`scale`: `field`, `regional`, `placeholder`) |
+
+**Extra keys written by B3** (the validator ignores them): see `docs/v2-options.md`, "Extra keys in the output".
 
 ### 2.2 Option
 | Key | Type | Meaning |
