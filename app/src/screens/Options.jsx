@@ -1,6 +1,6 @@
 // Screen 4 (v2): Options. Today's rotation first, then the top options against it.
 // Data: ONE loader (data/loadV2.js) -> data/v2Options.js -> cards. The sample banner shows only when the sample is used.
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Lightbulb, Target } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useV2 } from '../state/useV2.js';
@@ -10,7 +10,7 @@ import { SampleBanner, PlaceholderNotice } from '../components/PlaceholderTag.js
 import { NeedField, PageHead } from '../components/Small.jsx';
 
 // The cards themselves (props only, so a preview or test can feed them anything).
-export function OptionsView({ cards, sample = false }) {
+export function OptionsView({ cards, sample = false, photo = '' }) {
   const { t } = useApp();
   const all = [cards.current, ...cards.options];
   // One dollar scale for every card, so the profit bars can be compared by eye.
@@ -27,15 +27,33 @@ export function OptionsView({ cards, sample = false }) {
       {cards.goals.length > 0 && (
         <p className="takeaway small"><Target size={18} aria-hidden="true" /><span>{t('optionsScreen.weightedFor', { goals: cards.goals.map((k) => t(k)).join(', ') })}</span></p>
       )}
-      {all.map((c) => <OptionCard key={c.id} card={c} scale={scale} />)}
+      {all.map((c) => <OptionCard key={c.id} card={c} scale={scale} photo={photo} />)}
       <p className="takeaway small"><Lightbulb size={18} aria-hidden="true" /><span>{t('optionsScreen.takeaway')}</span></p>
     </div>
   );
 }
 
+function useFieldStill(id) {
+  const [src, setSrc] = useState('');
+  useEffect(() => {
+    if (!id) return undefined;
+    const controller = new AbortController();
+    fetch(`${import.meta.env.BASE_URL}history/fields/${id}.json`, { signal: controller.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        const frame = data?.frames?.at(-1);
+        if (frame?.src && !controller.signal.aborted) setSrc(`${import.meta.env.BASE_URL}${frame.src}`);
+      })
+      .catch(() => {});
+    return () => controller.abort();
+  }, [id]);
+  return src;
+}
+
 export default function Options() {
   const { t, field } = useApp();
   const v2 = useV2();
+  const photo = useFieldStill(field?.field?.id);
   const cards = useMemo(() => (v2.status === 'ready' ? buildOptionCards(v2.data) : null), [v2.status, v2.data]);
   if (!field) return <div className="screen"><NeedField /></div>;
   if (v2.status === 'loading') return <div className="screen"><p className="muted" role="status">{t('optionsScreen.loading')}</p></div>;
@@ -48,5 +66,5 @@ export default function Options() {
       </div>
     );
   }
-  return <OptionsView cards={cards} sample={v2.usingSample} />;
+  return <OptionsView cards={cards} sample={v2.usingSample} photo={photo} />;
 }

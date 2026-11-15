@@ -11,7 +11,8 @@
 
 /* ---------- Shared: type, spacing, shape, sizes, motion ---------- */
 :root {
-  --font: "Public Sans Variable", "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: Manrope, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, serif;
   --text-xs: 0.875rem;   /* 14px: source lines and meta only */
   --text-base: 1rem;     /* 16px minimum for body */
   --text-md: 1.125rem;   /* 18px */
@@ -33,9 +34,9 @@
   --s-5: 48px;
 
   /* Shape */
-  --radius-sm: 6px;      /* swatches, tiny tags */
-  --radius: 14px;        /* buttons, chips, inputs, inner tiles */
-  --radius-card: 24px;   /* cards and sheets */
+  --radius-sm: 2px;
+  --radius: 2px;         /* buttons and cards stay flat, like a printed sheet */
+  --radius-card: 2px;
   --radius-pill: 999px;
   --border: 1px solid var(--color-border);
   --brand-forest: #234233;
@@ -70,22 +71,22 @@
 /* ---------- Light theme (also the print theme) ---------- */
 :root, :root[data-theme="light"] {
   color-scheme: light;
-  --color-bg: #f1f4f2;
+  --color-bg: #e7f3e4;
   --color-surface: #ffffff;
-  --color-surface-sunken: #e8eee9;
-  --color-text: #192920;
-  --color-text-muted: #4b6052;
-  --color-border: #d5e0d8;
-  --color-border-strong: #798e80;
+  --color-surface-sunken: #d5e8d6;
+  --color-text: #042a22;
+  --color-text-muted: #3a5c50;
+  --color-border: #c5d9c6;
+  --color-border-strong: #6d8f7c;
 
-  --color-primary: #286049;
-  --color-primary-hover: #204b39;
-  --color-primary-soft: #e3efe6;
-  --color-on-primary: #ffffff;
-  --color-accent: #2d654e;
-  --color-accent-hover: #234f3e;
-  --color-on-accent: #ffffff;
-  --color-accent-border: #2d654e;
+  --color-primary: #042a22;
+  --color-primary-hover: #06382e;
+  --color-primary-soft: #d7ead8;
+  --color-on-primary: #fafafa;
+  --color-accent: #042a22;
+  --color-accent-hover: #06382e;
+  --color-on-accent: #fafafa;
+  --color-accent-border: #042a22;
 
   --color-soil: #7a4e2d;
   --color-soil-soft: #f1e7dc;
@@ -124,27 +125,32 @@
   --map-dim: brightness(1.04) saturate(0.95);
   --shadow-float: 0 6px 24px rgb(27 31 28 / 0.18);
   --backdrop: rgb(27 31 28 / 0.45);
+  /* Moncalisse slide card (cream sheet, brown ink) and Eloqwnt cards (white, 11px and 20px corners). */
+  --mc-paper: #faf8f1;
+  --mc-ink: #271002;
+  --eq-radius: 20px;
+  --eq-radius-sm: 11px;
 }
 
 /* ---------- Dark theme ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-bg: #172c23;
-  --color-surface: #203b2f;
-  --color-surface-sunken: #2c493b;
-  --color-text: #f1f8f3;
-  --color-text-muted: #c4d7ca;
-  --color-border: #3b5949;
-  --color-border-strong: #829d8b;
+  --color-bg: #101614;
+  --color-surface: #1c2622;
+  --color-surface-sunken: #24302b;
+  --color-text: #f7f4ee;
+  --color-text-muted: #c5d4cc;
+  --color-border: #31423b;
+  --color-border-strong: #8aa396;
 
-  --color-primary: #bad8bd;
-  --color-primary-hover: #d1e7d3;
-  --color-primary-soft: #355441;
-  --color-on-primary: #173025;
-  --color-accent: #bad8bd;
-  --color-accent-hover: #d1e7d3;
-  --color-on-accent: #173025;
-  --color-accent-border: #bad8bd;
+  --color-primary: #e7f3e4;
+  --color-primary-hover: #ffffff;
+  --color-primary-soft: #24302b;
+  --color-on-primary: #042a22;
+  --color-accent: #fafafa;
+  --color-accent-hover: #e7f3e4;
+  --color-on-accent: #042a22;
+  --color-accent-border: #fafafa;
 
   --color-soil: #d2a679;
   --color-soil-soft: #2b231a;
@@ -181,6 +187,10 @@
   --map-dim: brightness(0.62) saturate(0.85) contrast(1.05);
   --shadow-float: 0 8px 28px rgb(0 0 0 / 0.55);
   --backdrop: rgb(0 0 0 / 0.6);
+  --mc-paper: #241c16;
+  --mc-ink: #faf8f1;
+  --eq-radius: 20px;
+  --eq-radius-sm: 11px;
 }
 
 /* Paper is always light: the expert handoff prints with dark ink on white whatever the screen theme is. */
