@@ -69,3 +69,14 @@ main:has(.options-page) { max-width: none; }
 /* Satellite replay on the history page: the previous / next buttons keep their own space (the generic
    .icon-btn rule gives them a -12px margin, which made them overlap). */
 .history-replay-page .replay-step-controls .icon-btn { margin: 0; }
+/* Satellite replay controls on the history page, a size up: bigger year buttons, play button, speed menu and
+   step buttons, so the part under the image is easy to tap and read. */
+.history-replay-page .replay-years button { min-height: 56px; font-size: 1.0625rem; font-weight: 600; }
+.history-replay-page .replay-years button[aria-pressed="true"] { font-weight: 700; }
+.history-replay-page .satellite-replay-controls { gap: 14px; }
+.history-replay-page .replay-play { min-height: 52px; min-width: 120px; padding-inline: 16px; font-size: 1rem; }
+.history-replay-page .replay-speed { min-height: 52px; padding: 0 10px; font-size: 1rem; }
+.history-replay-page .replay-step-controls .icon-btn { width: 52px; height: 52px; }
+.history-replay-page .satellite-replay-facts dt { font-size: .875rem; }
+.history-replay-page .satellite-replay-facts dd { font-size: 1.0625rem; }
+@media (max-width: 639px) { .history-replay-page .replay-play { min-width: 0; padding-inline: 12px; } }

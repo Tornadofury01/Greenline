@@ -275,14 +275,10 @@ export default function FieldStory() {
       </section>
 
       {/* Satellite replay, unchanged */}
-      <section id="replay" className="grid w-full grid-cols-1 items-stretch gap-5 px-5 py-8 sm:px-8 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] lg:px-12">
+      <section id="replay" className="w-full px-5 py-8 sm:px-8 lg:px-12">
         {/* history-replay-page: the replay's own layout rules (styles.css) are scoped to this class */}
-        <div className="history-replay-page !mx-0 !max-w-none !p-0">
+        <div className="history-replay-page !max-w-5xl !p-0">
           <SatelliteReplay key={field.field.id} field={field} />
-        </div>
-        {/* On wide screens the key is as tall as the replay and scrolls inside (data-lenis-prevent lets the wheel scroll it) */}
-        <div className="lg:relative">
-          <NumberKey />
         </div>
       </section>
 
@@ -354,6 +350,11 @@ export default function FieldStory() {
           </button>
         </div>
       </section>
+
+      {/* The key, folded away at the very bottom */}
+      <section className="w-full px-5 pb-16 sm:px-8 lg:px-12">
+        <NumberKey />
+      </section>
     </div>
   );
 }
@@ -363,17 +364,21 @@ const KEY_ITEMS = ['image', 'rain', 'bare', 'heat', 'drought', 'storm', 'soil', 
 function NumberKey() {
   const { t } = useApp();
   return (
-    <aside className="gl-card lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain" data-lenis-prevent aria-labelledby="number-key-title" tabIndex={0}>
-      <CardHead icon={BookOpen}><span id="number-key-title">{t('story.key.title')}</span></CardHead>
-      <p className="m-0 mb-4 text-base leading-relaxed text-base-content/75">{t('story.key.intro')}</p>
-      <dl className="m-0 flex flex-col divide-y divide-base-300">
+    <details className="gl-card collapse collapse-arrow rounded-none !p-0">
+      <summary className="collapse-title flex min-h-16 items-center gap-3 px-5 py-4 sm:px-7">
+        <span className="grid h-10 w-10 flex-none place-items-center bg-primary/10 text-primary"><BookOpen size={20} aria-hidden="true" /></span>
+        <span className="text-xl font-semibold tracking-tight sm:text-2xl">{t('story.key.title')}</span>
+      </summary>
+      <div className="collapse-content px-5 sm:px-7">
+      <p className="m-0 mb-5 max-w-3xl text-base leading-relaxed text-base-content/75">{t('story.key.intro')}</p>
+      <dl className="m-0 grid grid-cols-1 gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
         {KEY_ITEMS.map((k) => (
-          <div key={k} className="py-3 first:pt-0">
+          <div key={k} className="border-t border-base-300 py-3">
             <dt className="text-base font-semibold">{t(`story.key.${k}`)}</dt>
             <dd className="m-0 mt-1 text-sm leading-relaxed text-base-content/75">{t(`story.key.${k}Text`)}</dd>
           </div>
         ))}
-        <div className="py-3">
+        <div className="border-t border-base-300 py-3">
           <dt className="text-base font-semibold">{t('story.key.types')}</dt>
           <dd className="m-0 mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-base-content/75">
             {['drought', 'heat', 'normal', 'wet'].map((k) => (
@@ -381,12 +386,13 @@ function NumberKey() {
             ))}
           </dd>
         </div>
-        <div className="py-3 last:pb-0">
+        <div className="border-t border-base-300 py-3">
           <dt className="text-base font-semibold">{t('story.key.lowConf')}</dt>
           <dd className="m-0 mt-1 text-sm leading-relaxed text-base-content/75">{t('story.key.lowConfText')}</dd>
         </div>
       </dl>
-    </aside>
+      </div>
+    </details>
   );
 }
 
