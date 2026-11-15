@@ -1,48 +1,76 @@
-import { FlaskConical, BookOpen, Sun, Moon } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { BookOpen, Plus, X } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import Logo from './Logo.jsx';
-import { NavItems } from './BottomNav.jsx';
+import { NavItems, SCREENS } from './BottomNav.jsx';
+
+const MENU_LABEL = {
+  field: 'nav.field',
+  farm: 'nav.farmLong',
+  story: 'nav.story',
+  options: 'nav.options',
+  plans: 'nav.plans',
+  risks: 'nav.risksLong',
+  sim: 'nav.simLong',
+  compare: 'nav.compareLong',
+  handoff: 'nav.handoffLong',
+};
 
 export default function Header() {
-  const { t, lang, setLang, theme, setTheme, field, screen, setScreen, openHow } = useApp();
-  const nextTheme = theme === 'dark' ? 'light' : 'dark';
+  const { t, lang, setLang, field, screen, setScreen, openHow } = useApp();
+  const [open, setOpen] = useState(false);
+  useEffect(() => { setOpen(false); }, [screen]);
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
   return (
     <>
-      <header className="header">
+      <header className={open ? 'header menu-open' : 'header'}>
         <div className="header-inner">
-          {/* The logo and name are the home button: they go back to the map (the Field screen). */}
           <button type="button" className="brand" aria-label={t('app.home')} title={t('app.home')} onClick={() => setScreen('field')}>
             <Logo />
             <span className="brand-name">{t('app.title')}</span>
-            <span className="brand-tag">{t('app.tagline')}</span>
           </button>
-          {/* Desktop (1024px+): navigation lives in the header. Phones use the bottom bar. */}
           <nav className="top-nav" aria-label={t('nav.label')}>
             <NavItems />
           </nav>
-          <div className="lang" role="group" aria-label={t('app.langGroup')}>
-            {['en', 'es'].map((code) => (
-              <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}
-                aria-label={t(`app.langName.${code}`)}>
-                <span>{t(`app.langShort.${code}`)}</span>
-              </button>
-            ))}
-          </div>
-          {/* Light is easier to read in bright sun; dark is easier at dusk. The choice is saved on this device. */}
-          <button type="button" className="icon-btn theme-btn" aria-label={t(`app.theme.${nextTheme}`)} title={t(`app.theme.${nextTheme}`)}
-            onClick={() => setTheme(nextTheme)}>
-            {theme === 'dark' ? <Sun size={22} aria-hidden="true" /> : <Moon size={22} aria-hidden="true" />}
-          </button>
-          <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
-            aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
-            <BookOpen size={22} aria-hidden="true" />
+          <button type="button" className="menu-btn" aria-expanded={open} aria-controls="site-menu"
+            aria-label={open ? t('nav.menuClose') : t('nav.menu')} onClick={() => setOpen(!open)}>
+            <span>{t('nav.menu')}</span>
+            {open ? <X size={18} aria-hidden="true" /> : <Plus size={18} aria-hidden="true" />}
           </button>
         </div>
       </header>
+      {open && (
+        <div className="menu-sheet" id="site-menu" role="dialog" aria-label={t('nav.label')}>
+          <nav className="menu-list">
+            {SCREENS.map(({ id }) => (
+              <button key={id} type="button" aria-current={screen === id ? 'page' : undefined} onClick={() => setScreen(id)}>
+                {t(MENU_LABEL[id])}
+              </button>
+            ))}
+            <button type="button" aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
+              <BookOpen size={18} aria-hidden="true" />{t('how.open')}
+            </button>
+          </nav>
+          <div className="menu-tools">
+            <div className="lang" role="group" aria-label={t('app.langGroup')}>
+              {['en', 'es'].map((code) => (
+                <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}
+                  aria-label={t(`app.langName.${code}`)}>
+                  <span>{t(`app.langShort.${code}`)}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
       {field?.isSampleData && (
         <div className="sample-strip" role="note">
           <div className="sample-strip-inner">
-            <FlaskConical size={16} aria-hidden="true" />
             <span>{t('app.sampleNotice')}</span>
           </div>
         </div>

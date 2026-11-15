@@ -182,31 +182,29 @@ export function ConfidenceNotes({ capped, isCurrent }) {
   );
 }
 
-export default function OptionCard({ card, scale }) {
+export default function OptionCard({ card, scale, photo = '' }) {
   const { t } = useApp();
   const v2t = useV2Text();
   const [phOpen, setPhOpen] = useState(false);
   const phId = useId();
   const isCurrent = card.kind === 'current';
   const label = isCurrent ? t('optionsScreen.current') : t('optionsScreen.option', { letter: card.letter });
+  const rotation = card.steps.map((crops) => crops.map((id) => t(`crops.${id}`)).join(' + ')).join(' → ');
   return (
-    <article className={`card opt${card.best ? ' is-best' : ''}${isCurrent ? ' is-current' : ''}`} aria-label={label}>
-      <header className="opt-head">
-        <div className="opt-title">
-          <div className="opt-name"><h2>{label}</h2>{card.placeholders.length > 0 && <PlaceholderCardTag open={phOpen} onToggle={() => setPhOpen(!phOpen)} panelId={phId} />}</div>
-          {card.best && <span className="pill pill-best">{t('optionsScreen.best')}</span>}
-          <Steps steps={card.steps} />
-        </div>
-        <GradeBadge grade={card.grade} total={card.total} />
-      </header>
-      {phOpen && <PlaceholderPanel items={card.placeholders} id={phId} />}
-      {!isCurrent && card.deltaTotal != null && (
-        <p className="opt-delta">{signed(card.deltaTotal)} {t('optionsScreen.vsToday')}</p>
-      )}
-
-      <ScoreGrid scores={card.scores} />
-      <FitChecks fit={card.fit} />
-      <ProfitBlock profit={card.profit} scale={scale} isCurrent={isCurrent} />
+    <article className={`eq-service opt${card.best ? ' is-best' : ''}${isCurrent ? ' is-current' : ''}`} aria-label={label}>
+      <div className="eq-copy">
+        <p className="mc-counter"><span>{isCurrent ? '01' : card.letter}</span></p>
+        <div className="opt-name"><h2>{label}</h2>{card.placeholders.length > 0 && <PlaceholderCardTag open={phOpen} onToggle={() => setPhOpen(!phOpen)} panelId={phId} />}</div>
+        {card.best && <span className="mc-discover">{t('optionsScreen.best')}</span>}
+        <p>{rotation}</p>
+        <p className="eq-num">{Math.round(card.total)}<span>{card.grade}</span></p>
+        {!isCurrent && card.deltaTotal != null && (
+          <p className="opt-delta">{signed(card.deltaTotal)} {t('optionsScreen.vsToday')}</p>
+        )}
+        {phOpen && <PlaceholderPanel items={card.placeholders} id={phId} />}
+        <ScoreGrid scores={card.scores} />
+        <FitChecks fit={card.fit} />
+        <ProfitBlock profit={card.profit} scale={scale} isCurrent={isCurrent} />
 
       {!isCurrent && (card.soilSaved || card.nitrogenSaved) && (
         <div className="tiles">
@@ -226,6 +224,8 @@ export default function OptionCard({ card, scale }) {
       )}
 
       <CheckLocally items={card.checkLocally} />
+      </div>
+      {photo && <div className="eq-photo"><img src={photo} alt="" /></div>}
     </article>
   );
 }
