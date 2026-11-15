@@ -1505,3 +1505,39 @@ button:disabled { opacity: .45; cursor: default; }
 }
 .screen-story .mini-stat-icon { display: none; }
 .screen-story .mini-stat-value { font-size: clamp(2rem, 4vw, 2.75rem); font-weight: 500; line-height: 1; }
+
+/* ---------- Surfaces modelled on the reference sites ----------
+   Cards and panels: borderless color blocks with soft 24px corners (Eloqwnt, Traced, APC). Sections are told apart
+   by fill (cream / sage / deep green), never by an outline or a drop shadow.
+   Buttons: solid pills (Traced, Eloqwnt); the main action is deep green on cream (APC) and cream on deep green in the
+   dark theme; secondary is a thin 1px outline pill (Traced); text actions are a bold underlined link (re-cycle).
+   The satellite replay keeps its own original shapes (excluded below). */
+.card:not(.satellite-replay), .rot, .notice, .fs-tile, .farm-sections, .map-scope, .map-legend, .more-menu {
+  border: 0; box-shadow: none;
+}
+.card:not(.satellite-replay), .rot, .farm-sections { border-radius: var(--radius-card); }
+.notice, .fs-tile { border-radius: var(--radius); background: var(--color-surface-sunken); }
+.card:not(.satellite-replay) .card, .card:not(.satellite-replay) .rot { background: var(--color-surface-sunken); }
+
+.btn:not(.satellite-replay .btn) {
+  border-radius: var(--radius-pill); border: 1px solid var(--color-border-strong); background: transparent;
+  padding: 0 28px; font-weight: 600; letter-spacing: -0.005em;
+}
+@media (hover: hover) { .btn:not(.satellite-replay .btn):hover { background: var(--color-surface-sunken); border-color: var(--color-text); } }
+.btn-primary:not(.satellite-replay .btn) { min-height: 54px; border: 0; background: var(--color-accent); color: var(--color-on-accent); }
+@media (hover: hover) { .btn-primary:not(.satellite-replay .btn):hover { background: var(--color-accent-hover); border: 0; } }
+.btn-primary:not(.satellite-replay .btn) svg:last-child { transition: transform var(--dur) var(--ease); }
+@media (hover: hover) { .btn-primary:not(.satellite-replay .btn):hover svg:last-child { transform: translateX(4px); } }
+.btn:not(.satellite-replay .btn):disabled { border-color: transparent; background: var(--color-surface-sunken); }
+.btn-text { text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 6px; }
+
+/* Map chrome: cream (light) or deep green (dark) blocks with no outline, like the reference cards. */
+.map-sheet, .map-ctrl-zoom, .map-ctrl-btn, .map-reopen, .map-search-box, .map-search-panel, .map-gps-btn { border-color: transparent; }
+.map-sheet { border-radius: var(--radius-card); }
+.map-search-box { border-radius: var(--radius-pill); }
+.map-search-panel { border-radius: 20px; }
+.sheet-row-icon { border: 0; background: var(--color-surface-sunken); }
+.pill { border-color: transparent; background: var(--color-surface-sunken); }
+.header .icon-btn, .lang { border-color: transparent; background: var(--color-surface-sunken); }
+.bottom-nav-inner { border-color: transparent; }
+.menu-btn { border-radius: var(--radius-pill); padding: 0 20px; }

@@ -34,15 +34,15 @@
   --s-5: 48px;
 
   /* Shape */
-  --radius-sm: 2px;
-  --radius: 2px;         /* buttons and cards stay flat, like a printed sheet */
-  --radius-card: 2px;
+  --radius-sm: 8px;
+  --radius: 14px;         /* buttons and cards stay flat, like a printed sheet */
+  --radius-card: 24px;
   --radius-pill: 999px;
   --border: 1px solid var(--color-border);
-  --brand-forest: #234233;
-  --brand-leaf: #37694e;
-  --brand-ink: #f6fbf7;
-  --brand-sage: #c5ddc6;
+  --brand-forest: #12402f;
+  --brand-leaf: #2f6a4c;
+  --brand-ink: #f4efe2;
+  --brand-sage: #d7e6c0;
   /* Header stays forest in both themes. These are the only header tones. */
   --header-muted: #d4e5d9;
   --header-soft: #416b52;
@@ -71,22 +71,22 @@
 /* ---------- Light theme (also the print theme) ---------- */
 :root, :root[data-theme="light"] {
   color-scheme: light;
-  --color-bg: #e7f3e4;
-  --color-surface: #ffffff;
-  --color-surface-sunken: #d5e8d6;
-  --color-text: #042a22;
-  --color-text-muted: #3a5c50;
-  --color-border: #c5d9c6;
-  --color-border-strong: #6d8f7c;
+  --color-bg: #f4efe2;
+  --color-surface: #fbf8f0;
+  --color-surface-sunken: #e5ead6;
+  --color-text: #10301f;
+  --color-text-muted: #4b5f4f;
+  --color-border: #dcd5c0;
+  --color-border-strong: #8e9c86;
 
-  --color-primary: #042a22;
-  --color-primary-hover: #06382e;
-  --color-primary-soft: #d7ead8;
-  --color-on-primary: #fafafa;
-  --color-accent: #042a22;
-  --color-accent-hover: #06382e;
-  --color-on-accent: #fafafa;
-  --color-accent-border: #042a22;
+  --color-primary: #12402f;
+  --color-primary-hover: #0b2f22;
+  --color-primary-soft: #dde9cf;
+  --color-on-primary: #f4efe2;
+  --color-accent: #12402f;
+  --color-accent-hover: #0b2f22;
+  --color-on-accent: #f4efe2;
+  --color-accent-border: #12402f;
 
   --color-soil: #7a4e2d;
   --color-soil-soft: #f1e7dc;
@@ -108,49 +108,49 @@
   /* Ground cover states. Bare also carries a stripe pattern, so it never relies on color alone. */
   --chart-green: #4f8a55;
   --chart-residue: #d9c79a;
-  --chart-none: #ebe9e2;
+  --chart-none: #ebe6d6;
   --hatch: rgb(255 255 255 / 0.35);
 
-  --glass: rgb(255 255 255 / 0.9);  /* cards and bars floating over the map */
-  --color-focus: #2b6d50;
+  --glass: rgb(251 248 240 / 0.94);  /* cards and bars floating over the map */
+  --color-focus: #2f6a4c;
   /* Map (light): bright imagery, white map chrome, dark labels with a white halo */
-  --map-bg: #eef0ea;          /* behind the tiles, and the whole map when offline */
+  --map-bg: #efeadc;          /* behind the tiles, and the whole map when offline */
   --map-outline: #ffffff;     /* the 300 field outlines */
   --map-selected: var(--brand-sage);
-  --map-ink: #1b1f1c;         /* labels and notes on the imagery (14:1 on --map-scrim) */
-  --map-halo: rgb(255 255 255 / 0.95);
-  --map-scrim: rgb(255 255 255 / 0.86);
+  --map-ink: #10301f;         /* labels and notes on the imagery (14:1 on --map-scrim) */
+  --map-halo: rgb(251 248 240 / 0.95);
+  --map-scrim: rgb(251 248 240 / 0.88);
   --map-mask: rgb(255 255 255 / 0.38); /* dims everything outside the study area */
-  --map-line: #1b1f1c;        /* county line */
+  --map-line: #10301f;        /* county line */
   --map-dim: brightness(1.04) saturate(0.95);
-  --shadow-float: 0 6px 24px rgb(27 31 28 / 0.18);
+  --shadow-float: 0 10px 30px -12px rgb(16 48 31 / 0.28);
   --backdrop: rgb(27 31 28 / 0.45);
   /* Moncalisse slide card (cream sheet, brown ink) and Eloqwnt cards (white, 11px and 20px corners). */
-  --mc-paper: #faf8f1;
-  --mc-ink: #271002;
-  --eq-radius: 20px;
+  --mc-paper: #fbf8f0;
+  --mc-ink: #10301f;
+  --eq-radius: 24px;
   --eq-radius-sm: 11px;
 }
 
 /* ---------- Dark theme ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-bg: #101614;
-  --color-surface: #1c2622;
-  --color-surface-sunken: #24302b;
-  --color-text: #f7f4ee;
-  --color-text-muted: #c5d4cc;
-  --color-border: #31423b;
-  --color-border-strong: #8aa396;
+  --color-bg: #0d2a1f;
+  --color-surface: #143627;
+  --color-surface-sunken: #1b4231;
+  --color-text: #f4efe2;
+  --color-text-muted: #cbd1bd;
+  --color-border: #24493a;
+  --color-border-strong: #8ea98e;
 
-  --color-primary: #e7f3e4;
+  --color-primary: #f4efe2;
   --color-primary-hover: #ffffff;
-  --color-primary-soft: #24302b;
-  --color-on-primary: #042a22;
-  --color-accent: #fafafa;
-  --color-accent-hover: #e7f3e4;
-  --color-on-accent: #042a22;
-  --color-accent-border: #fafafa;
+  --color-primary-soft: #1f4a37;
+  --color-on-primary: #0d2a1f;
+  --color-accent: #f4efe2;
+  --color-accent-hover: #ffffff;
+  --color-on-accent: #0d2a1f;
+  --color-accent-border: #f4efe2;
 
   --color-soil: #d2a679;
   --color-soil-soft: #2b231a;
@@ -166,30 +166,30 @@
   --chart-heat: #f2c230;
   --chart-wet: #6aa9ff;
   --chart-normal: #7c887f;
-  --chart-covered: #2f4a33;
+  --chart-covered: #2c5a40;
   --chart-bare: #a8713f;
   --chart-green: #6fbf7a;
   --chart-residue: #d9c79a;
-  --chart-none: #262d28;
-  --hatch: rgb(14 18 16 / 0.45);
+  --chart-none: #1a3a2c;
+  --hatch: rgb(13 42 31 / 0.45);
 
-  --glass: rgb(32 59 47 / 0.94);
-  --color-focus: #d1e7d3;
+  --glass: rgb(20 54 39 / 0.95);
+  --color-focus: #d7e6c0;
   /* Map (dark): imagery darkened so outlines pop, light labels with a dark halo */
-  --map-bg: #0b0e0c;
-  --map-outline: #f1f4ee;
+  --map-bg: #0a2018;
+  --map-outline: #f4efe2;
   --map-selected: var(--brand-sage);
-  --map-ink: #f1f4ee;         /* 12:1 on --map-scrim */
-  --map-halo: rgb(11 14 12 / 0.95);
-  --map-scrim: rgb(11 14 12 / 0.72);
-  --map-mask: rgb(11 14 12 / 0.42);
-  --map-line: #f1f4ee;
+  --map-ink: #f4efe2;         /* 12:1 on --map-scrim */
+  --map-halo: rgb(10 32 24 / 0.95);
+  --map-scrim: rgb(10 32 24 / 0.74);
+  --map-mask: rgb(10 32 24 / 0.45);
+  --map-line: #f4efe2;
   --map-dim: brightness(0.62) saturate(0.85) contrast(1.05);
-  --shadow-float: 0 8px 28px rgb(0 0 0 / 0.55);
+  --shadow-float: 0 12px 32px -10px rgb(0 0 0 / 0.55);
   --backdrop: rgb(0 0 0 / 0.6);
-  --mc-paper: #241c16;
-  --mc-ink: #faf8f1;
-  --eq-radius: 20px;
+  --mc-paper: #143627;
+  --mc-ink: #f4efe2;
+  --eq-radius: 24px;
   --eq-radius-sm: 11px;
 }
 
