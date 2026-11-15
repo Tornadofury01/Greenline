@@ -1,4 +1,4 @@
-// Screen 4 (v2): Options. Today's rotation first, then the top options against it.
+// Options is the full v2 list; Plans keeps the short recommended comparison.
 // Data: ONE loader (data/loadV2.js) -> data/v2Options.js -> cards. The sample banner shows only when the sample is used.
 import { useMemo } from 'react';
 import { Lightbulb, Target } from 'lucide-react';
@@ -16,7 +16,7 @@ export function OptionsView({ cards, sample = false }) {
   // One dollar scale for every card, so the profit bars can be compared by eye.
   const pad = 10;
   const scale = {
-    min: Math.max(0, Math.min(...all.map((c) => c.profit.low)) - pad),
+    min: Math.min(...all.map((c) => c.profit.low)) - pad,
     max: Math.max(...all.map((c) => c.profit.high)) + pad,
   };
   return (
@@ -36,7 +36,7 @@ export function OptionsView({ cards, sample = false }) {
 export default function Options() {
   const { t, field } = useApp();
   const v2 = useV2();
-  const cards = useMemo(() => (v2.status === 'ready' ? buildOptionCards(v2.data) : null), [v2.status, v2.data]);
+  const cards = useMemo(() => (v2.status === 'ready' ? buildOptionCards(v2.data, Infinity) : null), [v2.status, v2.data]);
   if (!field) return <div className="screen"><NeedField /></div>;
   if (v2.status === 'loading') return <div className="screen"><p className="muted" role="status">{t('optionsScreen.loading')}</p></div>;
   if (v2.status === 'error') {

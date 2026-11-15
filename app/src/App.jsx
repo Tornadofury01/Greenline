@@ -6,7 +6,6 @@ import PickField from './screens/PickField.jsx';
 import YourFarm from './screens/YourFarm.jsx';
 import FieldStory from './screens/FieldStory.jsx';
 import CompareRotations from './screens/CompareRotations.jsx';
-import Options from './screens/Options.jsx';
 import Plans from './screens/Plans.jsx';
 import Risks from './screens/Risks.jsx';
 import Simulator from './screens/Simulator.jsx';
@@ -19,7 +18,7 @@ const SCREEN_COMPONENTS = {
   farm: YourFarm,
   story: FieldStory,
   risks: Risks,
-  options: Options,
+  options: Plans, // compatibility: the navigation setter opens Browse all rotations
   plans: Plans,
   sim: Simulator,
   compare: CompareRotations,
@@ -38,7 +37,7 @@ export default function App() {
     const id = query.get('field');
     if (/^ec-\d{3}$/.test(id || '') && Number(id.slice(3)) < 300) {
       pickFieldById(id);
-      if (query.get('screen') === 'story') setScreen('story');
+      if (SCREEN_COMPONENTS[query.get('screen')]) setScreen(query.get('screen'));
     }
   }, [pickFieldById, setScreen]);
   const Screen = SCREEN_COMPONENTS[screen];

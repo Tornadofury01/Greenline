@@ -3,7 +3,8 @@
 import scoresConfig from '@content/v2-scores.json';
 
 export const TOP_OPTIONS = 3;
-const LETTERS = 'ABCDEFGHIJ';
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const optionLetter = (i) => i < 26 ? LETTERS[i] : `${LETTERS[Math.floor(i / 26) - 1]}${LETTERS[i % 26]}`;
 
 // Which model slots feed each number on screen (docs/v2-data-contract.md section 1, "Feeds"). A number is tagged
 // a placeholder when ANY slot that feeds it was a placeholder when the option was run. The card shows ONE tag; tapping it
@@ -45,7 +46,7 @@ function card(o, data, i, currentTotal, bestId) {
   return {
     id: o.id,
     kind: isCurrent ? 'current' : 'option',
-    letter: isCurrent ? null : LETTERS[i],
+    letter: isCurrent ? null : optionLetter(i),
     best: !isCurrent && o.id === bestId,
     steps: (o.sequence || []).map((y) => y.crops.map((c) => c.crop)), // one entry per rotation year; co-crops together
     total,
@@ -91,11 +92,11 @@ function card(o, data, i, currentTotal, bestId) {
 }
 
 // { current, options, goals } for the screen. Options are the TOP_OPTIONS by weighted total.
-export function buildOptionCards(data) {
+export function buildOptionCards(data, limit = TOP_OPTIONS) {
   const weights = data.priorities.weights;
   const totalOf = (o) => o.weightedTotal ?? totalFrom(o.scores, weights);
   const currentTotal = totalOf(data.current);
-  const top = [...data.options].sort((a, b) => totalOf(b) - totalOf(a)).slice(0, TOP_OPTIONS);
+  const top = [...data.options].sort((a, b) => totalOf(b) - totalOf(a)).slice(0, limit);
   // "Best match" = the file's best balance, if it is among the options shown and beats today; else none.
   const bb = data.bestPlans?.bestBalance?.optionId;
   const bestId = top.find((o) => o.id === bb && totalOf(o) > currentTotal)?.id ?? null;

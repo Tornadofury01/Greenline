@@ -1,6 +1,6 @@
 // App-wide state: language, current screen, selected field, and the farmer's answers.
 // Only the language is saved in localStorage (it can be empty or blocked). Farm answers are not kept between visits.
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { makeT } from '../i18n.js';
 import { loadFieldAt, loadFieldById, loadNearest, guessCurrentRotation } from '../data/loadField.js';
 
@@ -46,7 +46,13 @@ export function AppProvider({ children }) {
     mq.addEventListener('change', onChange);
     return () => mq.removeEventListener('change', onChange);
   }, []);
-  const [screen, setScreen] = useState('field');
+  const [screen, setScreenRaw] = useState('field');
+  const [browseRotations, setBrowseRotations] = useState(false);
+  // Legacy Options opens the secondary browser inside Plans; Compare opens the decision cards.
+  const setScreen = useCallback((next) => {
+    setBrowseRotations(next === 'options');
+    setScreenRaw(next === 'compare' || next === 'options' ? 'plans' : next);
+  }, []);
   // "How we know" is opened from the header and from cards: remember where to return and which term to show.
   const [how, setHow] = useState({ from: 'field', term: null });
   const openHow = (term = null) => { setHow({ from: screen === 'how' ? how.from : screen, term }); setScreen('how'); };
@@ -110,7 +116,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, clearField, pickNearest, retryLoad, loadError, loading, farm, updateFarm, tillage, setTillage };
+  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, browseRotations, setBrowseRotations, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, clearField, pickNearest, retryLoad, loadError, loading, farm, updateFarm, tillage, setTillage };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

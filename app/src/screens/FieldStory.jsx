@@ -138,7 +138,7 @@ function Replay({ year }) {
           <StripeRows rows={[cover]} perRow={1} yearType={{}} />
         </div>
       )}
-      <button type="button" className="btn btn-block" onClick={() => { setReplayYear(year); setScreen('compare'); }}>
+      <button type="button" className="btn btn-block" onClick={() => { setReplayYear(year); setScreen('plans'); }}>
         {t('replayUi.see', { year })}<ArrowRight size={20} aria-hidden="true" />
       </button>
     </div>
