@@ -1396,9 +1396,18 @@
     "weightedFor": "Ponderado según sus metas: {goals}.",
     "neighbors": "{count} campos a menos de {miles} millas hacen esto.",
     "checkOf": "Prueba de {name}",
-    "indexLabel": "En esta página",
     "sideBySide": "Lado a lado",
-    "seeDetails": "Ver detalles"
+    "seeDetails": "Ver detalles",
+    "heroBest": "Ver la mejor opción",
+    "heroCompare": "Comparar todas",
+    "statBest": "Mejor opción",
+    "statGain": "Mejor que hoy",
+    "statCount": "Rotaciones comparadas",
+    "statCountDesc": "Lo que siembra ahora y las mejores opciones",
+    "compareIntro": "Cada rotación con un puntaje de 100 para esta parcela. Toque una para verla de cerca.",
+    "detailsTitle": "Véala de cerca",
+    "detailsIntro": "Elija una rotación para ver sus puntajes, pruebas, dinero y qué tan seguros estamos.",
+    "cropOrder": "Orden de cultivos"
   },
   "placeholder": {
     "noOutlook": "Aún no hay pronóstico; se usa el promedio del calendario."
