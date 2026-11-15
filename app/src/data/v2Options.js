@@ -15,6 +15,10 @@ export const FEEDS = {
   profit: ['calibrationE', 'modelB'],
   soilSaved: ['modelA'],
   nitrogenSaved: ['calibrationE'],
+  // Best plans: the management choices come from the optimizer's simulated yields.
+  management: ['calibrationE', 'modelB'],
+  // Field risks: which slot feeds each card.
+  risk: { stress: ['modelB'], erosion: ['modelA'], climate: ['modelC'] },
 };
 
 // Weighted total (0-100) -> letter, using the cut-offs in v2-scores.json (highest cut-off first).
@@ -28,9 +32,10 @@ export function totalFrom(scores, weights) {
   return Math.round(scoresConfig.scores.reduce((a, s) => a + (scores[s.id]?.value ?? 0) * (weights[s.id] ?? s.weight), 0));
 }
 
-const isPlaceholder = (feeds, placeholderSlots) => feeds.some((s) => placeholderSlots.has(s));
+export const slotSet = (data, o) => new Set(o?.placeholderSlots ?? data.slots.placeholderSlots);
+export const isPlaceholder = (feeds, placeholderSlots) => feeds.some((s) => placeholderSlots.has(s));
 // The slots (in contract order) that a number is still waiting for.
-const waitingFor = (feeds, placeholderSlots) => feeds.filter((s) => placeholderSlots.has(s));
+export const waitingFor = (feeds, placeholderSlots) => feeds.filter((s) => placeholderSlots.has(s));
 
 function card(o, data, i, currentTotal, bestId) {
   const ph = new Set(o.placeholderSlots ?? data.slots.placeholderSlots);
@@ -93,4 +98,13 @@ export function buildOptionCards(data) {
     options: top.map((o, i) => card(o, data, i, currentTotal, bestId)),
     goals: (data.priorities.selected || []).map((p) => scoresConfig.priorities[p]?.nameKey).filter(Boolean),
   };
+}
+
+// One option as a card, looked up by id (used by Best plans). null when the id is not in the file.
+export function buildCardFor(data, optionId) {
+  const o = data.options.find((x) => x.id === optionId);
+  if (!o) return null;
+  const weights = data.priorities.weights;
+  const totalOf = (x) => x.weightedTotal ?? totalFrom(x.scores, weights);
+  return card(o, data, 0, totalOf(data.current), null);
 }

@@ -7,6 +7,8 @@ import YourFarm from './screens/YourFarm.jsx';
 import FieldStory from './screens/FieldStory.jsx';
 import CompareRotations from './screens/CompareRotations.jsx';
 import Options from './screens/Options.jsx';
+import Plans from './screens/Plans.jsx';
+import Risks from './screens/Risks.jsx';
 import ExpertHandoff from './screens/ExpertHandoff.jsx';
 import HowWeKnow from './screens/HowWeKnow.jsx';
 
@@ -15,7 +17,9 @@ const SCREEN_COMPONENTS = {
   field: PickField,
   farm: YourFarm,
   story: FieldStory,
+  risks: Risks,
   options: Options,
+  plans: Plans,
   compare: CompareRotations,
   handoff: ExpertHandoff,
   how: HowWeKnow, // opened from the header and from card links, not a bottom tab

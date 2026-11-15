@@ -24,7 +24,14 @@
     "story": "Historial",
     "compare": "Comparar",
     "handoff": "Experto",
-    "options": "Opciones"
+    "options": "Opciones",
+    "risks": "Riesgos",
+    "plans": "Planes",
+    "more": "Más",
+    "moreLabel": "Más pantallas",
+    "farmLong": "Su granja",
+    "compareLong": "Comparar rotaciones",
+    "handoffLong": "Entrega al experto"
   },
   "common": {
     "judgmentNote": "Esta herramienta apoya su criterio y a sus expertos locales. No los reemplaza.",
@@ -1227,5 +1234,171 @@
   },
   "placeholder": {
     "noOutlook": "Aún no hay pronóstico; se usa el promedio del calendario."
+  },
+  "plansScreen": {
+    "title": "Mejores planes",
+    "intro": "Tres respuestas para este campo, lado a lado: el más rentable, el mejor equilibrio para sus metas y el más seguro.",
+    "loading": "Cargando planes…",
+    "error": {
+      "network": "No pudimos cargar los planes. Revise su conexión e intente de nuevo.",
+      "invalid": "El archivo de planes de este campo no pasó nuestras revisiones, así que no lo mostramos."
+    },
+    "limitsTitle": "Dentro de sus límites",
+    "limits": {
+      "risk": {
+        "worst10-no-worse-than-current": "El 10% de las peores temporadas no es peor que lo que siembra ahora."
+      },
+      "soil": {
+        "erosion-under-T": "La erosión se mantiene por debajo del límite del suelo (T)."
+      },
+      "fitChecks": {
+        "no-fail": "Ninguna revisión de ajuste falla."
+      }
+    },
+    "glanceTitle": "De un vistazo",
+    "typicalPerAcre": "típica, por acre al año",
+    "glanceChance": "Supera lo actual en {pct}% de las simulaciones",
+    "kind": {
+      "mostProfitable": {
+        "name": "Más rentable",
+        "blurb": "La mayor ganancia típica dentro de sus límites."
+      },
+      "bestBalance": {
+        "name": "Mejor equilibrio",
+        "blurb": "La que mejor encaja con las metas que eligió."
+      },
+      "safest": {
+        "name": "Más segura",
+        "blurb": "El mejor resultado en las peores temporadas."
+      }
+    },
+    "sameAs": "Mismo plan que: {name}",
+    "rotationTitle": "Rotación",
+    "vsToday": "{diff} por acre al año frente a lo que siembra ahora (típico)",
+    "mgmtTitle": "Decisiones de manejo",
+    "mgmt": {
+      "label": {
+        "plantingDate": "Fecha de siembra",
+        "nitrogen": "Nitrógeno",
+        "maturity": "Variedad",
+        "cover": "Fin del cultivo de cobertura",
+        "doubleCrop": "Cultivo doble",
+        "tillage": "Labranza",
+        "irrigation": "Riego"
+      },
+      "plantingDate": {
+        "early": "Temprana",
+        "normal": "Normal",
+        "late": "Tardía"
+      },
+      "nitrogen": {
+        "rate": "{lb} lb por acre",
+        "none": "Ninguno"
+      },
+      "maturity": {
+        "short": "Ciclo corto",
+        "full": "Ciclo completo"
+      },
+      "cover": {
+        "early": "2 a 4 semanas antes de sembrar",
+        "at-planting": "Al sembrar",
+        "none": "Sin cultivo de cobertura"
+      },
+      "doubleCrop": {
+        "yes": "Sí",
+        "no": "No"
+      },
+      "tillage": {
+        "conventional": "Convencional",
+        "reduced": "Reducida",
+        "no-till": "Siembra directa"
+      },
+      "irrigation": {
+        "none": "Ninguno (secano)",
+        "limited": "Limitado",
+        "full": "Completo"
+      }
+    },
+    "ph": {
+      "profit": "Rango de ganancia y probabilidad de superar lo actual",
+      "management": "Decisiones de manejo"
+    },
+    "takeaway": "Son los mejores resultados esperados que encontramos dentro de sus límites. No son garantías. Consulte los puntos locales con su agente de extensión antes de cambiar algo."
+  },
+  "risksScreen": {
+    "title": "Riesgos del campo",
+    "intro": "Cuándo es más vulnerable este campo, dónde el suelo está en riesgo y cómo pueden cambiar las heladas y el calor hacia 2040.",
+    "loading": "Cargando riesgos del campo…",
+    "error": {
+      "network": "No pudimos cargar los riesgos del campo. Revise su conexión e intente de nuevo.",
+      "invalid": "El archivo de riesgos de este campo no pasó nuestras revisiones, así que no lo mostramos."
+    },
+    "level": {
+      "low": "Bajo",
+      "medium": "Medio",
+      "high": "Alto"
+    },
+    "stress": {
+      "title": "Calendario de estrés",
+      "intro": "Probabilidad, en porcentaje, de que un mes traiga estrés por sequía o calor a los cultivos de aquí.",
+      "peak": "Meses de mayor riesgo: {months}.",
+      "noPeak": "Ningún mes destaca como de riesgo alto."
+    },
+    "next": {
+      "title": "Próximos meses",
+      "chanceUnit": "de probabilidad de estrés",
+      "range": "Probablemente entre {low}% y {high}%"
+    },
+    "erosion": {
+      "title": "Zonas de erosión",
+      "intro": "Las partes del campo que más suelo pierden.",
+      "share": "{pct}% del campo",
+      "unit": "toneladas por acre al año",
+      "none": "No se encontraron zonas de erosión.",
+      "zoneFallback": "Parte del campo"
+    },
+    "water": {
+      "title": "Agua y agua subterránea",
+      "word": {
+        "falling": "Bajando",
+        "steady": "Estable",
+        "rising": "Subiendo",
+        "unknown": "Se desconoce",
+        "not-applicable": "No se usa"
+      },
+      "line": {
+        "falling": "El agua subterránea bajo este campo está bajando.",
+        "steady": "El agua subterránea bajo este campo está estable.",
+        "rising": "El agua subterránea bajo este campo está subiendo.",
+        "unknown": "No conocemos la tendencia del agua subterránea de este campo.",
+        "not-applicable": "Este es un campo de secano, así que el agua subterránea no aplica."
+      }
+    },
+    "climate": {
+      "title": "Heladas y calor: ahora y en 2040",
+      "now": "Ahora",
+      "y2040": "2040",
+      "name": {
+        "frostFreeDays": "Días sin helada al año",
+        "heatDays": "Días de calor al año",
+        "rainVariability": "Variabilidad de la lluvia"
+      },
+      "rainHint": "Cuánto puede diferir la lluvia de un año de lo normal. Más alto significa menos predecible.",
+      "same": "Sin cambio",
+      "up": {
+        "days": "{n} días más",
+        "points": "{n} puntos más"
+      },
+      "down": {
+        "days": "{n} días menos",
+        "points": "{n} puntos menos"
+      }
+    },
+    "ph": {
+      "stress": "Calendario de estrés y próximos meses",
+      "erosion": "Zonas de erosión",
+      "climate": "Heladas y calor en 2040"
+    },
+    "takeaway": "Son rangos probables a partir de registros del clima y modelos del campo, no pronósticos. Confírmelos con su agente de extensión."
   }
 }

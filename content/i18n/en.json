@@ -24,7 +24,14 @@
     "story": "History",
     "compare": "Compare",
     "handoff": "Expert",
-    "options": "Options"
+    "options": "Options",
+    "risks": "Risks",
+    "plans": "Plans",
+    "more": "More",
+    "moreLabel": "More screens",
+    "farmLong": "Your farm",
+    "compareLong": "Compare rotations",
+    "handoffLong": "Expert handoff"
   },
   "common": {
     "judgmentNote": "This tool supports your judgment and your local experts. It does not replace them.",
@@ -1227,5 +1234,171 @@
   },
   "placeholder": {
     "noOutlook": "No outlook yet; the calendar average is used."
+  },
+  "plansScreen": {
+    "title": "Best plans",
+    "intro": "Three answers for this field, side by side: the most profitable, the best balance for your goals and the safest.",
+    "loading": "Loading plans…",
+    "error": {
+      "network": "We could not load the plans. Check your connection and try again.",
+      "invalid": "The plans file for this field did not pass our checks, so we are not showing it."
+    },
+    "limitsTitle": "Within your limits",
+    "limits": {
+      "risk": {
+        "worst10-no-worse-than-current": "The worst 10% of seasons are no worse than what you grow now."
+      },
+      "soil": {
+        "erosion-under-T": "Erosion stays under the soil limit (T)."
+      },
+      "fitChecks": {
+        "no-fail": "No fit check fails."
+      }
+    },
+    "glanceTitle": "At a glance",
+    "typicalPerAcre": "typical, per acre a year",
+    "glanceChance": "Beats today in {pct}% of runs",
+    "kind": {
+      "mostProfitable": {
+        "name": "Most profitable",
+        "blurb": "The highest typical profit that stays within your limits."
+      },
+      "bestBalance": {
+        "name": "Best balance",
+        "blurb": "The best fit for the goals you picked."
+      },
+      "safest": {
+        "name": "Safest",
+        "blurb": "The best result in the worst seasons."
+      }
+    },
+    "sameAs": "Same plan as: {name}",
+    "rotationTitle": "Rotation",
+    "vsToday": "{diff} per acre a year vs what you grow now (typical)",
+    "mgmtTitle": "Management choices",
+    "mgmt": {
+      "label": {
+        "plantingDate": "Planting date",
+        "nitrogen": "Nitrogen",
+        "maturity": "Variety",
+        "cover": "Cover crop ends",
+        "doubleCrop": "Double crop",
+        "tillage": "Tillage",
+        "irrigation": "Irrigation"
+      },
+      "plantingDate": {
+        "early": "Early",
+        "normal": "Normal",
+        "late": "Late"
+      },
+      "nitrogen": {
+        "rate": "{lb} lb per acre",
+        "none": "None"
+      },
+      "maturity": {
+        "short": "Short season",
+        "full": "Full season"
+      },
+      "cover": {
+        "early": "2 to 4 weeks before planting",
+        "at-planting": "At planting",
+        "none": "No cover crop"
+      },
+      "doubleCrop": {
+        "yes": "Yes",
+        "no": "No"
+      },
+      "tillage": {
+        "conventional": "Conventional",
+        "reduced": "Reduced",
+        "no-till": "No-till"
+      },
+      "irrigation": {
+        "none": "None (dryland)",
+        "limited": "Limited",
+        "full": "Full"
+      }
+    },
+    "ph": {
+      "profit": "Profit range and chance of beating today",
+      "management": "Management choices"
+    },
+    "takeaway": "These are the best expected results we found within your limits. They are not guarantees. Check the local items with your extension agent before you change anything."
+  },
+  "risksScreen": {
+    "title": "Field risks",
+    "intro": "When this field is most vulnerable, where soil is at risk, and how frost and heat may change by 2040.",
+    "loading": "Loading field risks…",
+    "error": {
+      "network": "We could not load the field risks. Check your connection and try again.",
+      "invalid": "The risks file for this field did not pass our checks, so we are not showing it."
+    },
+    "level": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "stress": {
+      "title": "Stress calendar",
+      "intro": "Chance that a month brings dry or hot stress to the crops here, in percent.",
+      "peak": "Riskiest months: {months}.",
+      "noPeak": "No month stands out as high risk."
+    },
+    "next": {
+      "title": "Next months",
+      "chanceUnit": "chance of stress",
+      "range": "Likely between {low}% and {high}%"
+    },
+    "erosion": {
+      "title": "Erosion hotspots",
+      "intro": "The parts of the field that lose the most soil.",
+      "share": "{pct}% of the field",
+      "unit": "tons per acre a year",
+      "none": "No erosion hotspots found.",
+      "zoneFallback": "Part of the field"
+    },
+    "water": {
+      "title": "Water and groundwater",
+      "word": {
+        "falling": "Falling",
+        "steady": "Steady",
+        "rising": "Rising",
+        "unknown": "Not known",
+        "not-applicable": "Not used"
+      },
+      "line": {
+        "falling": "Groundwater under this field is falling.",
+        "steady": "Groundwater under this field is steady.",
+        "rising": "Groundwater under this field is rising.",
+        "unknown": "We do not know the groundwater trend for this field.",
+        "not-applicable": "This is a dryland field, so groundwater does not apply."
+      }
+    },
+    "climate": {
+      "title": "Frost and heat: now and 2040",
+      "now": "Now",
+      "y2040": "2040",
+      "name": {
+        "frostFreeDays": "Frost-free days a year",
+        "heatDays": "Hot days a year",
+        "rainVariability": "Rain variability"
+      },
+      "rainHint": "How much a year's rain can differ from usual. Higher means less predictable.",
+      "same": "No change",
+      "up": {
+        "days": "{n} more days",
+        "points": "{n} points more"
+      },
+      "down": {
+        "days": "{n} fewer days",
+        "points": "{n} points less"
+      }
+    },
+    "ph": {
+      "stress": "Stress calendar and next months",
+      "erosion": "Erosion hotspots",
+      "climate": "Frost and heat in 2040"
+    },
+    "takeaway": "These are likely ranges from weather records and field models, not forecasts. Confirm with your extension agent."
   }
 }
