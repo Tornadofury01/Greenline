@@ -12,6 +12,7 @@ import { planToSim, takePlayPlan } from './playPlan.js';
 import { GameCanvas } from './GameCanvas.jsx';
 import { Toolbar } from './Toolbar.jsx';
 import { SeasonView } from './SeasonView.jsx';
+import { Scoreboard } from './Scoreboard.jsx';
 import { runSeason, USING_MOCK } from './runSource.js';
 import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
 import { YEARS, PLOTS, BUDGET_PER_PLOT, CHALLENGES, emptyPlot, fillPlot } from './plots.js';
@@ -235,11 +236,8 @@ export default function FarmGame() {
           playing={playing} setPlaying={setPlaying} onMonth={setMonth} onCoins={setCoins} onDone={() => { setSeasonDone(true); setPlaying(false); }}
           sound={sound} calm={calm} accent={accent} hudRef={hudRef} coinRef={coinRef} usd={usd} done={seasonDone} />
       )}
-      {phase === 'season' && seasonDone && (
-        <div className="gm-board-cta">
-          <button type="button" className="btn btn-primary btn-block" onClick={endSeason}>{t(k >= YEARS - 1 ? 'game.results.end' : 'game.results.next')}<ArrowRight size={18} aria-hidden="true" /></button>
-        </div>
-      )}
+      {phase === 'season' && seasonDone && <Scoreboard runs={season.runs} k={k} last={k >= YEARS - 1} onNext={endSeason} usd={usd} top={(hudRef.current?.offsetHeight ?? 100) + 4} />}
+
     </div>
   );
 }

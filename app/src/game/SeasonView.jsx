@@ -100,7 +100,7 @@ export function SeasonView({ runs, prevRuns, coinsBefore, plots, labels, playing
     <>
       <GameCanvas getFrame={getFrame} onTap={(i) => setSel(sel === i ? -1 : i)} pads={pads} api={api} label={t('game.scene.alt')} />
       <div className="gm-pop-slot" aria-live="polite" style={{ top: (hudRef.current?.offsetHeight ?? 120) + 6 }}>
-        {pop && (
+        {pop && !done && (
           <div className={`gm-pop${pop.harvest ? ' is-harvest' : ''}`} key={`${pop.key}-${pop.day}-${pop.plot}`}>
             <p className="gm-pop-text">{pop.plot >= 0 && <span className="gm-pop-plot">{pop.plot + 1}</span>}{popText}</p>
             <p className="gm-pop-src">{t(`game.src.${pop.src}`)}</p>

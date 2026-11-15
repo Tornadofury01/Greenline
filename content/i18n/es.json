@@ -2103,7 +2103,7 @@
       "pest": "{pest} en {crop}: cerca del {pct}% de la cosecha en riesgo",
       "lowN": "Al cultivo de {crop} le falta nitrógeno: las hojas se ponen amarillas",
       "frost": "La helada mató el cultivo de {crop}",
-      "harvest": "Cosecha: {units} {unit}/acre de {crop}, {usd}/acre"
+      "harvest": "Cosecha: {units} {unit} de {crop}, {usd}/acre"
     },
     "src": {
       "power": "Temperatura NASA POWER (mensual), patrón diario simulado",
@@ -2122,6 +2122,21 @@
       "root-knot-nematode": "Nematodo agallador",
       "charcoal-rot": "Pudrición carbonosa",
       "sugarcane-aphid": "Pulgón de la caña"
+    },
+    "board": {
+      "title": "Cosecha: el clima de {year}",
+      "intro": "Una tarjeta por parcela. Toque un indicador para ver por qué. El dinero es de esta temporada; los indicadores cubren todas las temporadas jugadas.",
+      "winner": "Mejor en general",
+      "winnerNote": "Mejor en general = el promedio más alto de los puntajes de dinero, riesgo, suelo, agua, nutrientes y plagas.",
+      "phNote": "Algunos indicadores usan modelos provisionales hasta conectar los modelos del campo."
+    },
+    "whySrc": {
+      "money": "Fuente: el registro de dinero del simulador.",
+      "frost": "Fuente: etapas del cultivo simuladas y días de helada (temperatura NASA POWER).",
+      "pests": "Fuente: los contadores de plagas del simulador y la biblioteca de cultivos.",
+      "heat": "Fuente: temperatura NASA POWER y el límite de calor del cultivo (biblioteca de cultivos).",
+      "water": "Fuente: el balance de agua del simulador en suelo SSURGO, clima NASA POWER y GPM IMERG.",
+      "yield": "Fuente: el rendimiento simulado comparado con un rendimiento típico del condado (USDA NASS)."
     }
   }
 }

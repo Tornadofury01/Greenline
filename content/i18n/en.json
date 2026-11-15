@@ -2103,7 +2103,7 @@
       "pest": "{pest} on the {crop}: about {pct}% of the yield at risk",
       "lowN": "The {crop} is short of nitrogen: leaves turn yellow",
       "frost": "Frost killed the {crop}",
-      "harvest": "Harvest: {units} {unit}/acre of {crop}, {usd}/acre"
+      "harvest": "Harvest: {units} {unit} of {crop}, {usd}/acre"
     },
     "src": {
       "power": "NASA POWER temperature (monthly), daily pattern simulated",
@@ -2122,6 +2122,21 @@
       "root-knot-nematode": "Root-knot nematode",
       "charcoal-rot": "Charcoal rot",
       "sugarcane-aphid": "Sugarcane aphid"
+    },
+    "board": {
+      "title": "Harvest: the weather of {year}",
+      "intro": "One card per plot. Tap a meter to see why. Money is this season; the meters cover all seasons played so far.",
+      "winner": "Best all-round",
+      "winnerNote": "Best all-round = highest average of the money, risk, soil, water, nutrient and pest scores.",
+      "phNote": "Some meters use placeholder models until the field models are plugged in."
+    },
+    "whySrc": {
+      "money": "Source: the simulator's money ledger.",
+      "frost": "Source: simulated crop stages and frost days (NASA POWER temperature).",
+      "pests": "Source: the simulator's pest counters and the crop library.",
+      "heat": "Source: NASA POWER temperature and the crop's heat limit (crop library).",
+      "water": "Source: the simulator's water balance on SSURGO soil, NASA POWER and GPM IMERG weather.",
+      "yield": "Source: the simulator's yield compared with a typical yield for this county (USDA NASS)."
     }
   }
 }
