@@ -175,7 +175,7 @@ export function ConfidenceNotes({ capped, isCurrent }) {
       {isCurrent && (
         <p className="opt-conf-reason">
           {t('v2.honest.tillage')}{' '}
-          <button type="button" className="btn-text" onClick={() => setScreen('sim')}>{t('v2.honest.tillageTry')}</button>
+          <button type="button" className="btn-text" onClick={() => setScreen('farm')}>{t('v2.honest.tillageTry')}</button>
         </p>
       )}
     </>

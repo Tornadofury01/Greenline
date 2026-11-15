@@ -169,7 +169,17 @@
     "stepN": "Paso {n}",
     "metaCrops": "{n} cultivos",
     "metaPicked": "{n} elegidas",
-    "privacy": "Sus respuestas se quedan en este teléfono y se borran al cerrar la app."
+    "privacy": "Sus respuestas se quedan en este teléfono. Solo se recuerdan su idioma, el tema y su elección de labranza.",
+    "tillage": {
+      "title": "¿Cómo labra?",
+      "opt": {
+        "conventional": "Convencional",
+        "reduced": "Reducida",
+        "no-till": "Siembra directa"
+      },
+      "assumed": "Labranza reducida: es nuestra suposición hasta que usted nos diga. Toque una opción para cambiarla.",
+      "saved": "Guardado en este teléfono. Define la labranza de su rotación actual en el simulador de la finca."
+    }
   },
   "story": {
     "seeRisks": "Ver los riesgos de este campo",
@@ -1203,14 +1213,14 @@
     "honest": {
       "confCap": "La confianza no puede ser alta hasta que nuestros modelos del campo estén listos.",
       "tillage": "Supone labranza reducida; no sabemos cómo labra usted.",
-      "tillageTry": "Probar otra labranza en el simulador de la finca",
+      "tillageTry": "Cámbiela en la pantalla Granja",
       "costShare": "Costos compartidos: no estimados.",
       "fixedCosts": "Costos fijos: valores provisionales."
     },
     "val": {
       "title": "Boleta de validación",
       "intro": "Ocho pruebas del simulador contra datos medidos, en {n} campos del condado de Ellis. Mostramos todos los resultados, incluso los que fallaron.",
-      "misses": "Estos errores vienen sobre todo de valores provisionales que los modelos del campo van a reemplazar.",
+      "misses": "Algunas diferencias vienen de valores provisionales que nuestros modelos del campo van a reemplazar; otras las seguimos ajustando en el motor.",
       "target": "Meta",
       "measured": "Medido",
       "status": {

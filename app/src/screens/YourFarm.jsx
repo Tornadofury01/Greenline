@@ -37,7 +37,7 @@ function Group({ label, children }) {
 }
 
 export default function YourFarm() {
-  const { t, farm, updateFarm, setScreen } = useApp();
+  const { t, farm, updateFarm, setScreen, tillage, setTillage } = useApp();
   const opt = (group) => (id) => t(`options.${group}.${id}`);
 
   return (
@@ -48,6 +48,12 @@ export default function YourFarm() {
         meta={farm.currentRotation.length ? t('farm.metaCrops', { n: farm.currentRotation.length }) : null}>
         <RotationPicker label={t('farm.step1')} value={farm.currentRotation} onChange={(v) => updateFarm({ currentRotation: v })} />
       </Step>
+
+      <section className="card" aria-labelledby="till-h">
+        <h2 id="till-h" className="card-kicker"><Sprout size={18} aria-hidden="true" />{t('farm.tillage.title')}</h2>
+        <ChipGroup label={t('farm.tillage.title')} options={['conventional', 'reduced', 'no-till']} value={tillage || 'reduced'} onChange={setTillage} labelFor={(id) => t(`farm.tillage.opt.${id}`)} />
+        <p className="hint">{tillage ? t('farm.tillage.saved') : t('farm.tillage.assumed')}</p>
+      </section>
 
       <Step n={2} icon={Target} title={t('farm.step2')} meta={t('farm.metaPicked', { n: farm.priorities.length })}>
         <p className="hint">{t('farm.step2Hint')}</p>

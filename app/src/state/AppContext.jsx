@@ -59,6 +59,10 @@ export function AppProvider({ children }) {
   const setReplayYear = (year) => { setReplayYearRaw(year); if (year != null) setWhatIfRaw(null); };
   const setWhatIf = (w) => { setWhatIfRaw(w); if (w) setReplayYearRaw(null); };
   const [farm, setFarm] = useState({ ...DEFAULT_FARM });
+  // Tillage (conventional / reduced / no-till) is the one farm answer kept on this device. null = not told yet:
+  // the app then assumes reduced tillage and says so.
+  const [tillage, setTillageRaw] = useState(() => { try { const v = localStorage.getItem('greenline:tillage'); return ['conventional', 'reduced', 'no-till'].includes(v) ? v : null; } catch { return null; } });
+  const setTillage = (v) => { setTillageRaw(v); try { localStorage.setItem('greenline:tillage', v); } catch { /* ignore */ } };
 
   useEffect(() => {
     // Only the language is remembered. The farm answers are never saved: they reset on every visit.
@@ -96,7 +100,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, pickNearest, retryLoad, loadError, loading, farm, updateFarm };
+  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, pickNearest, retryLoad, loadError, loading, farm, updateFarm, tillage, setTillage };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

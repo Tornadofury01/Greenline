@@ -169,7 +169,17 @@
     "stepN": "Step {n}",
     "metaCrops": "{n} crops",
     "metaPicked": "{n} picked",
-    "privacy": "Your answers stay on this phone and reset when you close the app."
+    "privacy": "Your answers stay on this phone. Only your language, theme and tillage choice are remembered.",
+    "tillage": {
+      "title": "How do you till?",
+      "opt": {
+        "conventional": "Conventional",
+        "reduced": "Reduced",
+        "no-till": "No-till"
+      },
+      "assumed": "Reduced tillage: our assumption until you tell us. Tap a choice to change it.",
+      "saved": "Saved on this phone. It sets the tillage of your current rotation in the farm simulator."
+    }
   },
   "story": {
     "seeRisks": "See this field's risks",
@@ -1203,14 +1213,14 @@
     "honest": {
       "confCap": "Confidence can't be high until our field models are ready.",
       "tillage": "Assumes reduced tillage; we don't know your tillage.",
-      "tillageTry": "Try other tillage in the farm simulator",
+      "tillageTry": "Change it on the Farm screen",
       "costShare": "Cost-share: not estimated.",
       "fixedCosts": "Fixed costs: placeholder values."
     },
     "val": {
       "title": "Validation report card",
       "intro": "Eight checks of the simulator against measured data, run on {n} Ellis County fields. We show every result, including the ones that failed.",
-      "misses": "These misses come mainly from placeholder values the field models will replace.",
+      "misses": "Some gaps come from placeholder values our field models will replace; others we're still tuning in the engine.",
       "target": "Target",
       "measured": "Measured",
       "status": {

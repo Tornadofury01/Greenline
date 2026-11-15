@@ -168,7 +168,7 @@ function SeasonTable({ plan, label, showLabel }) {
 }
 
 export default function Simulator() {
-  const { t, field, lang } = useApp();
+  const { t, field, lang, tillage } = useApp();
   const { status, progress, result, band, bandStatus, error, start } = useSimRuns();
   const slots = useMemo(() => (field ? slotsFor(field) : null), [field]);
   const fieldId = field?.field?.id;
@@ -185,11 +185,14 @@ export default function Simulator() {
   const [speed, setSpeed] = useState('normal');
   const [drawerOpen, setDrawerOpen] = useState(true);
 
+  // The farmer's tillage answer (Farm screen) is the current rotation's tillage; Plan A follows it when it changes.
+  useEffect(() => { if (tillage) setPlanA((a) => (a ? { ...a, controls: { ...a.controls, tillage } } : a)); }, [tillage]);
+
   // "Your farm today" for the picked field; Plan B starts as the same rotation with a cereal rye cover and no-till.
   useEffect(() => {
     if (!field || !slots) return;
     const crops = todayCrops(field, slots);
-    setPlanA({ id: 'A', crops, controls: defaultControls() });
+    setPlanA({ id: 'A', crops, controls: { ...defaultControls(), ...(tillage ? { tillage } : {}) } });
     setPlanB({ id: 'B', crops: crops.map((y) => ({ ...y, cover: 'cereal_rye' })), controls: { ...defaultControls(), tillage: 'no-till' } });
     const ys = pastYears(field);
     setScen((s) => ({ ...s, year: ys.includes(2011) ? 2011 : ys[0] }));
