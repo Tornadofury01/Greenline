@@ -13,6 +13,8 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 button, input { font: inherit; color: inherit; }
+button, a, summary { cursor: pointer; }
+button:disabled { cursor: not-allowed; }
 img, svg { display: block; }
 
 h1, h2, h3, h4, p, ul, ol, dl, dd { margin: 0; }
@@ -40,14 +42,14 @@ ul, ol { padding-left: var(--s-3); }
 }
 .header {
   --color-text: var(--brand-ink);
-  --color-text-muted: #d4e5d9;
+  --color-text-muted: var(--header-muted);
   --color-primary: var(--brand-sage);
-  --color-primary-soft: #416b52;
+  --color-primary-soft: var(--header-soft);
   --color-on-primary: var(--brand-forest);
-  --color-surface: #29503d;
-  --color-surface-sunken: #3e6e53;
-  --color-border: #557a64;
-  --color-border-strong: #86a892;
+  --color-surface: var(--header-surface);
+  --color-surface-sunken: var(--header-sunken);
+  --color-border: var(--header-border);
+  --color-border-strong: var(--header-border-strong);
   --color-focus: var(--brand-sage);
   position: sticky; top: 0; z-index: 1000;
   background: linear-gradient(110deg, var(--brand-forest), var(--brand-leaf));
@@ -64,8 +66,10 @@ ul, ol { padding-left: var(--s-3); }
 .header .icon-btn {
   width: 44px; height: 44px; margin: 0; border-radius: 50%;
   background: var(--color-surface); border: var(--border); color: var(--color-text);
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
 @media (hover: hover) { .header .icon-btn:hover { border-color: var(--color-border-strong); } }
+.header .icon-btn:active { transform: scale(0.96); }
 
 /* Small pill toggle. The buttons are 44px tall to tap; the raised pill drawn inside the selected one is smaller. */
 .lang {
@@ -115,15 +119,22 @@ main { max-width: var(--content-w); margin: 0 auto; }
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
   background: none; border: 0; cursor: pointer; border-radius: var(--radius-pill);
   color: var(--color-text-muted); font-size: 0.8125rem; font-weight: var(--weight-medium);
+  transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
 }
 .bottom-nav button svg, .bottom-nav button span { position: relative; z-index: 1; }
 /* Active tab: bright bold label and a heavier icon in the accent (weight + brightness, not color alone). */
-.bottom-nav button[aria-current="page"] { color: var(--color-text); font-weight: var(--weight-bold); }
+.bottom-nav button[aria-current="page"] { color: var(--color-text); font-weight: var(--weight-bold); background: var(--color-primary-soft); }
 .bottom-nav button[aria-current="page"] svg { color: var(--color-primary); }
+@media (hover: hover) {
+  .bottom-nav button:hover:not([aria-current="page"]) { color: var(--color-text); background: var(--color-surface-sunken); }
+}
 .bottom-nav button:focus-visible { outline-offset: -4px; }
 
 /* ---------- Page layout ---------- */
 .screen { padding: var(--s-3) var(--s-2) var(--s-4); display: flex; flex-direction: column; gap: var(--s-2); }
+/* Page change settles in. The map stays still: a transform on that screen would trap its fixed controls. */
+.app:not(.app-map) .screen { animation: screen-in var(--dur) var(--ease); }
+@keyframes screen-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .page-head { display: flex; flex-direction: column; gap: var(--s-1); margin-bottom: var(--s-1); }
 .page-head p { color: var(--color-text-muted); }
 .section-title { display: flex; align-items: center; gap: var(--s-half); }
@@ -183,6 +194,7 @@ main { max-width: var(--content-w); margin: 0 auto; }
   transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease);
 }
 @media (hover: hover) { .chip:hover { border-color: var(--color-primary); } }
+.chip:active { background: var(--color-primary-soft); }
 .chip[aria-checked="true"] {
   background: var(--color-primary-soft); border: 2px solid var(--color-primary);
   padding: 0 calc(var(--s-2) - 1px); font-weight: var(--weight-bold); color: var(--color-primary);
@@ -227,7 +239,9 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 .icon-btn {
   width: var(--tap); height: var(--tap); margin: -12px -12px 0 0; flex-shrink: 0;
   display: inline-grid; place-items: center; border: 0; background: none; border-radius: 50%; cursor: pointer;
+  transition: background-color var(--dur) var(--ease), transform var(--dur) var(--ease);
 }
+.icon-btn:active { transform: scale(0.96); }
 
 /* ---------- Source line ---------- */
 .source {
@@ -391,7 +405,7 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 .glance-name { display: flex; align-items: center; gap: var(--s-1); font-weight: var(--weight-medium); min-width: 0; }
 .glance-score { font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; font-size: var(--text-md); }
 .glance-bar { grid-column: 1 / -1; height: 10px; border-radius: 5px; background: var(--color-surface-sunken); overflow: hidden; }
-.glance-bar span { display: block; height: 100%; border-radius: 5px; background: var(--color-border-strong); }
+.glance-bar span { display: block; height: 100%; border-radius: 5px; background: var(--color-border-strong); transition: width var(--dur) var(--ease); }
 .glance-row.is-best .glance-bar span { background: var(--color-primary); }
 
 /* ---------- Rotation cards (the visual highlight) ---------- */
@@ -525,6 +539,7 @@ dialog.sheet::backdrop { background: var(--backdrop); }
     display: flex; align-items: center; gap: var(--s-1);
     background: none; border: 0; cursor: pointer;
     color: var(--color-text-muted); font-weight: var(--weight-medium);
+    transition: color var(--dur) var(--ease), background-color var(--dur) var(--ease);
   }
   .top-nav button svg { width: 20px; height: 20px; }
   .top-nav button[aria-current="page"] { color: var(--color-text); font-weight: var(--weight-bold); }
@@ -580,6 +595,12 @@ dialog.sheet::backdrop { background: var(--backdrop); }
   display: flex; flex-direction: column; gap: 6px; margin: 6px 0 2px; padding: var(--s-1) var(--s-2);
   border-left: 3px solid var(--color-water); background: var(--color-water-soft); border-radius: var(--radius-sm);
   font-size: var(--text-xs); color: var(--color-text); font-weight: normal;
+  transform-origin: top center;
+  animation: receipt-open 280ms var(--ease);
+}
+@keyframes receipt-open {
+  from { opacity: 0; transform: perspective(480px) rotateX(-16deg); }
+  to { opacity: 1; transform: none; }
 }
 .receipt-title { font-weight: var(--weight-bold); }
 .receipt-row { display: flex; flex-direction: column; }
@@ -908,7 +929,7 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 .tile-value { font-size: 1.5rem; font-weight: var(--weight-num); line-height: 1.15; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .tile-unit, .tile-note { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.3; }
 .thin-bar { display: block; height: 4px; margin: 6px 0 4px; border-radius: 2px; background: var(--color-border); overflow: hidden; }
-.thin-bar span { display: block; height: 100%; border-radius: 2px; background: var(--color-text); }
+.thin-bar span { display: block; height: 100%; border-radius: 2px; background: var(--color-text); transition: width var(--dur) var(--ease); }
 .tile-wide { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 12px; }
 .tile-col { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 /* Mini bar chart: 12 months, the barest one highlighted. Height = chance the ground is bare that month. */
@@ -1053,6 +1074,9 @@ dialog.sheet::backdrop { background: var(--backdrop); }
 }
 
 /* ---------- Motion: short and calm, off for people who ask for less ---------- */
+/* A short label or number that changes in place (verdict, score). The site font stays; only the ink moves. */
+.morph.is-on { display: inline-block; animation: morph-in var(--dur) var(--ease); }
+@keyframes morph-in { from { opacity: 0.2; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }
@@ -1166,7 +1190,9 @@ dialog.sheet::backdrop { background: var(--backdrop); }
   position: absolute; right: var(--nav-gap); bottom: calc(100% + var(--s-1)); list-style: none; margin: 0; padding: var(--s-1);
   min-width: 220px; max-width: calc(100vw - 2 * var(--nav-gap)); pointer-events: auto;
   background: var(--color-surface); border: var(--border); border-radius: var(--radius-card); box-shadow: var(--shadow-float);
+  transform-origin: bottom right; animation: menu-in var(--dur) var(--ease);
 }
+@keyframes menu-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .bottom-nav { position: fixed; }
 .more-menu button {
   width: 100%; min-height: 48px; display: flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: var(--s-1);

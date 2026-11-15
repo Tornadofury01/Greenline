@@ -43,7 +43,7 @@ export default function Options() {
     return (
       <div className="screen">
         <PageHead title={t('optionsScreen.title')} />
-        <p className="sheet-note sheet-warn" role="alert">{t(`optionsScreen.error.${v2.error === 'invalid' ? 'invalid' : 'network'}`)}</p>
+        <p className="sheet-note sheet-warn" role="alert">{t(`optionsScreen.error.${['invalid', 'missing'].includes(v2.error) ? v2.error : 'network'}`)}</p>
         <button type="button" className="btn" onClick={() => window.location.reload()}>{t('pick.retry')}</button>
       </div>
     );

@@ -1388,7 +1388,8 @@
     "loading": "Cargando opciones…",
     "error": {
       "network": "No pudimos cargar las opciones. Revise su conexión e inténtelo de nuevo.",
-      "invalid": "El archivo de opciones de este campo no pasó nuestras revisiones, así que no lo mostramos."
+      "invalid": "El archivo de opciones de este campo no pasó nuestras revisiones, así que no lo mostramos.",
+      "missing": "Todavía no hay datos aquí: este campo aún no se ha calculado. Elija otro campo en el mapa."
     },
     "weightedFor": "Ponderado según sus metas: {goals}.",
     "neighbors": "{count} campos a menos de {miles} millas hacen esto.",
@@ -1403,7 +1404,8 @@
     "loading": "Cargando planes…",
     "error": {
       "network": "No pudimos cargar los planes. Revise su conexión e intente de nuevo.",
-      "invalid": "El archivo de planes de este campo no pasó nuestras revisiones, así que no lo mostramos."
+      "invalid": "El archivo de planes de este campo no pasó nuestras revisiones, así que no lo mostramos.",
+      "missing": "Todavía no hay datos aquí: este campo aún no se ha calculado. Elija otro campo en el mapa."
     },
     "limitsTitle": "Dentro de sus límites",
     "limits": {
@@ -1493,7 +1495,8 @@
     "loading": "Cargando riesgos del campo…",
     "error": {
       "network": "No pudimos cargar los riesgos del campo. Revise su conexión e intente de nuevo.",
-      "invalid": "El archivo de riesgos de este campo no pasó nuestras revisiones, así que no lo mostramos."
+      "invalid": "El archivo de riesgos de este campo no pasó nuestras revisiones, así que no lo mostramos.",
+      "missing": "Todavía no hay datos aquí: este campo aún no se ha calculado. Elija otro campo en el mapa."
     },
     "level": {
       "low": "Bajo",

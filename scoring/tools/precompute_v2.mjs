@@ -1,13 +1,16 @@
-// Precompute the v2 output for every Ellis County study field: shared/v2/fields/<id>.json (docs/v2-data-contract.md 2.1)
+// Precompute the v2 output for the North Texas fields: shared/v2/fields/<id>.json (docs/v2-data-contract.md 2.1)
 // and the report card shared/v2/validation.json. Each file is checked with scoring/v2Contract.js before it is written.
+// Inputs: shared/v2/input-index.json + shared/v2/inputs/<id>.json (pipeline/v2/build_inputs.py). Run guide: docs/v2-precompute-guide.md
 //
-//   node scoring/tools/precompute_v2.mjs                    all 300 fields, 6 worker threads
-//   node scoring/tools/precompute_v2.mjs --ids ec-251,ec-000 --workers 2
-//   node scoring/tools/precompute_v2.mjs --out shared/v2/fields-test --no-report
+//   node scoring/tools/precompute_v2.mjs                              every field in the index, 6 worker threads
+//   node scoring/tools/precompute_v2.mjs --counties 48139,48217,48251 one computer's share (no report card: --no-report)
+//   node scoring/tools/precompute_v2.mjs --ids 48139-0000 --workers 1 --out shared/v2/fields-test --no-report
+//   node scoring/tools/precompute_v2.mjs --legacy                     the old v1 Ellis files (ec-*)
+//   node scoring/tools/precompute_v2.mjs --report-only                report card from the output files already there
 //
 // Model slot files in shared/v2/models/<id>.json are picked up automatically (placeholders are used where a file or section is missing).
 import { Worker, isMainThread, parentPort, workerData } from 'node:worker_threads';
-import { readFileSync, writeFileSync, readdirSync, mkdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, readdirSync, mkdirSync, statSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 
@@ -24,22 +27,80 @@ if (isMainThread) {
   const outDir = resolve(rootPath, arg('--out', 'shared/v2/fields'));
   const workers = Math.max(1, Number(arg('--workers', 6)));
   const noReport = argv.includes('--no-report');
-  const allIds = readdirSync(resolve(rootPath, 'shared/fields')).filter((f) => /^ec-\d+\.json$/.test(f)).map((f) => f.replace('.json', '')).sort();
-  const ids = arg('--ids', null) ? arg('--ids').split(',') : allIds;
-  mkdirSync(outDir, { recursive: true });
-
-  // regional context: how common is each crop among the study fields, and where is everybody
-  const index = [];
-  const grewIn = {};
-  for (const id of allIds) {
-    const f = readJson(resolve(rootPath, `shared/fields/${id}.json`));
-    const hist = f.cropHistory ?? [];
-    const recent = new Set(hist.slice(-RECENT_CROP_YEARS).map((r) => r.crop));
-    for (const c of recent) grewIn[c] = (grewIn[c] ?? 0) + 1;
-    index.push({ id, lat: f.field.lat, lon: f.field.lon, crops: [...new Set(hist.slice(-NEIGHBOR_CROP_YEARS).map((r) => r.crop))] });
+  // Which fields. v2 (default): every field in shared/v2/input-index.json (pipeline/v2/build_inputs.py), optionally only
+  // --counties 48139,48217 or --ids. The index also carries each field's recent crops, so the regional context below is
+  // the same on every computer even when each one only has its own counties' input files. --legacy: the v1 ec-* files.
+  const legacy = argv.includes('--legacy');
+  const indexPath = resolve(rootPath, 'shared/v2/input-index.json');
+  let index, cropShareFor;
+  if (legacy) {
+    const allIds = readdirSync(resolve(rootPath, 'shared/fields')).filter((f) => /^ec-\d+\.json$/.test(f)).map((f) => f.replace('.json', '')).sort();
+    const grewIn = {};
+    index = allIds.map((id) => {
+      const f = readJson(resolve(rootPath, `shared/fields/${id}.json`));
+      const hist = f.cropHistory ?? [];
+      for (const c of new Set(hist.slice(-RECENT_CROP_YEARS).map((r) => r.crop))) grewIn[c] = (grewIn[c] ?? 0) + 1;
+      return { id, county: 'ec', lat: f.field.lat, lon: f.field.lon, crops: [...new Set(hist.slice(-NEIGHBOR_CROP_YEARS).map((r) => r.crop))] };
+    });
+    const share = Object.fromEntries(Object.entries(grewIn).map(([c, n]) => [c, n / allIds.length]));
+    cropShareFor = () => share;
+  } else {
+    if (!existsSync(indexPath)) { console.error('shared/v2/input-index.json is missing: run python pipeline/v2/build_inputs.py first (or pass --legacy)'); process.exit(1); }
+    const rows = readJson(indexPath).fields;
+    index = rows.map((r) => ({ id: r.id, county: r.countyFips, lat: r.lat, lon: r.lon, crops: r.neighborCrops }));
+    // how common each crop is among the fields of the SAME county (market fit), grown in the last 8 crop-map years
+    const byCounty = {};
+    for (const r of rows) {
+      const c = (byCounty[r.countyFips] ??= { n: 0, grew: {} });
+      c.n++;
+      for (const crop of r.recentCrops) c.grew[crop] = (c.grew[crop] ?? 0) + 1;
+    }
+    const shares = Object.fromEntries(Object.entries(byCounty).map(([k, c]) => [k, Object.fromEntries(Object.entries(c.grew).map(([crop, n]) => [crop, n / c.n]))]));
+    cropShareFor = (county) => shares[county] ?? {};
   }
-  const cropFieldShare = Object.fromEntries(Object.entries(grewIn).map(([c, n]) => [c, n / allIds.length]));
+  const counties = arg('--counties', null)?.split(',');
+  let ids = arg('--ids', null) ? arg('--ids').split(',') : index.filter((x) => !counties || counties.includes(x.county)).map((x) => x.id);
+  if (!legacy) {
+    const missing = ids.filter((id) => !existsSync(resolve(rootPath, `shared/v2/inputs/${id}.json`)));
+    if (missing.length) console.warn(`skipping ${missing.length} fields with no input file in shared/v2/inputs (e.g. ${missing.slice(0, 3).join(', ')})`);
+    ids = ids.filter((id) => !missing.includes(id));
+  }
+  mkdirSync(outDir, { recursive: true });
+  const cropFieldShare = Object.fromEntries([...new Set(index.map((x) => x.county))].map((k) => [k, cropShareFor(k)]));
   const now = new Date().toISOString();
+  const rawDir = resolve(rootPath, 'shared/v2/validation-raw');
+  const loadInput = (id) => readJson(existsSync(resolve(rootPath, `shared/v2/inputs/${id}.json`)) ? resolve(rootPath, `shared/v2/inputs/${id}.json`) : resolve(rootPath, `shared/fields/${id}.json`));
+  function writeCard(card, path) {
+    return import('../v2Contract.js').then(({ validateReportCard }) => {
+      const probs = validateReportCard(card);
+      if (probs.length) console.error('report card problems', probs);
+      writeFileSync(path, JSON.stringify(card, null, 1));
+      console.log(`Report card written: ${path}`);
+      for (const c of card.checks) console.log(`  check ${c.id}: ${c.status}`);
+    });
+  }
+  // One card per county from every validation-raw file present (merge both computers' runs first), Hill included.
+  // shared/v2/validation.json (the card the app shows) = Ellis (48139) when it is there, else the largest county.
+  async function writeReport() {
+    const { buildReportCard } = await import('../v2/reportCard.js');
+    const rows = readdirSync(rawDir).filter((f) => !f.startsWith('_') && f.endsWith('.json')).map((f) => readJson(resolve(rawDir, f)));
+    const byCounty = {};
+    for (const r of rows) (byCounty[r.county] ??= []).push(r);
+    mkdirSync(resolve(rootPath, 'shared/v2/validation-by-county'), { recursive: true });
+    const cards = {};
+    for (const [county, rs] of Object.entries(byCounty)) {
+      const nassPath = resolve(rawDir, `_nass-${county}.json`);
+      const nass = existsSync(nassPath) ? readJson(nassPath) : [];
+      cards[county] = buildReportCard(rs.map((r) => ({ fieldId: r.fieldId, bare: r.bare, dateErrors: r.dateErrors, yields: r.yields })), nass, {
+        generatedAt: now, engineVersion: rs[0].engineVersion, defaultTillage: rs[0].tillage,
+      });
+      await writeCard(cards[county], resolve(rootPath, `shared/v2/validation-by-county/${county}.json`));
+    }
+    const main = cards['48139'] ?? Object.entries(byCounty).sort((x, y) => y[1].length - x[1].length).map(([k]) => cards[k])[0];
+    if (main) await writeCard(main, resolve(rootPath, 'shared/v2/validation.json'));
+    console.log(`Report cards from ${rows.length} fields in ${Object.keys(byCounty).length} counties`);
+  }
+  if (argv.includes('--report-only')) { await writeReport(); process.exit(0); }
   console.log(`precompute v2: ${ids.length} fields, ${workers} workers -> ${outDir}`);
   const t0 = Date.now();
   const results = [];
@@ -70,18 +131,27 @@ if (isMainThread) {
   const kept = good.map((r) => r.kept).sort((a, b) => a - b);
   console.log(`Options kept per field: min ${kept[0]}, median ${kept[kept.length >> 1]}, max ${kept[kept.length - 1]}.`);
   for (const r of bad.slice(0, 5)) console.log('  contract problems', r.id, r.problems.slice(0, 3));
+  // Per-field validation numbers go to shared/v2/validation-raw/ so a report card can merge runs from several computers.
+  if (!legacy) {
+    mkdirSync(rawDir, { recursive: true });
+    const nassDone = new Set();
+    for (const r of good) {
+      const county = index.find((x) => x.id === r.id)?.county;
+      writeFileSync(resolve(rawDir, `${r.id}.json`), JSON.stringify({ fieldId: r.id, county, engineVersion: r.engineVersion, tillage: r.tillage, ...r.validationRaw }));
+      if (county && !nassDone.has(county)) {
+        nassDone.add(county);
+        writeFileSync(resolve(rawDir, `_nass-${county}.json`), JSON.stringify(loadInput(r.id).market.yields));
+      }
+    }
+  }
   if (!noReport && good.length) {
-    const { buildReportCard } = await import('../v2/reportCard.js');
-    const { validateReportCard } = await import('../v2Contract.js');
-    const first = readJson(resolve(rootPath, `shared/fields/${ids[0]}.json`));
-    const card = buildReportCard(good.map((r) => ({ fieldId: r.id, bare: r.validationRaw.bare, dateErrors: r.validationRaw.dateErrors, yields: r.validationRaw.yields })), first.market.yields, {
-      generatedAt: now, engineVersion: good[0].engineVersion, defaultTillage: good[0].tillage,
-    });
-    const probs = validateReportCard(card);
-    if (probs.length) console.error('report card problems', probs);
-    writeFileSync(resolve(rootPath, 'shared/v2/validation.json'), JSON.stringify(card, null, 1));
-    console.log('Report card written: shared/v2/validation.json');
-    for (const c of card.checks) console.log(`  check ${c.id}: ${c.status}`);
+    if (legacy) {
+      const { buildReportCard } = await import('../v2/reportCard.js');
+      const first = loadInput(ids[0]);
+      await writeCard(buildReportCard(good.map((r) => ({ fieldId: r.id, ...r.validationRaw })), first.market.yields, {
+        generatedAt: now, engineVersion: good[0].engineVersion, defaultTillage: good[0].tillage,
+      }), resolve(rootPath, 'shared/v2/validation.json'));
+    } else await writeReport();
   }
   process.exit(failed ? 1 : 0);
 } else {
@@ -106,7 +176,7 @@ if (isMainThread) {
       const me = index.find((x) => x.id === id);
       const near = index.filter((x) => x.id !== id && hav(me, x) * MILES_PER_KM <= NEIGHBOR_RADIUS_MILES);
       const neighborsFor = (cash) => ({ count: near.filter((x) => cash.every((c) => x.crops.includes(c))).length, radiusMiles: NEIGHBOR_RADIUS_MILES });
-      const { out, meta } = analyzeField({ field, slots, library, economics, scoresConfig, regional: { cropFieldShare }, neighborsFor, now, validationExtra: true });
+      const { out, meta } = analyzeField({ field, slots, library, economics, scoresConfig, regional: { cropFieldShare: cropFieldShare[me.county] ?? {} }, neighborsFor, now, validationExtra: true });
       const problems = validateFieldOutput(out, scoresConfig);
       const text = JSON.stringify(out);
       writeFileSync(resolve(outDir, `${id}.json`), text);

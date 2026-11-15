@@ -11,6 +11,7 @@ import { PRIORITIES } from '@scoring/index.js';
 import { topReasons } from '@scoring/confidence.js';
 import { Receipt } from './Small.jsx';
 import Verdict from './Verdict.jsx';
+import TextMorph from './TextMorph.jsx';
 import CoverStrip from './CoverStrip.jsx';
 import { DollarTile, DollarNotes, DollarDetails } from './DollarBlock.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
@@ -266,7 +267,7 @@ export default function RotationCard({ result, label, name, best = false, delta 
           <div className="rot-score">
             {maxed
               ? <Verdict verdict={rp.verdict} maxed big />
-              : <div className="rot-score-num">{shown}</div>}
+              : <div className="rot-score-num"><TextMorph text={shown} /></div>}
             <div className="rot-score-of">{rp ? scenarioTitle : t('compare.outOf')}</div>
           </div>
         </div>

@@ -1388,7 +1388,8 @@
     "loading": "Loading options…",
     "error": {
       "network": "We could not load the options. Check your connection and try again.",
-      "invalid": "The options file for this field did not pass our checks, so we are not showing it."
+      "invalid": "The options file for this field did not pass our checks, so we are not showing it.",
+      "missing": "No data here yet: this field has not been worked out. Pick another field on the map."
     },
     "weightedFor": "Weighted for your goals: {goals}.",
     "neighbors": "{count} fields within {miles} miles do this.",
@@ -1403,7 +1404,8 @@
     "loading": "Loading plans…",
     "error": {
       "network": "We could not load the plans. Check your connection and try again.",
-      "invalid": "The plans file for this field did not pass our checks, so we are not showing it."
+      "invalid": "The plans file for this field did not pass our checks, so we are not showing it.",
+      "missing": "No data here yet: this field has not been worked out. Pick another field on the map."
     },
     "limitsTitle": "Within your limits",
     "limits": {
@@ -1493,7 +1495,8 @@
     "loading": "Loading field risks…",
     "error": {
       "network": "We could not load the field risks. Check your connection and try again.",
-      "invalid": "The risks file for this field did not pass our checks, so we are not showing it."
+      "invalid": "The risks file for this field did not pass our checks, so we are not showing it.",
+      "missing": "No data here yet: this field has not been worked out. Pick another field on the map."
     },
     "level": {
       "low": "Low",

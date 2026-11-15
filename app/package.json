@@ -4,8 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "dev": "node scripts/pack-v2-fields.mjs && vite",
+    "build": "node scripts/pack-v2-fields.mjs && vite build",
     "preview": "vite preview",
     "selftest": "node ../scoring/selftest.js",
     "i18n": "node scripts/check-i18n.mjs",

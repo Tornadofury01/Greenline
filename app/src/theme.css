@@ -42,6 +42,13 @@
   --brand-leaf: #37694e;
   --brand-ink: #f6fbf7;
   --brand-sage: #c5ddc6;
+  /* Header stays forest in both themes. These are the only header tones. */
+  --header-muted: #d4e5d9;
+  --header-soft: #416b52;
+  --header-surface: #29503d;
+  --header-sunken: #3e6e53;
+  --header-border: #557a64;
+  --header-border-strong: #86a892;
   --imagery-edge: #adcbb887;
 
   /* Sizes */
