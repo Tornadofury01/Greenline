@@ -6,7 +6,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
   Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw,
-  Plus, Minus, Scan, X, ChevronUp, Sprout, Info, Compass, ArrowLeft, Navigation2,
+  Plus, Minus, Scan, X, ChevronUp, ChevronDown, Sprout, Info, Compass, ArrowLeft, Navigation2,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
@@ -247,7 +247,7 @@ function CropRow({ field }) {
 }
 
 export default function PickField() {
-  const { t, field, pickField, pickFieldById, pickDemo, pickNearest, retryLoad, loadError, loading, setScreen } = useApp();
+  const { t, field, pickField, pickFieldById, clearField, pickNearest, retryLoad, loadError, loading, setScreen } = useApp();
   const online = useOnline();
   const [map, setMap] = useState(null);
   // How the current field was picked ('tap' | 'gps' | 'outline') and the state of the GPS button. No coordinates are kept here.
@@ -258,6 +258,8 @@ export default function PickField() {
   const dragStart = useRef(null);
   const bottomRef = useRef(null);
   const topRef = useRef(null);
+  const lookup = useRef(0);
+  const [overviewReset, setOverviewReset] = useState(0);
 
   const [zoom, setZoom] = useState(11);
   const [legend, setLegend] = useState(false);
@@ -267,30 +269,43 @@ export default function PickField() {
   // Taps inside the study area keep the old behavior (nearest field + warnings). Outside it, first say where our
   // data is; the farmer can still open the nearest field from there.
   const tapPick = async (lat, lon) => {
+    const request = ++lookup.current;
     setGeo(null); setOpen(true);
     if (insideStudyArea(lat, lon)) { setOutside(null); setVia('tap'); pickField(lat, lon); return; }
-    setOutside(await nearestTo(lat, lon));
+    const info = await nearestTo(lat, lon);
+    if (request === lookup.current) setOutside(info);
   };
-  const outlinePick = (id) => { setVia('outline'); setGeo(null); setOutside(null); setOpen(true); pickFieldById(id); };
+  const outlinePick = (id) => { lookup.current++; setVia('outline'); setGeo(null); setOutside(null); setOpen(true); pickFieldById(id); };
   const openNearest = () => { setVia(outside?.source === 'search' ? 'search' : 'tap'); pickNearest(outside); setOutside(null); };
   // A search result: fly there, then the same nearest-field logic as a map tap. The point is only passed through.
   const searchPick = async ({ lat, lon }) => {
+    const request = ++lookup.current;
     setGeo(null); setOpen(true);
     map?.flyTo([lat, lon], 14, { duration: 0.8 });
     const info = await nearestTo(lat, lon);
-    if (!info) return;
+    if (request !== lookup.current || !info) return;
     if (insideStudyArea(lat, lon)) { setOutside(null); setVia('search'); pickNearest(info); return; }
     const f = fieldIndex().find((x) => x.id === info.id);
     setOutside({ ...info, source: 'search', town: f ? nearestTownTo(f.lat, f.lon) : mapLayers.nearestTown });
   };
-  const openDemo = () => { setVia('outline'); setOutside(null); pickDemo(); };
+  const resetSelection = () => {
+    lookup.current++;
+    clearField();
+    setVia('outline');
+    setGeo(null);
+    setOutside(null);
+    setLegend(false);
+    setOpen(true);
+    setOverviewReset((count) => count + 1);
+  };
   // Frame a box in the part of the map that isn't covered by the header, notes and the bottom card.
   // sheetClosed: the card is being folded away, so only the map buttons (46 px) sit above the nav.
   const framePadding = (sheetClosed = false) => {
     const wide = window.matchMedia('(min-width: 1024px)').matches;
     const card = sheetClosed ? 46 + 8 : (bottomRef.current?.offsetHeight || 0);
     const top = (topRef.current?.getBoundingClientRect().bottom || 150) + 8;
-    return { paddingTopLeft: [wide ? 440 : 16, top], paddingBottomRight: [16, wide ? 24 : card + 96] };
+    if (wide) return { paddingTopLeft: [240, top - 70], paddingBottomRight: [216, 94] };
+    return { paddingTopLeft: [16, top], paddingBottomRight: [16, card + 96] };
   };
   // "Show the study area": fold the card away so the whole area fits (the reopen pill brings it back).
   const showStudy = () => {
@@ -302,12 +317,17 @@ export default function PickField() {
   // Privacy: the GPS point exists only inside this callback. It goes to pickField() to find the nearest sampled
   // field and is never put in state, storage, a URL or a request. Low accuracy is enough (nearest of 300 fields).
   function locateMe() {
+    const request = ++lookup.current;
     setOpen(true);
+    setOutside(null);
     if (!navigator.geolocation || !window.isSecureContext) { setGeo('unsupported'); return; }
     setGeo('locating');
     navigator.geolocation.getCurrentPosition(
-      (pos) => { setVia('gps'); setGeo(null); setOutside(null); pickField(pos.coords.latitude, pos.coords.longitude); },
-      (err) => setGeo(GEO_ERROR[err.code] || 'unavailable'),
+      (pos) => {
+        if (request !== lookup.current) return;
+        setVia('gps'); setGeo(null); pickField(pos.coords.latitude, pos.coords.longitude);
+      },
+      (err) => { if (request === lookup.current) setGeo(GEO_ERROR[err.code] || 'unavailable'); },
       { enableHighAccuracy: false, maximumAge: 600000, timeout: 10000 },
     );
   }
@@ -325,8 +345,10 @@ export default function PickField() {
 
   // Opening view (no field yet): the study area and its nearest towns, clear of the header and the card.
   useEffect(() => {
-    if (map && !field) map.fitBounds(FRAME, framePadding());
-  }, [map]); // eslint-disable-line react-hooks/exhaustive-deps
+    if (map && !field) {
+      map.fitBounds(FRAME, { ...framePadding(), reset: true });
+    }
+  }, [map, overviewReset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // When a field loads, zoom to its outline, leaving room for the header and the card.
   useEffect(() => {
@@ -337,7 +359,7 @@ export default function PickField() {
     map.flyToBounds(bounds, { paddingTopLeft: [wide ? 440 : 24, 176], paddingBottomRight: [24, below], maxZoom: 16, duration: 0.8 });
   }, [map, field, outline]);
 
-  // The handle: tap to close, or drag the card down.
+  // Drag the handle down to minimize the card.
   const onDragStart = (e) => { dragStart.current = e.clientY; e.currentTarget.setPointerCapture?.(e.pointerId); };
   const onDragMove = (e) => { if (dragStart.current != null) setDrag(Math.max(0, e.clientY - dragStart.current)); };
   const onDragEnd = () => {
@@ -365,7 +387,7 @@ export default function PickField() {
       </section>
 
       <div className="map-top" ref={topRef}>
-      <MapSearch online={online} onChoose={searchPick} />
+      <MapSearch online={online} onChoose={searchPick} key={overviewReset} />
       <SearchPrivacy />
       {/* Reserved for the map view chips (built later). Nothing else may sit here. */}
       <div className="map-chips" aria-hidden="true" />
@@ -374,12 +396,18 @@ export default function PickField() {
       <div className="map-notes">
         <div className="map-top-row">
           <div className="map-left">
-          <div className="map-scope" role="note">
-            <span className="map-scope-icon" aria-hidden="true"><Layers size={16} /></span>
-            <span className="map-scope-text">
-              <strong>{t('pick.scopeTitle', { n: OUTLINES.length })}</strong>
-              <small>{t('pick.scopeSub')}</small>
-            </span>
+          <div className="map-scope-row">
+            <div className="map-scope" role="note">
+              <span className="map-scope-icon" aria-hidden="true"><Layers size={16} /></span>
+              <span className="map-scope-text">
+                <strong>{t('pick.scopeTitle', { n: OUTLINES.length })}</strong>
+                <small>{t('pick.scopeSub')}</small>
+              </span>
+            </div>
+            <button type="button" className="map-gps-btn" disabled={geo === 'locating' || loading} onClick={locateMe}>
+              {geo === 'locating' ? <LoaderCircle size={18} className="spin" aria-hidden="true" /> : <LocateFixed size={18} aria-hidden="true" />}
+              {t('pick.useLocation')}
+            </button>
           </div>
           <p className="map-attrib">{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
           </div>
@@ -418,10 +446,6 @@ export default function PickField() {
           <button type="button" className="map-ctrl-btn" aria-label={t('pick.showAll')} title={t('pick.showAll')} onClick={showStudy}>
             <Scan size={20} aria-hidden="true" />
           </button>
-          <button type="button" className="map-ctrl-btn" aria-label={t('pick.useLocation')} title={t('pick.useLocation')}
-            disabled={geo === 'locating' || loading} onClick={locateMe}>
-            {geo === 'locating' ? <LoaderCircle size={20} className="spin" aria-hidden="true" /> : <LocateFixed size={20} aria-hidden="true" />}
-          </button>
           <button type="button" className="map-ctrl-btn" aria-label={t('pick.legendTitle')} title={t('pick.legendTitle')}
             aria-expanded={legend} aria-controls="map-legend" onClick={() => setLegend(!legend)}>
             <Info size={20} aria-hidden="true" />
@@ -437,11 +461,10 @@ export default function PickField() {
         {open && (
           <section className="map-sheet" aria-label={t('pick.summaryTitle')} aria-live="polite"
             style={drag ? { transform: `translateY(${drag}px)`, transition: 'none' } : undefined}>
-            <button type="button" className="map-sheet-handle" aria-label={t('pick.closeSheet')}
-              onPointerDown={onDragStart} onPointerMove={onDragMove} onPointerUp={onDragEnd} onPointerCancel={onDragEnd}
-              onClick={() => { if (drag <= 4) setOpen(false); }}>
+            <div className="map-sheet-handle" aria-hidden="true"
+              onPointerDown={onDragStart} onPointerMove={onDragMove} onPointerUp={onDragEnd} onPointerCancel={onDragEnd}>
               <span />
-            </button>
+            </div>
             <div className="map-sheet-head">
               <span className="map-sheet-mark"><MapPin size={20} aria-hidden="true" /></span>
               <div className="map-sheet-title">
@@ -450,9 +473,14 @@ export default function PickField() {
                   <p>{t(acres != null ? 'pick.fieldSub' : 'pick.countyValue', { county: field.field.county, state: field.field.state })}</p>
                 )}
               </div>
-              <button type="button" className="map-sheet-close" aria-label={t('common.close')} onClick={() => setOpen(false)}>
-                <X size={20} aria-hidden="true" />
+              <button type="button" className="map-sheet-close" aria-label={t('pick.closeSheet')} title={t('pick.closeSheet')} onClick={() => setOpen(false)}>
+                <ChevronDown size={20} aria-hidden="true" />
               </button>
+              {(field || outside || geo || loading || loadError) && (
+                <button type="button" className="map-sheet-close" aria-label={t('pick.resetSelection')} title={t('pick.resetSelection')} onClick={resetSelection}>
+                  <X size={20} aria-hidden="true" />
+                </button>
+              )}
             </div>
 
             {geo === 'locating' && <p className="sheet-note"><LoaderCircle size={18} className="spin" aria-hidden="true" /><span>{t('pick.locating')}</span></p>}
@@ -493,19 +521,13 @@ export default function PickField() {
                 <button type="button" className="btn btn-block" disabled={loading} onClick={openNearest}>
                   {t('pick.outsideNearest', { km: outside.nearestKm })}
                 </button>
-                <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={openDemo}>
-                  {loading ? t('pick.loading') : t('pick.loadDemo')}
-                </button>
               </>
             )}
 
             {!field && !outside && (
               <>
-                <p className="map-sheet-text">{t('pick.emptySummary')}</p>
+                <p className="map-sheet-text">{t(loading ? 'pick.loading' : 'pick.emptySummary')}</p>
                 <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('pick.privacy')}</span></p>
-                <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={openDemo}>
-                  {loading ? t('pick.loading') : t('pick.loadDemo')}
-                </button>
               </>
             )}
 

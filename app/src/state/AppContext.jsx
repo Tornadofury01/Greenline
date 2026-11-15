@@ -1,8 +1,8 @@
 // App-wide state: language, current screen, selected field, and the farmer's answers.
 // Only the language is saved in localStorage (it can be empty or blocked). Farm answers are not kept between visits.
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { makeT } from '../i18n.js';
-import { loadFieldAt, loadFieldById, loadDemoField, loadNearest, guessCurrentRotation } from '../data/loadField.js';
+import { loadFieldAt, loadFieldById, loadNearest, guessCurrentRotation } from '../data/loadField.js';
 
 const AppContext = createContext(null);
 const STORAGE_KEY = 'greenline:v1';
@@ -33,7 +33,6 @@ export function AppProvider({ children }) {
   };
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#0e1210' : '#f6f5f1');
   }, [theme]);
   // Until the farmer picks a theme, keep following the phone if its setting changes.
   useEffect(() => {
@@ -73,25 +72,36 @@ export function AppProvider({ children }) {
   const [loading, setLoading] = useState(false);
   // A field file that couldn't be loaded: { reason: 'network' | 'missing', id }. The previous field stays on screen.
   const [loadError, setLoadError] = useState(null);
+  const fieldRequest = useRef(0);
 
   async function loadInto(load) {
+    const request = ++fieldRequest.current;
     setLoading(true);
     setLoadError(null);
     try {
       const f = await load();
+      if (request !== fieldRequest.current) return;
       if (f.error) { setLoadError({ reason: f.error, id: f.id }); return; }
       setField(f);
       setReplayYearRaw(null);
       setWhatIfRaw(null);
       setFarm((prev) => (prev.currentRotation.length ? prev : { ...prev, currentRotation: guessCurrentRotation(f) }));
     } finally {
-      setLoading(false);
+      if (request === fieldRequest.current) setLoading(false);
     }
   }
+  const clearField = () => {
+    fieldRequest.current++;
+    setField(null);
+    setLoadError(null);
+    setLoading(false);
+    setReplayYearRaw(null);
+    setWhatIfRaw(null);
+    setFarm((prev) => ({ ...prev, currentRotation: [] }));
+  };
   // The tap position is only passed to loadFieldAt to find the nearest sampled field. It is not kept.
   const pickField = (lat, lon) => loadInto(() => loadFieldAt(lat, lon));
   const pickFieldById = (id) => loadInto(() => loadFieldById(id));
-  const pickDemo = () => loadInto(loadDemoField);
   // A nearest-field summary from nearestTo() ({ id, nearestKm, notCropland }); no coordinates.
   const pickNearest = (info) => loadInto(() => loadNearest(info));
   // Retry by field id (no coordinates are kept for this).
@@ -100,7 +110,7 @@ export function AppProvider({ children }) {
   const updateFarm = (patch) => setFarm((prev) => ({ ...prev, ...patch }));
   const t = useMemo(() => makeT(lang), [lang]);
 
-  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, pickDemo, pickNearest, retryLoad, loadError, loading, farm, updateFarm, tillage, setTillage };
+  const value = { lang, setLang, theme, setTheme, t, screen, setScreen, how, openHow, field, replayYear, setReplayYear, whatIf, setWhatIf, pickField, pickFieldById, clearField, pickNearest, retryLoad, loadError, loading, farm, updateFarm, tillage, setTillage };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
 

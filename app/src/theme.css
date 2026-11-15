@@ -1,10 +1,10 @@
 /* Greenline design tokens. The ONLY place colors, type, spacing, radii and motion are defined.
    Two themes, chosen by <html data-theme="dark|light"> (set before first paint in index.html, toggled in the header):
-     dark  = "field notebook at dusk": deep green-black, rounded cards, one lime accent. The look for the demo video.
-     light = paper and ink, for bright sun.
+     dark  = forest surfaces with soft sage accents.
+     light = pale surfaces with forest green controls.
    Color carries meaning, never decoration:
-     primary = the one accent: "tap me" or "selected". Lime on dark, deep field green on light. NEVER used for data.
-     accent  = the big call-to-action fill (lime in both themes, always with dark ink on it).
+     primary = the interaction color for selection and focus.
+     accent  = the primary call-to-action fill.
      water = blue (rain, moisture, receipts)   soil = brown (bare ground)   warn = amber (cautions, gaps, heat)
      risk  = dark orange (real risks, drought). Not red: risk is never told apart from "good" by red vs green alone.
    Contrast (WCAG): body text >= 4.5:1, key numbers >= 7:1 on --color-surface and --color-bg, in both themes. */
@@ -38,6 +38,11 @@
   --radius-card: 24px;   /* cards and sheets */
   --radius-pill: 999px;
   --border: 1px solid var(--color-border);
+  --brand-forest: #234233;
+  --brand-leaf: #37694e;
+  --brand-ink: #f6fbf7;
+  --brand-sage: #c5ddc6;
+  --imagery-edge: #adcbb887;
 
   /* Sizes */
   --tap: 48px;
@@ -58,22 +63,22 @@
 /* ---------- Light theme (also the print theme) ---------- */
 :root, :root[data-theme="light"] {
   color-scheme: light;
-  --color-bg: #f6f5f1;
+  --color-bg: #f1f4f2;
   --color-surface: #ffffff;
-  --color-surface-sunken: #efede6;
-  --color-text: #1b1f1c;          /* 16.7:1 on surface */
-  --color-text-muted: #4b544d;    /* 7.9:1 on surface */
-  --color-border: #d5d2c8;
-  --color-border-strong: #8f8b7e;
+  --color-surface-sunken: #e8eee9;
+  --color-text: #192920;
+  --color-text-muted: #4b6052;
+  --color-border: #d5e0d8;
+  --color-border-strong: #798e80;
 
-  --color-primary: #1f5130;        /* 9.2:1 on white */
-  --color-primary-hover: #163d24;
-  --color-primary-soft: #e5eee6;
+  --color-primary: #286049;
+  --color-primary-hover: #204b39;
+  --color-primary-soft: #e3efe6;
   --color-on-primary: #ffffff;
-  --color-accent: #c5f03a;         /* lime fill: only ever behind --color-on-accent ink (14:1) */
-  --color-accent-hover: #b4e022;
-  --color-on-accent: #10140f;
-  --color-accent-border: #1f5130;  /* lime alone is 1.3:1 on white, so the button gets a dark edge */
+  --color-accent: #2d654e;
+  --color-accent-hover: #234f3e;
+  --color-on-accent: #ffffff;
+  --color-accent-border: #2d654e;
 
   --color-soil: #7a4e2d;
   --color-soil-soft: #f1e7dc;
@@ -99,11 +104,11 @@
   --hatch: rgb(255 255 255 / 0.35);
 
   --glass: rgb(255 255 255 / 0.9);  /* cards and bars floating over the map */
-  --color-focus: #2378c3;
+  --color-focus: #2b6d50;
   /* Map (light): bright imagery, white map chrome, dark labels with a white halo */
   --map-bg: #eef0ea;          /* behind the tiles, and the whole map when offline */
   --map-outline: #ffffff;     /* the 300 field outlines */
-  --map-selected: #c5f03a;    /* the selected field: lime = selected */
+  --map-selected: var(--brand-sage);
   --map-ink: #1b1f1c;         /* labels and notes on the imagery (14:1 on --map-scrim) */
   --map-halo: rgb(255 255 255 / 0.95);
   --map-scrim: rgb(255 255 255 / 0.86);
@@ -117,22 +122,22 @@
 /* ---------- Dark theme ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-bg: #0e1210;
-  --color-surface: #171c19;
-  --color-surface-sunken: #212823; /* raised tiles inside cards */
-  --color-text: #f1f4ee;           /* 15.5:1 on surface */
-  --color-text-muted: #aab4ab;     /* 8.1:1 on surface, 7.1:1 on raised tiles */
-  --color-border: #2c342f;
-  --color-border-strong: #5d6a61;  /* 3:1 control outlines */
+  --color-bg: #172c23;
+  --color-surface: #203b2f;
+  --color-surface-sunken: #2c493b;
+  --color-text: #f1f8f3;
+  --color-text-muted: #c4d7ca;
+  --color-border: #3b5949;
+  --color-border-strong: #829d8b;
 
-  --color-primary: #c5f03a;        /* lime, 13.1:1 on surface */
-  --color-primary-hover: #d6f968;
-  --color-primary-soft: #242e14;
-  --color-on-primary: #10140f;     /* ink on lime, 14.1:1 */
-  --color-accent: #c5f03a;
-  --color-accent-hover: #d6f968;
-  --color-on-accent: #10140f;
-  --color-accent-border: #c5f03a;
+  --color-primary: #bad8bd;
+  --color-primary-hover: #d1e7d3;
+  --color-primary-soft: #355441;
+  --color-on-primary: #173025;
+  --color-accent: #bad8bd;
+  --color-accent-hover: #d1e7d3;
+  --color-on-accent: #173025;
+  --color-accent-border: #bad8bd;
 
   --color-soil: #d2a679;
   --color-soil-soft: #2b231a;
@@ -155,12 +160,12 @@
   --chart-none: #262d28;
   --hatch: rgb(14 18 16 / 0.45);
 
-  --glass: rgb(23 28 25 / 0.86);
-  --color-focus: #8ec5ff;
+  --glass: rgb(32 59 47 / 0.94);
+  --color-focus: #d1e7d3;
   /* Map (dark): imagery darkened so outlines pop, light labels with a dark halo */
   --map-bg: #0b0e0c;
   --map-outline: #f1f4ee;
-  --map-selected: #c5f03a;
+  --map-selected: var(--brand-sage);
   --map-ink: #f1f4ee;         /* 12:1 on --map-scrim */
   --map-halo: rgb(11 14 12 / 0.95);
   --map-scrim: rgb(11 14 12 / 0.72);
@@ -175,10 +180,10 @@
 @media print {
   :root[data-theme="dark"] {
     color-scheme: light;
-    --color-bg: #ffffff; --color-surface: #ffffff; --color-surface-sunken: #efede6;
-    --color-text: #1b1f1c; --color-text-muted: #4b544d; --color-border: #d5d2c8; --color-border-strong: #8f8b7e;
-    --color-primary: #1f5130; --color-primary-hover: #163d24; --color-primary-soft: #e5eee6; --color-on-primary: #ffffff;
-    --color-accent: #c5f03a; --color-on-accent: #10140f; --color-accent-border: #1f5130;
+    --color-bg: #ffffff; --color-surface: #ffffff; --color-surface-sunken: #e8eee9;
+    --color-text: #192920; --color-text-muted: #4b6052; --color-border: #d5e0d8; --color-border-strong: #798e80;
+    --color-primary: #286049; --color-primary-hover: #204b39; --color-primary-soft: #e3efe6; --color-on-primary: #ffffff;
+    --color-accent: #2d654e; --color-on-accent: #ffffff; --color-accent-border: #2d654e;
     --color-soil: #7a4e2d; --color-soil-soft: #f1e7dc; --color-water: #1d5f8a; --color-water-soft: #e2edf4;
     --color-warn: #7d5100; --color-warn-fill: #c98a1b; --color-warn-soft: #fbf0d9; --color-risk: #a84300; --color-risk-soft: #fbe9dc;
     --chart-drought: #b84a00; --chart-heat: #c98a1b; --chart-wet: #2f75a8; --chart-normal: #8e9c90;

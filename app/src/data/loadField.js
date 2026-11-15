@@ -13,7 +13,6 @@ import outlineFile from '@shared/field-outlines.json';
 import mapLayerFile from '@shared/map-layers.json';
 import placeholderSlots from '@content/model-placeholders.json';
 import { slotModelC } from '@scoring/modelSlots.js';
-import { DEMO_FIELD_ID } from '../config.js';
 
 // Lazy: each field file becomes its own small chunk, fetched only when needed.
 const FIELD_FILES = import.meta.glob(['../../../shared/fields/*.json', '!../../../shared/fields/index.json']);
@@ -105,7 +104,6 @@ export async function loadFieldById(id) {
   }
 }
 
-export const loadDemoField = () => loadFieldById(DEMO_FIELD_ID);
 
 function loadIndex() {
   return INDEX_FILE['../../../shared/fields/index.json']?.fields || [];

@@ -4,17 +4,18 @@ import Logo from './Logo.jsx';
 import { NavItems } from './BottomNav.jsx';
 
 export default function Header() {
-  const { t, lang, setLang, theme, setTheme, field, screen, openHow } = useApp();
+  const { t, lang, setLang, theme, setTheme, field, screen, setScreen, openHow } = useApp();
   const nextTheme = theme === 'dark' ? 'light' : 'dark';
   return (
     <>
       <header className="header">
         <div className="header-inner">
-          <div className="brand">
+          {/* The logo and name are the home button: they go back to the map (the Field screen). */}
+          <button type="button" className="brand" aria-label={t('app.home')} title={t('app.home')} onClick={() => setScreen('field')}>
             <Logo />
             <span className="brand-name">{t('app.title')}</span>
             <span className="brand-tag">{t('app.tagline')}</span>
-          </div>
+          </button>
           {/* Desktop (1024px+): navigation lives in the header. Phones use the bottom bar. */}
           <nav className="top-nav" aria-label={t('nav.label')}>
             <NavItems />

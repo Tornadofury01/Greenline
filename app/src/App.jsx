@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useApp } from './state/AppContext.jsx';
 import Header from './components/Header.jsx';
 import BottomNav from './components/BottomNav.jsx';
@@ -28,7 +28,19 @@ const SCREEN_COMPONENTS = {
 };
 
 export default function App() {
-  const { screen } = useApp();
+  const { screen, pickFieldById, setScreen } = useApp();
+  const openedLink = useRef(false);
+  useEffect(() => {
+    if (openedLink.current) return;
+    openedLink.current = true;
+    // Share a sampled field's replay by id, never a GPS point or farmer answer.
+    const query = new URLSearchParams(window.location.search);
+    const id = query.get('field');
+    if (/^ec-\d{3}$/.test(id || '') && Number(id.slice(3)) < 300) {
+      pickFieldById(id);
+      if (query.get('screen') === 'story') setScreen('story');
+    }
+  }, [pickFieldById, setScreen]);
   const Screen = SCREEN_COMPONENTS[screen];
   useEffect(() => { window.scrollTo(0, 0); }, [screen]);
   return (

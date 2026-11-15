@@ -1,4 +1,4 @@
-// Screen 2: the farmer's current rotation, goals and limits, in three numbered step cards.
+// Screen 2: the farmer's current rotation, priorities and limits.
 import { ArrowRight, Sprout, Target, SlidersHorizontal, Lock } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import ChipGroup from '../components/ChipGroup.jsx';
@@ -15,14 +15,11 @@ const OPTIONS = {
   market: ['elevator', 'gin', 'cattle', 'local'],
 };
 
-// One step card: number pill + icon title on the left, a short status on the right.
-function Step({ n, icon: Icon, title, meta, children }) {
-  const { t } = useApp();
+function FarmSection({ id, icon: Icon, title, meta, className = '', children }) {
   return (
-    <section className="card" aria-labelledby={`step-${n}`}>
-      <div className="card-head">
-        <h2 id={`step-${n}`} className="card-kicker">
-          <span className="step-pill">{t('farm.stepN', { n })}</span>
+    <section className={`farm-section ${className}`} aria-labelledby={id}>
+      <div className="farm-section-head">
+        <h2 id={id}>
           <Icon size={18} aria-hidden="true" />{title}
         </h2>
         {meta && <span className="card-meta">{meta}</span>}
@@ -41,26 +38,27 @@ export default function YourFarm() {
   const opt = (group) => (id) => t(`options.${group}.${id}`);
 
   return (
-    <div className="screen screen-narrow">
+    <div className="screen screen-farm">
       <PageHead title={t('farm.title')} intro={t('farm.intro')} />
 
-      <Step n={1} icon={Sprout} title={t('farm.step1')}
+      <div className="farm-sections">
+      <FarmSection id="farm-rotation" className="farm-rotation" icon={Sprout} title={t('farm.step1')}
         meta={farm.currentRotation.length ? t('farm.metaCrops', { n: farm.currentRotation.length }) : null}>
         <RotationPicker label={t('farm.step1')} value={farm.currentRotation} onChange={(v) => updateFarm({ currentRotation: v })} />
-      </Step>
+      </FarmSection>
 
-      <section className="card" aria-labelledby="till-h">
-        <h2 id="till-h" className="card-kicker"><Sprout size={18} aria-hidden="true" />{t('farm.tillage.title')}</h2>
+      <FarmSection id="farm-tillage" icon={SlidersHorizontal} title={t('farm.tillage.title')}>
         <ChipGroup label={t('farm.tillage.title')} options={['conventional', 'reduced', 'no-till']} value={tillage || 'reduced'} onChange={setTillage} labelFor={(id) => t(`farm.tillage.opt.${id}`)} />
         <p className="hint">{tillage ? t('farm.tillage.saved') : t('farm.tillage.assumed')}</p>
-      </section>
+      </FarmSection>
 
-      <Step n={2} icon={Target} title={t('farm.step2')} meta={t('farm.metaPicked', { n: farm.priorities.length })}>
+      <FarmSection id="farm-priorities" icon={Target} title={t('farm.step2')} meta={t('farm.metaPicked', { n: farm.priorities.length })}>
         <p className="hint">{t('farm.step2Hint')}</p>
         <ChipGroup multi label={t('farm.step2')} options={PRIORITIES} value={farm.priorities} onChange={(v) => updateFarm({ priorities: v })} labelFor={(id) => t(`priorities.${id}`)} />
-      </Step>
+      </FarmSection>
 
-      <Step n={3} icon={SlidersHorizontal} title={t('farm.step3')}>
+      <FarmSection id="farm-limits" className="farm-limits" icon={SlidersHorizontal} title={t('farm.step3')}>
+        <div className="farm-limit-grid">
         <Group label={t('farm.waterMode')}>
           <ChipGroup label={t('farm.waterMode')} options={OPTIONS.waterMode} value={farm.waterMode} onChange={(v) => updateFarm({ waterMode: v })} labelFor={opt('waterMode')} />
         </Group>
@@ -76,7 +74,9 @@ export default function YourFarm() {
         <Group label={t('farm.market')}>
           <ChipGroup label={t('farm.market')} options={OPTIONS.market} value={farm.market} onChange={(v) => updateFarm({ market: v })} labelFor={opt('market')} />
         </Group>
-      </Step>
+        </div>
+      </FarmSection>
+      </div>
 
       <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('farm.privacy')}</span></p>
 

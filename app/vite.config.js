@@ -39,8 +39,8 @@ export default defineConfig(({ mode }) => {
           name: 'Greenline',
           short_name: 'Greenline',
           description: 'Compare crop rotations for North Texas fields using NASA Earth data.',
-          theme_color: '#0e1210',
-          background_color: '#0e1210',
+          theme_color: '#234233',
+          background_color: '#172c23',
           display: 'standalone',
           start_url: '/',
           icons: [
@@ -53,7 +53,7 @@ export default defineConfig(({ mode }) => {
           // App shell + bundled JSON are precached; map tiles are NOT (they need a connection).
           globPatterns: ['**/*.{js,css,html,svg,png,json}'],
           // v1 field files (assets/fields/) and v2 field files (assets/ec-NNN-*.js): precache only the demo field.
-          globIgnores: ['**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js', '**/assets/ec-!(' + DEMO_FIELD_ID.slice(3) + ')-*.js'],
+          globIgnores: ['**/history/**', '**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js', '**/assets/ec-!(' + DEMO_FIELD_ID.slice(3) + ')-*.js'],
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
           runtimeCaching: [{
             urlPattern: ({ url }) => url.pathname.includes('/assets/fields/') || /\/assets\/ec-\d+-/.test(url.pathname),
