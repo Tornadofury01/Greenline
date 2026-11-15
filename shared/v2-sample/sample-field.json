@@ -1,0 +1,1234 @@
+{
+  "schemaVersion": 1,
+  "isSampleData": true,
+  "_note": "SAMPLE for building screens. Every number is invented, including the option names and scores. Follows docs/v2-data-contract.md section 2. Real files: shared/v2/fields/<id>.json.",
+  "generatedAt": "2026-11-14T00:00:00Z",
+  "engineVersion": "sample",
+  "field": {
+    "id": "sample-ec-251",
+    "county": "Ellis",
+    "state": "TX",
+    "gridCell": "L30-ec-251",
+    "lat": 32.28334,
+    "lon": -96.74673
+  },
+  "slots": {
+    "sources": {
+      "modelA": "placeholder",
+      "modelB": "placeholder",
+      "modelC": "placeholder",
+      "modelD": "placeholder",
+      "calibrationE": "placeholder"
+    },
+    "placeholderSlots": [
+      "modelA",
+      "modelB",
+      "modelC",
+      "modelD",
+      "calibrationE"
+    ],
+    "modelVersions": {
+      "modelA": null,
+      "modelB": null,
+      "modelC": null,
+      "modelD": null,
+      "calibrationE": null
+    }
+  },
+  "priorities": {
+    "selected": [],
+    "weights": {
+      "profit": 0.25,
+      "risk": 0.2,
+      "soil": 0.2,
+      "water": 0.15,
+      "nutrients": 0.1,
+      "pests": 0.1
+    }
+  },
+  "current": {
+    "id": "current",
+    "kind": "current",
+    "name": {
+      "key": "v2.option.current",
+      "params": {}
+    },
+    "sequence": [
+      {
+        "year": 1,
+        "crops": [
+          {
+            "crop": "corn",
+            "role": "cash",
+            "plantDoy": 79,
+            "endDoy": 217,
+            "plantYearOffset": 0
+          }
+        ]
+      },
+      {
+        "year": 2,
+        "crops": [
+          {
+            "crop": "cotton",
+            "role": "cash",
+            "plantDoy": 115,
+            "endDoy": 283,
+            "plantYearOffset": 0
+          }
+        ]
+      },
+      {
+        "year": 3,
+        "crops": [
+          {
+            "crop": "grain_sorghum",
+            "role": "cash",
+            "plantDoy": 100,
+            "endDoy": 232,
+            "plantYearOffset": 0
+          }
+        ]
+      }
+    ],
+    "management": {
+      "plantingDate": "normal",
+      "nitrogenLbPerAcre": 90,
+      "maturity": "full",
+      "coverTermination": "none",
+      "doubleCrop": false,
+      "tillage": "reduced",
+      "irrigation": "none"
+    },
+    "scores": {
+      "profit": {
+        "value": 52,
+        "reasons": [
+          {
+            "key": "v2.reason.profit.median",
+            "params": {
+              "usd": 71
+            },
+            "tone": "note"
+          }
+        ]
+      },
+      "risk": {
+        "value": 50,
+        "reasons": [
+          {
+            "key": "v2.reason.risk.baseline",
+            "params": {},
+            "tone": "note"
+          }
+        ]
+      },
+      "soil": {
+        "value": 34,
+        "reasons": [
+          {
+            "key": "v2.reason.soil.bareDays",
+            "params": {
+              "days": 214
+            },
+            "tone": "down"
+          },
+          {
+            "key": "v2.reason.soil.erosionOverT",
+            "params": {
+              "erosion": 6.1,
+              "t": 5
+            },
+            "tone": "down"
+          }
+        ]
+      },
+      "water": {
+        "value": 55,
+        "reasons": [
+          {
+            "key": "v2.reason.water.ok",
+            "params": {},
+            "tone": "note"
+          }
+        ]
+      },
+      "nutrients": {
+        "value": 30,
+        "reasons": [
+          {
+            "key": "v2.reason.nutrients.allBought",
+            "params": {
+              "lb": 90
+            },
+            "tone": "down"
+          }
+        ]
+      },
+      "pests": {
+        "value": 70,
+        "reasons": [
+          {
+            "key": "v2.reason.pests.familiesRotate",
+            "params": {},
+            "tone": "up"
+          }
+        ]
+      }
+    },
+    "weightedTotal": 48,
+    "grade": "D",
+    "fitChecks": {
+      "water": {
+        "status": "pass",
+        "evidence": {
+          "key": "v2.fit.water.pass",
+          "params": {
+            "shortYears": 0.05
+          }
+        }
+      },
+      "disease": {
+        "status": "pass",
+        "evidence": {
+          "key": "v2.fit.disease.pass",
+          "params": {}
+        }
+      },
+      "market": {
+        "status": "pass",
+        "evidence": {
+          "key": "v2.fit.market.pass",
+          "params": {
+            "acres": 41000
+          }
+        }
+      },
+      "season": {
+        "status": "pass",
+        "evidence": {
+          "key": "v2.fit.season.pass",
+          "params": {}
+        }
+      }
+    },
+    "profit": {
+      "returnAboveVariable": {
+        "low": 22,
+        "typical": 71,
+        "high": 118,
+        "unit": "usd/acre/year"
+      },
+      "netAfterFixed": {
+        "low": -48,
+        "typical": 1,
+        "high": 48,
+        "unit": "usd/acre/year"
+      },
+      "chanceBeatsCurrent": null,
+      "nitrogenCreditUsd": 0,
+      "costShareUsdShown": 0
+    },
+    "soilSaved": {
+      "erosionTonsPerAcreYear": 6.1,
+      "toleranceT": 5,
+      "bareDaysPerYear": 214,
+      "somTrendPctPerDecade": -0.2,
+      "savedVsCurrentTonsPerAcreYear": null
+    },
+    "nitrogenSaved": {
+      "balanceLbPerAcreYear": -22,
+      "fertilizerBoughtLbPerAcreYear": 90,
+      "savedVsCurrentLb": null,
+      "savedVsCurrentUsd": null
+    },
+    "confidence": {
+      "level": "medium",
+      "whatIfRuns": 200,
+      "beatsCurrentShare": 0.5,
+      "climateModels": {
+        "agree": 8,
+        "of": 8
+      },
+      "reasons": [
+        {
+          "key": "v2.conf.placeholderSlots",
+          "params": {
+            "n": 5
+          }
+        }
+      ]
+    },
+    "checkLocally": [
+      "buyersLocalPrice",
+      "fieldQuirks"
+    ],
+    "placeholderSlots": [
+      "modelA",
+      "modelB",
+      "modelC",
+      "modelD",
+      "calibrationE"
+    ],
+    "neighbors": {
+      "count": 41,
+      "radiusMiles": 20
+    }
+  },
+  "options": [
+    {
+      "id": "opt-01",
+      "kind": "generated",
+      "name": {
+        "key": "v2.option.generated",
+        "params": {
+          "crops": "winter_wheat+cowpea, grain_sorghum+cereal_rye, cotton"
+        }
+      },
+      "sequence": [
+        {
+          "year": 1,
+          "crops": [
+            {
+              "crop": "winter_wheat",
+              "role": "cash",
+              "plantDoy": 293,
+              "endDoy": 161,
+              "plantYearOffset": -1
+            },
+            {
+              "crop": "cowpea",
+              "role": "cover",
+              "plantDoy": 171,
+              "endDoy": 263,
+              "plantYearOffset": 0
+            }
+          ]
+        },
+        {
+          "year": 2,
+          "crops": [
+            {
+              "crop": "grain_sorghum",
+              "role": "cash",
+              "plantDoy": 100,
+              "endDoy": 232,
+              "plantYearOffset": 0
+            },
+            {
+              "crop": "cereal_rye",
+              "role": "cover",
+              "plantDoy": 288,
+              "endDoy": 115,
+              "plantYearOffset": 0
+            }
+          ]
+        },
+        {
+          "year": 3,
+          "crops": [
+            {
+              "crop": "cotton",
+              "role": "cash",
+              "plantDoy": 115,
+              "endDoy": 283,
+              "plantYearOffset": 0
+            }
+          ]
+        }
+      ],
+      "management": {
+        "plantingDate": "normal",
+        "nitrogenLbPerAcre": 45,
+        "maturity": "full",
+        "coverTermination": "early",
+        "doubleCrop": false,
+        "tillage": "no-till",
+        "irrigation": "none"
+      },
+      "scores": {
+        "profit": {
+          "value": 66,
+          "reasons": [
+            {
+              "key": "v2.reason.profit.median",
+              "params": {
+                "usd": 94
+              },
+              "tone": "up"
+            },
+            {
+              "key": "v2.reason.profit.nCredit",
+              "params": {
+                "usd": 14
+              },
+              "tone": "up",
+              "src": [
+                "crop-library"
+              ]
+            }
+          ]
+        },
+        "risk": {
+          "value": 72,
+          "reasons": [
+            {
+              "key": "v2.reason.risk.worst10",
+              "params": {
+                "diffUsd": 21
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "soil": {
+          "value": 81,
+          "reasons": [
+            {
+              "key": "v2.reason.soil.bareDays",
+              "params": {
+                "days": 92
+              },
+              "tone": "up"
+            },
+            {
+              "key": "v2.reason.soil.erosionUnderT",
+              "params": {
+                "erosion": 2.3,
+                "t": 5
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "water": {
+          "value": 58,
+          "reasons": [
+            {
+              "key": "v2.reason.water.coverUsesWater",
+              "params": {
+                "mm": 35
+              },
+              "tone": "down"
+            }
+          ]
+        },
+        "nutrients": {
+          "value": 78,
+          "reasons": [
+            {
+              "key": "v2.reason.nutrients.legumeCredit",
+              "params": {
+                "lb": 40
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "pests": {
+          "value": 64,
+          "reasons": [
+            {
+              "key": "v2.reason.pests.greenBridge",
+              "params": {
+                "cover": "cowpea"
+              },
+              "tone": "down"
+            }
+          ]
+        }
+      },
+      "weightedTotal": 70,
+      "grade": "B",
+      "fitChecks": {
+        "water": {
+          "status": "warn",
+          "evidence": {
+            "key": "v2.fit.water.warn",
+            "params": {
+              "shortYears": 0.18
+            }
+          }
+        },
+        "disease": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.disease.pass",
+            "params": {}
+          }
+        },
+        "market": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.market.pass",
+            "params": {
+              "acres": 41000
+            }
+          }
+        },
+        "season": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.season.pass",
+            "params": {}
+          }
+        }
+      },
+      "profit": {
+        "returnAboveVariable": {
+          "low": 48,
+          "typical": 94,
+          "high": 141,
+          "unit": "usd/acre/year"
+        },
+        "netAfterFixed": {
+          "low": -22,
+          "typical": 24,
+          "high": 71,
+          "unit": "usd/acre/year"
+        },
+        "chanceBeatsCurrent": 0.87,
+        "nitrogenCreditUsd": 14,
+        "costShareUsdShown": 18
+      },
+      "soilSaved": {
+        "erosionTonsPerAcreYear": 2.3,
+        "toleranceT": 5,
+        "bareDaysPerYear": 92,
+        "somTrendPctPerDecade": 0.3,
+        "savedVsCurrentTonsPerAcreYear": 3.8
+      },
+      "nitrogenSaved": {
+        "balanceLbPerAcreYear": 6,
+        "fertilizerBoughtLbPerAcreYear": 45,
+        "savedVsCurrentLb": 45,
+        "savedVsCurrentUsd": 27
+      },
+      "confidence": {
+        "level": "medium",
+        "whatIfRuns": 200,
+        "beatsCurrentShare": 0.87,
+        "climateModels": {
+          "agree": 7,
+          "of": 8
+        },
+        "reasons": [
+          {
+            "key": "v2.conf.warnedCheck",
+            "params": {
+              "check": "water"
+            }
+          },
+          {
+            "key": "v2.conf.placeholderSlots",
+            "params": {
+              "n": 5
+            }
+          }
+        ]
+      },
+      "checkLocally": [
+        "legumeNitrogenCredit",
+        "coverEstablishment",
+        "seedPriceAvailability",
+        "equipment",
+        "buyersLocalPrice"
+      ],
+      "placeholderSlots": [
+        "modelA",
+        "modelB",
+        "modelC",
+        "modelD",
+        "calibrationE"
+      ],
+      "neighbors": {
+        "count": 14,
+        "radiusMiles": 20
+      }
+    },
+    {
+      "id": "opt-02",
+      "kind": "generated",
+      "name": {
+        "key": "v2.option.generated",
+        "params": {
+          "crops": "winter_wheat, grain_sorghum, soybeans"
+        }
+      },
+      "sequence": [
+        {
+          "year": 1,
+          "crops": [
+            {
+              "crop": "winter_wheat",
+              "role": "cash",
+              "plantDoy": 293,
+              "endDoy": 161,
+              "plantYearOffset": -1
+            }
+          ]
+        },
+        {
+          "year": 2,
+          "crops": [
+            {
+              "crop": "grain_sorghum",
+              "role": "cash",
+              "plantDoy": 100,
+              "endDoy": 232,
+              "plantYearOffset": 0
+            }
+          ]
+        },
+        {
+          "year": 3,
+          "crops": [
+            {
+              "crop": "soybeans",
+              "role": "cash",
+              "plantDoy": 125,
+              "endDoy": 274,
+              "plantYearOffset": 0
+            }
+          ]
+        }
+      ],
+      "management": {
+        "plantingDate": "early",
+        "nitrogenLbPerAcre": 55,
+        "maturity": "short",
+        "coverTermination": "none",
+        "doubleCrop": false,
+        "tillage": "reduced",
+        "irrigation": "none"
+      },
+      "scores": {
+        "profit": {
+          "value": 74,
+          "reasons": [
+            {
+              "key": "v2.reason.profit.median",
+              "params": {
+                "usd": 108
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "risk": {
+          "value": 61,
+          "reasons": [
+            {
+              "key": "v2.reason.risk.worst10",
+              "params": {
+                "diffUsd": 9
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "soil": {
+          "value": 55,
+          "reasons": [
+            {
+              "key": "v2.reason.soil.bareDays",
+              "params": {
+                "days": 160
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "water": {
+          "value": 66,
+          "reasons": [
+            {
+              "key": "v2.reason.water.ok",
+              "params": {},
+              "tone": "note"
+            }
+          ]
+        },
+        "nutrients": {
+          "value": 60,
+          "reasons": [
+            {
+              "key": "v2.reason.nutrients.legumeCredit",
+              "params": {
+                "lb": 25
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "pests": {
+          "value": 58,
+          "reasons": [
+            {
+              "key": "v2.reason.pests.grassRepeat",
+              "params": {},
+              "tone": "down"
+            }
+          ]
+        }
+      },
+      "weightedTotal": 63,
+      "grade": "C",
+      "fitChecks": {
+        "water": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.water.pass",
+            "params": {
+              "shortYears": 0.06
+            }
+          }
+        },
+        "disease": {
+          "status": "warn",
+          "evidence": {
+            "key": "v2.fit.disease.warnRisingRisk",
+            "params": {}
+          }
+        },
+        "market": {
+          "status": "warn",
+          "evidence": {
+            "key": "v2.fit.market.warnFewAcres",
+            "params": {
+              "acres": 900
+            }
+          }
+        },
+        "season": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.season.pass",
+            "params": {}
+          }
+        }
+      },
+      "profit": {
+        "returnAboveVariable": {
+          "low": 51,
+          "typical": 108,
+          "high": 160,
+          "unit": "usd/acre/year"
+        },
+        "netAfterFixed": {
+          "low": -19,
+          "typical": 38,
+          "high": 90,
+          "unit": "usd/acre/year"
+        },
+        "chanceBeatsCurrent": 0.74,
+        "nitrogenCreditUsd": 8,
+        "costShareUsdShown": 0
+      },
+      "soilSaved": {
+        "erosionTonsPerAcreYear": 4.4,
+        "toleranceT": 5,
+        "bareDaysPerYear": 160,
+        "somTrendPctPerDecade": 0,
+        "savedVsCurrentTonsPerAcreYear": 1.7
+      },
+      "nitrogenSaved": {
+        "balanceLbPerAcreYear": -8,
+        "fertilizerBoughtLbPerAcreYear": 55,
+        "savedVsCurrentLb": 35,
+        "savedVsCurrentUsd": 21
+      },
+      "confidence": {
+        "level": "low",
+        "whatIfRuns": 200,
+        "beatsCurrentShare": 0.74,
+        "climateModels": {
+          "agree": 6,
+          "of": 8
+        },
+        "reasons": [
+          {
+            "key": "v2.conf.warnedCheck",
+            "params": {
+              "check": "disease"
+            }
+          },
+          {
+            "key": "v2.conf.warnedCheck",
+            "params": {
+              "check": "market"
+            }
+          }
+        ]
+      },
+      "checkLocally": [
+        "buyersLocalPrice",
+        "localPests",
+        "seedPriceAvailability"
+      ],
+      "placeholderSlots": [
+        "modelA",
+        "modelB",
+        "modelC",
+        "modelD",
+        "calibrationE"
+      ],
+      "neighbors": {
+        "count": 6,
+        "radiusMiles": 20
+      }
+    },
+    {
+      "id": "opt-03",
+      "kind": "generated",
+      "name": {
+        "key": "v2.option.generated",
+        "params": {
+          "crops": "sesame, winter_wheat+crimson_clover"
+        }
+      },
+      "sequence": [
+        {
+          "year": 1,
+          "crops": [
+            {
+              "crop": "sesame",
+              "role": "cash",
+              "plantDoy": 152,
+              "endDoy": 268,
+              "plantYearOffset": 0
+            }
+          ]
+        },
+        {
+          "year": 2,
+          "crops": [
+            {
+              "crop": "winter_wheat",
+              "role": "cash",
+              "plantDoy": 293,
+              "endDoy": 161,
+              "plantYearOffset": -1
+            },
+            {
+              "crop": "crimson_clover",
+              "role": "cover",
+              "plantDoy": 283,
+              "endDoy": 115,
+              "plantYearOffset": -1
+            }
+          ]
+        }
+      ],
+      "management": {
+        "plantingDate": "normal",
+        "nitrogenLbPerAcre": 40,
+        "maturity": "full",
+        "coverTermination": "at-planting",
+        "doubleCrop": false,
+        "tillage": "reduced",
+        "irrigation": "none"
+      },
+      "scores": {
+        "profit": {
+          "value": 60,
+          "reasons": [
+            {
+              "key": "v2.reason.profit.median",
+              "params": {
+                "usd": 86
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "risk": {
+          "value": 80,
+          "reasons": [
+            {
+              "key": "v2.reason.risk.worst10",
+              "params": {
+                "diffUsd": 30
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "soil": {
+          "value": 70,
+          "reasons": [
+            {
+              "key": "v2.reason.soil.bareDays",
+              "params": {
+                "days": 120
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "water": {
+          "value": 75,
+          "reasons": [
+            {
+              "key": "v2.reason.water.lowUse",
+              "params": {},
+              "tone": "up"
+            }
+          ]
+        },
+        "nutrients": {
+          "value": 72,
+          "reasons": [
+            {
+              "key": "v2.reason.nutrients.legumeCredit",
+              "params": {
+                "lb": 30
+              },
+              "tone": "up"
+            }
+          ]
+        },
+        "pests": {
+          "value": 76,
+          "reasons": [
+            {
+              "key": "v2.reason.pests.familiesRotate",
+              "params": {},
+              "tone": "up"
+            }
+          ]
+        }
+      },
+      "weightedTotal": 71,
+      "grade": "B",
+      "fitChecks": {
+        "water": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.water.pass",
+            "params": {
+              "shortYears": 0.04
+            }
+          }
+        },
+        "disease": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.disease.pass",
+            "params": {}
+          }
+        },
+        "market": {
+          "status": "pass",
+          "evidence": {
+            "key": "v2.fit.market.passFewBuyers",
+            "params": {
+              "acres": 3200
+            }
+          }
+        },
+        "season": {
+          "status": "warn",
+          "evidence": {
+            "key": "v2.fit.season.warn2040",
+            "params": {}
+          }
+        }
+      },
+      "profit": {
+        "returnAboveVariable": {
+          "low": 41,
+          "typical": 86,
+          "high": 124,
+          "unit": "usd/acre/year"
+        },
+        "netAfterFixed": {
+          "low": -29,
+          "typical": 16,
+          "high": 54,
+          "unit": "usd/acre/year"
+        },
+        "chanceBeatsCurrent": 0.81,
+        "nitrogenCreditUsd": 11,
+        "costShareUsdShown": 12
+      },
+      "soilSaved": {
+        "erosionTonsPerAcreYear": 3.1,
+        "toleranceT": 5,
+        "bareDaysPerYear": 120,
+        "somTrendPctPerDecade": 0.2,
+        "savedVsCurrentTonsPerAcreYear": 3
+      },
+      "nitrogenSaved": {
+        "balanceLbPerAcreYear": 2,
+        "fertilizerBoughtLbPerAcreYear": 40,
+        "savedVsCurrentLb": 50,
+        "savedVsCurrentUsd": 30
+      },
+      "confidence": {
+        "level": "medium",
+        "whatIfRuns": 200,
+        "beatsCurrentShare": 0.81,
+        "climateModels": {
+          "agree": 8,
+          "of": 8
+        },
+        "reasons": [
+          {
+            "key": "v2.conf.warnedCheck",
+            "params": {
+              "check": "season"
+            }
+          }
+        ]
+      },
+      "checkLocally": [
+        "legumeNitrogenCredit",
+        "coverEstablishment",
+        "buyersLocalPrice",
+        "seedPriceAvailability"
+      ],
+      "placeholderSlots": [
+        "modelA",
+        "modelB",
+        "modelC",
+        "modelD",
+        "calibrationE"
+      ],
+      "neighbors": null
+    }
+  ],
+  "bestPlans": {
+    "limits": {
+      "risk": "worst10-no-worse-than-current",
+      "soil": "erosion-under-T",
+      "fitChecks": "no-fail"
+    },
+    "mostProfitable": {
+      "optionId": "opt-02",
+      "why": {
+        "key": "v2.best.mostProfitable",
+        "params": {
+          "usd": 108
+        }
+      }
+    },
+    "bestBalance": {
+      "optionId": "opt-01",
+      "why": {
+        "key": "v2.best.bestBalance",
+        "params": {}
+      }
+    },
+    "safest": {
+      "optionId": "opt-03",
+      "why": {
+        "key": "v2.best.safest",
+        "params": {
+          "usd": 41
+        }
+      }
+    }
+  },
+  "fieldRisks": {
+    "stressCalendar": [
+      {
+        "month": 1,
+        "risk": 0.05,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 2,
+        "risk": 0.05,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 3,
+        "risk": 0.08,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 4,
+        "risk": 0.1,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 5,
+        "risk": 0.15,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 6,
+        "risk": 0.25,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 7,
+        "risk": 0.35,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 8,
+        "risk": 0.4,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 9,
+        "risk": 0.25,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 10,
+        "risk": 0.12,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 11,
+        "risk": 0.06,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      },
+      {
+        "month": 12,
+        "risk": 0.05,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      }
+    ],
+    "nextMonths": [
+      {
+        "month": "2026-12",
+        "low": 0,
+        "chance": 0.05,
+        "high": 0.2,
+        "reasons": [
+          {
+            "key": "placeholder.noOutlook",
+            "params": {}
+          }
+        ]
+      }
+    ],
+    "erosionHotspots": [
+      {
+        "zoneKey": "v2.zone.steepEdge",
+        "areaShare": 0.12,
+        "tonsPerAcreYear": 9.4,
+        "reasons": [
+          {
+            "key": "v2.reason.soil.erosionOverT",
+            "params": {
+              "erosion": 9.4,
+              "t": 5
+            }
+          }
+        ]
+      }
+    ],
+    "water": {
+      "groundwaterTrend": {
+        "status": "not-applicable",
+        "source": "dryland field"
+      }
+    },
+    "climateNowVs2040": {
+      "frostFreeDays": {
+        "today": 255,
+        "y2040": 255
+      },
+      "heatDays": {
+        "today": 70,
+        "y2040": 70
+      },
+      "rainVariability": {
+        "today": 0.25,
+        "y2040": 0.25
+      }
+    }
+  },
+  "validation": {
+    "reportFile": "shared/v2/validation.json",
+    "bareDays": {
+      "status": "pending-model",
+      "simulatedPerYear": null,
+      "measuredPerYear": null,
+      "differenceDays": null
+    },
+    "cropDates": {
+      "status": "pending-model",
+      "meanAbsErrorDays": null
+    }
+  },
+  "sources": [
+    {
+      "id": "usda-cdl",
+      "name": "USDA Cropland Data Layer",
+      "resolution": "30 m, yearly",
+      "scale": "field"
+    },
+    {
+      "id": "placeholder",
+      "name": "Fixed placeholder values (content/model-placeholders.json)",
+      "resolution": "none",
+      "scale": "placeholder"
+    }
+  ]
+}
