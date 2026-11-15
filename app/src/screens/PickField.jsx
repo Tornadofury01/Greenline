@@ -32,8 +32,10 @@ const CLOSE_DRAG_PX = 70; // drag the card down this far to close it
 // A tap inside an outline loads exactly that field and does not reach the map's own tap handler.
 function Outlines({ selectedId, onPick }) {
   return OUTLINES.map((f) => (
+    // className must be a direct prop: react-leaflet applies pathOptions with setStyle(), which ignores className.
+    // The key changes with the selection so the shape is re-created with the new class.
     <Polygon key={`${f.id}${f.id === selectedId ? '-on' : ''}`} positions={f.rings}
-      pathOptions={{ className: f.id === selectedId ? 'field-outline is-selected' : 'field-outline' }}
+      className={f.id === selectedId ? 'field-outline is-selected' : 'field-outline'}
       bubblingMouseEvents={false} eventHandlers={{ click: () => onPick(f.id) }} />
   ));
 }
