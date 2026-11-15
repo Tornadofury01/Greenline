@@ -27,7 +27,7 @@
   },
 
   "modelB": {
-    "_note": "One fixed sensitivity per crop, same for every field. droughtKy = yield-response factor (FAO-33 style: 1.0 = yield falls as fast as water supply; higher = more drought-sensitive). Values for crops FAO-33 does not list are guesses. heatLossPerDay = share of yield lost per day above heatThresholdC during the sensitive stage (0.01 = 1 %). heatThresholdC = daily max temperature that starts hurting.",
+    "_note": "One fixed sensitivity per crop, same for every field. droughtKy = yield-response factor (FAO-33 style: 1.0 = yield falls as fast as water supply; higher = more drought-sensitive). droughtKy now equals content/crop-library.json for every crop (checked in scoring/engine/selftest-engine.js): FAO-33 values where the crop is listed, the closest listed crop where not (sesame = safflower, cereal rye = winter wheat, clovers and vetch = alfalfa, sorghum-sudangrass = sorghum, cowpea = groundnut). Heat thresholds and loss rates are still rough guesses. heatLossPerDay = share of yield lost per day above heatThresholdC during the sensitive stage (0.01 = 1 %). heatThresholdC = daily max temperature that starts hurting.",
     "crops": {
       "winter_wheat":       { "droughtKy": 1.0,  "heatLossPerDay": 0.010, "heatThresholdC": 32 },
       "corn":               { "droughtKy": 1.25, "heatLossPerDay": 0.015, "heatThresholdC": 35 },
@@ -35,13 +35,13 @@
       "cotton":             { "droughtKy": 0.85, "heatLossPerDay": 0.008, "heatThresholdC": 36 },
       "soybeans":           { "droughtKy": 0.85, "heatLossPerDay": 0.008, "heatThresholdC": 35 },
       "sunflower":          { "droughtKy": 0.95, "heatLossPerDay": 0.006, "heatThresholdC": 37 },
-      "sesame":             { "droughtKy": 0.6,  "heatLossPerDay": 0.003, "heatThresholdC": 38 },
+      "sesame":             { "droughtKy": 0.8,  "heatLossPerDay": 0.003, "heatThresholdC": 38 },
       "alfalfa":            { "droughtKy": 1.1,  "heatLossPerDay": 0.005, "heatThresholdC": 37 },
       "cowpea":             { "droughtKy": 0.7,  "heatLossPerDay": 0.004, "heatThresholdC": 38 },
-      "sorghum_sudangrass": { "droughtKy": 0.8,  "heatLossPerDay": 0.003, "heatThresholdC": 38 },
-      "cereal_rye":         { "droughtKy": 0.7,  "heatLossPerDay": 0.003, "heatThresholdC": 32 },
-      "crimson_clover":     { "droughtKy": 0.9,  "heatLossPerDay": 0.005, "heatThresholdC": 32 },
-      "hairy_vetch":        { "droughtKy": 0.9,  "heatLossPerDay": 0.005, "heatThresholdC": 32 }
+      "sorghum_sudangrass": { "droughtKy": 0.9,  "heatLossPerDay": 0.003, "heatThresholdC": 38 },
+      "cereal_rye":         { "droughtKy": 1.0,  "heatLossPerDay": 0.003, "heatThresholdC": 32 },
+      "crimson_clover":     { "droughtKy": 1.1,  "heatLossPerDay": 0.005, "heatThresholdC": 32 },
+      "hairy_vetch":        { "droughtKy": 1.1,  "heatLossPerDay": 0.005, "heatThresholdC": 32 }
     },
     "defaultCrop": { "droughtKy": 1.0, "heatLossPerDay": 0.008, "heatThresholdC": 35 },
     "stressOutlook": {
@@ -71,7 +71,7 @@
   },
 
   "calibrationE": {
-    "_note": "One fixed typical yield per crop, same for every field (rounded dryland Blackland Prairie levels). wpScale 1 = textbook water productivity; heatThresholdOffsetC 0 = textbook heat threshold. Cover crops are not sold: their typical yield is dry biomass (lb/acre).",
+    "_note": "One fixed typical yield per crop, same for every field (rounded dryland Blackland Prairie levels). wpScale 1 = textbook water productivity; heatThresholdOffsetC 0 = textbook heat threshold. Cover crops are not sold: their typical yield is dry biomass (lb/acre). wpScale 0.5 on crimson clover and hairy vetch is a rough engine tuning: at 1 the daily engine makes 9,000-10,000 lb/acre of winter legume biomass on the Ellis fields, against published ranges of about 2,000-6,000 (SARE). Every other crop is left at 1.",
     "crops": {
       "winter_wheat":       { "typicalYield": 45,   "unit": "bu/acre" },
       "corn":               { "typicalYield": 85,   "unit": "bu/acre" },
@@ -84,8 +84,8 @@
       "cowpea":             { "typicalYield": 2000, "unit": "lb biomass/acre" },
       "sorghum_sudangrass": { "typicalYield": 4000, "unit": "lb biomass/acre" },
       "cereal_rye":         { "typicalYield": 3000, "unit": "lb biomass/acre" },
-      "crimson_clover":     { "typicalYield": 2500, "unit": "lb biomass/acre" },
-      "hairy_vetch":        { "typicalYield": 2500, "unit": "lb biomass/acre" }
+      "crimson_clover":     { "typicalYield": 2500, "unit": "lb biomass/acre", "wpScale": 0.5 },
+      "hairy_vetch":        { "typicalYield": 2500, "unit": "lb biomass/acre", "wpScale": 0.5 }
     },
     "wpScale": 1,
     "heatThresholdOffsetC": 0
