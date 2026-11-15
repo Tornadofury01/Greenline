@@ -1,0 +1,97 @@
+Fld              Date      Act. Crop Rate  Unit   Equipment Fert   Rate Unit  Pesticide   Rate Unit
+                            No.   No.                No.     Name/Comp
+
+SW12             1955        107
+SW12             1956        107
+SW12             1957        107
+SW12             1958        107
+SW12             1959        107
+SW12       4  20 1960      4 107
+SW12       6  16 1960     14 107
+SW12       1  23 1961      4 107
+SW12      12  27 1961      4 107
+SW12       2  12 1962      4 107
+SW12             1963        107
+SW12             1964        107
+SW12             1965        107
+SW12             1966        107
+SW12             1967        107
+SW12             1968        107
+SW12             1969        107
+SW12             1970        107
+SW12             1971        107
+SW12             1972        107
+SW12             1973        107
+SW12             1974        107
+SW12             1975        107
+SW12             1976        107
+
+SW12       6   9 1977      2 107
+SW12             1978        107
+SW12             1979        107
+SW12             1980        107
+SW12             1981        107
+SW12             1982        107
+SW12             1983        107
+SW12             1984        107
+SW12             1985        107
+SW12             1986        107
+SW12             1987        107
+SW12             1988        107
+SW12             1989        107
+              
+SW12             1990      3                                                        herbicide
+SW12             1990      8 107   6bales(1200lb/bale)
+SW12             1990      8 107   1bales(1200lb/bale)
+SW12             1991      3                                                        herbicide
+SW12             1991      8 107   9bales(1200lb/bale)
+SW12             1992      3                                                        herbicide
+SW12             1992      8 107  11bales(1200lb/bale)
+SW12             1992      8 107   4bales(1200lb/bale)
+SW12             1993      3                                                        herbicide
+SW12             1993      8 107   7bales(1200lb/bale)
+SW12             1994      3                                                        herbicide
+SW12             1994      8 107   6bales(1200lb/bale)
+SW12             1994      8 107   2bales(1200lb/bale)
+SW12             1995      3                                                        herbicide
+SW12             1995      8 107  12bales(1200lb/bale)
+SW12             1995      8 107   6bales(1200lb/bale)
+SW12             1996      3                                                        herbicide
+SW12             1996      8 107   7bales(1200lb/bale)
+SW12             1997      3                                                        herbicide
+SW12             1997      8 107   8bales(1200lb/bale)
+SW12             1998      3                                                        herbicide
+SW12             1998      8 107   4bales(1200lb/bale)
+SW12             1999      3                                                        herbicide
+SW12             1999      8 107   6bales(1200lb/bale)
+SW12       3  27 2000      3 107                                                    banvel+2-4-D  1.33pt/ac
+SW12       6  28 2000      8 107  12bales(1200lb/bale)
+SW12       4  12 2001      3 107                                                    grazon P+D     1.7pt/ac
+SW12       7  10 2001      8 107   4bales(1200lb/bale)
+SW12       4   5 2002      3 107                                                    banvel+2-4-D   2.2pt/ac
+SW12       6  28 2002      8 107   8bales(1200lb/bale)
+SW12       4   5 2003      3 107                                                    banvel+2-4-D   2.2pt/ac
+SW12       6  28 2003      8 107   8bales(1200lb/bale)
+SW12       7  22 2004      8 107   9bales(1200lb/bale)
+SW12       3  31 2005      3 107                                                           2-4-D   1.1qt/ac
+SW12       6  28 2005      8 107   6bales(1200lb/bale)
+SW12       6  14 2006      8 107   7bales(1200lb/bale)
+SW12       4  26 2007      3 107                                                       Rangestar   1.5 pints/ac    
+SW12       6  13 2007      8 107   6bales(1200lb/bale)   
+SW12       6  11 2008      8 107  11bales(1200lb/bale)
+SW12      10  29 2008      8 107   2bales(1200lb/bale)
+SW12       4  20 2009      3 107                                                    cimmaron-herbicide 
+SW12       8  13 2009      8 107   2bales(1200lb/bale)
+SW12       5  11 2010      8 107   3bales(1200lb/bale)
+SW12       8  18 2010      8 107   3bales(1200lb/bale)
+SW12       4   5 2011      3 107                                                    cimmaron (0.3 oz)-Surfking(1 gal/500 gal tank)
+SW12       6  14 2011      8 107   2bales(1200lb/bale)
+SW12       7  11 2014      8 107   6bales(1200lb/bale)
+SW12       7  10 2015      8 107   9bales(1200lb/bale)
+SW12       2   4 2016      4 107
+SW12       9  21 2016      8 107  11bales(1200lb/bale)
+
+
+
+
+
