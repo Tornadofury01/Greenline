@@ -3,7 +3,7 @@
 // Pure JS. Used by scoring/selftest-v2contract.js and by the precompute script (step B3).
 
 export const OUTPUT_SCHEMA_VERSION = 1;
-export const SCORE_IDS = ['profit', 'risk', 'soil', 'water', 'nutrients', 'pests']; // provisional: content/v2-scores.json is the master
+export const SCORE_IDS = ['profit', 'risk', 'soil', 'water', 'nutrients', 'pests']; // decided (Nov 14 2026): content/v2-scores.json is the master
 export const FIT_CHECK_IDS = ['water', 'disease', 'market', 'season'];
 export const FIT_STATUSES = ['pass', 'warn', 'fail'];
 export const CONFIDENCE_LEVELS = ['high', 'medium', 'low'];

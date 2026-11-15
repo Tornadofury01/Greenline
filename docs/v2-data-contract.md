@@ -10,7 +10,7 @@ Contract version: **schemaVersion 1**. If any shape below changes, bump it and u
 
 ```
 content/model-placeholders.json     the placeholders (same for every field), the only place to edit them
-content/v2-scores.json              the six scores, weights, priority boosts, grade cut-offs (provisional)
+content/v2-scores.json              the six scores, weights, priority boosts, grade cut-offs (decided)
 content/crop-library.json           crop library (built by scoring/tools/build_crop_library.mjs, format in section 3)
 shared/v2/models/<field-id>.json    Pranav's model outputs (section 1)    <- plugged in later
 shared/v2/fields/<field-id>.json    engine output the app reads (section 2)
@@ -150,7 +150,7 @@ Built by the engine (step B3). Sample: `shared/v2-sample/sample-field.json` (inv
 | `name` | `{ key, params }` | |
 | `sequence[]` | `{ year, crops[] }` | Rotation year 1…n; `crops[]` = `{ crop, role: cash/cover/fallow, plantDoy, endDoy, plantYearOffset }` (a double crop or cover = more than one entry) |
 | `management` | object | The optimized choices: `plantingDate` early/normal/late, `nitrogenLbPerAcre`, `maturity` short/full, `coverTermination` early/at-planting/none, `doubleCrop` boolean, `tillage` conventional/reduced/no-till, `irrigation` none/limited/full |
-| `scores` | `{ profit, risk, soil, water, nutrients, pests }` each `{ value 0-100, reasons[] }` | **Six scores, provisional** (names and weights: `content/v2-scores.json`). `reasons[]` = `{ key, params, tone: up/down/note, src? }` |
+| `scores` | `{ profit, risk, soil, water, nutrients, pests }` each `{ value 0-100, reasons[] }` | **Six scores, decided** (names and weights: `content/v2-scores.json`). `reasons[]` = `{ key, params, tone: up/down/note, src? }` |
 | `weightedTotal`, `grade` | 0-100, A/B/C/D/F | Weighted by `priorities.weights`; cut-offs in `v2-scores.json` |
 | `fitChecks` | `{ water, disease, market, season }` each `{ status: pass/warn/fail, evidence: { key, params } }` | The four fit checks, one line of evidence each |
 | `profit` | see below | |
@@ -176,8 +176,8 @@ Built by the engine (step B3). Sample: `shared/v2-sample/sample-field.json` (inv
 ### 2.4 Report card: `shared/v2/validation.json`
 `{ schemaVersion, generatedAt, checks[8] }`; check ids 1 to 8 as in the plan (model accuracy, bare days, crop dates, yields, erosion, soil moisture, neighbor backtest, expert ranking). Each: `{ id, nameKey, status: pass/fail/partial/pending-model/not-run, region, n, measured, target, noteKey }`. Failures are shown. Anything that needs a model not plugged in yet is `pending-model`.
 
-### 2.5 Six scores: provisional
-`content/v2-scores.json` is the single place for the names, weights, priority boosts and grade cut-offs. **Provisional, confirm with Pranav.** Current definitions: 1 Profit (median return above variable costs), 2 Risk (worst-10%-of-seasons result vs the current rotation), 3 Soil (erosion vs T, bare days, organic matter trend), 4 Water (water left for the next crop, water stress), 5 Nutrients (nitrogen balance, fertilizer bought, legume credit), 6 Pests (shared hosts, green bridges, family repeats).
+### 2.5 Six scores: decided
+`content/v2-scores.json` is the single place for the names, weights, priority boosts and grade cut-offs. **Decided by the team (Nov 14 2026): final.** Current definitions: 1 Profit (median return above variable costs), 2 Risk (worst-10%-of-seasons result vs the current rotation), 3 Soil (erosion vs T, bare days, organic matter trend), 4 Water (water left for the next crop, water stress), 5 Nutrients (nitrogen balance, fertilizer bought, legume credit), 6 Pests (shared hosts, green bridges, family repeats).
 
 ---
 
