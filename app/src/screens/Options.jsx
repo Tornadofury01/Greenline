@@ -56,12 +56,13 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       <section className="relative isolate overflow-hidden">
         <VantaTopology className="absolute inset-0 -z-10 opacity-50" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-b from-base-100/20 via-base-100/60 to-base-100" aria-hidden="true" />
-        <div className="flex min-h-[78svh] w-full flex-col justify-center gap-8 px-5 pb-20 pt-16 sm:px-8 lg:px-12">
-          {(sample || placeholders) && <div className="flex flex-col gap-2">{sample && <SampleBanner />}{placeholders && <PlaceholderNotice />}</div>}
+        <div className="grid w-full grid-cols-1 items-end gap-x-12 gap-y-6 px-5 pb-10 pt-8 sm:px-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:px-12 lg:pt-10">
+          {(sample || placeholders) && <div className="flex flex-col gap-2 lg:col-span-2">{sample && <SampleBanner />}{placeholders && <PlaceholderNotice />}</div>}
+          <div className="flex flex-col gap-5">
           <span className="badge badge-lg badge-outline w-fit bg-base-100/70">{t('pick.fieldName', { id: field?.field?.id ?? '' })}</span>
           <SplitText text={t('optionsScreen.title')} tag="h1" textAlign="left" splitType="chars" delay={45} duration={1}
-            className="m-0 text-7xl font-bold leading-[0.9] tracking-tighter sm:text-9xl" />
-          <p className="max-w-2xl text-xl leading-relaxed text-base-content/85 sm:text-2xl">{t('optionsScreen.intro')}</p>
+            className="m-0 text-6xl font-bold leading-[0.9] tracking-tighter sm:text-8xl" />
+          <p className="max-w-2xl text-lg leading-relaxed text-base-content/85 sm:text-xl">{t('optionsScreen.intro')}</p>
           {cards.goals.length > 0 && (
             <p className="max-w-2xl text-base leading-relaxed text-base-content/70">{t('optionsScreen.weightedFor', { goals: cards.goals.map((k) => t(k)).join(', ') })}</p>
           )}
@@ -71,7 +72,8 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
             </button>
             <button type="button" className="btn btn-ghost btn-lg rounded-full px-6" onClick={() => scrollToId('compare')}>{t('optionsScreen.heroCompare')}</button>
           </div>
-          <div className="stats stats-vertical mt-4 w-full max-w-4xl bg-base-100/75 sm:stats-horizontal">
+          </div>
+          <div className="stats stats-horizontal w-full auto-cols-[minmax(0,1fr)] overflow-visible bg-base-100/75 [&_.stat-title]:whitespace-normal [&_.stat-title]:text-sm sm:[&_.stat-title]:text-base [&_.stat]:px-3 sm:[&_.stat]:px-6 [&_.stat-desc]:whitespace-normal [&_.stat-value]:text-3xl sm:[&_.stat-value]:text-4xl">
             <div className="stat">
               <div className="stat-title text-base">{t('optionsScreen.statBest')}</div>
               <div className="stat-value text-primary"><CountUp to={Math.round(best.total)} duration={1.6} /></div>
@@ -94,16 +96,16 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       </section>
 
       {/* Every rotation side by side */}
-      <section id="compare" className="w-full px-5 py-24 sm:px-8 lg:px-12">
+      <section id="compare" className="w-full px-5 py-10 sm:px-8 lg:px-12">
         <AnimatedContent distance={40} duration={0.9}>
-          <h2 className="m-0 text-4xl font-bold tracking-tight sm:text-5xl">{t('optionsScreen.sideBySide')}</h2>
+          <h2 className="m-0 text-3xl font-bold tracking-tight sm:text-4xl">{t('optionsScreen.sideBySide')}</h2>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-base-content/75">{t('optionsScreen.compareIntro')}</p>
         </AnimatedContent>
-        <ol className="mt-12 grid snap-x snap-mandatory auto-cols-[minmax(250px,1fr)] grid-flow-col overflow-x-auto pb-4 lg:overflow-visible">
+        <ol className="m-0 mt-6 grid list-none p-0 snap-x snap-mandatory auto-cols-[minmax(250px,1fr)] grid-flow-col overflow-x-auto pb-4 lg:overflow-visible">
           {all.map((c) => (
             <li key={c.id} className="snap-start border-l border-base-300 first:border-l-0">
               <button type="button" onClick={() => open(c.id)}
-                className={`group flex h-full w-full flex-col gap-4 rounded-box px-6 py-6 text-left transition-colors duration-300 hover:bg-base-200 ${selected === c.id ? 'bg-base-200' : ''}`}>
+                className={`group flex h-full w-full flex-col gap-4 rounded-box border-0 bg-transparent shadow-none px-6 py-6 text-left transition-colors duration-300 hover:bg-base-200 ${selected === c.id ? 'bg-base-200' : ''}`}>
                 <span className="flex flex-wrap items-center gap-2">
                   <span className="text-base font-semibold">{optionLabel(t, c)}</span>
                   {c.best && <span className="badge badge-primary badge-sm">{t('optionsScreen.best')}</span>}
@@ -124,10 +126,10 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
       </section>
 
       {/* One rotation at a time */}
-      <section id="details" ref={detailsRef} className="w-full px-5 pb-28 pt-8 sm:px-8 lg:px-12">
-        <h2 className="m-0 text-4xl font-bold tracking-tight sm:text-5xl">{t('optionsScreen.detailsTitle')}</h2>
+      <section id="details" ref={detailsRef} className="w-full px-5 pb-12 pt-4 sm:px-8 lg:px-12">
+        <h2 className="m-0 text-3xl font-bold tracking-tight sm:text-4xl">{t('optionsScreen.detailsTitle')}</h2>
         <p className="mt-4 max-w-2xl text-lg leading-relaxed text-base-content/75">{t('optionsScreen.detailsIntro')}</p>
-        <div role="tablist" aria-label={t('optionsScreen.detailsTitle')} className="tabs tabs-box mt-10 w-full flex-nowrap overflow-x-auto bg-base-200 sm:w-fit">
+        <div role="tablist" aria-label={t('optionsScreen.detailsTitle')} className="tabs tabs-box mt-6 w-full flex-nowrap overflow-x-auto bg-base-200 sm:w-fit">
           {all.map((c) => (
             <button key={c.id} type="button" role="tab" aria-selected={selected === c.id} aria-controls="option-panel"
               className={`tab h-11 whitespace-nowrap px-5 text-base ${selected === c.id ? 'tab-active font-semibold' : ''}`}
@@ -137,7 +139,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
           ))}
         </div>
         <AnimatePresence mode="wait" initial={false}>
-          <motion.div key={card.id} id="option-panel" role="tabpanel" className="mt-14"
+          <motion.div key={card.id} id="option-panel" role="tabpanel" className="mt-8"
             initial={reduce ? false : { opacity: 0, y: 24, filter: 'blur(6px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -12, filter: 'blur(4px)' }}
@@ -147,7 +149,7 @@ export function OptionsView({ cards, sample = false, photo = '' }) {
         </AnimatePresence>
       </section>
 
-      <section className="w-full px-5 pb-32 sm:px-8 lg:px-12">
+      <section className="w-full px-5 pb-14 sm:px-8 lg:px-12">
         <div role="note" className="alert alert-soft items-start text-base leading-relaxed">
           <Lightbulb size={22} className="text-primary" aria-hidden="true" />
           <span>{t('optionsScreen.takeaway')}</span>
