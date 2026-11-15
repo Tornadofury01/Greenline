@@ -13,9 +13,16 @@ What each slot is built from (sections left out stay PLACEHOLDERS, tagged in the
                 so probability = 1.
   calibrationE  Calibration E (`calibrationE/predictions.csv`): the county's trend yield in its latest NASS year for
                 wheat, corn, sorghum, cotton; every other crop keeps its placeholder yield.
-  modelB        not written: Model B gives greenness response per SPEI / hot day, not the yield factors the engine
-                needs (droughtKy, heatLossPerDay). Mapping one to the other is a modelling decision.
-  modelD        not written: Model D gives volumetric soil moisture; the engine needs a share of plant-available water.
+  modelB        Model B (`modelB/field_sensitivity.csv` + `metrics.json`): how much THIS field's crop browns per unit of
+                drought (z per SPEI) and per hot day, relative to the average field with that crop. The engine's
+                textbook factors (FAO-33 droughtKy, heatLossPerDay) are scaled by that ratio, clipped to 0.5-2x, so
+                the level stays textbook and the field-to-field spread comes from the satellite record. Heat is only
+                scaled for crops whose average greenness falls on hot days (summer and winter grain). Crops Model B
+                has no group for keep the textbook values. stressOutlook is not written: the forecast needs this
+                month's data and the record ends in Dec 2025, so the fixed calendar outlook stays (tagged in the app).
+  modelD        not written (decision): Model D estimates SURFACE moisture (top ~5 cm) at SMAP's 9 km scale, its own
+                report says not to present per-field values as measured, and its latest value is from 2025; the engine
+                needs root-zone water as a share of plant-available water "today". The placeholder (0.5) stays.
 """
 import argparse
 import json
@@ -30,6 +37,15 @@ SCHEMA = 1
 M1_TO_CROP = {"corn": "corn", "sorghum": "grain_sorghum", "cotton": "cotton", "soybeans": "soybeans",
               "wheat": "winter_wheat", "fallow": "fallow", "sunflower": "sunflower"}
 E_TO_CROP = {"WHEAT": "winter_wheat", "CORN": "corn", "SORGHUM": "grain_sorghum", "COTTON": "cotton"}
+# Model B crop group -> crop library ids it speaks for (cash crops of that group)
+B_GROUP_CROPS = {"summer_grain": ["corn", "grain_sorghum"], "winter_grain": ["winter_wheat"], "cotton": ["cotton"],
+                 "soybeans": ["soybeans"]}
+B_RATIO = (0.5, 2.0)      # clip on field / average sensitivity
+B_HEAT_MIN = -0.005       # scale heat only where the crop's average greenness clearly drops on hot days (z per day)
+
+
+def clip(x, lo, hi):
+    return max(lo, min(hi, x))
 
 
 def default_models_dir():
@@ -68,13 +84,16 @@ def main():
     freq = {s: {t: round(c2040[s]["summer"]["meanShare"][t], 3) for t in ("drought", "hot", "wet", "normal")} for s in ("ssp245", "ssp585")}
     e = pd.read_csv(M / "calibrationE" / "predictions.csv", usecols=["cfips", "year", "crop", "trend"])
     e = e.sort_values("year").groupby(["cfips", "crop"]).last().reset_index()
+    bs = pd.read_csv(M / "modelB" / "field_sensitivity.csv")
+    bs = bs[bs.fid.isin(ids)].set_index(["fid", "crop"])
+    bmean = json.loads((M / "modelB" / "metrics.json").read_text())["sensitivityByCrop"]
 
     now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-    written, missing = 0, {"A": 0, "C": 0, "E": 0}
+    written, missing = 0, {"A": 0, "B": 0, "C": 0, "E": 0}
     for f in fields:
         fid, cf = f["id"], int(f["countyFips"])
         doc = {"schemaVersion": SCHEMA, "fieldId": fid, "generatedAt": now,
-               "modelVersions": {"A": "model1-v2", "B": None, "C": "modelC-1", "D": None, "E": "calibrationE-1"}}
+               "modelVersions": {"A": "model1-v2", "B": "modelB-1", "C": "modelC-1", "D": None, "E": "calibrationE-1"}}
 
         rows = p1[p1.fid == fid].sort_values("year")
         if len(rows):
@@ -95,6 +114,25 @@ def main():
                              "frequencies2040": freq}
         else:
             missing["C"] += 1
+
+        crops_b, scaled = {k: dict(v) for k, v in ph["modelB"]["crops"].items()}, []
+        for group, crop_ids in B_GROUP_CROPS.items():
+            if (fid, group) not in bs.index or group not in bmean:
+                continue
+            r, avg = bs.loc[(fid, group)], bmean[group]
+            dr = clip(r.z_per_spei90 / avg["z_per_spei90"], *B_RATIO) if avg["z_per_spei90"] > 0 else 1.0
+            hr = clip(r.z_per_hot_day / avg["z_per_hot_day"], *B_RATIO) if avg["z_per_hot_day"] < B_HEAT_MIN else 1.0
+            for c in crop_ids:
+                if c in crops_b:
+                    crops_b[c]["droughtKy"] = round(crops_b[c]["droughtKy"] * dr, 3)
+                    crops_b[c]["heatLossPerDay"] = round(crops_b[c]["heatLossPerDay"] * hr, 4)
+            scaled.append(f"{group} drought x{dr:.2f} heat x{hr:.2f} ({int(r.n_months)} months)")
+        if scaled:
+            doc["modelB"] = {"_note": "Textbook factors scaled by this field's Model B sensitivity vs the average field: " + "; ".join(scaled)
+                                      + ". Other crops: textbook. No stress outlook (record ends Dec 2025).",
+                             "crops": crops_b}
+        else:
+            missing["B"] += 1
 
         ec = e[e.cfips == cf]
         if len(ec):
