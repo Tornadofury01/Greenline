@@ -47,7 +47,7 @@ Aliases set in `app/vite.config.js`: `@content`, `@shared`, `@scoring`.
 1. **All user-facing text lives in `/content/i18n/en.json` and `es.json`.** Nothing hardcoded in JSX. Add every key to both files.
 2. **Data must follow `/shared/data-format.md`.** Change the doc and the sample together.
 3. **Never commit API keys.** Use `.env` (it's gitignored). Vite exposes only `VITE_*` vars to the browser, so treat those as public.
-4. Never store or send the farmer's raw GPS. Use the 30 m `gridCell` id.
+4. Never store or send the farmer's raw GPS. Use the 30 m `gridCell` id. Same for the map's address search (`data/geocode.js`, `components/MapSearch.jsx`): the typed text goes only to the free US Census Geocoder lookup (JSONP, online only; towns match the bundled list offline), and neither the text nor the coordinates are kept in saved state, localStorage, URLs or logs.
 5. Keep scoring rules small, pure and commented. Run `node scoring/selftest.js` after changing them.
 6. Crop trait values in `crops.json` are **placeholders** (`"verified": false`) until checked with AgriLife / NRCS.
 7. Mobile-first: tap targets ≥ 44px, plain language.

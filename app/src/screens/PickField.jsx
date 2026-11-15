@@ -6,13 +6,15 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
   Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw,
-  Plus, Minus, Scan, X, ChevronUp, Sprout, Info, Compass,
+  Plus, Minus, Scan, X, ChevronUp, Sprout, Info, Compass, ArrowLeft,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
 import { Receipt } from '../components/Small.jsx';
 import { slopeWord } from '../display.js';
-import { fieldOutlines, outlineFor, mapLayers, insideStudyArea, nearestTo } from '../data/loadField.js';
+import { fieldOutlines, outlineFor, mapLayers, insideStudyArea, nearestTo, fieldIndex } from '../data/loadField.js';
+import { nearestTownTo } from '../data/geocode.js';
+import MapSearch from '../components/MapSearch.jsx';
 import { cropThisYear } from '../si.js';
 // import FieldWalkMode from '../components/future/FieldWalkMode.jsx';  // FUTURE
 // import MemoryPins from '../components/future/MemoryPins.jsx';        // FUTURE
@@ -175,6 +177,7 @@ export default function PickField() {
   const [drag, setDrag] = useState(0);
   const dragStart = useRef(null);
   const bottomRef = useRef(null);
+  const topRef = useRef(null);
 
   const [zoom, setZoom] = useState(11);
   const [legend, setLegend] = useState(false);
@@ -189,14 +192,25 @@ export default function PickField() {
     setOutside(await nearestTo(lat, lon));
   };
   const outlinePick = (id) => { setVia('outline'); setGeo(null); setOutside(null); setOpen(true); pickFieldById(id); };
-  const openNearest = () => { setVia('tap'); pickNearest(outside); setOutside(null); };
+  const openNearest = () => { setVia(outside?.source === 'search' ? 'search' : 'tap'); pickNearest(outside); setOutside(null); };
+  // A search result: fly there, then the same nearest-field logic as a map tap. The point is only passed through.
+  const searchPick = async ({ lat, lon }) => {
+    setGeo(null); setOpen(true);
+    map?.flyTo([lat, lon], 14, { duration: 0.8 });
+    const info = await nearestTo(lat, lon);
+    if (!info) return;
+    if (insideStudyArea(lat, lon)) { setOutside(null); setVia('search'); pickNearest(info); return; }
+    const f = fieldIndex().find((x) => x.id === info.id);
+    setOutside({ ...info, source: 'search', town: f ? nearestTownTo(f.lat, f.lon) : mapLayers.nearestTown });
+  };
   const openDemo = () => { setVia('outline'); setOutside(null); pickDemo(); };
   // Frame a box in the part of the map that isn't covered by the header, notes and the bottom card.
   // sheetClosed: the card is being folded away, so only the map buttons (46 px) sit above the nav.
   const framePadding = (sheetClosed = false) => {
     const wide = window.matchMedia('(min-width: 1024px)').matches;
     const card = sheetClosed ? 46 + 8 : (bottomRef.current?.offsetHeight || 0);
-    return { paddingTopLeft: [wide ? 440 : 16, 150], paddingBottomRight: [16, wide ? 24 : card + 96] };
+    const top = (topRef.current?.getBoundingClientRect().bottom || 150) + 8;
+    return { paddingTopLeft: [wide ? 440 : 16, top], paddingBottomRight: [16, wide ? 24 : card + 96] };
   };
   // "Show the study area": fold the card away so the whole area fits (the reopen pill brings it back).
   const showStudy = () => {
@@ -270,9 +284,10 @@ export default function PickField() {
         </MapContainer>
       </section>
 
+      <div className="map-top" ref={topRef}>
+      <MapSearch online={online} onChoose={searchPick} />
       {/* Reserved for the map view chips (built later). Nothing else may sit here. */}
       <div className="map-chips" aria-hidden="true" />
-
       <div className="map-notes">
         <p>{t('pick.note300')}</p>
         <p>{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
@@ -290,6 +305,7 @@ export default function PickField() {
             </ul>
           </div>
         )}
+      </div>
       </div>
 
       <div className="map-bottom" ref={bottomRef}>
@@ -328,7 +344,7 @@ export default function PickField() {
             <div className="map-sheet-head">
               <span className="map-sheet-mark"><MapPin size={20} aria-hidden="true" /></span>
               <div className="map-sheet-title">
-                <h1>{outside ? t('pick.outsideTitle') : !field ? t('pick.title') : acres != null ? t('pick.fieldTitle', { id, acres }) : t('pick.fieldName', { id })}</h1>
+                <h1>{outside ? t(outside.source === 'search' ? 'pick.searchOutTitle' : 'pick.outsideTitle') : !field ? t('pick.title') : acres != null ? t('pick.fieldTitle', { id, acres }) : t('pick.fieldName', { id })}</h1>
                 {field && !outside && (
                   <p>{t(acres != null ? 'pick.fieldSub' : 'pick.countyValue', { county: field.field.county, state: field.field.state })}</p>
                 )}
@@ -354,7 +370,19 @@ export default function PickField() {
               </button>
             )}
 
-            {outside && (
+            {outside?.source === 'search' && (
+              <>
+                <p className="map-sheet-text">{t('pick.searchOutText', { mi: Math.max(1, Math.round(outside.nearestKm * 0.621371)), town: outside.town })}</p>
+                <button type="button" className="btn btn-block" onClick={showStudy}>
+                  <ArrowLeft size={20} aria-hidden="true" />{t('pick.searchBack')}
+                </button>
+                <button type="button" className="btn btn-primary btn-block" disabled={loading} onClick={openNearest}>
+                  {loading ? t('pick.loading') : t('pick.searchOpen')}{!loading && <ArrowRight size={20} aria-hidden="true" />}
+                </button>
+              </>
+            )}
+
+            {outside && outside.source !== 'search' && (
               <>
                 <p className="map-sheet-text">{t('pick.outsideText', { n: OUTLINES.length, town: mapLayers.nearestTown })}</p>
                 {outside.notCropland && <p className="sheet-note sheet-warn"><TriangleAlert size={18} aria-hidden="true" /><span>{t('pick.outsideNotCropland')}</span></p>}
@@ -383,10 +411,10 @@ export default function PickField() {
             {field && !outside && (
               <>
                 {field.nearestKm > 0 && via !== 'outline' && (
-                  <p className="sheet-note">{t(via === 'gps' ? 'pick.nearestGps' : 'pick.nearest', { km: field.nearestKm, id })}</p>
+                  <p className="sheet-note">{t(via === 'gps' ? 'pick.nearestGps' : via === 'search' ? 'pick.nearestSearch' : 'pick.nearest', { km: field.nearestKm, id })}</p>
                 )}
                 {field.notCropland && field.nearestKm <= FAR_KM && (
-                  <p className="sheet-note sheet-warn"><TriangleAlert size={18} aria-hidden="true" /><span>{t(via === 'gps' ? 'pick.notCroplandGps' : 'pick.notCropland')}</span></p>
+                  <p className="sheet-note sheet-warn"><TriangleAlert size={18} aria-hidden="true" /><span>{t(via === 'gps' ? 'pick.notCroplandGps' : via === 'search' ? 'pick.notCroplandSearch' : 'pick.notCropland')}</span></p>
                 )}
                 {field.nearestKm > FAR_KM && (
                   <p className="sheet-note sheet-warn"><TriangleAlert size={18} aria-hidden="true" /><span>{t('pick.farAway', { km: field.nearestKm })}</span></p>

@@ -25,7 +25,7 @@ const TERMS = [
   { id: 'fieldShiftModels', data: ['Landsat 5/7/8/9', 'HLS', 'USDA Cropland Data Layer', 'NASA POWER', 'SMAP', 'GPM IMERG', 'MODIS'] },
   { id: 'seasonReplay', data: ['NASA POWER', 'NASA NEX-GDDP-CMIP6', 'OpenLandMap', 'SRTM', 'FAO-56', 'FAO-33', 'RUSLE'] },
 ];
-const NOTES = [{ id: 'satVsGround' }, { id: 'sensor2013', data: ['Landsat 8/9', 'Landsat 5/7/8/9'] }];
+const NOTES = [{ id: 'satVsGround' }, { id: 'sensor2013', data: ['Landsat 8/9', 'Landsat 5/7/8/9'] }, { id: 'privacy', data: ['US Census Geocoder'] }];
 
 function Entry({ id, data = [] }) {
   const { t, how } = useApp();

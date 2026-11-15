@@ -130,7 +130,13 @@
     "outsideText": "We have data for {n} fields near {town}. Tap one of them, or open the demo field.",
     "outsideNotCropland": "The spot you tapped doesn't look like cropland on the USDA crop map.",
     "outsideShow": "Show our 300 fields",
-    "outsideNearest": "Open the nearest field anyway ({km} km away)"
+    "outsideNearest": "Open the nearest field anyway ({km} km away)",
+    "nearestSearch": "Showing the closest field we have data for, {km} km from the place you searched.",
+    "notCroplandSearch": "The place you searched doesn't look like cropland on the USDA crop map, so we show the nearest sampled crop field as an example.",
+    "searchOutTitle": "We don't have data there yet",
+    "searchOutText": "The nearest field we have is {mi} miles away near {town}.",
+    "searchOpen": "Open that field",
+    "searchBack": "Go back"
   },
   "farm": {
     "title": "Your farm",
@@ -635,6 +641,10 @@
     "seasonReplay": {
       "title": "Season replay",
       "text": "We plant each rotation on paper and run it day by day through every real season since 1985, using NASA weather. A daily water balance tracks soil water, published crop factors turn water stress into yield, and the RUSLE formula estimates soil loss. For 2040 we shift those real seasons by the change that eight NASA climate models project. Each rotation is then graded on soil cover, erosion, profit, bad-year resilience, nitrogen and pests. It is a simulation built on published farm science, not a trained model, and a starting point for a talk with your Extension agent, not a prescription."
+    },
+    "privacy": {
+      "title": "Privacy",
+      "text": "We never save your location, your address or your farm answers. “Use my location” is used once, on your phone, to find the nearest study field. To find an address, we look it up with the US Census Bureau's free map service. Nothing is saved by us."
     }
   },
   "si": {
@@ -996,5 +1006,19 @@
     "rankingHint": "Average score over {n} scenarios (5 climate views × 2 price sets). This sets the order.",
     "notField": "County-wide simulation on one typical field. Not your field.",
     "whyDiffers": "Why this is not the same answer as your field's cards ({field}): this study tests its own list of seven rotations on one typical county field, with county costs and climate projections. Here its best is {study}. The cards above use your field's own data and your goals."
+  },
+  "search": {
+    "label": "Find a place",
+    "placeholder": "Type an address, road or town",
+    "clear": "Clear the search",
+    "go": "Search",
+    "kind": {
+      "town": "Town",
+      "address": "Address"
+    },
+    "none": "No match found. Try adding the town, or tap your field on the map.",
+    "error": "We couldn't reach the address service. Try again, or type a town.",
+    "offline": "Address search needs internet. You can still tap a field or type a town.",
+    "privacy": "We never save your address or your data."
   }
 }

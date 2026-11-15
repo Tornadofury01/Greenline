@@ -130,7 +130,13 @@
     "outsideText": "Tenemos datos de {n} campos cerca de {town}. Toque uno de ellos o abra el campo de demostración.",
     "outsideNotCropland": "El lugar que tocó no parece tierra de cultivo en el mapa de cultivos del USDA.",
     "outsideShow": "Ver nuestros 300 campos",
-    "outsideNearest": "Abrir de todos modos el campo más cercano (a {km} km)"
+    "outsideNearest": "Abrir de todos modos el campo más cercano (a {km} km)",
+    "nearestSearch": "Mostramos el campo más cercano con datos, a {km} km del lugar que buscó.",
+    "notCroplandSearch": "El lugar que buscó no parece tierra de cultivo en el mapa de cultivos del USDA, así que mostramos el campo de muestra más cercano como ejemplo.",
+    "searchOutTitle": "Aún no tenemos datos de ese lugar",
+    "searchOutText": "El campo más cercano que tenemos está a {mi} millas, cerca de {town}.",
+    "searchOpen": "Abrir ese campo",
+    "searchBack": "Volver"
   },
   "farm": {
     "title": "Su granja",
@@ -635,6 +641,10 @@
     "seasonReplay": {
       "title": "Repaso de temporadas",
       "text": "Sembramos cada rotación en papel y la pasamos día por día por cada temporada real desde 1985, con el clima de la NASA. Un balance de agua diario sigue el agua del suelo, factores de cultivo publicados convierten la falta de agua en rendimiento, y la fórmula RUSLE estima la pérdida de suelo. Para 2040 movemos esas temporadas reales según el cambio que proyectan ocho modelos de clima de la NASA. Luego cada rotación se califica en cobertura del suelo, erosión, ganancia, aguante en años malos, nitrógeno y plagas. Es una simulación basada en ciencia agrícola publicada, no un modelo entrenado, y es un punto de partida para hablar con su agente de Extensión, no una receta."
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "text": "Nunca guardamos su ubicación, su dirección ni las respuestas sobre su granja. “Usar mi ubicación” se usa una sola vez, en su teléfono, para encontrar el campo de estudio más cercano. Para encontrar una dirección, la buscamos con el servicio de mapas gratuito de la Oficina del Censo de EE. UU. Nosotros no guardamos nada."
     }
   },
   "si": {
@@ -996,5 +1006,19 @@
     "rankingHint": "Puntaje promedio en {n} escenarios (5 climas × 2 juegos de precios). Esto decide el orden.",
     "notField": "Simulación de todo el condado en un campo típico. No es su campo.",
     "whyDiffers": "Por qué no es la misma respuesta que las tarjetas de su campo ({field}): este estudio prueba su propia lista de siete rotaciones en un campo típico del condado, con costos del condado y proyecciones de clima. Aquí la mejor es {study}. Las tarjetas de arriba usan los datos de su propio campo y sus metas."
+  },
+  "search": {
+    "label": "Buscar un lugar",
+    "placeholder": "Dirección, camino o pueblo",
+    "clear": "Borrar la búsqueda",
+    "go": "Buscar",
+    "kind": {
+      "town": "Pueblo",
+      "address": "Dirección"
+    },
+    "none": "No encontramos nada. Agregue el pueblo, o toque su campo en el mapa.",
+    "error": "No pudimos conectar con el servicio de direcciones. Inténtelo de nuevo o escriba un pueblo.",
+    "offline": "La búsqueda de direcciones necesita internet. Aún puede tocar un campo o escribir un pueblo.",
+    "privacy": "Nunca guardamos su dirección ni sus datos."
   }
 }
