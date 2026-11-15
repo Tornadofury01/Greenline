@@ -1,0 +1,53 @@
+{
+ "_note": "canopy timing fitted on 1986-2013 Landsat 5/7 peaks, 72 fields (pipeline/v2/calibrate_growth.mjs); report card tests 2014+",
+ "crops": {
+  "corn": {
+   "seasons": 381,
+   "stageAtPeakMedian": 0.623,
+   "stageAtPeakIQR": [
+    0.387,
+    0.676
+   ],
+   "canopyFullOld": 0.5,
+   "canopyFullNew": 0.623,
+   "senescence": 0.75,
+   "peakDoyMedian": 166
+  },
+  "grain_sorghum": {
+   "seasons": 398,
+   "stageAtPeakMedian": 0.623,
+   "stageAtPeakIQR": [
+    0.578,
+    0.884
+   ],
+   "canopyFullOld": 0.5,
+   "canopyFullNew": 0.623,
+   "senescence": 0.78,
+   "peakDoyMedian": 166
+  },
+  "cotton": {
+   "seasons": 280,
+   "stageAtPeakMedian": 0.563,
+   "stageAtPeakIQR": [
+    0.53,
+    0.779
+   ],
+   "canopyFullOld": 0.45,
+   "canopyFullNew": 0.563,
+   "senescence": 0.8,
+   "peakDoyMedian": 196
+  },
+  "winter_wheat": {
+   "seasons": 410,
+   "stageAtPeakMedian": 0.566,
+   "stageAtPeakIQR": [
+    0.469,
+    0.646
+   ],
+   "canopyFullOld": 0.55,
+   "canopyFullNew": 0.566,
+   "senescence": 0.78,
+   "peakDoyMedian": 105
+  }
+ }
+}

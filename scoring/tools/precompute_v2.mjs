@@ -47,7 +47,7 @@ if (isMainThread) {
   } else {
     if (!existsSync(indexPath)) { console.error('shared/v2/input-index.json is missing: run python pipeline/v2/build_inputs.py first (or pass --legacy)'); process.exit(1); }
     const rows = readJson(indexPath).fields;
-    index = rows.map((r) => ({ id: r.id, county: r.countyFips, lat: r.lat, lon: r.lon, crops: r.neighborCrops }));
+    index = rows.map((r) => ({ id: r.id, county: r.countyFips, lat: r.lat, lon: r.lon, crops: r.neighborCrops, texture: r.texture ?? null }));
     // how common each crop is among the fields of the SAME county (market fit), grown in the last 8 crop-map years
     const byCounty = {};
     for (const r of rows) {
@@ -72,7 +72,8 @@ if (isMainThread) {
   mkdirSync(outDir, { recursive: true });
   const cropFieldShare = Object.fromEntries([...new Set(index.map((x) => x.county))].map((k) => [k, cropShareFor(k)]));
   const now = new Date().toISOString();
-  const rawDir = resolve(rootPath, 'shared/v2/validation-raw');
+  const rawDir = resolve(rootPath, arg('--raw', 'shared/v2/validation-raw'));      // per-field validation numbers
+  const cardsDir = resolve(rootPath, arg('--cards', 'shared/v2'));                  // validation.json + validation-by-county/
   const loadInput = (id) => readJson(existsSync(resolve(rootPath, `shared/v2/inputs/${id}.json`)) ? resolve(rootPath, `shared/v2/inputs/${id}.json`) : resolve(rootPath, `shared/fields/${id}.json`));
   function writeCard(card, path) {
     return import('../v2Contract.js').then(({ validateReportCard }) => {
@@ -87,21 +88,37 @@ if (isMainThread) {
   // shared/v2/validation.json (the card the app shows) = Ellis (48139) when it is there, else the largest county.
   async function writeReport() {
     const { buildReportCard } = await import('../v2/reportCard.js');
+    const { neighborBacktest } = await import('../v2/neighborBacktest.js');
+    const erPath = resolve(rootPath, 'shared/v2/erosion-check.json');
+    const erosionCheck = existsSync(erPath) ? readJson(erPath) : null;
+    // check 7: every field's recommended cash crops vs what similar neighbors grew (neighbors from all six counties)
+    const outDirAll = outDir;
+    const idxRows = existsSync(indexPath) ? readJson(indexPath).fields : [];
+    const nbFields = idxRows.map((r) => {
+      const has = existsSync(resolve(outDirAll, `${r.id}.json`));
+      const o = has ? readJson(resolve(outDirAll, `${r.id}.json`)) : null;
+      const best = o?.options.find((x) => x.id === o.bestPlans?.bestBalance?.optionId);
+      const inp = existsSync(resolve(rootPath, `shared/v2/inputs/${r.id}.json`)) ? readJson(resolve(rootPath, `shared/v2/inputs/${r.id}.json`)) : null;
+      return { id: r.id, county: r.countyFips, lat: r.lat, lon: r.lon, texture: r.texture ?? inp?.soil?.texture ?? null, crops: r.neighborCrops, recommended: best?.name?.params?.cashAll ?? [], has };
+    });
+    const msPath = resolve(rootPath, 'shared/v2/model-scores.json');
+    const modelScores = existsSync(msPath) ? readJson(msPath) : null;
     const rows = readdirSync(rawDir).filter((f) => !f.startsWith('_') && f.endsWith('.json')).map((f) => readJson(resolve(rawDir, f)));
     const byCounty = {};
     for (const r of rows) (byCounty[r.county] ??= []).push(r);
-    mkdirSync(resolve(rootPath, 'shared/v2/validation-by-county'), { recursive: true });
+    mkdirSync(resolve(cardsDir, 'validation-by-county'), { recursive: true });
     const cards = {};
     for (const [county, rs] of Object.entries(byCounty)) {
       const nassPath = resolve(rawDir, `_nass-${county}.json`);
       const nass = existsSync(nassPath) ? readJson(nassPath) : [];
-      cards[county] = buildReportCard(rs.map((r) => ({ fieldId: r.fieldId, bare: r.bare, dateErrors: r.dateErrors, yields: r.yields })), nass, {
-        generatedAt: now, engineVersion: rs[0].engineVersion, defaultTillage: rs[0].tillage,
+      cards[county] = buildReportCard(rs.map((r) => ({ fieldId: r.fieldId, bare: r.bare, dateErrors: r.dateErrors, yields: r.yields, soilMoisture: r.soilMoisture })), nass, {
+        generatedAt: now, engineVersion: rs[0].engineVersion, defaultTillage: rs[0].tillage, modelScores, erosionCheck,
+        neighbor: neighborBacktest(nbFields, { countIds: new Set(nbFields.filter((f) => f.has && f.county === county && rs.some((x) => x.fieldId === f.id)).map((f) => f.id)) }),
       });
-      await writeCard(cards[county], resolve(rootPath, `shared/v2/validation-by-county/${county}.json`));
+      await writeCard(cards[county], resolve(cardsDir, `validation-by-county/${county}.json`));
     }
     const main = cards['48139'] ?? Object.entries(byCounty).sort((x, y) => y[1].length - x[1].length).map(([k]) => cards[k])[0];
-    if (main) await writeCard(main, resolve(rootPath, 'shared/v2/validation.json'));
+    if (main) await writeCard(main, resolve(cardsDir, 'validation.json'));
     console.log(`Report cards from ${rows.length} fields in ${Object.keys(byCounty).length} counties`);
   }
   if (argv.includes('--report-only')) { await writeReport(); process.exit(0); }
@@ -179,8 +196,10 @@ if (isMainThread) {
       const slots = slotsForField(field);
       const me = index.find((x) => x.id === id);
       const near = index.filter((x) => x.id !== id && hav(me, x) * MILES_PER_KM <= NEIGHBOR_RADIUS_MILES);
+      // crops grown in the last crop-map years by fields on the same soil texture within the radius (check 7)
+      const neighborCrops = new Set(near.filter((x) => me.texture == null || x.texture === me.texture).flatMap((x) => x.crops));
       const neighborsFor = (cash) => ({ count: near.filter((x) => cash.every((c) => x.crops.includes(c))).length, radiusMiles: NEIGHBOR_RADIUS_MILES });
-      const { out, meta } = analyzeField({ field, slots, library, economics, scoresConfig, regional: { cropFieldShare: cropFieldShare[me.county] ?? {} }, neighborsFor, now, validationExtra: true });
+      const { out, meta } = analyzeField({ field, slots, library, economics, scoresConfig, regional: { cropFieldShare: cropFieldShare[me.county] ?? {} }, neighborsFor, neighborCrops, now, validationExtra: true });
       const problems = validateFieldOutput(out, scoresConfig);
       const text = JSON.stringify(out);
       writeFileSync(resolve(outDir, `${id}.json`), text);

@@ -1,0 +1,88 @@
+{
+ "schemaVersion": 1,
+ "target": 0.85,
+ "rule": "held-out score >= target and better than the baseline",
+ "models": [
+  {
+   "id": "model1",
+   "name": "Model 1: crop each year",
+   "metric": "accuracy, 6 grouped crop classes",
+   "unseenYears": 0.873,
+   "heldOutCounty": 0.947,
+   "baseline": 0.43,
+   "baselineName": "same crop as last year",
+   "also": {
+    "exact9ClassAccuracy": 0.83,
+    "cleanLabelAccuracy": 0.888
+   },
+   "source": "v2/models/model1/REPORT.md (unseen years 2020-2025, Hill)",
+   "pass": true
+  },
+  {
+   "id": "modelB",
+   "name": "Model B: crop stress, 1 month ahead",
+   "metric": "AUC",
+   "unseenYears": 0.882,
+   "heldOutCounty": 0.892,
+   "baseline": 0.845,
+   "baselineName": "last month's greenness only",
+   "source": "v2/models/modelB/metrics.json",
+   "pass": true
+  },
+  {
+   "id": "modelC",
+   "name": "Model C: year types",
+   "metric": "AUC, drought summers vs US Drought Monitor (D2+)",
+   "unseenYears": 0.974,
+   "heldOutCounty": null,
+   "baseline": 0.5,
+   "baselineName": "coin flip",
+   "source": "v2/models/modelC/REPORT.md",
+   "pass": true
+  },
+  {
+   "id": "calibrationE.winter_wheat",
+   "name": "Calibration E: winter wheat yield",
+   "metric": "correlation with county yield, leave one year out",
+   "unseenYears": 0.482,
+   "heldOutCounty": 0.586,
+   "baseline": 0.0,
+   "baselineName": "trend only (no year-to-year signal)",
+   "source": "v2/models/calibrationE/metrics.json",
+   "pass": false
+  },
+  {
+   "id": "calibrationE.corn",
+   "name": "Calibration E: corn yield",
+   "metric": "correlation with county yield, leave one year out",
+   "unseenYears": 0.659,
+   "heldOutCounty": 0.751,
+   "baseline": 0.0,
+   "baselineName": "trend only (no year-to-year signal)",
+   "source": "v2/models/calibrationE/metrics.json",
+   "pass": false
+  },
+  {
+   "id": "calibrationE.grain_sorghum",
+   "name": "Calibration E: grain sorghum yield",
+   "metric": "correlation with county yield, leave one year out",
+   "unseenYears": 0.423,
+   "heldOutCounty": 0.662,
+   "baseline": 0.0,
+   "baselineName": "trend only (no year-to-year signal)",
+   "source": "v2/models/calibrationE/metrics.json",
+   "pass": false
+  },
+  {
+   "id": "calibrationE.cotton",
+   "name": "Calibration E: cotton yield",
+   "metric": "correlation with county yield, leave one year out",
+   "unseenYears": 0.83,
+   "heldOutCounty": 0.843,
+   "baseline": 0.0,
+   "baselineName": "trend only (no year-to-year signal)",
+   "source": "v2/models/calibrationE/metrics.json",
+   "pass": false
+  }
+ ]
+}

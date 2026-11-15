@@ -1267,8 +1267,9 @@
       "n": "{n} comparaciones",
       "check1": {
         "name": "Precisión de los modelos",
-        "target": "Los modelos del campo puntúan bien en años que nunca vieron.",
-        "needsModels": "Necesita los modelos del campo."
+        "target": "Cada modelo acierta al menos un {score}% en años (y un condado) que nunca vio, y supera una referencia simple.",
+        "needsModels": "Necesita los modelos del campo.",
+        "note": "Los puntajes vienen de la prueba de cada modelo en años no vistos 2020-2025 y en el condado de Hill, con el que ningún modelo entrenó."
       },
       "check2": {
         "name": "Días desnudos vs satélite",
@@ -1278,27 +1279,30 @@
       "check3": {
         "name": "Fechas de cultivo",
         "target": "Fechas de cultivo simuladas a menos de {days} días de las del satélite.",
-        "note": "Se compara con el mes de mayor verdor, una medida aproximada."
+        "note": "Comparado con la fecha de la imagen Landsat 8/9 despejada más verde de cada temporada (las imágenes están a 8-16 días). Las fechas de siembra varían cada año; el simulador usa un calendario por cultivo."
       },
       "check4": {
         "name": "Rendimientos vs los del condado",
         "target": "Correlación año a año de al menos {correlation} y rendimiento a menos de {ratioError}% del rendimiento del condado.",
-        "note": "Todavía no se ajustó nada a los rendimientos; la calibración de rendimiento es provisional."
+        "note": "La calibración E fija el nivel de rendimiento de cada condado; esta revisión prueba las subidas y bajadas de un año a otro, que también dependen de heladas, enfermedades y manejo que el simulador no modela."
       },
       "check5": {
         "name": "Erosión",
-        "target": "Erosión simulada cercana a la erosión medida.",
-        "needsMeasurements": "Necesita datos de erosión medida."
+        "target": "Pérdida de suelo simulada dentro de un factor de {factor} de la medida en las cuencas USDA-ARS de Riesel, en años no usados para calibrar.",
+        "needsMeasurements": "Necesita datos de erosión medida.",
+        "note": "Medido: registros diarios de sedimento de cuatro cuencas de maíz y trigo con labranza convencional en arcilla Houston Black. La ecuación estándar de pérdida de suelo sobreestima en estas arcillas que se agrietan, así que se ajustó una corrección con 1985-2000 y se probó con 2001-2019."
       },
       "check6": {
         "name": "Humedad del suelo",
-        "target": "Humedad simulada cercana a la humedad medida por satélite.",
-        "needsModelD": "Necesita el modelo de humedad del suelo (D)."
+        "target": "En más del {share}% de los campos, el agua simulada en la zona de raíces sigue la humedad del suelo por satélite mes a mes (correlación de al menos {r}).",
+        "needsModelD": "Necesita el modelo de humedad del suelo (D).",
+        "note": "Satélite: humedad del suelo en la zona de raíces SMAP L4 (9 km), 2015-2025."
       },
       "check7": {
         "name": "Prueba con vecinos",
-        "target": "Los planes coinciden con lo que hicieron vecinos con campos parecidos.",
-        "needsModelA": "Necesita el modelo de historial de cultivos (A)."
+        "target": "En al menos el {share}% de los campos, cada cultivo comercial del plan recomendado lo sembró en 2020-2025 un campo con el mismo suelo a menos de {miles} millas.",
+        "needsModelA": "Necesita el modelo de historial de cultivos (A).",
+        "note": "Prueba que la aplicación recomienda cultivos que los productores en tierras parecidas de verdad siembran; no prueba que el plan sea mejor."
       },
       "check8": {
         "name": "Ranking de expertos",

@@ -292,7 +292,7 @@ export function createSimulation(cfg) {
       date: date(), dayNum: S.dayNum, year: S.year, doy: S.doy, rain, tmin, tmax, et0, irrigation: irr, runoff: water.runoff, evaporation: water.evap, transpiration: water.transp,
       drainage: water.drain, waterStress: live ? 1 - water.ks : 0, rootZoneWaterMm: water.wR, rootZoneCapacityMm: water.tawR, soilWaterMm: soil.w[0] + soil.w[1] + soil.w[2],
       crop: live ? crop.id : crop ? 'fallow' : null, stage: live ? crop.f : 0, canopyCover: cc, residueCover: rc, groundCover: ground, bare, biomassLbAc: live ? crop.biomass * BIOMASS_G_M2_TO_LB_AC : 0,
-      erosionTonsPerAcre: ero.tons, mineralNLb: O.nMin, nFixedLb: nFixToday, somPct: somPercent(O), pestRisk: live ? pestRiskNow(S.pests, crop.def) : {},
+      erosionTonsPerAcre: ero.tons, erosionRawTonsPerAcre: ero.rawTons ?? ero.tons, mineralNLb: O.nMin, nFixedLb: nFixToday, somPct: somPercent(O), pestRisk: live ? pestRiskNow(S.pests, crop.def) : {},
       events: dayEvents,
     });
     S.last = rec;

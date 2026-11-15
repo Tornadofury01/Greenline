@@ -1,0 +1,35 @@
+{
+ "_note": "Engine canopy lags on the textbook calendars, 1999-2013, 18 sample fields (pipeline/v2/engine_lags.mjs)",
+ "crops": {
+  "corn": {
+   "riseLag": 43,
+   "fallLag": 41,
+   "seasons": 270
+  },
+  "grain_sorghum": {
+   "riseLag": 33,
+   "fallLag": 47,
+   "seasons": 270
+  },
+  "cotton": {
+   "riseLag": 40,
+   "fallLag": 77,
+   "seasons": 270
+  },
+  "winter_wheat": {
+   "riseLag": 65,
+   "fallLag": 30,
+   "seasons": 270
+  },
+  "soybeans": {
+   "riseLag": 31,
+   "fallLag": 67,
+   "seasons": 270
+  },
+  "sunflower": {
+   "riseLag": 34,
+   "fallLag": 35,
+   "seasons": 270
+  }
+ }
+}

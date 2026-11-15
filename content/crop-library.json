@@ -32,7 +32,7 @@
         "gddToMaturity": 2400,
         "stageFractions": {
           "emerge": 0.05,
-          "canopyFull": 0.55,
+          "canopyFull": 0.566,
           "flowerStart": 0.62,
           "flowerEnd": 0.7,
           "senescence": 0.78
@@ -40,6 +40,11 @@
         "daysToMaturity": {
           "short": 200,
           "full": 235
+        },
+        "canopyFullCalibrated": {
+          "from": 0.55,
+          "fit": "North Texas Landsat 5/7 peak greenness 1985-2013, 72 fields (pipeline/v2/calibrate_growth.mjs); tested on 2014-2025",
+          "seasons": 410
         }
       },
       "plantingWindow": {
@@ -176,7 +181,7 @@
         "gddToMaturity": 1450,
         "stageFractions": {
           "emerge": 0.06,
-          "canopyFull": 0.5,
+          "canopyFull": 0.623,
           "flowerStart": 0.52,
           "flowerEnd": 0.6,
           "senescence": 0.75
@@ -184,6 +189,11 @@
         "daysToMaturity": {
           "short": 105,
           "full": 130
+        },
+        "canopyFullCalibrated": {
+          "from": 0.5,
+          "fit": "North Texas Landsat 5/7 peak greenness 1985-2013, 72 fields (pipeline/v2/calibrate_growth.mjs); tested on 2014-2025",
+          "seasons": 381
         }
       },
       "plantingWindow": {
@@ -319,7 +329,7 @@
         "gddToMaturity": 1350,
         "stageFractions": {
           "emerge": 0.06,
-          "canopyFull": 0.5,
+          "canopyFull": 0.623,
           "flowerStart": 0.52,
           "flowerEnd": 0.6,
           "senescence": 0.78
@@ -327,6 +337,11 @@
         "daysToMaturity": {
           "short": 95,
           "full": 120
+        },
+        "canopyFullCalibrated": {
+          "from": 0.5,
+          "fit": "North Texas Landsat 5/7 peak greenness 1985-2013, 72 fields (pipeline/v2/calibrate_growth.mjs); tested on 2014-2025",
+          "seasons": 398
         }
       },
       "plantingWindow": {
@@ -464,7 +479,7 @@
         "gddToMaturity": 1300,
         "stageFractions": {
           "emerge": 0.06,
-          "canopyFull": 0.45,
+          "canopyFull": 0.563,
           "flowerStart": 0.45,
           "flowerEnd": 0.7,
           "senescence": 0.8
@@ -472,6 +487,11 @@
         "daysToMaturity": {
           "short": 140,
           "full": 170
+        },
+        "canopyFullCalibrated": {
+          "from": 0.45,
+          "fit": "North Texas Landsat 5/7 peak greenness 1985-2013, 72 fields (pipeline/v2/calibrate_growth.mjs); tested on 2014-2025",
+          "seasons": 280
         }
       },
       "plantingWindow": {

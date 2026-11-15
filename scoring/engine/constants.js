@@ -60,6 +60,11 @@ export const SLOPE_LENGTH_FT = 150;                          // estimate (no per
 export const BARE_COVER_THRESHOLD = 0.30;                    // a day counts as "bare" when total ground cover is below this
 export const SURFACE_COVER_B = 0.04;                         // RUSLE surface-cover subfactor SC = exp(-b * cover %) (Renard et al. 1997, b 0.035-0.05)
 export const CANOPY_FALL_HEIGHT_DECAY = 0.1;                 // RUSLE canopy subfactor 1 - Fc exp(-0.1 H) with H in feet
+// RUSLE overpredicts field soil loss on the cracking Blackland clays (Vertisols). One correction fitted to MEASURED soil
+// loss at the USDA-ARS Riesel watersheds (W12, W13, Y10, Y13, conventional corn / wheat, Houston Black clay) on 1985-2000:
+// 0.705 t/ac/yr measured vs 8.18 simulated on 248 McLennan study fields; tested on 2001-2019: 0.72 simulated vs 0.60
+// measured (pipeline/v2/compare_erosion.mjs, shared/v2/erosion-check.json, report card check 5).
+export const EROSION_CALIBRATION = 0.0862;
 export const RUNOFF_GATE_MM = 1;                             // erosion needs overland flow: full strength at >= 1 mm of runoff, scaled below
 export const M_TO_FT = 3.28084;
 

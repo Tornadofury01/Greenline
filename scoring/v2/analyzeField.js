@@ -24,7 +24,10 @@ const fixMojibake = (s) => String(s ?? '').replace(/Â°/g, '°').replace(/Ã—
 /** Pick the three answers from options under a set of weights. Pure: the app can call it again when the farmer changes priorities. */
 export function pickBestPlans(options, current, weights, scoresConfig) {
   const usable = options.filter((o) => o.limits ? o.limits.soilMet && o.limits.riskMet : true);
-  const pool = usable.length ? usable : options;
+  const base = usable.length ? usable : options;
+  // prefer options whose every cash crop is grown by a neighbor on the same soil (report card check 7); fall back if none is
+  const supported = base.filter((o) => o.neighborSupport !== false);
+  const pool = supported.length ? supported : base;
   const relaxed = !usable.length;
   const noOptions = !pool.length;
   const by = (arr, f) => arr.reduce((b, o) => (b === null || f(o) > f(b) ? o : b), null);
@@ -182,6 +185,7 @@ export function analyzeField(cfg) {
       checkLocally: checkLocally(st, mgmt, ctx, newCropsOf(st)),
       placeholderSlots,
       neighbors: nbr && nbr.count > 0 ? { count: nbr.count, radiusMiles: NEIGHBOR_RADIUS_MILES } : null,
+      neighborSupport: kind === 'current' || !cfg.neighborCrops ? null : st.cash.every((c) => cfg.neighborCrops.has(c)),
       _rank: total,
     };
   };
@@ -244,7 +248,7 @@ export function analyzeField(cfg) {
   };
   const bareAlt = {};
   if (cfg.validationExtra) for (const tl of ['conventional', 'reduced', 'no-till']) if (tl !== ctx.constraints.currentTillage) bareAlt[tl] = validateField(ctx, { tillage: tl }).bareDays;
-  const meta = { ms: Date.now() - t0, timing, specs: specs.length, screened: screened.length, pool: pool.length, optimizerRuns: optRuns, kept: options.length, removed: removed.length, validationRaw: { yields: val.yields, dateErrors: val.dateErrors, bare: { default: val.bareDays, ...bareAlt } } };
+  const meta = { ms: Date.now() - t0, timing, specs: specs.length, screened: screened.length, pool: pool.length, optimizerRuns: optRuns, kept: options.length, removed: removed.length, validationRaw: { yields: val.yields, dateErrors: val.dateErrors, soilMoisture: val.soilMoisture, bare: { default: val.bareDays, ...bareAlt } } };
   return { out, meta };
 }
 

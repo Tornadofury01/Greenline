@@ -7,7 +7,7 @@
 
 What each slot is built from (sections left out stay PLACEHOLDERS, tagged in the app):
   modelA        Model 1 v2 (`model1/predictions_v2.csv.gz`): crop per year 1985-2025, USDA label where clean, model
-                otherwise. cropDates are the placeholder calendars (Model 1 does not estimate planting dates).
+                otherwise. cropDates are the crop calendars (per-field dates from field_calendars were tested and rejected).
   modelC        Model C (`modelC/year_types.csv`): the field's county, summer-season type per year; 2040 shares =
                 the 8-model mean for the summer season (`modelC/metrics.json` -> 2040). Types are hard rule cut-offs,
                 so probability = 1.
@@ -68,6 +68,98 @@ def smap_rootzone(data, ids):
     return {fid: g.set_index("date").sm for fid, g in s.groupby("fid")}
 
 
+FIT_LAST_YEAR = 2013      # crop dates are fitted on 1985-2013 only; the report card tests them on 2014-2025 (Landsat 8/9)
+MID = [15, 46, 74, 105, 135, 166, 196, 227, 258, 288, 319, 349]
+CAL_CROPS = ["corn", "grain_sorghum", "cotton", "winter_wheat", "soybeans", "sunflower"]
+
+
+def season_curve(ndvi, year, winter):
+    """Daily NDVI (linear between mid-month values) over the season, as {day relative to Jan 1 of the harvest year: v}.
+    Summer crops: Jan-Dec of the harvest year. Winter crops: Sep of the year before to Jul."""
+    pts = []
+    months = [(year - 1, m) for m in (9, 10, 11, 12)] + [(year, m) for m in range(1, 8)] if winter else [(year, m) for m in range(1, 13)]
+    for (y, m) in months:
+        v = ndvi.get((y, m))
+        if v is not None:
+            pts.append((MID[m - 1] - (365 if y < year else 0), v))
+    return pts
+
+
+def rise_fall(pts):
+    """Half-green and half-brown day of one season (None if too cloudy or no clear crop signal)."""
+    if len(pts) < 7:
+        return None
+    xs, vs = [p[0] for p in pts], [p[1] for p in pts]
+    lo, hi = min(vs), max(vs)
+    if hi - lo < 0.15:
+        return None
+    half = lo + (hi - lo) / 2
+    k = vs.index(hi)
+    rise = fall = None
+    for i in range(k, 0, -1):            # going back from the peak: last crossing below half
+        if vs[i - 1] < half <= vs[i]:
+            rise = xs[i - 1] + (half - vs[i - 1]) / (vs[i] - vs[i - 1]) * (xs[i] - xs[i - 1]); break
+    for i in range(k, len(vs) - 1):      # going forward from the peak: first crossing below half
+        if vs[i] >= half > vs[i + 1]:
+            fall = xs[i] + (vs[i] - half) / (vs[i] - vs[i + 1]) * (xs[i + 1] - xs[i]); break
+    return (rise, fall, xs[k]) if rise is not None and fall is not None else None
+
+
+def field_calendars(inputs_dir, crop_years_by_fid, county_of, ph_cal, lib, lags):
+    """Per field, per cash crop: planting and harvest day from the field's own 1985-2013 green-up and brown-down.
+    planting = median half-green day - engine riseLag; harvest = median half-brown day + engine fallLag.
+    >= 3 good seasons on the field: the field's own dates; else the county median (>= 10 seasons); else textbook.
+    Planting is kept inside the crop's planting window +/- 14 days. Returns ({fid: {crop: cal}}, stats)."""
+    import statistics
+    per = {}
+    for fid, years in crop_years_by_fid.items():
+        f = json.loads((inputs_dir / f"{fid}.json").read_text())
+        ndvi = {(r["year"], r["month"]): r["ndvi"] for r in f["ndviMonthly"] if r["ndvi"] is not None}
+        for y, crop in years:
+            if crop not in CAL_CROPS or y > FIT_LAST_YEAR:
+                continue
+            rf = rise_fall(season_curve(ndvi, y, ph_cal[crop]["plantYearOffset"] == -1))
+            if rf:
+                per.setdefault(fid, {}).setdefault(crop, []).append(rf)
+    county = {}
+    for fid, crops in per.items():
+        for crop, v in crops.items():
+            county.setdefault((county_of[fid], crop), []).extend(v)
+    out, stats = {}, {"field": 0, "county": 0, "textbook": 0}
+    for fid in crop_years_by_fid:
+        cals = {}
+        for crop in CAL_CROPS:
+            base = dict(ph_cal[crop])
+            own = per.get(fid, {}).get(crop, [])
+            src = own if len(own) >= 3 else county.get((county_of[fid], crop), []) if len(county.get((county_of[fid], crop), [])) >= 10 else []
+            if not src:
+                stats["textbook"] += 1; continue
+            stats["field" if len(own) >= 3 else "county"] += 1
+            rise = statistics.median(r[0] for r in src); fall = statistics.median(r[1] for r in src); peak = statistics.median(r[2] for r in src)
+            winter = base["plantYearOffset"] == -1
+            plant = round(rise - lags[crop]["riseLag"])          # day relative to Jan 1 of the harvest year
+            w = lib[crop]["plantingWindow"]
+            lo_w, hi_w = w["earliestDoy"] - 14, w["latestDoy"] + 14
+            if winter:
+                pd_ = plant + 365
+                pd_ = max(lo_w, min(hi_w, pd_))
+                base["plantDoy"] = int(pd_)
+            else:
+                base["plantDoy"] = int(max(lo_w, min(hi_w, plant)))
+            end = round(fall + lags[crop]["fallLag"])
+            start_rel = base["plantDoy"] - (365 if winter else 0)
+            end = max(start_rel + 90, min(end, 365))              # at least 90 days of season, inside the harvest year
+            base["endDoy"] = int(max(1, end))
+            base["greenUpDoy"] = int(round(rise)) % 365 or 365
+            base["peakDoy"] = int(round(peak)) % 365 or 365
+            base["rangeDays"] = int(round((statistics.quantiles([r[0] for r in src], n=4)[2] - statistics.quantiles([r[0] for r in src], n=4)[0]) / 2)) if len(src) >= 4 else base.get("rangeDays")
+            base["source"] = "field" if len(own) >= 3 else "county"
+            base["seasons"] = len(src)
+            cals[crop] = base
+        out[fid] = cals
+    return out, stats
+
+
 def default_models_dir():
     here = ROOT / "v2" / "models"
     if (here / "model1" / "predictions_v2.csv.gz").exists():
@@ -81,6 +173,7 @@ def main():
     ap.add_argument("--counties", default="")
     ap.add_argument("--ids", default="")
     ap.add_argument("--data", default=str(ROOT / "v2" / "data"))
+    ap.add_argument("--inputs", default=str(ROOT / "shared" / "v2" / "inputs"))
     ap.add_argument("--index", default=str(ROOT / "shared" / "v2" / "input-index.json"))
     ap.add_argument("--out", default=str(ROOT / "shared" / "v2" / "models"))
     a = ap.parse_args()
@@ -99,6 +192,11 @@ def main():
     ph = json.loads((ROOT / "content" / "model-placeholders.json").read_text())
     p1 = pd.read_csv(M / "model1" / "predictions_v2.csv.gz", usecols=["fid", "year", "final", "source", "confidence"])
     p1 = p1[p1.fid.isin(ids)]
+    lib = {c["id"]: c for c in json.loads((ROOT / "content" / "crop-library.json").read_text())["crops"]}
+    lags = json.loads((ROOT / "pipeline" / "v2" / "engine_lags.json").read_text())["crops"]
+    crop_years = {fid: [(int(r.year), M1_TO_CROP.get(r.final, "other")) for r in g.itertuples()] for fid, g in p1.groupby("fid")}
+    county_of = {f["id"]: f["countyFips"] for f in fields}
+    # field_calendars(...) is kept for reference but not used (see cropDates below)
     yt = pd.read_csv(M / "modelC" / "year_types.csv")
     yt = yt[yt.season == "summer"]
     c2040 = json.loads((M / "modelC" / "metrics.json").read_text())["2040"]
@@ -130,11 +228,11 @@ def main():
         rows = p1[p1.fid == fid].sort_values("year")
         if len(rows):
             doc["modelA"] = {
-                "_note": "cropByYear from Model 1 v2; cropDates are the placeholder calendars (no field planting-date model yet).",
+                "_note": "cropByYear from Model 1 v2; cropDates are the crop calendars (per-field dates were tested on 2014-2025 and did not help); canopy timing is calibrated in the crop library.",
                 "cropByYear": [{"year": int(r.year), "crop": M1_TO_CROP.get(r.final, "other"),
                                 "confidence": None if pd.isna(r.confidence) else round(float(r.confidence), 3),
                                 "labelSource": "usda-cdl" if r.source == "usda_cdl" else "model"} for r in rows.itertuples()],
-                "cropDates": ph["modelA"]["calendars"],
+                "cropDates": ph["modelA"]["calendars"],   # per-field dates (field_calendars) were tested and did not improve the 2014+ checks
             }
         else:
             missing["A"] += 1

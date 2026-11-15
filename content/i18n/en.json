@@ -1267,8 +1267,9 @@
       "n": "{n} comparisons",
       "check1": {
         "name": "Model accuracy",
-        "target": "Field models score well on years they never saw.",
-        "needsModels": "Needs the field models."
+        "target": "Every model scores at least {score}% on years (and a county) it never saw, and beats a simple baseline.",
+        "needsModels": "Needs the field models.",
+        "note": "Scores are from each model's own test on unseen years 2020-2025 and on Hill County, which no model trained on."
       },
       "check2": {
         "name": "Bare days vs satellite",
@@ -1278,27 +1279,30 @@
       "check3": {
         "name": "Crop dates",
         "target": "Simulated crop dates within {days} days of the satellite's.",
-        "note": "Compared with the month of peak greenness, which is a rough measure."
+        "note": "Compared with the date of the greenest clear Landsat 8/9 scene of each season (scenes are 8-16 days apart). Planting dates vary year to year; the simulator uses one calendar per crop."
       },
       "check4": {
         "name": "Yields vs county yields",
         "target": "Year-to-year correlation of at least {correlation} and yield within {ratioError}% of the county yield.",
-        "note": "Nothing was fitted to yields yet; the yield calibration is a placeholder."
+        "note": "Calibration E sets each county's yield level; this check tests the year-to-year swings, which also depend on freezes, disease and management the simulator does not model."
       },
       "check5": {
         "name": "Erosion",
-        "target": "Simulated erosion close to measured erosion.",
-        "needsMeasurements": "Needs measured erosion data."
+        "target": "Simulated soil loss within a factor of {factor} of soil loss measured at the USDA-ARS Riesel watersheds, on years not used to calibrate.",
+        "needsMeasurements": "Needs measured erosion data.",
+        "note": "Measured: daily sediment records of four conventionally farmed corn and wheat watersheds on Houston Black clay. The standard soil-loss equation overestimates on these cracking clays, so one correction was fitted on 1985-2000 and tested on 2001-2019."
       },
       "check6": {
         "name": "Soil moisture",
-        "target": "Simulated soil moisture close to satellite soil moisture.",
-        "needsModelD": "Needs the soil moisture model (D)."
+        "target": "On more than {share}% of fields, simulated root-zone water follows satellite soil moisture month by month (correlation at least {r}).",
+        "needsModelD": "Needs the soil moisture model (D).",
+        "note": "Satellite: SMAP L4 root-zone soil moisture (9 km), 2015-2025."
       },
       "check7": {
         "name": "Neighbor backtest",
-        "target": "Plans match what neighbors with similar fields actually did.",
-        "needsModelA": "Needs the crop history model (A)."
+        "target": "On at least {share}% of fields, every cash crop in the recommended plan was grown in 2020-2025 by a field with the same soil within {miles} miles.",
+        "needsModelA": "Needs the crop history model (A).",
+        "note": "Tests that the app recommends crops farmers on similar land really grow; it does not test whether the plan is better."
       },
       "check8": {
         "name": "Expert ranking",

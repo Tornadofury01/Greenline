@@ -1,0 +1,39 @@
+{
+ "schemaVersion": 1,
+ "rule": "calibrated simulated mean annual soil loss within a factor of 2 of measured, on test years",
+ "status": "pass",
+ "calibration": {
+  "fitYears": [
+   1985,
+   2000
+  ],
+  "measuredMean": 0.705,
+  "rawSimulatedMean": 8.181,
+  "factor": 0.0862,
+  "fields": 248
+ },
+ "test": {
+  "years": [
+   2001,
+   2019
+  ],
+  "measured": {
+   "source": "USDA-ARS Riesel watersheds W12, W13, Y10, Y13 daily sediment records",
+   "watersheds": {
+    "W12": 0.508,
+    "W13": 0.493,
+    "Y10": 0.415,
+    "Y13": 0.982
+   },
+   "meanTonsPerAcreYear": 0.599
+  },
+  "simulated": {
+   "fields": 234,
+   "county": "McLennan (48309)",
+   "tillage": "conventional",
+   "rawMean": 8.396,
+   "calibratedMean": 0.724
+  },
+  "ratioSimOverMeasured": 1.21
+ }
+}

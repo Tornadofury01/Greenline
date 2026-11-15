@@ -278,6 +278,33 @@ def full_grid(df, fid, first, last):
     return g.reset_index()
 
 
+def landsat89_scenes(ee, fids, first=2014):
+    """Clear Landsat 8/9 scenes per field, 2014+: {fid: [{"d": "YYYY-MM-DD", "v": ndvi}]} (report card check 3 uses the
+    scene dates, 8-16 days apart, instead of monthly values)."""
+    cols = {"fid", "date", "sensor", "tot_count", "snow_count", "ndvi_count", "ndvi_p50"}
+    parts = []
+    for f in sorted(glob.glob(str(ee / "ls[89]_*.csv"))):
+        d = pd.read_csv(f, usecols=lambda c: c in cols)
+        d = d[d.fid.isin(fids)]
+        d = d[(d.tot_count > 0) & (d.ndvi_count >= MIN_CLEAR * d.tot_count) & (d.snow_count <= MAX_SNOW * d.tot_count)]
+        parts.append(d[["fid", "date", "ndvi_p50"]])
+    s = pd.concat(parts, ignore_index=True)
+    s = s[s.date.str[:4].astype(int) >= first]
+    s = s.groupby(["fid", "date"], as_index=False).ndvi_p50.median().sort_values(["fid", "date"])
+    return {fid: [{"d": r.date, "v": round(float(r.ndvi_p50), 3)} for r in g.itertuples()] for fid, g in s.groupby("fid")}
+
+
+def smap_rootzone_monthly(ee, fids):
+    """SMAP L4 root-zone soil moisture, monthly mean per field (m3/m3), 2015-2025 (report card check 6)."""
+    parts = []
+    for y, d in read_daily(ee, "smapl4", ["sm_rootzone"], fids).items():
+        v = d[daily_cols(d.columns, "sm_rootzone")]
+        parts.append(d[["fid", "year", "month"]].assign(sm=v.mean(axis=1)))
+    s = pd.concat(parts).dropna(subset=["sm"])
+    return {fid: [{"year": int(r.year), "month": int(r.month), "sm": round(float(r.sm), 4)} for r in g.sort_values(["year", "month"]).itertuples()]
+            for fid, g in s.groupby("fid")}
+
+
 # ---------------------------------------------------------------------------------------------------------------------
 # Soil, terrain, market
 # ---------------------------------------------------------------------------------------------------------------------
@@ -408,6 +435,7 @@ def main():
     log("PRISM"); pr = prism(ee, fids)
     log("IMERG"); im = imerg(ee, fids)
     log("SMAP"); sm_anom = smap_anomaly(ee, fids)
+    log("validation series"); scenes89, smap_m = landsat89_scenes(ee, fids), smap_rootzone_monthly(ee, fids)
     log("writing files")
 
     gm_m = gm_m.set_index(["fid", "year", "month"]).sort_index()
@@ -504,6 +532,8 @@ def main():
             "climateMonthly": climate_monthly,
             "ndviMonthly": ndvi_monthly, "coverYearly": cover, "bareDaysPerYear": bare,
             "ndviMonthlyL89": ndvi_l89, "coverYearlyL89": cover89, "bareDaysPerYearL89": bare89,
+            "ndviScenesL89": scenes89.get(fid, []),          # report card check 3 (scene dates)
+            "smapRootzoneMonthly": smap_m.get(fid, []),       # report card check 6 (soil moisture)
             "quality": quality,
             "market": market_cache.setdefault(f.cfips, market(f.cfips, ny, prices)),
             "sources": field_sources({
@@ -519,6 +549,7 @@ def main():
         (out / f"{fid}.json").write_text(json.dumps(out_obj, separators=(",", ":"), ensure_ascii=False, allow_nan=False), encoding="utf-8")
         index.append({"id": fid, "countyFips": f.cfips, "county": COUNTY_NAMES.get(f.cfips, f.cfips), "lat": round(f.lat, 5),
                       "lon": round(f.lon, 5), "holdout": bool(f.holdout),
+                      "texture": out_obj["soil"]["texture"],   # neighbors "on similar soil" (report card check 7)
                       # precompute regional context (RECENT_CROP_YEARS = 8, NEIGHBOR_CROP_YEARS = 6 in precompute_v2.mjs)
                       "recentCrops": sorted({r["crop"] for r in crop_hist[-8:]}),
                       "neighborCrops": sorted({r["crop"] for r in crop_hist[-6:]})})

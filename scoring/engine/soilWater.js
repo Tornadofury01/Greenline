@@ -10,7 +10,7 @@
 import {
   LAYER_THICKNESS_M, SATURATION_OVER_FC, DRAIN_FRACTION_BY_HSG, CURVE_NUMBER_BY_HSG, CN_RESIDUE_CREDIT, CN_MAX,
   RUNOFF_INITIAL_ABSTRACTION, EVAP_MAX_COEFF, EVAP_MULCH_MAX_CUT, KR_FULL_SHARE, EVAP_TEW_MM,
-  EI_COEFF_US, EI_EXPONENT, SLOPE_LENGTH_FT, SURFACE_COVER_B, CANOPY_FALL_HEIGHT_DECAY, RUNOFF_GATE_MM, M_TO_FT,
+  EI_COEFF_US, EI_EXPONENT, SLOPE_LENGTH_FT, SURFACE_COVER_B, CANOPY_FALL_HEIGHT_DECAY, RUNOFF_GATE_MM, EROSION_CALIBRATION, M_TO_FT,
 } from './constants.js';
 
 const num = (v, d) => (Number.isFinite(v) ? v : d);
@@ -145,5 +145,6 @@ export function erosionStep(soil, { rain, runoff, cc, heightM, resCover, support
   const surfaceSub = Math.exp(-SURFACE_COVER_B * resCover * 100);
   const slr = canopySub * surfaceSub;
   const gate = Math.min(1, runoff / RUNOFF_GATE_MM);
-  return { tons: rDay * soil.kFactor * soil.ls * slr * supportPractice * gate, rDay, slr };
+  const raw = rDay * soil.kFactor * soil.ls * slr * supportPractice * gate;
+  return { tons: raw * EROSION_CALIBRATION, rawTons: raw, rDay, slr };
 }
