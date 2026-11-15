@@ -1,0 +1,52 @@
+/* App stylesheet entry: Tailwind v4 + daisyUI 5, layered over the older stylesheet.
+   The old styles.css sits in a low "legacy" layer, so daisyUI components and Tailwind utilities always win on
+   redesigned screens, and screens not redesigned yet keep working. No Tailwind preflight (it would reset them). */
+@layer theme, legacy, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "./styles.css" layer(legacy);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+/* Greenline daisyUI theme: cream ground, deep green for actions and highlights, sage and wheat as soft accents. */
+@plugin "daisyui/theme" {
+  name: "greenline";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+  --color-base-100: #f5f2ea;
+  --color-base-200: #ece7da;
+  --color-base-300: #ddd6c3;
+  --color-base-content: #1a2420;
+  --color-primary: #1f5f40;
+  --color-primary-content: #f5f2ea;
+  --color-secondary: #a9c79a;
+  --color-secondary-content: #142a1e;
+  --color-accent: #d9c46b;
+  --color-accent-content: #2a2205;
+  --color-neutral: #1a2420;
+  --color-neutral-content: #f5f2ea;
+  --color-info: #2f6f9f;
+  --color-info-content: #f5f2ea;
+  --color-success: #2e7a4f;
+  --color-success-content: #f5f2ea;
+  --color-warning: #b57b12;
+  --color-warning-content: #1f1600;
+  --color-error: #b0452b;
+  --color-error-content: #fff6f2;
+  --radius-selector: 2rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.25rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: "Inter Tight Variable", "Helvetica Neue", Arial, sans-serif;
+}
+main:has(.options-page) { max-width: none; }

@@ -10,6 +10,7 @@ import RotationCard from '../components/RotationCard.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
 import ReplayBar from '../components/ReplayBar.jsx';
 import { NeedField, JudgmentNote, PageHead } from '../components/Small.jsx';
+import SlidingTabs from '../components/SlidingTabs.jsx';
 
 // One plain sentence under a table or chart.
 function Takeaway({ children }) {
@@ -129,10 +130,16 @@ export default function CompareRotations() {
       </section>
       <Takeaway>{takeaway()}</Takeaway>
 
-      <div className="segmented" role="group" aria-label={t('compare.seg.label')}>
-        <button type="button" aria-pressed={!badOpen} onClick={pickNormal}>{t('compare.seg.normal')}</button>
-        <button type="button" aria-pressed={badOpen} onClick={pickBad}>{t('compare.seg.bad')}</button>
-      </div>
+      <SlidingTabs
+        id="compare-year"
+        label={t('compare.seg.label')}
+        value={badOpen ? 'bad' : 'normal'}
+        onChange={(next) => (next === 'bad' ? pickBad() : pickNormal())}
+        options={[
+          { value: 'normal', label: t('compare.seg.normal') },
+          { value: 'bad', label: t('compare.seg.bad') },
+        ]}
+      />
       {badOpen && <ReplayBar embedded />}
 
       {!current && (

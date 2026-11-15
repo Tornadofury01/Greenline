@@ -29,6 +29,8 @@
     "risks": "Risks",
     "plans": "Plans",
     "more": "More",
+    "menu": "Menu",
+    "menuClose": "Close menu",
     "moreLabel": "More screens",
     "farmLong": "Your farm",
     "compareLong": "Compare rotations",
@@ -1393,7 +1395,19 @@
     },
     "weightedFor": "Weighted for your goals: {goals}.",
     "neighbors": "{count} fields within {miles} miles do this.",
-    "checkOf": "{name} check"
+    "checkOf": "{name} check",
+    "sideBySide": "Side by side",
+    "seeDetails": "See details",
+    "heroBest": "See the best option",
+    "heroCompare": "Compare all",
+    "statBest": "Best match",
+    "statGain": "Better than today",
+    "statCount": "Rotations compared",
+    "statCountDesc": "What you grow now plus the top options",
+    "compareIntro": "Each rotation scored out of 100 for this field. Tap one to look closer.",
+    "detailsTitle": "Look closer",
+    "detailsIntro": "Pick a rotation to see its scores, checks, money and how sure we are.",
+    "cropOrder": "Crop order"
   },
   "placeholder": {
     "noOutlook": "No outlook yet; the calendar average is used."

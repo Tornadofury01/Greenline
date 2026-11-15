@@ -5,6 +5,7 @@ import { useEffect, useId, useMemo, useState } from 'react';
 import { Play, Pause, StepForward, FastForward, Plus, Minus, Copy, Lightbulb, RotateCcw } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { PageHead } from '../components/Small.jsx';
+import SlidingTabs from '../components/SlidingTabs.jsx';
 import { PlaceholderNotice, PlaceholderCardTag, PlaceholderPanel } from '../components/PlaceholderTag.jsx';
 import { SimChart, Legend, BandChart, PLAN_STYLE, UNITS } from '../components/SimCharts.jsx';
 import { useSimRuns } from '../sim/useSimRuns.js';
@@ -261,10 +262,16 @@ export default function Simulator() {
         {drawerOpen && (
           <>
             {compare && (
-              <div className="segmented" role="group" aria-label={t('sim.plan.editing')}>
-                <button type="button" aria-pressed={editing === 'A'} onClick={() => setEditing('A')}>{labelA}</button>
-                <button type="button" aria-pressed={editing === 'B'} onClick={() => setEditing('B')}>{labelB}</button>
-              </div>
+              <SlidingTabs
+                id="sim-plan"
+                label={t('sim.plan.editing')}
+                value={editing}
+                onChange={setEditing}
+                options={[
+                  { value: 'A', label: labelA },
+                  { value: 'B', label: labelB },
+                ]}
+              />
             )}
             <PlanEditor plan={editPlan} onChange={setEdit} canCopy={compare && editing === 'B'} onCopyFrom={() => setPlanB({ ...planA, id: 'B', crops: planA.crops.map((y) => ({ ...y })) })} />
             <h3>{t('sim.weather.title')}</h3>

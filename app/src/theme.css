@@ -11,7 +11,8 @@
 
 /* ---------- Shared: type, spacing, shape, sizes, motion ---------- */
 :root {
-  --font: "Public Sans Variable", "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font: "Inter Tight Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter Tight Variable", "Helvetica Neue", Arial, sans-serif;
   --text-xs: 0.875rem;   /* 14px: source lines and meta only */
   --text-base: 1rem;     /* 16px minimum for body */
   --text-md: 1.125rem;   /* 18px */
@@ -33,15 +34,15 @@
   --s-5: 48px;
 
   /* Shape */
-  --radius-sm: 6px;      /* swatches, tiny tags */
-  --radius: 14px;        /* buttons, chips, inputs, inner tiles */
-  --radius-card: 24px;   /* cards and sheets */
+  --radius-sm: 2px;
+  --radius: 2px;         /* buttons and cards stay flat, like a printed sheet */
+  --radius-card: 2px;
   --radius-pill: 999px;
   --border: 1px solid var(--color-border);
-  --brand-forest: #234233;
-  --brand-leaf: #37694e;
-  --brand-ink: #f6fbf7;
-  --brand-sage: #c5ddc6;
+  --brand-forest: #12402f;
+  --brand-leaf: #2f6a4c;
+  --brand-ink: #f4efe2;
+  --brand-sage: #d7e6c0;
   /* Header stays forest in both themes. These are the only header tones. */
   --header-muted: #d4e5d9;
   --header-soft: #416b52;
@@ -70,22 +71,22 @@
 /* ---------- Light theme (also the print theme) ---------- */
 :root, :root[data-theme="light"] {
   color-scheme: light;
-  --color-bg: #f1f4f2;
-  --color-surface: #ffffff;
-  --color-surface-sunken: #e8eee9;
-  --color-text: #192920;
-  --color-text-muted: #4b6052;
-  --color-border: #d5e0d8;
-  --color-border-strong: #798e80;
+  --color-bg: #f1f0ea;
+  --color-surface: #f1f0ea;
+  --color-surface-sunken: #e6e4da;
+  --color-text: #141a16;
+  --color-text-muted: #545a53;
+  --color-border: #d3cfc2;
+  --color-border-strong: #8d9086;
 
-  --color-primary: #286049;
-  --color-primary-hover: #204b39;
-  --color-primary-soft: #e3efe6;
-  --color-on-primary: #ffffff;
-  --color-accent: #2d654e;
-  --color-accent-hover: #234f3e;
-  --color-on-accent: #ffffff;
-  --color-accent-border: #2d654e;
+  --color-primary: #1e5a3c;
+  --color-primary-hover: #164a31;
+  --color-primary-soft: #dbe5d2;
+  --color-on-primary: #f1f0ea;
+  --color-accent: #1e5a3c;
+  --color-accent-hover: #164a31;
+  --color-on-accent: #f1f0ea;
+  --color-accent-border: #1e5a3c;
 
   --color-soil: #7a4e2d;
   --color-soil-soft: #f1e7dc;
@@ -107,44 +108,49 @@
   /* Ground cover states. Bare also carries a stripe pattern, so it never relies on color alone. */
   --chart-green: #4f8a55;
   --chart-residue: #d9c79a;
-  --chart-none: #ebe9e2;
+  --chart-none: #ebe6d6;
   --hatch: rgb(255 255 255 / 0.35);
 
-  --glass: rgb(255 255 255 / 0.9);  /* cards and bars floating over the map */
-  --color-focus: #2b6d50;
+  --glass: rgb(241 240 234 / 0.95);  /* cards and bars floating over the map */
+  --color-focus: #1e5a3c;
   /* Map (light): bright imagery, white map chrome, dark labels with a white halo */
-  --map-bg: #eef0ea;          /* behind the tiles, and the whole map when offline */
+  --map-bg: #f1f0ea;          /* behind the tiles, and the whole map when offline */
   --map-outline: #ffffff;     /* the 300 field outlines */
   --map-selected: var(--brand-sage);
-  --map-ink: #1b1f1c;         /* labels and notes on the imagery (14:1 on --map-scrim) */
-  --map-halo: rgb(255 255 255 / 0.95);
-  --map-scrim: rgb(255 255 255 / 0.86);
+  --map-ink: #141a16;         /* labels and notes on the imagery (14:1 on --map-scrim) */
+  --map-halo: rgb(241 240 234 / 0.95);
+  --map-scrim: rgb(241 240 234 / 0.9);
   --map-mask: rgb(255 255 255 / 0.38); /* dims everything outside the study area */
-  --map-line: #1b1f1c;        /* county line */
+  --map-line: #141a16;        /* county line */
   --map-dim: brightness(1.04) saturate(0.95);
-  --shadow-float: 0 6px 24px rgb(27 31 28 / 0.18);
+  --shadow-float: 0 10px 30px -12px rgb(16 48 31 / 0.28);
   --backdrop: rgb(27 31 28 / 0.45);
+  /* Moncalisse slide card (cream sheet, brown ink) and Eloqwnt cards (white, 11px and 20px corners). */
+  --mc-paper: #f1f0ea;
+  --mc-ink: #141a16;
+  --eq-radius: 24px;
+  --eq-radius-sm: 11px;
 }
 
 /* ---------- Dark theme ---------- */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --color-bg: #172c23;
-  --color-surface: #203b2f;
-  --color-surface-sunken: #2c493b;
-  --color-text: #f1f8f3;
-  --color-text-muted: #c4d7ca;
-  --color-border: #3b5949;
-  --color-border-strong: #829d8b;
+  --color-bg: #0d2a1f;
+  --color-surface: #143627;
+  --color-surface-sunken: #1b4231;
+  --color-text: #f4efe2;
+  --color-text-muted: #cbd1bd;
+  --color-border: #24493a;
+  --color-border-strong: #8ea98e;
 
-  --color-primary: #bad8bd;
-  --color-primary-hover: #d1e7d3;
-  --color-primary-soft: #355441;
-  --color-on-primary: #173025;
-  --color-accent: #bad8bd;
-  --color-accent-hover: #d1e7d3;
-  --color-on-accent: #173025;
-  --color-accent-border: #bad8bd;
+  --color-primary: #f4efe2;
+  --color-primary-hover: #ffffff;
+  --color-primary-soft: #1f4a37;
+  --color-on-primary: #0d2a1f;
+  --color-accent: #f4efe2;
+  --color-accent-hover: #ffffff;
+  --color-on-accent: #0d2a1f;
+  --color-accent-border: #f4efe2;
 
   --color-soil: #d2a679;
   --color-soil-soft: #2b231a;
@@ -160,27 +166,31 @@
   --chart-heat: #f2c230;
   --chart-wet: #6aa9ff;
   --chart-normal: #7c887f;
-  --chart-covered: #2f4a33;
+  --chart-covered: #2c5a40;
   --chart-bare: #a8713f;
   --chart-green: #6fbf7a;
   --chart-residue: #d9c79a;
-  --chart-none: #262d28;
-  --hatch: rgb(14 18 16 / 0.45);
+  --chart-none: #1a3a2c;
+  --hatch: rgb(13 42 31 / 0.45);
 
-  --glass: rgb(32 59 47 / 0.94);
-  --color-focus: #d1e7d3;
+  --glass: rgb(20 54 39 / 0.95);
+  --color-focus: #d7e6c0;
   /* Map (dark): imagery darkened so outlines pop, light labels with a dark halo */
-  --map-bg: #0b0e0c;
-  --map-outline: #f1f4ee;
+  --map-bg: #0a2018;
+  --map-outline: #f4efe2;
   --map-selected: var(--brand-sage);
-  --map-ink: #f1f4ee;         /* 12:1 on --map-scrim */
-  --map-halo: rgb(11 14 12 / 0.95);
-  --map-scrim: rgb(11 14 12 / 0.72);
-  --map-mask: rgb(11 14 12 / 0.42);
-  --map-line: #f1f4ee;
+  --map-ink: #f4efe2;         /* 12:1 on --map-scrim */
+  --map-halo: rgb(10 32 24 / 0.95);
+  --map-scrim: rgb(10 32 24 / 0.74);
+  --map-mask: rgb(10 32 24 / 0.45);
+  --map-line: #f4efe2;
   --map-dim: brightness(0.62) saturate(0.85) contrast(1.05);
-  --shadow-float: 0 8px 28px rgb(0 0 0 / 0.55);
+  --shadow-float: 0 12px 32px -10px rgb(0 0 0 / 0.55);
   --backdrop: rgb(0 0 0 / 0.6);
+  --mc-paper: #143627;
+  --mc-ink: #f4efe2;
+  --eq-radius: 24px;
+  --eq-radius-sm: 11px;
 }
 
 /* Paper is always light: the expert handoff prints with dark ink on white whatever the screen theme is. */
