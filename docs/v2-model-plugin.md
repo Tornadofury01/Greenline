@@ -66,3 +66,5 @@ Common reasons a section is ignored (all reported by the tool): wrong `schemaVer
 Not needed: any change in `/app`, `/scoring`, `content/model-placeholders.json` or the crop library. Do not edit the placeholders to "plug in" a model; put the file in `shared/v2/models/`. The placeholders stay as the fallback for fields without a file.
 
 Please do not use these numbers for claims before the report card (`shared/v2/validation.json`) shows the checks for your model. Tell the team when a model is plugged in, so the submission text can say which slots are real.
+
+Cotton and wheat timing: tuning crop-library heat sums traded timing for yield accuracy (cotton yield correlation 0.55 → 0.01), so it wasn't shipped. Model A calendars and Calibration E are the expected fix.
