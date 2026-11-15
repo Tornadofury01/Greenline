@@ -33,7 +33,7 @@ export function rotationText(t, card) {
 
 // A section heading inside the details: one size, generous space above.
 function Heading({ children }) {
-  return <h3 className="mb-6 mt-16 text-xl font-semibold tracking-tight text-base-content sm:text-2xl">{children}</h3>;
+  return <h3 className="mb-4 mt-10 text-xl font-semibold tracking-tight text-base-content sm:text-2xl">{children}</h3>;
 }
 
 export default function OptionSlice({ card, scale }) {
@@ -50,9 +50,9 @@ export default function OptionSlice({ card, scale }) {
   return (
     <div className="option-detail">
       {/* Name, crop order, score */}
-      <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+      <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="max-w-2xl">
-          <div className="mb-6 flex flex-wrap items-center gap-2">
+          <div className="mb-4 flex flex-wrap items-center gap-2">
             <span className="badge badge-lg badge-outline">{optionLabel(t, card)}</span>
             {card.best && <span className="badge badge-lg badge-primary">{t('optionsScreen.best')}</span>}
             {card.placeholders.length > 0 && <PlaceholderCardTag open={phOpen} onToggle={() => setPhOpen(!phOpen)} panelId={phId} />}
@@ -89,7 +89,7 @@ export default function OptionSlice({ card, scale }) {
 
       {/* Six scores: a number and a bar each, three to a row on wide screens */}
       <Heading>{t('optionsScreen.scoresTitle')}</Heading>
-      <ul className="grid grid-cols-1 gap-x-14 gap-y-9 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
         {card.scores.map((s) => (
           <li key={s.id} className="flex flex-col gap-3">
             <div className="flex items-baseline justify-between gap-4">
@@ -103,7 +103,7 @@ export default function OptionSlice({ card, scale }) {
 
       {/* Four fit checks, two to a row */}
       <Heading>{t('optionsScreen.fitTitle')}</Heading>
-      <ul className="grid grid-cols-1 gap-x-14 gap-y-10 md:grid-cols-2">
+      <ul className="grid grid-cols-1 gap-x-10 gap-y-6 md:grid-cols-2">
         {card.fit.map((c) => {
           const { Icon, badge } = FIT[c.status];
           return (
@@ -123,7 +123,7 @@ export default function OptionSlice({ card, scale }) {
 
       {/* Money and what the rotation saves */}
       <Heading>{t('optionsScreen.profitLabel')}</Heading>
-      <div className="grid grid-cols-1 gap-12 lg:grid-cols-[1.4fr_1fr]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.4fr_1fr]">
         <div className="flex flex-col gap-4">
           <p className="flex flex-wrap items-baseline gap-x-3">
             <span className="text-5xl font-bold tabular-nums tracking-tight">{money(p.typical)}</span>
@@ -174,7 +174,7 @@ export default function OptionSlice({ card, scale }) {
         )}
       </div>
       {card.checkLocally?.length > 0 && (
-        <div className="collapse collapse-arrow mt-10 rounded-box border border-base-300 bg-base-200/60">
+        <div className="collapse collapse-arrow mt-6 rounded-box border border-base-300 bg-base-200/60">
           <input type="checkbox" aria-label={t('optionsScreen.local.title', { count: card.checkLocally.length })} />
           <div className="collapse-title flex items-center gap-3 text-lg font-semibold">
             <MapPinned size={20} className="text-primary" aria-hidden="true" />{t('optionsScreen.local.title', { count: card.checkLocally.length })}
