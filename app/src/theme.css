@@ -35,18 +35,26 @@
   /* Shape */
   --radius-sm: 6px;      /* swatches, tiny tags */
   --radius: 14px;        /* buttons, chips, inputs, inner tiles */
-  --radius-card: 20px;   /* cards and sheets */
+  --radius-card: 24px;   /* cards and sheets */
   --radius-pill: 999px;
   --border: 1px solid var(--color-border);
 
   /* Sizes */
   --tap: 48px;
   --nav-h: 64px;
-  --nav-gap: 8px;        /* the bottom nav floats this far from the screen edges */
+  --nav-gap: 12px;       /* the bottom nav floats this far from the screen edges */
   --header-h: 56px;
   --content-w: 1200px;   /* page cap on large screens */
   --read-w: 68ch;        /* max line length for paragraphs */
   --sheet-w: 720px;
+
+  /* Map: drawn over satellite imagery, so these are the same in both themes */
+  --map-bg: #0b0e0c;          /* behind the tiles, and the whole map when offline */
+  --map-outline: #f1f4ee;     /* the 300 field outlines */
+  --map-selected: #c5f03a;    /* the selected field: lime = selected */
+  --map-ink: #f1f4ee;         /* small notes on the imagery (12:1 on --map-scrim) */
+  --map-scrim: rgb(11 14 12 / 0.72);
+  --map-dim: brightness(0.62) saturate(0.85) contrast(1.05); /* darken the imagery so outlines pop */
 
   /* Motion (switched off under prefers-reduced-motion in styles.css) */
   --dur: 200ms;
@@ -96,6 +104,7 @@
   --chart-none: #ebe9e2;
   --hatch: rgb(255 255 255 / 0.35);
 
+  --glass: rgb(255 255 255 / 0.9);  /* cards and bars floating over the map */
   --color-focus: #2378c3;
   --shadow-float: 0 6px 24px rgb(27 31 28 / 0.18);
   --backdrop: rgb(27 31 28 / 0.45);
@@ -142,6 +151,7 @@
   --chart-none: #262d28;
   --hatch: rgb(14 18 16 / 0.45);
 
+  --glass: rgb(23 28 25 / 0.86);
   --color-focus: #8ec5ff;
   --shadow-float: 0 8px 28px rgb(0 0 0 / 0.55);
   --backdrop: rgb(0 0 0 / 0.6);

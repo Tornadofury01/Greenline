@@ -9,6 +9,7 @@
 // in the cropland mask. It is never stored or sent.
 import cropLibrary from '@content/crops.json';
 import rotationLibrary from '@content/rotations.json';
+import outlineFile from '@shared/field-outlines.json';
 import { DEMO_FIELD_ID } from '../config.js';
 
 // Lazy: each field file becomes its own small chunk, fetched only when needed.
@@ -85,8 +86,14 @@ export const loadDemoField = () => loadFieldById(DEMO_FIELD_ID);
 function loadIndex() {
   return INDEX_FILE['../../../shared/fields/index.json']?.fields || [];
 }
-// The sampled fields (id, county, lat, lon) for the map dots.
+// The sampled fields (id, county, lat, lon).
 export const fieldIndex = loadIndex;
+
+// The 300 USDA field outlines for the map (shared/field-outlines.json, built by pipeline/build_field_outlines.mjs):
+// [{ id, acres, rings: [[[lat, lon], ...], ...holes] }]. Bundled, so the outlines draw offline.
+export const fieldOutlines = () => outlineFile.fields;
+const OUTLINE_BY_ID = new Map(outlineFile.fields.map((f) => [f.id, f]));
+export const outlineFor = (id) => OUTLINE_BY_ID.get(id) || null;
 
 // ---- Cropland mask (shared/cropland-mask.json, built by pipeline/build_cropland_mask.py): ~400 m cells over North
 // Texas, 1 = USDA CDL cropland. Lazy chunk (precached by the service worker, so it works offline).

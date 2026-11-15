@@ -19,23 +19,23 @@ export default function Header() {
           <nav className="top-nav" aria-label={t('nav.label')}>
             <NavItems />
           </nav>
-          <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
-            aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
-            <BookOpen size={22} aria-hidden="true" />
-          </button>
+          <div className="lang" role="group" aria-label={t('app.langGroup')}>
+            {['en', 'es'].map((code) => (
+              <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}
+                aria-label={t(`app.langName.${code}`)}>
+                <span>{t(`app.langShort.${code}`)}</span>
+              </button>
+            ))}
+          </div>
           {/* Light is easier to read in bright sun; dark is easier at dusk. The choice is saved on this device. */}
           <button type="button" className="icon-btn theme-btn" aria-label={t(`app.theme.${nextTheme}`)} title={t(`app.theme.${nextTheme}`)}
             onClick={() => setTheme(nextTheme)}>
             {theme === 'dark' ? <Sun size={22} aria-hidden="true" /> : <Moon size={22} aria-hidden="true" />}
           </button>
-          <div className="lang" role="group" aria-label={t('app.langGroup')}>
-            {['en', 'es'].map((code) => (
-              <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}
-                aria-label={t(`app.langName.${code}`)}>
-                {t(`app.langShort.${code}`)}
-              </button>
-            ))}
-          </div>
+          <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
+            aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
+            <BookOpen size={22} aria-hidden="true" />
+          </button>
         </div>
       </header>
       {field?.isSampleData && (

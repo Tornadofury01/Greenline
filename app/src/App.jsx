@@ -24,7 +24,7 @@ export default function App() {
   const Screen = SCREEN_COMPONENTS[screen];
   useEffect(() => { window.scrollTo(0, 0); }, [screen]);
   return (
-    <div className="app">
+    <div className={`app${screen === 'field' ? ' app-map' : ''}`}>
       <Header />
       <main><Screen /></main>
       <BottomNav />

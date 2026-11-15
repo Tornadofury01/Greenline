@@ -279,3 +279,15 @@ Each preset: `weights`, `current` and `recommended` cards, `runnerUp` (rotation 
 never scored), `pest_index` (0–100, lower is better).
 Rotation keys: `current` (wheat, bare summer), `wheat_soy`, `wheat_cowpea`, `sorghum_rye`, `corn_wheat_soy`,
 `sorghum_clover`, `sorghum_wheat_cowpea`.
+
+## Field outlines (`/shared/field-outlines.json`)
+Built by `node pipeline/build_field_outlines.mjs` from `pipeline/fieldshift/data/fields.geojson` (USDA NASS Crop Sequence
+Boundaries, public data; never a farmer's position). Bundled with the app so the map outlines draw offline.
+
+| Key | Type | Notes |
+|---|---|---|
+| `schemaVersion` | number | 1 |
+| `source` | string | Where the outlines come from |
+| `fields[].id` | string | `ec-000` … `ec-299`, same ids as `/shared/fields/` |
+| `fields[].acres` | number | Area of the USDA outline, 1 decimal |
+| `fields[].rings` | number[][][] | `[lat, lon]` points rounded to 5 decimals (~1 m). First ring = outline, the rest = holes |
