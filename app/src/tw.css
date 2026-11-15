@@ -54,3 +54,15 @@ main:has(.options-page) { max-width: none; }
 .app:has(.options-page) .header-inner { max-width: none; padding-inline: 20px; }
 @media (min-width: 640px) { .app:has(.options-page) .header-inner { padding-inline: 32px; } }
 @media (min-width: 1024px) { .app:has(.options-page) .header-inner { padding-inline: 48px; } }
+
+/* Section card: square corners, a light hairline border and a soft, low shadow. Used on the Options page. */
+@layer components {
+  .gl-card {
+    background: #fbf9f4;
+    border: 1px solid var(--color-base-300);
+    border-radius: 0;
+    box-shadow: 0 1px 2px rgb(26 36 32 / 0.04), 0 8px 20px -12px rgb(26 36 32 / 0.14);
+    padding: 1.25rem;
+  }
+  @media (min-width: 640px) { .gl-card { padding: 1.75rem; } }
+}
