@@ -36,7 +36,7 @@
     "compareLong": "Compare rotations",
     "risksLong": "Field risks",
     "handoffLong": "Expert handoff",
-    "sim": "Simulator",
+    "sim": "Farm simulator",
     "simLong": "Farm simulator"
   },
   "common": {
@@ -168,7 +168,7 @@
     "equipment": "Equipment you have",
     "budget": "Budget for changes",
     "market": "Where do you sell or use your crops?",
-    "seeResults": "Compare rotations",
+    "seeResults": "See plans",
     "stepN": "Step {n}",
     "metaCrops": "{n} crops",
     "metaPicked": "{n} picked",
@@ -181,7 +181,7 @@
         "no-till": "No-till"
       },
       "assumed": "Reduced tillage: our assumption until you tell us. Tap a choice to change it.",
-      "saved": "Saved on this phone. It sets the tillage of your current rotation in the farm simulator."
+      "saved": "Saved on this phone. Your plots in the Farm simulator start with this tillage."
     }
   },
   "story": {
@@ -198,7 +198,7 @@
       "play": "Play",
       "pause": "Pause",
       "timeline": "Satellite replay date",
-      "simulate": "Try a rotation in the simulator",
+      "simulate": "Try a rotation in the Farm simulator",
       "loading": "Loading satellite view?",
       "noArchive": "No replay is available for this field. Connect to the internet and try again.",
       "retry": "Try again",
@@ -891,7 +891,7 @@
     "heading": "If {year} came back",
     "note": "This is a stress check from real weather and crop traits, not a yield forecast. Local experts know your field best.",
     "glanceTitle": "How each option holds up in {year}",
-    "see": "See how rotations hold up in {year}",
+    "see": "Explore weather tools for {year}",
     "noYear": "No weather record for {year} on this field.",
     "coverRule": "In drought years we count cover crops as only half established, so their bare-day savings are halved. A dry fall can stop them from coming up, and we don't want the replay to oversell them.",
     "maxedNote": "Extreme settings max out the stress, so this option bottoms out. The exact score is in the details.",
@@ -939,9 +939,11 @@
       "field": "Back to the map",
       "farm": "Back to your farm",
       "story": "Back to the field history",
-      "compare": "Back to compare",
+      "compare": "Back to plans",
       "handoff": "Back to the expert summary",
-      "how": "Back"
+      "how": "Back",
+      "plans": "Back to plans",
+      "options": "Back to plans"
     }
   },
   "whatIf": {
@@ -1314,7 +1316,7 @@
     "honest": {
       "confCap": "Confidence can't be high until our field models are ready.",
       "tillage": "These numbers assume reduced tillage.",
-      "tillageTry": "Your tillage setting is used in the farm simulator.",
+      "tillageTry": "Try your tillage on 4 plots in the Farm simulator.",
       "costShare": "Cost-share: not estimated.",
       "fixedCosts": "Fixed costs: placeholder values."
     },
@@ -1379,7 +1381,7 @@
   },
   "optionsScreen": {
     "title": "Options",
-    "intro": "What you grow now, and the best options for this field, side by side.",
+    "intro": "Your current baseline and the full list of saved v2 options. Review fit warnings before choosing.",
     "takeaway": "Profit is a likely range, not a promise. Check the local items with your extension agent before you change anything.",
     "current": "What you grow now",
     "option": "Option {letter}",
@@ -1478,7 +1480,7 @@
     "noOutlook": "No outlook yet; the calendar average is used."
   },
   "plansScreen": {
-    "title": "Best plans",
+    "title": "Plans",
     "intro": "Three answers for this field, side by side: the most profitable, the best balance for your goals and the safest.",
     "loading": "Loading plans…",
     "error": {
@@ -1646,204 +1648,375 @@
     "takeaway": "These are likely ranges from weather records and field models, not forecasts. Confirm with your extension agent."
   },
   "sim": {
-    "title": "Farm simulator",
-    "intro": "Start from your farm as it is today, change anything, and watch the seasons play out day by day.",
-    "notForecast": "Shows what would happen under the chosen weather, not a forecast.",
-    "running": "Running the simulation",
-    "error": "The simulation could not run. Try again or pick another field.",
-    "controls": {
-      "title": "Your choices",
-      "show": "Show choices",
-      "hide": "Hide choices"
-    },
-    "plan": {
-      "today": "Your farm today",
-      "nameA": "Plan A: your farm today",
-      "nameB": "Plan B",
-      "compare": "Compare with a second plan",
-      "editing": "Plan being edited",
-      "rotation": "Crops by year",
-      "year": "Year {n}",
-      "crop": "Crop",
-      "cover": "Cover crop",
-      "noCover": "No cover crop",
-      "addYear": "Add a year",
-      "removeYear": "Remove a year",
-      "copyA": "Copy plan A"
-    },
     "in": {
-      "tillage": "Tillage",
       "tillageOpt": {
         "conventional": "Conventional",
         "reduced": "Reduced",
         "no-till": "No-till"
       },
-      "nitrogen": "Nitrogen",
-      "nDefault": "Usual rate for each crop",
-      "nRate": "{n} lb N per acre",
-      "irrigation": "Irrigation",
       "irrOpt": {
         "none": "None (dryland)",
         "limited": "Limited",
         "full": "Full"
-      },
-      "shift": "Planting date",
-      "shiftNormal": "Usual date",
-      "shiftEarly": "{n} days earlier",
-      "shiftLate": "{n} days later",
-      "maturity": "Variety maturity",
-      "maturityOpt": {
-        "full": "Full season",
-        "short": "Short season"
-      },
-      "termination": "Cover crop ending",
-      "termOpt": {
-        "at-planting": "At planting",
-        "early": "2 weeks before planting",
-        "none": "Not ended (grows on)"
       }
-    },
-    "weather": {
-      "title": "Weather",
-      "kind": "Kind of weather",
-      "year": "Which year",
-      "redraw": "Draw different years",
-      "kinds": {
-        "typical": "A typical year",
-        "past": "A past year again",
-        "random": "A random draw of past years",
-        "ssp245": "2040, middle climate scenario",
-        "ssp585": "2040, high climate scenario"
+    }
+  },
+  "mergedPlans": {
+    "intro": "Three strategies for field {id}.",
+    "best": "Best match for your farm",
+    "compactBest": "Best match",
+    "current": "Current rotation",
+    "alternative": "A different approach",
+    "returnLabel": "Estimated return after variable costs",
+    "perAcreYear": "per acre, per year",
+    "range": "Estimated range: {low}–{high}",
+    "unavailable": "Not available",
+    "returnNote": "Before fixed costs; cost-share not included. Not a guarantee.",
+    "placeholderReturn": "Uses placeholder yields. Before fixed costs; cost-share not included.",
+    "waterLabel": "Water shortage",
+    "waterUnit": "of seasons at planting",
+    "coverLabel": "Bare ground",
+    "coverUnit": "estimated days per year",
+    "placeholderMeasures": "Water and cover are simulated with placeholder inputs.",
+    "simulatedMeasures": "Simulated water and ground cover, not measurements.",
+    "why": "Why it fits.",
+    "details": "View details",
+    "scoreNote": "Six v2 scores out of 100; based on the stored plan assumptions.",
+    "limitsWarning": "Some field limits could not be met. Review fit checks before choosing this plan.",
+    "compareTitle": "How the strategies compare",
+    "sameBasis": "Same field and v2 analysis. Returns are after variable costs; water and cover are estimates.",
+    "shownAbove": "The recommendation shown above.",
+    "currentSource": "USDA crop-history baseline, using the management shown in details. Farm edits do not recalculate these saved estimates.",
+    "noAlternative": "No distinct alternative meets the stored field limits. Browse Options to see the remaining choices and their trade-offs.",
+    "overlap": "The named recommendations overlap. The alternative is a different eligible rotation from Options.",
+    "options": "Browse all Options",
+    "explore": "Explore more",
+    "noBest": "A best-balance plan is not available for this field. Browse Options for the available rotations."
+  },
+  "rotationPlans": {
+    "intro": "Your rotation and two plans to consider · Field {id}",
+    "recommended": "Recommended",
+    "baseline": "USDA crop-history baseline",
+    "higherReturn": "Higher estimated return",
+    "badYears": "Stronger in bad seasons",
+    "moreCover": "Fewer bare days",
+    "lessStress": "Fewer water-short seasons",
+    "alternative": "Another eligible rotation",
+    "moreReturnReason": "About {usd} more per acre a year than Best match, under the same assumptions.",
+    "badYearsReason": "About {usd} more per acre in the worst 10% of simulated seasons than Best match.",
+    "moreCoverReason": "About {days} fewer bare days a year than Best match in the simulation.",
+    "lessStressReason": "Water shortage at planting in {points} percentage points fewer seasons than Best match.",
+    "currentReason": "What USDA crop maps show for this field. Your starting point for comparison.",
+    "eligibleReason": "A different crop cycle that passes the stored field checks.",
+    "whySuggested": "Why this rotation?",
+    "evidence": "Evidence and tradeoffs",
+    "checkLocally": "What to check locally",
+    "rankingNote": "Your priorities rank the existing v2 plans. Crop yields and returns remain the saved estimates, not a new simulation.",
+    "constraintsNote": "We screen soil loss, bad seasons and field fit. Dryland choices require no irrigation. Confirm equipment, budget and buyers locally.",
+    "cattleNote": "Cattle-feed value is not scored in this v2 analysis. Check forage choices locally.",
+    "savedAnalysis": "The saved analysis simulates {years} seasons, starting in {year}. Historical weather guides the scenarios; results are not forecasts.",
+    "scoreNote": "Six v2 scores, each out of 100. The recommendation uses the existing priority weights.",
+    "assumes": "Assumes {tillage} management.",
+    "notEligible": "Does not meet every stored field limit. Review details before considering it.",
+    "gap": "Two distinct eligible alternatives are not available. We show what passes the field checks; the full list includes other choices and their tradeoffs.",
+    "browse": "Browse all rotations",
+    "browseNote": "All {count} stored rotations. This list also includes choices that do not pass every field check.",
+    "simulatorNotice": "Try your own plans on 4 plots of your field, side by side, in real past weather. Use \"Play this plan\" on a card to bring that plan along.",
+    "openSimulator": "Open the Farm simulator",
+    "sources": {
+      "simulator": "v2 agronomy simulation",
+      "ssurgo": "USDA SSURGO soil survey",
+      "nass": "USDA NASS yields and prices",
+      "crop-library": "Published crop traits (not verified)",
+      "cdl": "USDA Cropland Data Layer"
+    }
+  },
+  "game": {
+    "title": "Farm simulator",
+    "loading": "Loading the Farm simulator…",
+    "playThis": "Play this plan",
+    "banner": "Replays real past weather on your field. Not a forecast.",
+    "progress": "Year {n}/{total}",
+    "running": "Growing the season…",
+    "error": "The season could not be run.",
+    "weatherOf": "weather of {year}",
+    "perAcre": "/acre",
+    "meter": {
+      "money": {
+        "name": "Money",
+        "what": "Money left after the costs the model counts (seed, fertilizer, field passes, harvest), per acre. Land rent and your own labor are not counted.",
+        "src": "Source: the simulator's money ledger, with USDA NASS prices for this county."
       },
-      "rain": "Rain",
-      "temp": "Temperature",
-      "asIs": "as is",
-      "wetter": "{n}% wetter",
-      "drier": "{n}% drier",
-      "hotter": "{n}°F hotter",
-      "cooler": "{n}°F cooler"
-    },
-    "money": {
-      "title": "Money",
-      "price": "Crop prices",
-      "nPrice": "Nitrogen price per lb",
-      "rent": "Land rent per acre per year",
-      "note": "Prices start from the field's USDA numbers. Profit is return above the costs counted here, before overhead and loans."
-    },
-    "length": {
-      "title": "Length",
-      "years": "{n} years",
-      "note": "Runs from January {year}. One year is one season of each crop in the rotation."
-    },
-    "play": {
-      "title": "Play it",
-      "play": "Play",
-      "pause": "Pause",
-      "stepDay": "Step a day",
-      "jumpMonth": "Jump a month",
-      "scrub": "Day of the simulation",
-      "speed": "Speed",
-      "speeds": {
-        "slow": "Slow",
-        "normal": "Normal",
-        "fast": "Fast"
-      }
-    },
-    "stage": {
-      "idle": "nothing growing",
-      "fallow": "fallow",
-      "planted": "planted",
-      "growing": "growing",
-      "flowering": "flowering",
-      "filling": "filling the grain",
-      "mature": "mature"
-    },
-    "today": {
-      "noCrop": "No crop",
-      "weather": "High / low",
-      "rain": "Rain today: {n} in",
-      "water": "Soil water",
-      "waterNote": "of {cap} in the root zone; water stress {stress}%",
-      "cover": "Ground covered",
-      "erosion": "Soil lost so far: {n} tons/ac",
-      "money": "Profit so far",
-      "nitrogen": "Nitrogen in soil: {n} lb/ac"
-    },
-    "unit": {
-      "%": "percent",
-      "in": "inches",
-      "lb": "lb per acre",
-      "$": "dollars per acre"
-    },
-    "chart": {
-      "crop": {
-        "title": "Crop",
-        "note": "How green the field is: the crop's leaf cover, in percent."
-      },
-      "water": {
-        "title": "Water",
-        "note": "Water the roots can reach, in inches. Higher is better."
+      "risk": {
+        "name": "Risk",
+        "what": "How your worst seasons compare with your farm today on the same weather (0 to 100, higher is safer).",
+        "src": "Source: the simulator, same scoring as the Plans page."
       },
       "soil": {
-        "title": "Soil",
-        "note": "Ground covered by crop and residue, in percent. Under 30% counts as bare."
+        "name": "Soil",
+        "what": "Soil lost compared with what the soil can tolerate (T), bare days and organic matter (0 to 100).",
+        "src": "Source: the simulator on SSURGO soil, daily erosion (RUSLE)."
+      },
+      "water": {
+        "name": "Water",
+        "what": "Water left in the soil for the next crop, and how much the crop was short of water (0 to 100).",
+        "src": "Source: the simulator's daily water balance, SSURGO soil, NASA POWER weather."
       },
       "nutrients": {
-        "title": "Nutrients",
-        "note": "Nitrogen in the soil, in pounds per acre."
+        "name": "Nutrients",
+        "what": "Nitrogen bought, nitrogen fixed by legumes, and whether the soil is being mined (0 to 100).",
+        "src": "Source: the simulator and the crop library (traits not yet verified)."
       },
       "pests": {
-        "title": "Pests and disease",
-        "note": "Highest weather risk among the pests of the crop in the field."
+        "name": "Pests & disease",
+        "what": "Pest loss in the simulation and crops of the same family back to back (0 to 100).",
+        "src": "Source: the simulator's pest counters and the crop library."
       },
-      "money": {
-        "title": "Money",
-        "note": "Profit per acre so far: revenue minus costs on the day they happen, minus rent."
+      "market": {
+        "name": "Market",
+        "what": "Whether there is a county yield record or a buyer for each crop, and whether its price is weak.",
+        "src": "Source: USDA NASS Quick Stats for this county."
+      },
+      "season": {
+        "name": "Season",
+        "what": "Whether every crop finished before frost or harvest.",
+        "src": "Source: the simulator's crop stages and frost days."
       }
     },
-    "score": {
-      "title": "The whole run, per year",
-      "plan": "Plan",
-      "profit": "Profit $/ac",
-      "soil": "Soil lost t/ac (limit)",
-      "bare": "Bare days",
-      "nLeached": "N lost lb/ac",
-      "note": "Averages per year over {years} years of this weather. The limit is the soil's tolerable loss, T."
+    "word": {
+      "good": "Good",
+      "fair": "Fair",
+      "low": "Low",
+      "gain": "Gain",
+      "loss": "Loss",
+      "pass": "Pass",
+      "warn": "Warning",
+      "fail": "Fail",
+      "na": "No number"
     },
-    "seasons": {
-      "title": "Season by season",
-      "caption": "Harvests",
-      "crop": "Crop",
-      "ended": "Ended",
-      "yield": "Yield",
-      "vs": "vs usual"
+    "scene": {
+      "alt": "Your field split into 4 plots, drawn from the simulation"
     },
-    "band": {
-      "title": "How much results vary",
-      "intro": "Runs the first year of your plan through every past season, using that season's real weather.",
-      "show": "Show the range",
-      "hide": "Hide the range",
-      "takeaway": "Across {n} past seasons the middle result was {mid} per acre. The worst 1 in 10 was {low} or less, the best 1 in 10 was {high} or more."
+    "play": {
+      "play": "Play",
+      "pause": "Pause",
+      "speed": "Speed",
+      "skip": "Skip to harvest"
     },
-    "log": {
-      "title": "What happened",
-      "empty": "Nothing yet. Press play."
+    "why": {
+      "noCash": "No cash crop this year, so no harvest money.",
+      "killed": "Frost killed the {crop} before it finished.",
+      "pests": "Pests and disease took about {pct}% of the {crop}.",
+      "heat": "Heat hurt the {crop}: {n} days above its heat limit.",
+      "dry": "A dry spell held the {crop} back: {n} days short of water.",
+      "steady": "A steady season: {crop} at {pct}% of a typical yield."
     },
-    "event": {
-      "planted": "Planted {crop}",
-      "flowering": "{crop} flowering",
-      "harvested": "Harvested {crop} {yield}",
-      "terminated": "Ended the {crop} cover crop",
-      "cut": "Cut {crop} {yield}",
-      "frost-kill": "Frost killed the {crop}",
-      "flower-frost": "Frost hit the {crop} flowers",
-      "fallow-start": "Field left fallow"
+    "results": {
+      "next": "Next year",
+      "end": "See the results"
     },
-    "ph": {
-      "yields": "Yields and profit",
-      "calendars": "Planting and harvest dates",
-      "weather2040": "2040 weather mix",
-      "startWater": "Starting soil water"
+    "yearType": {
+      "drought": "Drought year",
+      "hot": "Hot year",
+      "wet": "Wet year",
+      "normal": "Normal year"
+    },
+    "challenge": {
+      "drought": {
+        "name": "Survive 2011",
+        "goal": "Get through the 2011 drought without running out of money."
+      },
+      "soil": {
+        "name": "Keep the soil",
+        "goal": "Keep soil loss under what your soil can tolerate, wet year included."
+      },
+      "beat": {
+        "name": "Beat your current rotation",
+        "goal": "Beat your farm today on money, then soil, then water."
+      }
+    },
+    "start": {
+      "subtitle": "Split your field into 4 plots, try a plan on each, and see how they hold up in real past weather.",
+      "heroAlt": "A small farm with 4 plots of growing crops",
+      "howTitle": "How it works",
+      "step1": "Set up 4 plots",
+      "step2": "Play a season",
+      "step3": "See which plot wins",
+      "free": "Free play · 5 random past years",
+      "challenges": "Challenges",
+      "ready": "Ready to test: {name}",
+      "playIt": "Play it",
+      "loadedWhere": "It goes on plot 1. You can change it there.",
+      "level": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      }
+    },
+    "planNote": {
+      "doubleCrop": "This plan has a double crop. The Farm simulator plays one crop a year, so the second crop is left out.",
+      "cover": "One cover crop in this plan is not offered in the Farm simulator and is left out.",
+      "maturity": "The plan uses short-season varieties; the Farm simulator uses full season (variety is not fully modeled yet).",
+      "termination": "The plan ends its cover early; the Farm simulator ends covers at planting (other end dates are not fully modeled yet)."
+    },
+    "sound": {
+      "on": "Sound on",
+      "off": "Sound off"
+    },
+    "end": {
+      "title": "Five seasons done",
+      "sameWeather": "All four plots ran on the same weather years: {years}.",
+      "moneyNote": "Money is the total for the seasons played, per acre, after the costs the model counts. Land rent and your own labor are not counted.",
+      "again": "Play the same weather again",
+      "another": "Try another setup",
+      "broke": "Out of money",
+      "brokeWhy": "After {n} seasons your coins are at {usd}. A farm can't plant the next season like this.",
+      "stars": "{n} of 3 stars",
+      "free": "Free play: no goal. Compare the plots below.",
+      "money": "Money",
+      "soil": "Soil lost/yr",
+      "soilVal": "{t} of {max} t",
+      "bare": "Bare days/yr",
+      "som": "Organic matter",
+      "starRule": {
+        "drought": "1 star: don't run out of money. 2: end with more coins than you started. 3: a plot beats your current rotation on money.",
+        "soil": "1 star: a plot averages under the soil's limit. 2: a plot stays under it every year. 3: and keeps its organic matter.",
+        "beat": "1 star: a plot beats your current rotation on money. 2: and on soil. 3: and on water."
+      }
+    },
+    "plotN": "Plot {n}",
+    "plotEmpty": "No seed",
+    "pickPlot": "Pick a plot",
+    "noCover": "No cover",
+    "hud": {
+      "exit": "Leave the game",
+      "coins": "Coins: {usd}"
+    },
+    "tool": {
+      "label": "Farm tools",
+      "seeds": "Seeds",
+      "cover": "Cover",
+      "tillage": "Tillage",
+      "fert": "Fertilizer",
+      "irr": "Water",
+      "locked": "Set in year 1. The model runs one way of farming on each plot for all 5 years.",
+      "coverNote": "A winter cover grows before this year's crop and is ended at planting."
+    },
+    "fert": {
+      "low": "Low (half rate)",
+      "med": "Usual rate",
+      "high": "High (1.5 ×)"
+    },
+    "setup": {
+      "cost": "Plot {n} setup {usd} · all plots {total}",
+      "costNote": "Seed, planting, fertilizer and the pre-plant field pass for this plot, from the simulator's money ledger. Sprays, harvest and water come off when they happen. — means not worked out yet.",
+      "start": "Start season"
+    },
+    "fill": {
+      "title": "Quick fill",
+      "best": "Best plan on plot 3",
+      "today": "My current rotation on plot 4",
+      "loaded": "Loaded plan on plot {n}",
+      "clear": "Clear plot {n}",
+      "lockNote": "After year 1 only the crops change; tillage, fertilizer and water stay as set.",
+      "short": "Quick fill"
+    },
+    "live": {
+      "title": "Plot {n} right now",
+      "hint": "Tap a plot to see how it is doing.",
+      "noCrop": "No crop",
+      "stage": "{pct} grown",
+      "water": "Soil water",
+      "cover": "Ground cover",
+      "soil": "Soil lost",
+      "soilVal": "{t} of {max} t",
+      "n": "Nitrogen",
+      "pest": "Pests",
+      "pestVal": "−{pct}% yield",
+      "money": "Money this season"
+    },
+    "ev": {
+      "heat": "{month}: {n} days over 95 °F",
+      "rain": "{date}: {inches} in of rain. This plot lost {tons} t/acre of soil",
+      "rainNoLoss": "{date}: {inches} in of rain. The ground held",
+      "dry": "The {crop} has been short of water for 3 weeks",
+      "pest": "{pest} on the {crop}: about {pct}% of the yield at risk",
+      "lowN": "The {crop} is short of nitrogen: leaves turn yellow",
+      "frost": "Frost killed the {crop}",
+      "harvest": "Harvest: {units} {unit} of {crop}, {usd}/acre"
+    },
+    "src": {
+      "power": "NASA POWER temperature (monthly), daily pattern simulated",
+      "rain": "GPM IMERG rain (monthly), daily pattern simulated · erosion on SSURGO soil",
+      "water": "Simulator water balance · SSURGO soil · NASA POWER",
+      "pest": "Simulator pest counters (weather rules) · crop library",
+      "n": "Simulator nitrogen balance · crop library",
+      "frost": "Simulator crop stages · NASA POWER temperature",
+      "harvest": "Simulator yield · USDA NASS prices"
+    },
+    "pest": {
+      "any": "Pests",
+      "cereal-rust": "Cereal rust",
+      "grass-foliar-disease": "Leaf disease",
+      "cotton-root-rot": "Cotton root rot",
+      "root-knot-nematode": "Root-knot nematode",
+      "charcoal-rot": "Charcoal rot",
+      "sugarcane-aphid": "Sugarcane aphid"
+    },
+    "board": {
+      "title": "Harvest: the weather of {year}",
+      "intro": "One card per plot. Tap a meter to see why. Money is this season; the meters cover all seasons played so far.",
+      "winner": "Best all-round",
+      "winnerNote": "Best all-round = highest average of the money, risk, soil, water, nutrient and pest scores.",
+      "phNote": "Some meters use placeholder models until the field models are plugged in."
+    },
+    "whySrc": {
+      "money": "Source: the simulator's money ledger.",
+      "frost": "Source: simulated crop stages and frost days (NASA POWER temperature).",
+      "pests": "Source: the simulator's pest counters and the crop library.",
+      "heat": "Source: NASA POWER temperature and the crop's heat limit (crop library).",
+      "water": "Source: the simulator's water balance on SSURGO soil, NASA POWER and GPM IMERG weather.",
+      "yield": "Source: the simulator's yield compared with a typical yield for this county (USDA NASS)."
+    },
+    "noData": "No data here yet",
+    "startState": {
+      "title": "Starting conditions",
+      "intro": "Every plot starts from your field as it is today: we ran your real crops and weather from {from} to {to} through the simulator.",
+      "introNoHistory": "No crop history for this field, so every plot starts from the simulator's default values.",
+      "loading": "Working out your field today…",
+      "water": "Soil water",
+      "waterVal": "{pct} of what the crop can use",
+      "n": "Nitrogen in the soil",
+      "nVal": "{lb} lb N/acre",
+      "som": "Organic matter",
+      "somVal": "{pct}%",
+      "residue": "Residue on the ground",
+      "residueVal": "covers {pct}",
+      "pests": "Pest carry-over",
+      "pestVal": "{pest}: {pct}",
+      "lastCrop": "Last crop",
+      "none": "None",
+      "src": {
+        "modelD": "NASA SMAP soil moisture (field model)",
+        "history": "Simulated from your crops and weather",
+        "default": "Default value",
+        "input": "Your input",
+        "ssurgo": "USDA SSURGO soil survey",
+        "ssurgoHistory": "USDA SSURGO, then your crop history",
+        "cdl": "USDA Cropland Data Layer",
+        "modelA": "Field model (crop history)"
+      },
+      "waterNote": "Satellite soil moisture for your field (NASA SMAP) is coming; until then it comes from your crop and weather history.",
+      "nNote": "No measurement: nitrogen is simulated. A soil test is better.",
+      "edit": "I know better",
+      "lastCropQ": "What did you grow last season?",
+      "soilTestQ": "Soil-test nitrate (lb N/acre, optional)",
+      "soilTestPh": "e.g. 25",
+      "inputNote": "Your answers are only used in this game. They are not saved or sent.",
+      "reset": "Back to the data",
+      "challengeNote": "Challenges always use your field's data, so everyone gets the same test. In Free play you can correct the last crop and nitrogen.",
+      "go": "Set up my plots",
+      "open": "Start"
     }
   }
 }

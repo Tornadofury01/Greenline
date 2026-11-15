@@ -12,7 +12,8 @@ export const COLS = ['rain', 'tmax', 'tmin', 'irr', 'rz', 'rzCap', 'stress', 'ca
 export const COVERS = ['cereal_rye', 'crimson_clover', 'hairy_vetch'];
 export const libById = Object.fromEntries(library.crops.map((c) => [c.id, c]));
 export const CASH_CROPS = library.crops.filter((c) => c.kind === 'cash' || c.kind === 'fallow').map((c) => c.id);
-export const slotsFor = (field) => makeSlots({ field, modelFile: null, placeholders });
+/** Model slots for a field. modelFile = shared/v2/models/<id>.json (data/loadModels.js) or null (all placeholders). */
+export const slotsFor = (field, modelFile = null) => makeSlots({ field, modelFile, placeholders });
 
 // Seeded random (mulberry32) so two plans and a re-run see the same weather.
 export function rng(seed) {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MapPin, Tractor, CloudRain, Scale, ClipboardList, ListChecks, Trophy, ThermometerSun, Ellipsis, FlaskRound } from 'lucide-react';
+import { MapPin, Tractor, CloudRain, ClipboardList, Trophy, ThermometerSun, Ellipsis, FlaskRound } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 
 // Screen ids in order, with one Lucide icon each. `more: true` = lives in the "More" menu on phones and tablets
@@ -8,11 +8,9 @@ export const SCREENS = [
   { id: 'field', Icon: MapPin },
   { id: 'farm', Icon: Tractor },
   { id: 'story', Icon: CloudRain },
-  { id: 'options', Icon: ListChecks },
   { id: 'plans', Icon: Trophy },
   { id: 'risks', Icon: ThermometerSun, more: true },
   { id: 'sim', Icon: FlaskRound, more: true },
-  { id: 'compare', Icon: Scale, more: true },
   { id: 'handoff', Icon: ClipboardList, more: true },
 ];
 const TABS = SCREENS.filter((s) => !s.more);
