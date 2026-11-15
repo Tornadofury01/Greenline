@@ -170,5 +170,6 @@
     --chart-drought: #b84a00; --chart-heat: #c98a1b; --chart-wet: #2f75a8; --chart-normal: #8e9c90;
     --chart-covered: #cfe0cf; --chart-bare: #7a4e2d; --chart-green: #4f8a55; --chart-residue: #d9c79a; --chart-none: #ebe9e2;
     --hatch: rgb(255 255 255 / 0.35);
+    --glass: #ffffff; --shadow-float: none;
   }
 }

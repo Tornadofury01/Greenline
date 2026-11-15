@@ -130,7 +130,11 @@
     "equipment": "Equipment you have",
     "budget": "Budget for changes",
     "market": "Where do you sell or use your crops?",
-    "seeResults": "Compare rotations"
+    "seeResults": "Compare rotations",
+    "stepN": "Step {n}",
+    "metaCrops": "{n} crops",
+    "metaPicked": "{n} picked",
+    "privacy": "Your answers stay on this phone and reset when you close the app."
   },
   "story": {
     "title": "Your field's history",
@@ -336,7 +340,14 @@
     "notesSection": "Notes",
     "sources": "Data sources",
     "sampleNote": "This summary uses sample data, not measurements from this field.",
-    "generated": "Made with Greenline on {date}"
+    "generated": "Made with Greenline on {date}",
+    "fieldMeta": "Field {id} · {acres} acres",
+    "climateTitle": "Weather and bare soil",
+    "bareLabel": "Bare days a year",
+    "bareDetail": "Landsat 8/9, 2014 on",
+    "barePill": "≈ {n} bare days a year (estimate)",
+    "bareNote": "Bare days per rotation are estimates from satellite crop calendars, not measurements.",
+    "printNote": "The printout is always dark ink on white paper."
   },
   "priorities": {
     "water": "Save water",
@@ -770,7 +781,15 @@
     "notesTitle": "Good to know",
     "jump": "Jump to a word",
     "dataLabel": "Data",
-    "back": "Back"
+    "back": "Back",
+    "backTo": {
+      "field": "Back to the map",
+      "farm": "Back to your farm",
+      "story": "Back to the field history",
+      "compare": "Back to compare",
+      "handoff": "Back to the expert summary",
+      "how": "Back"
+    }
   },
   "whatIf": {
     "drier": "What-if: {pct}% less rain than this field's average year.",

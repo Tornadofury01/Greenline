@@ -130,7 +130,11 @@
     "equipment": "Equipo que tiene",
     "budget": "Presupuesto para cambios",
     "market": "¿Dónde vende o usa sus cultivos?",
-    "seeResults": "Comparar rotaciones"
+    "seeResults": "Comparar rotaciones",
+    "stepN": "Paso {n}",
+    "metaCrops": "{n} cultivos",
+    "metaPicked": "{n} elegidas",
+    "privacy": "Sus respuestas se quedan en este teléfono y se borran al cerrar la app."
   },
   "story": {
     "title": "El historial de su parcela",
@@ -336,7 +340,14 @@
     "notesSection": "Notas",
     "sources": "Fuentes de datos",
     "sampleNote": "Este resumen usa datos de muestra, no medidas de este campo.",
-    "generated": "Hecho con Greenline el {date}"
+    "generated": "Hecho con Greenline el {date}",
+    "fieldMeta": "Campo {id} · {acres} acres",
+    "climateTitle": "Clima y suelo desnudo",
+    "bareLabel": "Días desnudos al año",
+    "bareDetail": "Landsat 8/9, desde 2014",
+    "barePill": "≈ {n} días desnudos al año (estimación)",
+    "bareNote": "Los días desnudos de cada rotación son estimaciones de calendarios de cultivo satelitales, no mediciones.",
+    "printNote": "La copia impresa siempre sale con tinta oscura sobre papel blanco."
   },
   "priorities": {
     "water": "Ahorrar agua",
@@ -770,7 +781,15 @@
     "notesTitle": "Bueno saberlo",
     "jump": "Ir a una palabra",
     "dataLabel": "Datos",
-    "back": "Volver"
+    "back": "Volver",
+    "backTo": {
+      "field": "Volver al mapa",
+      "farm": "Volver a su granja",
+      "story": "Volver al historial del campo",
+      "compare": "Volver a comparar",
+      "handoff": "Volver al resumen para el experto",
+      "how": "Volver"
+    }
   },
   "whatIf": {
     "drier": "Suposición: {pct}% menos lluvia que el año promedio de este campo.",

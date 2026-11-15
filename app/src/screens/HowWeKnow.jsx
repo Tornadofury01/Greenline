@@ -1,7 +1,7 @@
 // "How we know": plain-language explanations of every term and data limit the app uses.
 // Opened from the header and from "How we know" links on cards. Text lives in i18n under glossary.<id>.
 import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, BookOpen, Lightbulb, Database } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { PageHead, JudgmentNote } from '../components/Small.jsx';
 
@@ -28,12 +28,17 @@ const TERMS = [
 const NOTES = [{ id: 'satVsGround' }, { id: 'sensor2013', data: ['Landsat 8/9', 'Landsat 5/7/8/9'] }];
 
 function Entry({ id, data = [] }) {
-  const { t } = useApp();
+  const { t, how } = useApp();
   return (
-    <article className="how-term" id={`term-${id}`}>
+    <article className={`how-term${how.term === id ? ' is-target' : ''}`} id={`term-${id}`}>
       <h3>{t(`glossary.${id}.title`)}</h3>
       <p>{t(`glossary.${id}.text`)}</p>
-      {data.length > 0 && <p className="muted small">{t('how.dataLabel')}: {data.join(', ')}</p>}
+      {data.length > 0 && (
+        <div className="pills" aria-label={t('how.dataLabel')}>
+          <Database size={14} aria-hidden="true" className="how-data-icon" />
+          {data.map((d) => <span key={d} className="pill">{d}</span>)}
+        </div>
+      )}
     </article>
   );
 }
@@ -49,16 +54,18 @@ export default function HowWeKnow() {
   }, [how.term]);
 
   const jump = (id) => document.getElementById(`term-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const back = () => setScreen(how.from);
 
   return (
-    <div className="screen">
-      <button type="button" className="btn-text" onClick={() => setScreen(how.from)}>
+    <div className="screen screen-narrow">
+      <button type="button" className="btn-text btn-back" onClick={back}>
         <ArrowLeft size={18} aria-hidden="true" />{t('how.back')}
       </button>
       <PageHead title={t('how.title')} intro={t('how.intro')} />
 
       <nav className="card" aria-label={t('how.jump')}>
-        <div className="chips">
+        <h2 className="card-kicker">{t('how.jump')}</h2>
+        <div className="chips chips-jump">
           {[...TERMS, ...NOTES].map(({ id }) => (
             <button key={id} type="button" className="chip" onClick={() => jump(id)}>{t(`glossary.${id}.title`)}</button>
           ))}
@@ -66,16 +73,20 @@ export default function HowWeKnow() {
       </nav>
 
       <section className="card how-list" aria-labelledby="how-terms">
-        <h2 id="how-terms">{t('how.termsTitle')}</h2>
+        <h2 id="how-terms" className="card-kicker"><BookOpen size={18} aria-hidden="true" />{t('how.termsTitle')}</h2>
         {TERMS.map((x) => <Entry key={x.id} {...x} />)}
       </section>
 
       <section className="card how-list" aria-labelledby="how-notes">
-        <h2 id="how-notes">{t('how.notesTitle')}</h2>
+        <h2 id="how-notes" className="card-kicker"><Lightbulb size={18} aria-hidden="true" />{t('how.notesTitle')}</h2>
         {NOTES.map((x) => <Entry key={x.id} {...x} />)}
       </section>
 
       <JudgmentNote />
+
+      <button type="button" className="btn btn-primary btn-block btn-cta" onClick={back}>
+        <ArrowLeft size={20} aria-hidden="true" />{t(`how.backTo.${how.from}`)}
+      </button>
     </div>
   );
 }
