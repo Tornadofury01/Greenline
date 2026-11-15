@@ -32,7 +32,9 @@
     "farmLong": "Su granja",
     "compareLong": "Comparar rotaciones",
     "risksLong": "Riesgos del campo",
-    "handoffLong": "Entrega al experto"
+    "handoffLong": "Entrega al experto",
+    "sim": "Simulador",
+    "simLong": "Simulador de la finca"
   },
   "common": {
     "judgmentNote": "Esta herramienta apoya su criterio y a sus expertos locales. No los reemplaza.",
@@ -1402,5 +1404,206 @@
       "climate": "Heladas y calor en 2040"
     },
     "takeaway": "Son rangos probables a partir de registros del clima y modelos del campo, no pronósticos. Confírmelos con su agente de extensión."
+  },
+  "sim": {
+    "title": "Simulador de la finca",
+    "intro": "Empiece con su finca como está hoy, cambie lo que quiera y vea pasar las temporadas día por día.",
+    "notForecast": "Muestra lo que pasaría con el clima elegido. No es un pronóstico.",
+    "running": "Calculando la simulación",
+    "error": "No se pudo hacer la simulación. Intente de nuevo o elija otro campo.",
+    "controls": {
+      "title": "Sus decisiones",
+      "show": "Mostrar decisiones",
+      "hide": "Ocultar decisiones"
+    },
+    "plan": {
+      "today": "Su finca hoy",
+      "nameA": "Plan A: su finca hoy",
+      "nameB": "Plan B",
+      "compare": "Comparar con un segundo plan",
+      "editing": "Plan que está editando",
+      "rotation": "Cultivos por año",
+      "year": "Año {n}",
+      "crop": "Cultivo",
+      "cover": "Cultivo de cobertura",
+      "noCover": "Sin cobertura",
+      "addYear": "Agregar un año",
+      "removeYear": "Quitar un año",
+      "copyA": "Copiar el plan A"
+    },
+    "in": {
+      "tillage": "Labranza",
+      "tillageOpt": {
+        "conventional": "Convencional",
+        "reduced": "Reducida",
+        "no-till": "Siembra directa"
+      },
+      "nitrogen": "Nitrógeno",
+      "nDefault": "Dosis usual de cada cultivo",
+      "nRate": "{n} lb de N por acre",
+      "irrigation": "Riego",
+      "irrOpt": {
+        "none": "Ninguno (secano)",
+        "limited": "Limitado",
+        "full": "Completo"
+      },
+      "shift": "Fecha de siembra",
+      "shiftNormal": "Fecha usual",
+      "shiftEarly": "{n} días antes",
+      "shiftLate": "{n} días después",
+      "maturity": "Madurez de la variedad",
+      "maturityOpt": {
+        "full": "Ciclo completo",
+        "short": "Ciclo corto"
+      },
+      "termination": "Fin del cultivo de cobertura",
+      "termOpt": {
+        "at-planting": "A la siembra",
+        "early": "2 semanas antes de sembrar",
+        "none": "Sin terminar (sigue creciendo)"
+      }
+    },
+    "weather": {
+      "title": "Clima",
+      "kind": "Tipo de clima",
+      "year": "Qué año",
+      "redraw": "Sortear otros años",
+      "kinds": {
+        "typical": "Un año típico",
+        "past": "Un año pasado otra vez",
+        "random": "Un sorteo de años pasados",
+        "ssp245": "2040, escenario climático medio",
+        "ssp585": "2040, escenario climático alto"
+      },
+      "rain": "Lluvia",
+      "temp": "Temperatura",
+      "asIs": "sin cambio",
+      "wetter": "{n}% más lluvia",
+      "drier": "{n}% menos lluvia",
+      "hotter": "{n}°F más caliente",
+      "cooler": "{n}°F más fresco"
+    },
+    "money": {
+      "title": "Dinero",
+      "price": "Precios de los cultivos",
+      "nPrice": "Precio del nitrógeno por lb",
+      "rent": "Renta de la tierra por acre al año",
+      "note": "Los precios parten de los números del USDA para el campo. La ganancia es el ingreso menos los costos contados aquí, antes de gastos generales y préstamos."
+    },
+    "length": {
+      "title": "Duración",
+      "years": "{n} años",
+      "note": "Empieza en enero de {year}. Un año es una temporada de cada cultivo de la rotación."
+    },
+    "play": {
+      "title": "Reproducir",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "stepDay": "Avanzar un día",
+      "jumpMonth": "Saltar un mes",
+      "scrub": "Día de la simulación",
+      "speed": "Velocidad",
+      "speeds": {
+        "slow": "Lenta",
+        "normal": "Normal",
+        "fast": "Rápida"
+      }
+    },
+    "stage": {
+      "idle": "nada creciendo",
+      "fallow": "barbecho",
+      "planted": "sembrado",
+      "growing": "creciendo",
+      "flowering": "floreciendo",
+      "filling": "llenando el grano",
+      "mature": "maduro"
+    },
+    "today": {
+      "noCrop": "Sin cultivo",
+      "weather": "Máxima / mínima",
+      "rain": "Lluvia hoy: {n} pulg",
+      "water": "Agua del suelo",
+      "waterNote": "de {cap} pulg en la zona de raíces; estrés de agua {stress}%",
+      "cover": "Suelo cubierto",
+      "erosion": "Suelo perdido hasta hoy: {n} ton/ac",
+      "money": "Ganancia hasta hoy",
+      "nitrogen": "Nitrógeno en el suelo: {n} lb/ac"
+    },
+    "unit": {
+      "%": "por ciento",
+      "in": "pulgadas",
+      "lb": "lb por acre",
+      "$": "dólares por acre"
+    },
+    "chart": {
+      "crop": {
+        "title": "Cultivo",
+        "note": "Qué tan verde está el campo: la cobertura de hojas del cultivo, en por ciento."
+      },
+      "water": {
+        "title": "Agua",
+        "note": "Agua que las raíces alcanzan, en pulgadas. Más es mejor."
+      },
+      "soil": {
+        "title": "Suelo",
+        "note": "Suelo cubierto por cultivo y rastrojo, en por ciento. Menos de 30% cuenta como suelo desnudo."
+      },
+      "nutrients": {
+        "title": "Nutrientes",
+        "note": "Nitrógeno en el suelo, en libras por acre."
+      },
+      "pests": {
+        "title": "Plagas y enfermedades",
+        "note": "El mayor riesgo por clima entre las plagas del cultivo que está en el campo."
+      },
+      "money": {
+        "title": "Dinero",
+        "note": "Ganancia por acre hasta hoy: ingresos menos costos el día en que ocurren, menos la renta."
+      }
+    },
+    "score": {
+      "title": "Toda la simulación, por año",
+      "plan": "Plan",
+      "profit": "Ganancia $/ac",
+      "soil": "Suelo perdido t/ac (límite)",
+      "bare": "Días desnudo",
+      "nLeached": "N perdido lb/ac",
+      "note": "Promedios por año en {years} años de este clima. El límite es la pérdida de suelo tolerable, T."
+    },
+    "seasons": {
+      "title": "Temporada por temporada",
+      "caption": "Cosechas",
+      "crop": "Cultivo",
+      "ended": "Terminó",
+      "yield": "Rendimiento",
+      "vs": "vs lo usual"
+    },
+    "band": {
+      "title": "Cuánto varían los resultados",
+      "intro": "Corre el primer año de su plan con cada temporada pasada, usando el clima real de esa temporada.",
+      "show": "Mostrar el rango",
+      "hide": "Ocultar el rango",
+      "takeaway": "En {n} temporadas pasadas el resultado del medio fue {mid} por acre. El peor 1 de cada 10 fue {low} o menos, el mejor 1 de cada 10 fue {high} o más."
+    },
+    "log": {
+      "title": "Qué pasó",
+      "empty": "Todavía nada. Oprima reproducir."
+    },
+    "event": {
+      "planted": "Se sembró {crop}",
+      "flowering": "{crop} floreciendo",
+      "harvested": "Se cosechó {crop} {yield}",
+      "terminated": "Se terminó la cobertura de {crop}",
+      "cut": "Corte de {crop} {yield}",
+      "frost-kill": "La helada mató el cultivo de {crop}",
+      "flower-frost": "La helada dañó las flores de {crop}",
+      "fallow-start": "El campo quedó en barbecho"
+    },
+    "ph": {
+      "yields": "Rendimientos y ganancia",
+      "calendars": "Fechas de siembra y cosecha",
+      "weather2040": "Mezcla de clima 2040",
+      "startWater": "Agua inicial del suelo"
+    }
   }
 }

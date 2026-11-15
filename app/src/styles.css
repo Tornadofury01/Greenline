@@ -1214,3 +1214,40 @@ dialog.sheet::backdrop { background: var(--backdrop); }
   .top-nav button { padding: 0 8px; }
   .top-nav button[aria-current="page"]::after { left: 8px; right: 8px; }
 }
+
+/* ---- Farm simulator (screens/Simulator.jsx) ---- */
+.sim-honest { display: flex; gap: var(--s-1); align-items: flex-start; margin: 0; font-weight: var(--weight-bold); }
+.sim-honest svg { flex: none; margin-top: 3px; color: var(--color-text-muted); }
+.sim-card { gap: var(--s-1); }
+.sim-card h3 { margin: var(--s-1) 0 0; font-size: var(--text-base, 1rem); display: flex; align-items: center; gap: 8px; }
+.sim-tabs { display: flex; flex-wrap: wrap; gap: var(--s-1); }
+.sim-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sim-field label { font-size: var(--text-sm, 0.875rem); color: var(--color-text-muted); }
+.sim-field label strong { color: var(--color-text); }
+.sim-field select { min-height: 44px; padding: 0 12px; border-radius: var(--radius); border: var(--border); background: var(--color-surface-sunken); color: var(--color-text); font: inherit; max-width: 100%; }
+.sim-field input[type="range"], .sim-scrub { width: 100%; min-height: 44px; accent-color: var(--color-primary); }
+.sim-grid { display: grid; grid-template-columns: 1fr; gap: var(--s-1); }
+@media (min-width: 560px) { .sim-grid { grid-template-columns: 1fr 1fr; } }
+.sim-editor { display: flex; flex-direction: column; gap: var(--s-2); }
+.sim-years { border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--s-1); min-width: 0; }
+.sim-years legend { font-weight: var(--weight-bold); padding: 0; margin-bottom: 4px; }
+.sim-year { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-1); padding: 12px; border-radius: 16px; background: var(--color-surface-sunken); }
+.sim-year-n { grid-column: 1 / -1; font-weight: var(--weight-bold); }
+.sim-row { display: flex; flex-wrap: wrap; gap: var(--s-1); }
+.sim-row .btn { flex: 1 1 auto; }
+.sim-date { margin: 0; font-size: 1.25rem; font-weight: var(--weight-num); }
+.sim-today { display: flex; flex-direction: column; gap: var(--s-2); }
+.sim-today-head { margin: 0 0 8px; }
+.sim-swatch { width: 14px; height: 14px; border-radius: 4px; display: inline-block; }
+.sim-chart { width: 100%; min-width: 0; }
+.sim-legend { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-2); font-size: var(--text-sm, 0.875rem); }
+.sim-legend li { display: flex; align-items: center; gap: 8px; }
+.sim-table-wrap { overflow-x: auto; }
+.sim-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm, 0.875rem); font-variant-numeric: tabular-nums; }
+.sim-table caption { text-align: left; font-weight: var(--weight-bold); padding: 4px 0; }
+.sim-table th, .sim-table td { text-align: left; padding: 8px 6px; border-bottom: var(--border); vertical-align: top; }
+.sim-table thead th { color: var(--color-text-muted); font-weight: var(--weight-normal, 400); }
+.sim-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; max-height: 360px; overflow-y: auto; }
+.sim-log li { display: flex; flex-wrap: wrap; gap: 8px; align-items: baseline; }
+.sim-log-date { color: var(--color-text-muted); min-width: 72px; font-variant-numeric: tabular-nums; }
+.sim-band { display: flex; flex-direction: column; gap: var(--s-1); }

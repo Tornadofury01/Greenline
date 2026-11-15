@@ -32,7 +32,9 @@
     "farmLong": "Your farm",
     "compareLong": "Compare rotations",
     "risksLong": "Field risks",
-    "handoffLong": "Expert handoff"
+    "handoffLong": "Expert handoff",
+    "sim": "Simulator",
+    "simLong": "Farm simulator"
   },
   "common": {
     "judgmentNote": "This tool supports your judgment and your local experts. It does not replace them.",
@@ -1402,5 +1404,206 @@
       "climate": "Frost and heat in 2040"
     },
     "takeaway": "These are likely ranges from weather records and field models, not forecasts. Confirm with your extension agent."
+  },
+  "sim": {
+    "title": "Farm simulator",
+    "intro": "Start from your farm as it is today, change anything, and watch the seasons play out day by day.",
+    "notForecast": "Shows what would happen under the chosen weather, not a forecast.",
+    "running": "Running the simulation",
+    "error": "The simulation could not run. Try again or pick another field.",
+    "controls": {
+      "title": "Your choices",
+      "show": "Show choices",
+      "hide": "Hide choices"
+    },
+    "plan": {
+      "today": "Your farm today",
+      "nameA": "Plan A: your farm today",
+      "nameB": "Plan B",
+      "compare": "Compare with a second plan",
+      "editing": "Plan being edited",
+      "rotation": "Crops by year",
+      "year": "Year {n}",
+      "crop": "Crop",
+      "cover": "Cover crop",
+      "noCover": "No cover crop",
+      "addYear": "Add a year",
+      "removeYear": "Remove a year",
+      "copyA": "Copy plan A"
+    },
+    "in": {
+      "tillage": "Tillage",
+      "tillageOpt": {
+        "conventional": "Conventional",
+        "reduced": "Reduced",
+        "no-till": "No-till"
+      },
+      "nitrogen": "Nitrogen",
+      "nDefault": "Usual rate for each crop",
+      "nRate": "{n} lb N per acre",
+      "irrigation": "Irrigation",
+      "irrOpt": {
+        "none": "None (dryland)",
+        "limited": "Limited",
+        "full": "Full"
+      },
+      "shift": "Planting date",
+      "shiftNormal": "Usual date",
+      "shiftEarly": "{n} days earlier",
+      "shiftLate": "{n} days later",
+      "maturity": "Variety maturity",
+      "maturityOpt": {
+        "full": "Full season",
+        "short": "Short season"
+      },
+      "termination": "Cover crop ending",
+      "termOpt": {
+        "at-planting": "At planting",
+        "early": "2 weeks before planting",
+        "none": "Not ended (grows on)"
+      }
+    },
+    "weather": {
+      "title": "Weather",
+      "kind": "Kind of weather",
+      "year": "Which year",
+      "redraw": "Draw different years",
+      "kinds": {
+        "typical": "A typical year",
+        "past": "A past year again",
+        "random": "A random draw of past years",
+        "ssp245": "2040, middle climate scenario",
+        "ssp585": "2040, high climate scenario"
+      },
+      "rain": "Rain",
+      "temp": "Temperature",
+      "asIs": "as is",
+      "wetter": "{n}% wetter",
+      "drier": "{n}% drier",
+      "hotter": "{n}°F hotter",
+      "cooler": "{n}°F cooler"
+    },
+    "money": {
+      "title": "Money",
+      "price": "Crop prices",
+      "nPrice": "Nitrogen price per lb",
+      "rent": "Land rent per acre per year",
+      "note": "Prices start from the field's USDA numbers. Profit is return above the costs counted here, before overhead and loans."
+    },
+    "length": {
+      "title": "Length",
+      "years": "{n} years",
+      "note": "Runs from January {year}. One year is one season of each crop in the rotation."
+    },
+    "play": {
+      "title": "Play it",
+      "play": "Play",
+      "pause": "Pause",
+      "stepDay": "Step a day",
+      "jumpMonth": "Jump a month",
+      "scrub": "Day of the simulation",
+      "speed": "Speed",
+      "speeds": {
+        "slow": "Slow",
+        "normal": "Normal",
+        "fast": "Fast"
+      }
+    },
+    "stage": {
+      "idle": "nothing growing",
+      "fallow": "fallow",
+      "planted": "planted",
+      "growing": "growing",
+      "flowering": "flowering",
+      "filling": "filling the grain",
+      "mature": "mature"
+    },
+    "today": {
+      "noCrop": "No crop",
+      "weather": "High / low",
+      "rain": "Rain today: {n} in",
+      "water": "Soil water",
+      "waterNote": "of {cap} in the root zone; water stress {stress}%",
+      "cover": "Ground covered",
+      "erosion": "Soil lost so far: {n} tons/ac",
+      "money": "Profit so far",
+      "nitrogen": "Nitrogen in soil: {n} lb/ac"
+    },
+    "unit": {
+      "%": "percent",
+      "in": "inches",
+      "lb": "lb per acre",
+      "$": "dollars per acre"
+    },
+    "chart": {
+      "crop": {
+        "title": "Crop",
+        "note": "How green the field is: the crop's leaf cover, in percent."
+      },
+      "water": {
+        "title": "Water",
+        "note": "Water the roots can reach, in inches. Higher is better."
+      },
+      "soil": {
+        "title": "Soil",
+        "note": "Ground covered by crop and residue, in percent. Under 30% counts as bare."
+      },
+      "nutrients": {
+        "title": "Nutrients",
+        "note": "Nitrogen in the soil, in pounds per acre."
+      },
+      "pests": {
+        "title": "Pests and disease",
+        "note": "Highest weather risk among the pests of the crop in the field."
+      },
+      "money": {
+        "title": "Money",
+        "note": "Profit per acre so far: revenue minus costs on the day they happen, minus rent."
+      }
+    },
+    "score": {
+      "title": "The whole run, per year",
+      "plan": "Plan",
+      "profit": "Profit $/ac",
+      "soil": "Soil lost t/ac (limit)",
+      "bare": "Bare days",
+      "nLeached": "N lost lb/ac",
+      "note": "Averages per year over {years} years of this weather. The limit is the soil's tolerable loss, T."
+    },
+    "seasons": {
+      "title": "Season by season",
+      "caption": "Harvests",
+      "crop": "Crop",
+      "ended": "Ended",
+      "yield": "Yield",
+      "vs": "vs usual"
+    },
+    "band": {
+      "title": "How much results vary",
+      "intro": "Runs the first year of your plan through every past season, using that season's real weather.",
+      "show": "Show the range",
+      "hide": "Hide the range",
+      "takeaway": "Across {n} past seasons the middle result was {mid} per acre. The worst 1 in 10 was {low} or less, the best 1 in 10 was {high} or more."
+    },
+    "log": {
+      "title": "What happened",
+      "empty": "Nothing yet. Press play."
+    },
+    "event": {
+      "planted": "Planted {crop}",
+      "flowering": "{crop} flowering",
+      "harvested": "Harvested {crop} {yield}",
+      "terminated": "Ended the {crop} cover crop",
+      "cut": "Cut {crop} {yield}",
+      "frost-kill": "Frost killed the {crop}",
+      "flower-frost": "Frost hit the {crop} flowers",
+      "fallow-start": "Field left fallow"
+    },
+    "ph": {
+      "yields": "Yields and profit",
+      "calendars": "Planting and harvest dates",
+      "weather2040": "2040 weather mix",
+      "startWater": "Starting soil water"
+    }
   }
 }
