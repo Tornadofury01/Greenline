@@ -37,21 +37,37 @@ function nPriceRows(t, lang, f) {
   }];
 }
 
-// Card face: one gross number and, for nitrogen fixers, the fertilizer value.
-export function DollarFace({ dollars: d }) {
+// Card face, as a small stat tile: the gross number, a thin bar (share of the highest option shown) and the
+// "not profit" label. Notes that need more room (Texas averages, nitrogen value) go under the tiles: DollarNotes.
+export function DollarTile({ dollars: d, maxGross }) {
   const { t } = useApp();
   if (!d) return null;
+  const pct = d.grossPerAcreYear != null && maxGross ? Math.round((100 * d.grossPerAcreYear) / maxGross) : null;
   return (
-    <div className="dollar-block">
-      <div className="dollar-top">
-        <DollarSign size={18} aria-hidden="true" />
-        {d.grossPerAcreYear != null
-          ? <Receipt src={d.src}><strong className="dollar-num">{t('dollars.grossLine', { usd: usd(d.grossPerAcreYear) })}</strong></Receipt>
-          : <span>{t('dollars.noGross')}</span>}
-        <EstimatePill />
-      </div>
-      <span className="muted small">{t('dollars.notProfit')}</span>
-      {d.levels.includes('state') && d.state !== 'OK' && <span className="muted small">{t('dollars.stateWarnShort')}</span>}
+    <div className="tile">
+      <span className="tile-label"><DollarSign size={16} aria-hidden="true" />{t('dollars.tileLabel')}</span>
+      {d.grossPerAcreYear != null ? (
+        <>
+          <span className="tile-value dollar-num"><Receipt src={d.src}>{t('dollars.tileValue', { usd: usd(d.grossPerAcreYear) })}</Receipt></span>
+          <span className="tile-unit">{t('dollars.tileUnit')} <EstimatePill /></span>
+        </>
+      ) : <span className="tile-unit">{t('dollars.noGross')}</span>}
+      {pct != null && (
+        <span className="thin-bar" role="img" aria-label={t('dollars.barLabel', { pct })}><span style={{ width: `${Math.min(100, pct)}%` }} /></span>
+      )}
+      <span className="tile-note">{t('dollars.notProfitShort')}</span>
+    </div>
+  );
+}
+
+export function DollarNotes({ dollars: d }) {
+  const { t } = useApp();
+  if (!d) return null;
+  const stateWarn = d.levels.includes('state') && d.state !== 'OK';
+  if (!stateWarn && !d.fertilizer) return null;
+  return (
+    <div className="dollar-notes">
+      {stateWarn && <span className="muted small">{t('dollars.stateWarnShort')}</span>}
       {d.fertilizer && (
         <span className="dollar-fert">
           <Sprout size={14} aria-hidden="true" />

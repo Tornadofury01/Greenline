@@ -16,9 +16,10 @@ export function JudgmentNote() {
   );
 }
 
-export function PageHead({ title, intro }) {
+// center: a compact centered title (screens that open with a card, like Compare).
+export function PageHead({ title, intro, center = false }) {
   return (
-    <div className="page-head">
+    <div className={`page-head${center ? ' page-head-center' : ''}`}>
       <h1>{title}</h1>
       {intro && <p>{intro}</p>}
     </div>

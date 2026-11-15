@@ -4,6 +4,15 @@ import { BARE_NDVI } from './data/loadField.js';
 
 export const mmToIn = (mm) => Math.round(mm / 25.4);
 
+// The bad year the Compare scoreboard shows by default: 2011 if it is one of the field's drought presets,
+// else its first drought preset, else its latest drought year. { year, yearType } or null.
+export function defaultBadYear(field) {
+  const presets = field?.si?.replayPresets
+    || (field?.climateYearly || []).filter((y) => y.yearType === 'drought').slice(-3).reverse().map((y) => ({ year: y.year, yearType: y.yearType }));
+  const droughts = presets.filter((p) => p.yearType === 'drought');
+  return droughts.find((p) => p.year === 2011) || droughts[0] || presets[0] || null;
+}
+
 // Slope in plain words (thresholds follow common NRCS slope classes).
 export function slopeWord(pct) {
   if (pct < 2) return 'flat';

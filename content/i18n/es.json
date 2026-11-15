@@ -261,7 +261,39 @@
     "goFarm": "Agregar mis cultivos",
     "buildOwn": "Pruebe su propia rotación",
     "buildHint": "Elija cultivos en orden. Se califica igual que las opciones de arriba.",
-    "scoreIt": "Calificar mi rotación"
+    "scoreIt": "Calificar mi rotación",
+    "short": {
+      "current": "Actual",
+      "custom": "La mía"
+    },
+    "col": {
+      "rotation": "Rotación",
+      "score": "Puntaje",
+      "bare": "Días desnudos al año",
+      "year": {
+        "drought": "Sequía de {year}",
+        "heat": "Calor de {year}",
+        "wet": "Año húmedo {year}",
+        "normal": "{year}"
+      },
+      "whatIf": "Año hipotético"
+    },
+    "scoreboardLabel": "Marcador: todas las rotaciones lado a lado",
+    "seg": {
+      "label": "Tipo de año",
+      "normal": "Año normal",
+      "bad": "Año malo"
+    },
+    "takeaway": {
+      "best": "{name} obtiene {a} contra {b} de lo que siembra ahora, con unos {bareA} días desnudos al año en lugar de {bareB}.",
+      "badYear": "Si volviera {year}: {dA} contra {dB}.",
+      "whatIf": "En su año hipotético: {dA} contra {dB}. Es hipotético, no un pronóstico.",
+      "noCurrent": "{name} obtiene el puntaje más alto: {a} de 100, con unos {bareA} días desnudos al año.",
+      "keep": "Lo que siembra ahora ya obtiene un puntaje tan alto como nuestras opciones ({b} de 100)."
+    },
+    "sendAgent": "Enviar a mi agente del condado",
+    "confTile": "Confianza",
+    "confPoints": "{n} de {max} puntos"
   },
   "handoff": {
     "title": "Resumen para su agente de extensión",
@@ -705,7 +737,10 @@
     "coverAssumption": "Supone que el cultivo de cobertura se establece. En un otoño seco puede que no.",
     "estimatedFor": "Estimado, no medido, para: {crops}.",
     "fallowNote": "El barbecho desnudo es nuestra estimación para un campo labrado. Los campos “en barbecho” del satélite suelen tener maleza, así que no lo muestran.",
-    "replayBare": "Días desnudos si volviera {year}"
+    "replayBare": "Días desnudos si volviera {year}",
+    "tileLabel": "Días desnudos al año",
+    "barsAlt": "Probabilidad de suelo desnudo en cada mes, de enero a diciembre. Mes más desnudo: {month}.",
+    "takeaway": "Más desnudo en {month}: unos {days} días de ese mes. Es una estimación."
   },
   "how": {
     "link": "Cómo lo sabemos",
@@ -773,7 +808,12 @@
     "source": "Encuesta USDA NASS Quick Stats: rendimientos y precios recibidos en Texas, promedios de {years}.",
     "notInScore": "Los dólares se muestran solo como contexto. No cambian el puntaje ni el orden de las opciones.",
     "nSource": "Estimación nacional, no de Texas: precio de distribuidores de Illinois para amoníaco anhidro (82% N), informe de USDA AMS del {date}. Pregunte a su proveedor por los precios locales.",
-    "nSourceVar": "Amoníaco anhidro (82% N): ${perTon} por tonelada ÷ 1,640 lb de N = ${perLb} por libra de N"
+    "nSourceVar": "Amoníaco anhidro (82% N): ${perTon} por tonelada ÷ 1,640 lb de N = ${perLb} por libra de N",
+    "tileLabel": "Ingreso bruto",
+    "tileValue": "≈ ${usd}",
+    "tileUnit": "por acre al año",
+    "notProfitShort": "Antes de costos. No es ganancia.",
+    "barLabel": "{pct}% de la opción más alta mostrada"
   },
   "soilFacts": {
     "title": "Su suelo: {series}",
@@ -890,6 +930,8 @@
     "m3Title": "Tipos de año:",
     "m3Line": "Las temporadas de 1985–2025 agrupadas en {drought} años de sequía, {hot} calurosos, {normal} normales y {wet} húmedos. Grupos aproximados, solo como guía.",
     "notYourField": "El repaso es una simulación basada en agronomía publicada (balance de agua FAO-56, respuesta del rendimiento FAO-33, pérdida de suelo RUSLE), no aprendizaje automático. Los precios, presupuestos y pagos de apoyo son estimados que debe confirmar con su oficina de Extensión del condado y la del NRCS.",
-    "rankingHint": "Puntaje promedio en {n} escenarios (5 climas × 2 juegos de precios). Esto decide el orden."
+    "rankingHint": "Puntaje promedio en {n} escenarios (5 climas × 2 juegos de precios). Esto decide el orden.",
+    "notField": "Simulación de todo el condado en un campo típico. No es su campo.",
+    "whyDiffers": "Por qué no es la misma respuesta que las tarjetas de su campo ({field}): este estudio prueba su propia lista de siete rotaciones en un campo típico del condado, con costos del condado y proyecciones de clima. Aquí la mejor es {study}. Las tarjetas de arriba usan los datos de su propio campo y sus metas."
   }
 }

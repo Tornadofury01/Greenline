@@ -261,7 +261,39 @@
     "goFarm": "Add my crops",
     "buildOwn": "Try your own rotation",
     "buildHint": "Pick crops in order. We score it the same way as the options above.",
-    "scoreIt": "Score my rotation"
+    "scoreIt": "Score my rotation",
+    "short": {
+      "current": "Current",
+      "custom": "My own"
+    },
+    "col": {
+      "rotation": "Rotation",
+      "score": "Score",
+      "bare": "Bare days a year",
+      "year": {
+        "drought": "{year} drought",
+        "heat": "{year} heat",
+        "wet": "{year} wet year",
+        "normal": "{year}"
+      },
+      "whatIf": "What-if year"
+    },
+    "scoreboardLabel": "Scoreboard: every rotation side by side",
+    "seg": {
+      "label": "Kind of year",
+      "normal": "Normal year",
+      "bad": "Bad year"
+    },
+    "takeaway": {
+      "best": "{name} scores {a} against {b} for what you grow now, with about {bareA} bare days a year instead of {bareB}.",
+      "badYear": "If {year} came back: {dA} against {dB}.",
+      "whatIf": "In your what-if year: {dA} against {dB}. Hypothetical, not a forecast.",
+      "noCurrent": "{name} scores highest: {a} out of 100, with about {bareA} bare days a year.",
+      "keep": "What you grow now already scores as high as our options ({b} out of 100)."
+    },
+    "sendAgent": "Send to my county agent",
+    "confTile": "Confidence",
+    "confPoints": "{n} of {max} points"
   },
   "handoff": {
     "title": "Summary for your extension agent",
@@ -705,7 +737,10 @@
     "coverAssumption": "Assumes the cover crop establishes. In a dry fall it may not.",
     "estimatedFor": "Estimated, not measured, for: {crops}.",
     "fallowNote": "Bare fallow is our estimate for a tilled field. Satellite “fallow” fields are often weedy, so they don't show it.",
-    "replayBare": "Bare days if {year} came back"
+    "replayBare": "Bare days if {year} came back",
+    "tileLabel": "Bare days a year",
+    "barsAlt": "Chance of bare ground in each month, January to December. Barest month: {month}.",
+    "takeaway": "Barest in {month}: bare for about {days} days of that month. An estimate."
   },
   "how": {
     "link": "How we know",
@@ -773,7 +808,12 @@
     "source": "USDA NASS Quick Stats survey: yields and Texas prices received, {years} averages.",
     "notInScore": "Dollars are shown for context only. They don't change the score or the order of options.",
     "nSource": "National estimate, not Texas: Illinois dealer price of anhydrous ammonia (82% N), USDA AMS report of {date}. Ask your dealer for local prices.",
-    "nSourceVar": "Anhydrous ammonia (82% N): ${perTon} per ton ÷ 1,640 lb N = ${perLb} per lb of N"
+    "nSourceVar": "Anhydrous ammonia (82% N): ${perTon} per ton ÷ 1,640 lb N = ${perLb} per lb of N",
+    "tileLabel": "Gross revenue",
+    "tileValue": "≈ ${usd}",
+    "tileUnit": "per acre a year",
+    "notProfitShort": "Before costs. Not profit.",
+    "barLabel": "{pct}% of the highest option shown"
   },
   "soilFacts": {
     "title": "Your soil: {series}",
@@ -890,6 +930,8 @@
     "m3Title": "Year types:",
     "m3Line": "1985–2025 seasons sorted into {drought} drought, {hot} hot, {normal} normal and {wet} wet years. Soft groups, a guide only.",
     "notYourField": "The replay is a simulation built on published agronomy (FAO-56 water balance, FAO-33 yield response, RUSLE soil loss), not machine learning. Prices, budgets and cost-share rates are estimates to check with your county Extension and NRCS office.",
-    "rankingHint": "Average score over {n} scenarios (5 climate views × 2 price sets). This sets the order."
+    "rankingHint": "Average score over {n} scenarios (5 climate views × 2 price sets). This sets the order.",
+    "notField": "County-wide simulation on one typical field. Not your field.",
+    "whyDiffers": "Why this is not the same answer as your field's cards ({field}): this study tests its own list of seven rotations on one typical county field, with county costs and climate projections. Here its best is {study}. The cards above use your field's own data and your goals."
   }
 }

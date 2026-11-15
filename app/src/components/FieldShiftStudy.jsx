@@ -27,7 +27,8 @@ const ROWS = [
 
 export const showsFieldShiftStudy = (field) => field?.field?.county === 'Ellis' && field?.field?.state === 'TX';
 
-export default function FieldShiftStudy() {
+// fieldBest: the name of the best rotation on the field's own cards (or null), for the "why they differ" note.
+export default function FieldShiftStudy({ fieldBest = null }) {
   const { t, field } = useApp();
   const [preset, setPreset] = useState('balanced');
   if (!showsFieldShiftStudy(field)) return null;
@@ -39,8 +40,9 @@ export default function FieldShiftStudy() {
 
   return (
     <section className="card fs-study" aria-labelledby="fs-title">
+      <p className="fs-flag"><FlaskConical size={16} aria-hidden="true" /><span>{t('fieldShift.notField')}</span></p>
       <h2 id="fs-title" className="section-title">
-        <FlaskConical size={20} aria-hidden="true" />{t('fieldShift.title')} <GlossaryIcon term="seasonReplay" />
+        {t('fieldShift.title')} <GlossaryIcon term="seasonReplay" />
       </h2>
       <p className="muted">{t('fieldShift.intro', { n: study.area.nFields })}</p>
 
@@ -64,6 +66,7 @@ export default function FieldShiftStudy() {
         </div>
       </div>
       <p><ConfidenceBadge level={p.confidence} /></p>
+      {fieldBest && <p className="notice-inline">{t('fieldShift.whyDiffers', { study: rot(rec.key), field: fieldBest })}</p>}
       {p.closeCall && <p className="notice-inline">{t('fieldShift.closeCall', { other: rot(p.runnerUp), gap: p.gapPoints })}</p>}
 
       <table className="fs-table">
