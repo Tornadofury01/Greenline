@@ -5,7 +5,7 @@
 // (display.js): years before 2013 are shown with the low-confidence tag and are never averaged.
 import { useMemo, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, Tooltip, ReferenceLine, ResponsiveContainer, ComposedChart, Line } from 'recharts';
-import { ArrowDown, ArrowRight, ArrowUp, CloudRain, Droplets, Thermometer, Snowflake, Sprout, Wheat, Layers } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUp, BookOpen, CloudRain, Droplets, Thermometer, Snowflake, Sprout, Wheat, Layers } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useApp } from '../state/AppContext.jsx';
 import { NeedField, Receipt, LowConfTag } from '../components/Small.jsx';
@@ -275,10 +275,14 @@ export default function FieldStory() {
       </section>
 
       {/* Satellite replay, unchanged */}
-      <section id="replay" className="w-full px-5 py-8 sm:px-8 lg:px-12">
+      <section id="replay" className="grid w-full grid-cols-1 items-stretch gap-5 px-5 py-8 sm:px-8 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)] lg:px-12">
         {/* history-replay-page: the replay's own layout rules (styles.css) are scoped to this class */}
-        <div className="history-replay-page !max-w-3xl !p-0">
+        <div className="history-replay-page !mx-0 !max-w-none !p-0">
           <SatelliteReplay key={field.field.id} field={field} />
+        </div>
+        {/* On wide screens the key is as tall as the replay and scrolls inside (data-lenis-prevent lets the wheel scroll it) */}
+        <div className="lg:relative">
+          <NumberKey />
         </div>
       </section>
 
@@ -351,6 +355,38 @@ export default function FieldStory() {
         </div>
       </section>
     </div>
+  );
+}
+
+// The key: what every number and color on this page means, in plain words, with its source.
+const KEY_ITEMS = ['image', 'rain', 'bare', 'heat', 'drought', 'storm', 'soil', 'frost', 'green', 'score', 'ndvi'];
+function NumberKey() {
+  const { t } = useApp();
+  return (
+    <aside className="gl-card lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain" data-lenis-prevent aria-labelledby="number-key-title" tabIndex={0}>
+      <CardHead icon={BookOpen}><span id="number-key-title">{t('story.key.title')}</span></CardHead>
+      <p className="m-0 mb-4 text-base leading-relaxed text-base-content/75">{t('story.key.intro')}</p>
+      <dl className="m-0 flex flex-col divide-y divide-base-300">
+        {KEY_ITEMS.map((k) => (
+          <div key={k} className="py-3 first:pt-0">
+            <dt className="text-base font-semibold">{t(`story.key.${k}`)}</dt>
+            <dd className="m-0 mt-1 text-sm leading-relaxed text-base-content/75">{t(`story.key.${k}Text`)}</dd>
+          </div>
+        ))}
+        <div className="py-3">
+          <dt className="text-base font-semibold">{t('story.key.types')}</dt>
+          <dd className="m-0 mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-base-content/75">
+            {['drought', 'heat', 'normal', 'wet'].map((k) => (
+              <span key={k} className="inline-flex items-center gap-1.5"><span className="inline-block h-3 w-3" style={{ background: TYPE_HEX[k] }} aria-hidden="true" />{t(`yearType.${k}`)}</span>
+            ))}
+          </dd>
+        </div>
+        <div className="py-3 last:pb-0">
+          <dt className="text-base font-semibold">{t('story.key.lowConf')}</dt>
+          <dd className="m-0 mt-1 text-sm leading-relaxed text-base-content/75">{t('story.key.lowConfText')}</dd>
+        </div>
+      </dl>
+    </aside>
   );
 }
 
