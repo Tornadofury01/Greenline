@@ -1,0 +1,65 @@
+{
+  "_note": "EXAMPLE of a model slot file in the exact format (docs/v2-model-plugin.md). Every number is invented. Copy to shared/v2/models/<field-id>.json and replace the values. This copy is for ec-251 so the check tool can run on it.",
+  "schemaVersion": 1,
+  "fieldId": "ec-251",
+  "generatedAt": "2026-11-15T09:00:00Z",
+  "modelVersions": { "A": "example", "B": "example", "C": "example", "D": "example", "E": "example" },
+
+  "modelA": {
+    "cropByYear": [
+      { "year": 2022, "crop": "cotton", "confidence": 0.93, "labelSource": "usda-cdl" },
+      { "year": 2023, "crop": "corn", "confidence": 0.96, "labelSource": "usda-cdl" },
+      { "year": 2024, "crop": "cotton", "confidence": 0.95, "labelSource": "usda-cdl" },
+      { "year": 2025, "crop": "grain_sorghum", "confidence": 0.9, "labelSource": "usda-cdl" }
+    ],
+    "cropDates": {
+      "corn":          { "plantYearOffset": 0, "plantDoy": 82,  "greenUpDoy": 98,  "peakDoy": 150, "endDoy": 214, "endKind": "harvest", "rangeDays": 8 },
+      "cotton":        { "plantYearOffset": 0, "plantDoy": 118, "greenUpDoy": 132, "peakDoy": 212, "endDoy": 280, "endKind": "harvest", "rangeDays": 10 },
+      "grain_sorghum": { "plantYearOffset": 0, "plantDoy": 104, "greenUpDoy": 118, "peakDoy": 184, "endDoy": 236, "endKind": "harvest", "rangeDays": 9 }
+    }
+  },
+
+  "modelB": {
+    "crops": {
+      "corn":          { "droughtKy": 1.4,  "heatLossPerDay": 0.017, "heatThresholdC": 34, "droughtKyRange90": [1.1, 1.7] },
+      "cotton":        { "droughtKy": 0.8,  "heatLossPerDay": 0.007, "heatThresholdC": 36 },
+      "grain_sorghum": { "droughtKy": 0.85, "heatLossPerDay": 0.005, "heatThresholdC": 37 }
+    },
+    "stressOutlook": {
+      "asOf": "2026-11-14",
+      "months": [
+        { "month": "2026-12", "chance": 0.1,  "low": 0.03, "high": 0.22, "reasons": [{ "key": "outlook.reason.rainBelowNormal", "params": { "pct": 20 } }] },
+        { "month": "2027-01", "chance": 0.08, "low": 0.02, "high": 0.2,  "reasons": [] },
+        { "month": "2027-02", "chance": 0.09, "low": 0.02, "high": 0.22, "reasons": [] }
+      ]
+    }
+  },
+
+  "modelC": {
+    "yearTypes": [
+      { "year": 2010, "type": "normal",  "probability": 0.8 },
+      { "year": 2011, "type": "drought", "probability": 0.97 },
+      { "year": 2012, "type": "hot",     "probability": 0.7 },
+      { "year": 2015, "type": "wet",     "probability": 0.92 }
+    ],
+    "frequencies2040": {
+      "ssp245": { "drought": 0.12, "hot": 0.18, "wet": 0.1, "normal": 0.6 },
+      "ssp585": { "drought": 0.18, "hot": 0.27, "wet": 0.1, "normal": 0.45 }
+    }
+  },
+
+  "modelD": { "rootZoneFraction": 0.38, "asOf": "2026-11-13" },
+
+  "calibrationE": {
+    "regionId": "tx-blackland",
+    "fitYears": [2008, 2019],
+    "testYears": [2020, 2025],
+    "wpScale": 0.95,
+    "heatThresholdOffsetC": 0,
+    "crops": {
+      "corn":          { "typicalYield": 78,  "unit": "bu/acre", "wpScale": 0.9 },
+      "cotton":        { "typicalYield": 640, "unit": "lb lint/acre" },
+      "grain_sorghum": { "typicalYield": 58,  "unit": "bu/acre" }
+    }
+  }
+}
