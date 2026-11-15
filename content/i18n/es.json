@@ -154,7 +154,16 @@
     "scopeTitle": "{n} campos del condado de Ellis",
     "scopeSub": "Contornos del USDA · no todas las granjas",
     "dallasName": "Dallas",
-    "dallasKm": "{km} km"
+    "dallasKm": "{km} km",
+    "acresShort": "{acres} ac",
+    "acresLabel": "Tamaño",
+    "acresValue": "{acres} acres",
+    "cropLabel": "Cultivo",
+    "indexLabel": "En este mapa",
+    "indexTitle": "Índice de campos",
+    "indexSort": "Ordenar el índice de campos",
+    "indexByNumber": "Por número",
+    "indexBySize": "Más grandes primero"
   },
   "farm": {
     "title": "Su granja",

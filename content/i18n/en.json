@@ -154,7 +154,16 @@
     "scopeTitle": "{n} Ellis County fields",
     "scopeSub": "USDA outlines · not every farm",
     "dallasName": "Dallas",
-    "dallasKm": "{km} km"
+    "dallasKm": "{km} km",
+    "acresShort": "{acres} ac",
+    "acresLabel": "Size",
+    "acresValue": "{acres} acres",
+    "cropLabel": "Crop",
+    "indexLabel": "On this map",
+    "indexTitle": "Field index",
+    "indexSort": "Sort the field index",
+    "indexByNumber": "By number",
+    "indexBySize": "Biggest first"
   },
   "farm": {
     "title": "Your farm",

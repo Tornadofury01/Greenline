@@ -1,13 +1,12 @@
-// Greenline mark: crop rows running to a horizon, with one leaf. Decorative (the name is next to it).
-export default function Logo({ size = 32 }) {
+// Greenline mark: a plat-book section, four parcels ruled in ink with one washed in highlighter (the farmer's field).
+// Decorative: the wordmark sits next to it.
+export default function Logo({ size = 28 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 32 32" aria-hidden="true" focusable="false">
-      <rect width="32" height="32" rx="9" fill="var(--color-primary)" />
-      <path d="M4 26 L13 14 M10 26 L15 14 M16 26 L17 14 M22 26 L19 14 M28 26 L21 14"
-        stroke="var(--color-on-primary)" strokeOpacity="0.55" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M4 14 H28" stroke="var(--color-on-primary)" strokeWidth="1.6" strokeLinecap="round" />
-      <path d="M16 13 C16 9 18.5 6 23 5.5 C22.6 9.6 20 12.4 16 13 Z" fill="var(--color-on-primary)" />
-      <path d="M16 13 C15.6 10.5 13.8 8.6 10.5 8.3 C10.8 11 12.8 12.8 16 13 Z" fill="var(--color-on-primary)" fillOpacity="0.8" />
+    <svg width={size} height={size} viewBox="0 0 28 28" aria-hidden="true" focusable="false">
+      <rect x="1" y="1" width="26" height="26" fill="var(--color-paper-raised)" stroke="var(--color-ink)" strokeWidth="1.5" />
+      <path d="M3 3 L15 3 L13 15 L3 13 Z" fill="var(--color-highlight)" />
+      <path d="M1 14 L13 15 L27 12 M13 15 L15 1 M13 15 L14 27" fill="none" stroke="var(--color-ink)" strokeWidth="1.25" />
+      <path d="M17 20 h6" stroke="var(--color-forest)" strokeWidth="2.5" />
     </svg>
   );
 }

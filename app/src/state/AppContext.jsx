@@ -34,18 +34,7 @@ export function AppProvider({ children }) {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
-  // Until the farmer picks a theme, keep following the phone if its setting changes.
-  useEffect(() => {
-    const mq = window.matchMedia?.('(prefers-color-scheme: light)');
-    if (!mq?.addEventListener) return undefined;
-    const onChange = (e) => {
-      let saved = null;
-      try { saved = localStorage.getItem(THEME_KEY); } catch { /* ignore */ }
-      if (!saved) setThemeRaw(e.matches ? 'light' : 'dark');
-    };
-    mq.addEventListener('change', onChange);
-    return () => mq.removeEventListener('change', onChange);
-  }, []);
+  // The plat-book redesign is light only (index.html sets data-theme="light"); the phone's dark setting is not followed.
   const [screen, setScreen] = useState('field');
   // "How we know" is opened from the header and from cards: remember where to return and which term to show.
   const [how, setHow] = useState({ from: 'field', term: null });
