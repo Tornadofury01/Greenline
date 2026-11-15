@@ -25,7 +25,7 @@
 .gm-canvas { display: block; width: 100%; height: 100%; cursor: pointer; }
 
 /* HUD */
-.gm-hud { position: absolute; top: 0; left: 0; right: 0; padding: 8px 8px 0; pointer-events: none; display: grid; gap: 4px; }
+.gm-hud { position: absolute; z-index: 3; top: 0; left: 0; right: 0; padding: 8px 8px 0; pointer-events: none; display: grid; gap: 4px; }
 .gm-hud > * { pointer-events: auto; }
 .gm-hud-row { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .gm-spacer { flex: 1; }
@@ -45,7 +45,7 @@
 .gm-hud-sub { justify-self: start; margin: 0; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: rgba(12, 22, 15, 0.7); font-size: 12px; }
 
 /* bottom bar (setup) */
-.gm-bottom { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 8px 8px; display: grid; gap: 6px; }
+.gm-bottom { position: absolute; z-index: 2; left: 0; right: 0; bottom: 0; padding: 0 8px 8px; display: grid; gap: 6px; }
 .gm-actions { display: flex; align-items: center; gap: 6px; min-width: 0; }
 .gm-plotpick { display: flex; gap: 4px; }
 .gm-plotpick button {
@@ -79,5 +79,42 @@
 .gm-opt:disabled { opacity: 0.5; cursor: not-allowed; }
 .gm-opt-wide { display: block; width: 100%; margin-bottom: 6px; text-align: left; }
 .gm-note { margin: 6px 0 0; font-size: 12px; color: var(--color-text-muted); display: flex; gap: 4px; align-items: flex-start; }
+
+/* season */
+.gm-mock { justify-self: start; margin: 0; padding: 3px 10px; border-radius: 999px; background: #8a2be2; color: #fff; font-size: 12px; font-weight: 700; }
+.gm-pop-slot { position: absolute; z-index: 4; left: 8px; right: 8px; top: 132px; display: grid; justify-items: center; pointer-events: none; }
+.gm-pop {
+  max-width: 420px; padding: 8px 12px; border-radius: 14px; background: rgba(12, 22, 15, 0.9); border: 2px solid #ff7a5c;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35); animation: gm-pop-in 0.25s ease-out;
+}
+.gm-pop.is-harvest { border-color: #f2c230; }
+.gm-pop p { margin: 0; }
+.gm-pop-text { font-weight: 700; font-size: 14px; line-height: 1.3; display: flex; gap: 6px; align-items: flex-start; }
+.gm-pop-plot { flex: none; display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 999px; background: #ff7a5c; color: #14200f; font-size: 12px; }
+.gm-pop.is-harvest .gm-pop-plot { background: #f2c230; }
+.gm-pop-src { font-size: 12px; color: #cfe0d4; margin-top: 2px !important; }
+@keyframes gm-pop-in { from { transform: translateY(-8px); opacity: 0; } to { transform: none; opacity: 1; } }
+.gm-speed { flex: none; min-width: 112px; display: grid; grid-template-columns: 1fr 1fr; }
+.gm-speed button { min-height: 48px; }
+.gm-live { padding: 8px; border-radius: 16px; background: var(--color-surface); color: var(--color-text); border: var(--border); box-shadow: var(--shadow-float); }
+.gm-live .gm-icon-btn { background: var(--color-surface-sunken); color: var(--color-text); }
+.gm-live-grid { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px 8px; }
+.gm-live-grid div { min-width: 0; }
+.gm-live-grid dt { font-size: 12px; color: var(--color-text-muted); }
+.gm-live-grid dd { margin: 0; font-weight: 700; font-size: 14px; }
+.gm-bar { display: block; height: 5px; border-radius: 3px; background: var(--color-surface-sunken); overflow: hidden; margin-top: 2px; }
+.gm-bar span { display: block; height: 100%; }
+.gm-bar .lvl-good { background: var(--color-primary); }
+.gm-bar .lvl-fair { background: var(--color-warn-fill); }
+.gm-bar .lvl-low { background: var(--color-risk); }
+.gm-growing {
+  position: absolute; z-index: 4; left: 50%; top: 45%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 18px; border-radius: 999px; background: rgba(12, 22, 15, 0.88); font-weight: 700;
+}
+.gm-sprout { width: 18px; height: 18px; border-radius: 50% 0; background: #7fd16a; animation: gm-grow 0.9s ease-in-out infinite alternate; }
+@keyframes gm-grow { from { transform: scale(0.5) rotate(-20deg); } to { transform: scale(1.1) rotate(20deg); } }
+.gm-error { position: absolute; z-index: 4; left: 8px; right: 8px; top: 140px; margin: 0; padding: 8px 12px; border-radius: 12px; background: var(--color-risk-soft); color: var(--color-risk); }
+.gm-board-cta { position: absolute; z-index: 5; left: 8px; right: 8px; bottom: 8px; }
+.gm-board-cta .btn { min-height: 52px; }
 
 @media (prefers-reduced-motion: reduce) { .gm-full * { transition: none !important; animation: none !important; } }

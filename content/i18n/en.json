@@ -1854,7 +1854,7 @@
     "progress": "Year {n}/{total}",
     "running": "Growing the season…",
     "error": "The season could not be run.",
-    "weatherOf": "Weather of {year} on this field",
+    "weatherOf": "weather of {year}",
     "sign": "{county} County · {acres} ac",
     "perAcre": "/acre",
     "meters": {
@@ -1967,7 +1967,7 @@
       "src": "Source: the simulator with the real monthly weather of {year} on this field (NASA POWER, GPM IMERG); the daily pattern inside each month is simulated.",
       "srcClimatology": "Source: the simulator. {year} has no full weather record here, so the field's average weather was used.",
       "next": "Next year",
-      "end": "See your report card"
+      "end": "See the results"
     },
     "yearType": {
       "drought": "Drought year",
@@ -2079,6 +2079,49 @@
       "clear": "Clear plot {n}",
       "lockNote": "After year 1 only the crops change; tillage, fertilizer and water stay as set.",
       "short": "Quick fill"
+    },
+    "mock": "Mock numbers for testing the screens. Not your field's results.",
+    "live": {
+      "title": "Plot {n} right now",
+      "hint": "Tap a plot to see how it is doing.",
+      "noCrop": "No crop",
+      "stage": "{pct} grown",
+      "water": "Soil water",
+      "cover": "Ground cover",
+      "soil": "Soil lost",
+      "soilVal": "{t} of {max} t",
+      "n": "Nitrogen",
+      "pest": "Pests",
+      "pestVal": "−{pct}% yield",
+      "money": "Money this season"
+    },
+    "ev": {
+      "heat": "{month}: {n} days over 95 °F",
+      "rain": "{date}: {inches} in of rain. This plot lost {tons} t/acre of soil",
+      "rainNoLoss": "{date}: {inches} in of rain. The ground held",
+      "dry": "The {crop} has been short of water for 3 weeks",
+      "pest": "{pest} on the {crop}: about {pct}% of the yield at risk",
+      "lowN": "The {crop} is short of nitrogen: leaves turn yellow",
+      "frost": "Frost killed the {crop}",
+      "harvest": "Harvest: {units} {unit}/acre of {crop}, {usd}/acre"
+    },
+    "src": {
+      "power": "NASA POWER temperature (monthly), daily pattern simulated",
+      "rain": "GPM IMERG rain (monthly), daily pattern simulated · erosion on SSURGO soil",
+      "water": "Simulator water balance · SSURGO soil · NASA POWER",
+      "pest": "Simulator pest counters (weather rules) · crop library",
+      "n": "Simulator nitrogen balance · crop library",
+      "frost": "Simulator crop stages · NASA POWER temperature",
+      "harvest": "Simulator yield · USDA NASS prices"
+    },
+    "pest": {
+      "any": "Pests",
+      "cereal-rust": "Cereal rust",
+      "grass-foliar-disease": "Leaf disease",
+      "cotton-root-rot": "Cotton root rot",
+      "root-knot-nematode": "Root-knot nematode",
+      "charcoal-rot": "Charcoal rot",
+      "sugarcane-aphid": "Sugarcane aphid"
     }
   }
 }

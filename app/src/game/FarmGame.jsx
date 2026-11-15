@@ -3,7 +3,7 @@
 // grow from ITS OWN daily engine run. Every number comes from the engine (gameWorker.js); the scene only draws those numbers.
 // Lazy: this file, the scene and the workers load only when Play opens.
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { X, Volume2, VolumeX, Coins } from 'lucide-react';
+import { X, Volume2, VolumeX, Coins, Pause, Play, ArrowRight } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useV2 } from '../state/useV2.js';
 import { slotsFor, todayCrops, pastYears } from '../sim/simSetup.js';
@@ -11,6 +11,9 @@ import { buildMergedPlans } from '../data/mergedPlans.js';
 import { planToSim, takePlayPlan } from './playPlan.js';
 import { GameCanvas } from './GameCanvas.jsx';
 import { Toolbar } from './Toolbar.jsx';
+import { SeasonView } from './SeasonView.jsx';
+import { runSeason, USING_MOCK } from './runSource.js';
+import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
 import { YEARS, PLOTS, BUDGET_PER_PLOT, CHALLENGES, emptyPlot, fillPlot } from './plots.js';
 import './game.css';
 
@@ -88,7 +91,7 @@ export default function FarmGame() {
   const irrigated = farm.waterMode === 'irrigated';
   const baseTillage = tillage ?? 'reduced';
 
-  const [phase, setPhase] = useState('start'); // start | setup | (season | board | end in later steps)
+  const [phase, setPhase] = useState('start'); // start | setup | growing | season | (board | end in later steps)
   const [mode, setMode] = useState({ kind: 'free' });
   const [years, setYears] = useState([]);
   const [k, setK] = useState(0);
@@ -97,7 +100,13 @@ export default function FarmGame() {
   const [coins, setCoins] = useState(PLOTS * BUDGET_PER_PLOT);
   const [sound, setSound] = useState(false);
   const [loaded, setLoaded] = useState(null);
-  const hudRef = useRef(null), barRef = useRef(null), api = useRef(null);
+  const [season, setSeason] = useState(null);     // { runs, prevRuns, coinsBefore, today }
+  const [seasonDone, setSeasonDone] = useState(false);
+  const [playing, setPlaying] = useState(true);
+  const [month, setMonth] = useState(0);
+  const [error, setError] = useState(null);
+  const lastRuns = useRef(null);
+  const hudRef = useRef(null), barRef = useRef(null), api = useRef(null), coinRef = useRef(null);
   const accent = useMemo(accentColor, [phase]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const usd0 = useMemo(() => new Intl.NumberFormat(lang, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }), [lang]);
@@ -137,17 +146,42 @@ export default function FarmGame() {
 
   function startGame(nextMode, ys) {
     setMode(nextMode); setYears(ys); setK(0); setSel(0);
-    setCoins(PLOTS * BUDGET_PER_PLOT);
+    setCoins(PLOTS * BUDGET_PER_PLOT); setSeason(null); lastRuns.current = null; setError(null);
     let ps = Array.from({ length: PLOTS }, (_, i) => emptyPlot(i, baseTillage));
     if (loadedSim) ps = ps.map((p, i) => (i === 0 ? fillPlot(p, loadedSim.crops, loadedSim.controls, 'loaded') : p));
     setPlots(ps);
     setPhase('setup');
   }
 
+  const prevCrop = slots?.slots.A.cropByYear?.at(-1)?.crop ?? null;
+
+  async function startSeason() {
+    setPhase('growing'); setError(null);
+    try {
+      const res = await runSeason({ field, plots, today: todaySim, years: years.slice(0, k + 1), prevCrop });
+      const prevRuns = lastRuns.current;
+      const coinsBefore = plots.map((_, i) => BUDGET_PER_PLOT + (prevRuns ? prevRuns[i].money.reduce((a, x) => a + x, 0) : 0));
+      setSeason({ runs: res.runs, prevRuns, coinsBefore, today: res.today });
+      setSeasonDone(false); setPlaying(true); setMonth(0);
+      setPhase('season');
+    } catch (err) {
+      setError(String(err?.message ?? err)); setPhase('setup');
+    }
+  }
+
+  function endSeason() {
+    lastRuns.current = season.runs;
+    const total = season.runs.reduce((a, r) => a + BUDGET_PER_PLOT + r.money.reduce((x, y) => x + y, 0), 0);
+    setCoins(Math.round(total));
+    if (k >= YEARS - 1) { setPhase('start'); return; }   // end screen comes in step (d)
+    setK(k + 1); setSeason(null); setPhase('setup');
+  }
+
   if (!field) return <p className="muted">{t('common.noField')}</p>;
   if (phase === 'start') return <StartScreen loaded={loaded} avail={avail} sound={sound} setSound={setSound} onStart={startGame} />;
 
   const crop = (id) => t(`crops.${id}`);
+  const monthName = (m) => new Intl.DateTimeFormat(lang, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2001, m, 1)));
   const plotLabel = (p) => { const c = p.crops[k]; return c?.main ? crop(c.main) : t('game.plotEmpty'); };
   const fills = [
     { id: 'best', label: t('game.fill.best'), disabled: !bestSim, run: () => fillFrom(2, bestSim, 'best') },
@@ -164,22 +198,47 @@ export default function FarmGame() {
 
   return (
     <div className="gm-full" role="region" aria-label={t('game.title')}>
-      <GameCanvas getFrame={getFrame} onTap={setSel} pads={pads} api={api} label={t('game.scene.alt')} />
+      {phase !== 'season' && <GameCanvas getFrame={getFrame} onTap={setSel} pads={pads} api={api} label={t('game.scene.alt')} />}
       <div className="gm-hud" ref={hudRef}>
         <div className="gm-hud-row">
           <button type="button" className="gm-icon-btn" aria-label={t('game.hud.exit')} onClick={() => setPhase('start')}><X size={22} aria-hidden="true" /></button>
           <span className="gm-pill">{t('game.progress', { n: k + 1, total: YEARS })}</span>
-          <span className="gm-pill gm-coins" aria-label={t('game.hud.coins', { usd: usd(coins) })}><Coins size={16} aria-hidden="true" />{usd(coins)}</span>
+          <span className={`gm-pill gm-coins${coins < 0 ? ' is-low' : ''}`} ref={coinRef} aria-label={t('game.hud.coins', { usd: usd(coins) })}><Coins size={16} aria-hidden="true" />{usd(coins)}</span>
           <span className="gm-spacer" />
+          {phase === 'season' && (
+            <button type="button" className="gm-icon-btn" aria-label={t(playing ? 'game.play.pause' : 'game.play.play')} disabled={seasonDone} onClick={() => setPlaying(!playing)}>
+              {playing ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
+            </button>
+          )}
           <button type="button" className="gm-icon-btn" aria-pressed={sound} aria-label={t(sound ? 'game.sound.on' : 'game.sound.off')} onClick={() => setSound(!sound)}>
             {sound ? <Volume2 size={20} aria-hidden="true" /> : <VolumeX size={20} aria-hidden="true" />}
           </button>
         </div>
         <p className="gm-hud-banner" role="note">{t('game.banner')}{mode.kind === 'challenge' && ` · ${t(`game.challenge.${mode.id}.name`)}`}</p>
+        {phase === 'season' && season && (
+          <p className="gm-hud-sub">
+            <strong>{monthName(month)}</strong> · {t('game.weatherOf', { year: years[k] })}
+            {season.runs[0].yearType && <> · {t(`game.yearType.${season.runs[0].yearType}`)}</>}
+            {season.runs[0].placeholderSlots?.includes('modelC') && <PlaceholderTag />}
+          </p>
+        )}
+        {USING_MOCK && <p className="gm-mock" role="note">{t('game.mock')}</p>}
       </div>
-      {phase === 'setup' && (
+      {(phase === 'setup' || phase === 'growing') && (
         <Toolbar k={k} plots={plots} sel={sel} setSel={setSel} setPlot={setPlot} irrigated={irrigated} fills={fills} usd={usd} barRef={barRef}
-          onStart={() => {}} />
+          onStart={phase === 'setup' ? startSeason : null} />
+      )}
+      {phase === 'growing' && <div className="gm-growing" role="status"><span className="gm-sprout" aria-hidden="true" />{t('game.running')}</div>}
+      {error && phase === 'setup' && <p className="gm-error" role="alert">{t('game.error')} ({error})</p>}
+      {phase === 'season' && season && (
+        <SeasonView runs={season.runs} prevRuns={season.prevRuns} coinsBefore={season.coinsBefore} plots={plots} labels={plots.map(plotLabel)}
+          playing={playing} setPlaying={setPlaying} onMonth={setMonth} onCoins={setCoins} onDone={() => { setSeasonDone(true); setPlaying(false); }}
+          sound={sound} calm={calm} accent={accent} hudRef={hudRef} coinRef={coinRef} usd={usd} done={seasonDone} />
+      )}
+      {phase === 'season' && seasonDone && (
+        <div className="gm-board-cta">
+          <button type="button" className="btn btn-primary btn-block" onClick={endSeason}>{t(k >= YEARS - 1 ? 'game.results.end' : 'game.results.next')}<ArrowRight size={18} aria-hidden="true" /></button>
+        </div>
       )}
     </div>
   );

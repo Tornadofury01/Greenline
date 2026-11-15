@@ -337,7 +337,7 @@ function drawPlotLabel(ctx, L, i, pf, frame) {
 
 function drawPlant(ctx, look, x, y, tw, grow, ripe, leaf, t, calm, wilt) {
   if (grow <= 0.02) return;
-  const H = tw * 0.95 * look.h * grow * (1 - wilt * 0.25);
+  const H = tw * 1.3 * look.h * grow * (1 - wilt * 0.25);
   const sway = calm ? 0 : Math.sin(t * 2 + x * 0.05) * 1.2;
   const droop = wilt * tw * 0.12;
   ctx.lineCap = 'round';

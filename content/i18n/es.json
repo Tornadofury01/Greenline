@@ -1854,7 +1854,7 @@
     "progress": "Año {n}/{total}",
     "running": "Creciendo la temporada…",
     "error": "No se pudo simular la temporada.",
-    "weatherOf": "Clima de {year} en este campo",
+    "weatherOf": "clima de {year}",
     "sign": "Condado de {county} · {acres} acres",
     "perAcre": "/acre",
     "meters": {
@@ -1925,10 +1925,10 @@
       "alt": "Su campo dividido en 4 parcelas, dibujado con la simulación"
     },
     "play": {
-      "play": "Reproducir",
+      "play": "Seguir",
       "pause": "Pausa",
       "speed": "Velocidad",
-      "skip": "Saltar a la cosecha",
+      "skip": "Ir a la cosecha",
       "results": "Ver los resultados"
     },
     "choose": {
@@ -1967,7 +1967,7 @@
       "src": "Fuente: el simulador con el clima mensual real de {year} en este campo (NASA POWER, GPM IMERG); el patrón diario dentro de cada mes es simulado.",
       "srcClimatology": "Fuente: el simulador. {year} no tiene un registro completo de clima aquí, así que se usó el clima promedio del campo.",
       "next": "Año siguiente",
-      "end": "Ver su boleta de calificaciones"
+      "end": "Ver los resultados"
     },
     "yearType": {
       "drought": "Año de sequía",
@@ -2079,6 +2079,49 @@
       "clear": "Vaciar la parcela {n}",
       "lockNote": "Después del año 1 solo cambian los cultivos; la labranza, el fertilizante y el agua quedan como estaban.",
       "short": "Rápido"
+    },
+    "mock": "Números de prueba para ver las pantallas. No son los resultados de su campo.",
+    "live": {
+      "title": "Parcela {n} ahora",
+      "hint": "Toque una parcela para ver cómo va.",
+      "noCrop": "Sin cultivo",
+      "stage": "{pct} crecido",
+      "water": "Agua del suelo",
+      "cover": "Cobertura",
+      "soil": "Suelo perdido",
+      "soilVal": "{t} de {max} t",
+      "n": "Nitrógeno",
+      "pest": "Plagas",
+      "pestVal": "−{pct}% cosecha",
+      "money": "Dinero esta temporada"
+    },
+    "ev": {
+      "heat": "{month}: {n} días sobre 95 °F",
+      "rain": "{date}: {inches} pulg de lluvia. Esta parcela perdió {tons} t/acre de suelo",
+      "rainNoLoss": "{date}: {inches} pulg de lluvia. El suelo aguantó",
+      "dry": "El cultivo de {crop} lleva 3 semanas con falta de agua",
+      "pest": "{pest} en {crop}: cerca del {pct}% de la cosecha en riesgo",
+      "lowN": "Al cultivo de {crop} le falta nitrógeno: las hojas se ponen amarillas",
+      "frost": "La helada mató el cultivo de {crop}",
+      "harvest": "Cosecha: {units} {unit}/acre de {crop}, {usd}/acre"
+    },
+    "src": {
+      "power": "Temperatura NASA POWER (mensual), patrón diario simulado",
+      "rain": "Lluvia GPM IMERG (mensual), patrón diario simulado · erosión en suelo SSURGO",
+      "water": "Balance de agua del simulador · suelo SSURGO · NASA POWER",
+      "pest": "Contadores de plagas del simulador (reglas de clima) · biblioteca de cultivos",
+      "n": "Balance de nitrógeno del simulador · biblioteca de cultivos",
+      "frost": "Etapas del cultivo en el simulador · temperatura NASA POWER",
+      "harvest": "Rendimiento del simulador · precios USDA NASS"
+    },
+    "pest": {
+      "any": "Plagas",
+      "cereal-rust": "Roya de cereales",
+      "grass-foliar-disease": "Enfermedad de la hoja",
+      "cotton-root-rot": "Pudrición de raíz del algodón",
+      "root-knot-nematode": "Nematodo agallador",
+      "charcoal-rot": "Pudrición carbonosa",
+      "sugarcane-aphid": "Pulgón de la caña"
     }
   }
 }
