@@ -66,3 +66,6 @@ main:has(.options-page) { max-width: none; }
   }
   @media (min-width: 640px) { .gl-card { padding: 1.75rem; } }
 }
+/* Satellite replay on the history page: the previous / next buttons keep their own space (the generic
+   .icon-btn rule gives them a -12px margin, which made them overlap). */
+.history-replay-page .replay-step-controls .icon-btn { margin: 0; }

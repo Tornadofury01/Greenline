@@ -240,7 +240,7 @@ export default function FieldStory() {
           <div className="flex flex-col gap-5">
             <span className="badge badge-lg badge-outline w-fit bg-base-100/70">{t('pick.fieldName', { id: field.field.id })}</span>
             <SplitText text={t('story.title')} tag="h1" textAlign="left" splitType="chars" delay={30} duration={1}
-              className="m-0 text-5xl font-bold leading-[0.95] tracking-tighter sm:text-7xl" />
+              className="m-0 text-5xl font-bold leading-[1.2] tracking-tighter sm:text-7xl" />
             <p className="max-w-2xl text-lg leading-relaxed text-base-content/85 sm:text-xl">{t('story.heroIntro')}</p>
             <div className="flex flex-wrap gap-3">
               <button type="button" className="btn btn-primary btn-lg rounded-full px-8" onClick={() => scrollToId('years')}>
@@ -276,7 +276,10 @@ export default function FieldStory() {
 
       {/* Satellite replay, unchanged */}
       <section id="replay" className="w-full px-5 py-8 sm:px-8 lg:px-12">
-        <SatelliteReplay key={field.field.id} field={field} />
+        {/* history-replay-page: the replay's own layout rules (styles.css) are scoped to this class */}
+        <div className="history-replay-page !max-w-3xl !p-0">
+          <SatelliteReplay key={field.field.id} field={field} />
+        </div>
       </section>
 
       {/* Year by year */}
