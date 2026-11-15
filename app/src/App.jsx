@@ -20,6 +20,7 @@ const SCREEN_COMPONENTS = {
   risks: Risks,
   options: Plans, // compatibility: the navigation setter opens Browse all rotations
   plans: Plans,
+  rotations: Plans, // the one Rotations page (Options + Plans + Compare); old ids redirect here in AppContext
   sim: FarmSimulator,
   compare: CompareRotations,
   handoff: ExpertHandoff,
