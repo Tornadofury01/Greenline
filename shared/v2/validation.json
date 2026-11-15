@@ -1,0 +1,226 @@
+{
+ "schemaVersion": 1,
+ "generatedAt": "2026-11-15T05:33:51.064Z",
+ "engineVersion": "v2-0.1",
+ "fieldsChecked": 300,
+ "checks": [
+  {
+   "id": 1,
+   "nameKey": "v2.val.check1.name",
+   "status": "pending-model",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 0,
+   "measured": null,
+   "target": {
+    "key": "v2.val.check1.target",
+    "params": {}
+   },
+   "noteKey": "v2.val.check1.needsModels"
+  },
+  {
+   "id": 2,
+   "nameKey": "v2.val.check2.name",
+   "status": "fail",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 206,
+   "measured": {
+    "fieldsWithin15Days": 0.17,
+    "meanSimulatedPerYear": 55.5,
+    "meanMeasuredPerYear": 25.4,
+    "meanDifferenceDays": 30.1,
+    "assumedTillage": "reduced",
+    "byTillage": {
+     "conventional": {
+      "n": 206,
+      "shareWithin": 0,
+      "meanDifferenceDays": 203.8
+     },
+     "reduced": {
+      "n": 206,
+      "shareWithin": 0.17,
+      "meanDifferenceDays": 30.1
+     },
+     "no-till": {
+      "n": 206,
+      "shareWithin": 0.48,
+      "meanDifferenceDays": -6.1
+     }
+    },
+    "note": "measured = Landsat 8/9 whole-outline average, which may undercount bare soil"
+   },
+   "target": {
+    "key": "v2.val.check2.target",
+    "params": {
+     "days": 15,
+     "share": 0.5
+    }
+   },
+   "noteKey": "v2.val.check2.note"
+  },
+  {
+   "id": 3,
+   "nameKey": "v2.val.check3.name",
+   "status": "fail",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 1863,
+   "measured": {
+    "meanAbsErrorDays": 29.8,
+    "byCrop": {
+     "corn": {
+      "n": 710,
+      "meanAbsErrorDays": 19.7,
+      "medianAbsErrorDays": 15
+     },
+     "cotton": {
+      "n": 294,
+      "meanAbsErrorDays": 47.8,
+      "medianAbsErrorDays": 45.5
+     },
+     "winter_wheat": {
+      "n": 525,
+      "meanAbsErrorDays": 36.5,
+      "medianAbsErrorDays": 29
+     },
+     "grain_sorghum": {
+      "n": 264,
+      "meanAbsErrorDays": 25,
+      "medianAbsErrorDays": 18.5
+     },
+     "alfalfa": {
+      "n": 4,
+      "meanAbsErrorDays": 48.3,
+      "medianAbsErrorDays": 33.5
+     },
+     "sunflower": {
+      "n": 66,
+      "meanAbsErrorDays": 23.2,
+      "medianAbsErrorDays": 16
+     }
+    },
+    "comparison": "simulated day of peak canopy vs the middle of the month of peak NDVI (Landsat 8/9, monthly), so about +/- 15 days of the error is resolution",
+    "calendars": "placeholder (model A not plugged in)"
+   },
+   "target": {
+    "key": "v2.val.check3.target",
+    "params": {
+     "days": 10
+    }
+   },
+   "noteKey": "v2.val.check3.note"
+  },
+  {
+   "id": 4,
+   "nameKey": "v2.val.check4.name",
+   "status": "partial",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 38,
+   "measured": {
+    "byCrop": {
+     "corn": {
+      "years": 11,
+      "correlation": -0.17,
+      "meanRatioSimOverNass": 1.05,
+      "meanAbsPercentError": 0.23,
+      "unit": "bu/acre",
+      "status": "fail"
+     },
+     "cotton": {
+      "years": 11,
+      "correlation": 0.55,
+      "meanRatioSimOverNass": 1.12,
+      "meanAbsPercentError": 0.34,
+      "unit": "lb lint/acre",
+      "status": "pass"
+     },
+     "winter_wheat": {
+      "years": 10,
+      "correlation": 0.44,
+      "meanRatioSimOverNass": 1.35,
+      "meanAbsPercentError": 0.37,
+      "unit": "bu/acre",
+      "status": "fail"
+     },
+     "grain_sorghum": {
+      "years": 6,
+      "correlation": 0.35,
+      "meanRatioSimOverNass": 1.14,
+      "meanAbsPercentError": 0.49,
+      "unit": "bu/acre",
+      "status": "fail"
+     },
+     "alfalfa": {
+      "years": 0,
+      "status": "not-run"
+     },
+     "sunflower": {
+      "years": 0,
+      "status": "not-run"
+     }
+    },
+    "fitYears": [],
+    "testYears": "all years with a NASS county yield (nothing was fitted: calibration E is a placeholder)",
+    "comparison": "mean simulated yield over the study fields that grew the crop that year vs the NASS county yield"
+   },
+   "target": {
+    "key": "v2.val.check4.target",
+    "params": {
+     "correlation": 0.5,
+     "ratioError": 0.25
+    }
+   },
+   "noteKey": "v2.val.check4.note"
+  },
+  {
+   "id": 5,
+   "nameKey": "v2.val.check5.name",
+   "status": "not-run",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 0,
+   "measured": null,
+   "target": {
+    "key": "v2.val.check5.target",
+    "params": {}
+   },
+   "noteKey": "v2.val.check5.needsMeasurements"
+  },
+  {
+   "id": 6,
+   "nameKey": "v2.val.check6.name",
+   "status": "pending-model",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 0,
+   "measured": null,
+   "target": {
+    "key": "v2.val.check6.target",
+    "params": {}
+   },
+   "noteKey": "v2.val.check6.needsModelD"
+  },
+  {
+   "id": 7,
+   "nameKey": "v2.val.check7.name",
+   "status": "pending-model",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 0,
+   "measured": null,
+   "target": {
+    "key": "v2.val.check7.target",
+    "params": {}
+   },
+   "noteKey": "v2.val.check7.needsModelA"
+  },
+  {
+   "id": 8,
+   "nameKey": "v2.val.check8.name",
+   "status": "not-run",
+   "region": "Ellis County, TX (Texas Blackland)",
+   "n": 0,
+   "measured": null,
+   "target": {
+    "key": "v2.val.check8.target",
+    "params": {}
+   },
+   "noteKey": "v2.val.check8.needsInterview"
+  }
+ ]
+}

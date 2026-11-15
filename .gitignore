@@ -54,3 +54,15 @@ Thumbs.db
 
 # v2 data (large, from Earth Engine exports and downloads)
 v2/data/
+
+# Local design references (third-party images, never commit)
+design-refs/
+
+# Field Shift v2: generated per-field files (shared as zips between computers, see docs/v2-precompute-guide.md)
+shared/v2/inputs/
+shared/v2/validation-raw/
+app/public/v2f/
+v2-share-B/
+v2-share-B.zip
+v2-back/
+v2-results-B.zip

@@ -1,10 +1,10 @@
 # Greenline 🌱
 
-Compare crop rotations for North Texas fields using NASA Earth observation data.
+Compare crop rotations for North Texas farm fields using NASA Earth observation data.
 Built for NASA Space Apps, "Field Shift: Adapting Farms with NASA Data".
 
 > Greenline supports farmer judgment and local experts. It doesn't replace them.
-> Uses real NASA and USDA data for 201 sampled North Texas fields. Crop traits and model results are still being checked with local experts.
+> Uses real NASA and USDA data for 300 Ellis County fields (USDA outlines), not every farm. Crop traits and model results are still being checked with local experts.
 
 **Try it: https://greenline-psi.vercel.app** (works on a phone; add it to your home screen, and the demo field works offline).
 

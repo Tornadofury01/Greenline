@@ -11,7 +11,12 @@
       "en": "EN",
       "es": "ES"
     },
-    "sampleNotice": "Mostrando datos de ejemplo de una parcela de demostración. Todavía no son mediciones reales."
+    "sampleNotice": "Mostrando datos de ejemplo de una parcela de demostración. Todavía no son mediciones reales.",
+    "theme": {
+      "light": "Cambiar a modo claro (más fácil de leer a pleno sol)",
+      "dark": "Cambiar a modo oscuro"
+    },
+    "home": "Inicio de Greenline: volver al mapa"
   },
   "nav": {
     "label": "Principal",
@@ -19,7 +24,18 @@
     "farm": "Granja",
     "story": "Historial",
     "compare": "Comparar",
-    "handoff": "Experto"
+    "handoff": "Experto",
+    "options": "Opciones",
+    "risks": "Riesgos",
+    "plans": "Planes",
+    "more": "Más",
+    "moreLabel": "Más pantallas",
+    "farmLong": "Su granja",
+    "compareLong": "Comparar rotaciones",
+    "risksLong": "Riesgos del campo",
+    "handoffLong": "Entrega al experto",
+    "sim": "Simulador",
+    "simLong": "Simulador de la finca"
   },
   "common": {
     "judgmentNote": "Esta herramienta apoya su criterio y a sus expertos locales. No los reemplaza.",
@@ -55,22 +71,16 @@
   },
   "pick": {
     "title": "Elija su parcela",
-    "intro": "Busque su parcela en el mapa y tóquela.",
-    "mapLabel": "Mapa del norte de Texas",
-    "mapHint": "Los puntos verdes son los 300 campos del condado de Ellis con datos (contornos de campos del USDA). Toque uno, o toque su campo y cargamos el punto más cercano.",
-    "dotLabel": "Campo {id}, condado de {county}",
-    "sampledField": "Campo de muestra {id}: datos medidos en este mismo lugar.",
+    "mapLabel": "Mapa satelital de los 300 campos del condado de Ellis",
     "notCropland": "El lugar que tocó no parece tierra de cultivo en el mapa de cultivos del USDA, así que mostramos el campo de muestra más cercano como ejemplo. Toque su propio campo para acercarse más.",
     "notCroplandGps": "Donde está ahora no parece tierra de cultivo en el mapa de cultivos del USDA, así que mostramos el campo de muestra más cercano como ejemplo. Párese en su campo e inténtelo de nuevo, o tóquelo en el mapa.",
     "loadError": "No pudimos cargar los datos de este campo. Revise su conexión e inténtelo de nuevo.",
-    "loadMissing": "Todavía no tenemos datos para este campo. Elija otro punto verde.",
+    "loadMissing": "Todavía no tenemos datos para este campo. Elija otro contorno de campo.",
     "retry": "Intentar de nuevo",
-    "mapOffline": "El mapa necesita internet. Aún puede cargar el campo de demostración.",
-    "loadSample": "Cargar la parcela de ejemplo",
     "summaryTitle": "Su parcela de un vistazo",
     "location": "Ubicación",
     "countyValue": "Condado de {county}, {state}",
-    "cellDetail": "Cuadro del mapa {cell} (30 m)",
+    "cellDetail": "Datos de un cuadro de 30 m (100 pies) de este campo",
     "soil": "Suelo",
     "soilValue": "{texture}, {drainage}",
     "soilDetail": "Serie {series} · {om}% de materia orgánica · grupo hidrológico {group}",
@@ -84,22 +94,65 @@
     "slopeDetail": "{pct}% de inclinación promedio",
     "recentCrops": "Últimos 3 cultivos",
     "privacy": "Guardamos un cuadro de 30 m, nunca su ubicación exacta.",
-    "continue": "Siguiente: su granja",
-    "emptySummary": "Toque su campo en el mapa o cargue el campo de demostración (datos reales de la NASA) para probar la app.",
-    "loadDemo": "Cargar el campo de demostración",
+    "continue": "Continuar",
+    "emptySummary": "Toque dentro del contorno de un campo para ver sus detalles.",
     "loading": "Cargando…",
-    "nearest": "Campo de muestra más cercano ({id}), a {km} km de donde tocó. Pronto habrá datos reales para cada campo.",
+    "nearest": "Mostramos el campo más cercano con datos, a {km} km de donde tocó. Pronto habrá datos para todos los campos.",
     "fallback": "No pudimos cargar datos reales para este campo, así que este es el campo de muestra ficticio.",
-    "useLocation": "Usar mi ubicación",
+    "useLocation": "Usar GPS",
     "locating": "Buscando su ubicación…",
-    "nearestGps": "Campo de muestra más cercano ({id}), a {km} km de usted. Su ubicación se usó una sola vez para encontrarlo y no se guardó.",
+    "nearestGps": "Mostramos el campo más cercano con datos, a {km} km de usted. Su ubicación se usó una vez para encontrarlo y no se guardó.",
     "farAway": "El campo más cercano con datos está a {km} km, así que puede no parecerse al suyo. Úselo como ejemplo, no como su campo.",
     "geo": {
       "denied": "La ubicación está desactivada para este sitio. Puede permitirla en los ajustes del navegador, o toque el mapa.",
       "unavailable": "No pudimos encontrar su ubicación ahora. Inténtelo al aire libre, o toque el mapa.",
       "timeout": "Encontrar su ubicación tardó demasiado. Inténtelo de nuevo, o toque el mapa.",
       "unsupported": "Este navegador o conexión no puede compartir su ubicación. Toque el mapa."
-    }
+    },
+    "fieldName": "Campo {id}",
+    "fieldSub": "Contorno de campo del USDA · Condado de {county}, {state}",
+    "cropThisYear": "{crop} en {year}",
+    "cropSrc": {
+      "usda": "Mapa de cultivos del USDA",
+      "model": "Estimación del modelo · {pct}% de certeza",
+      "notSure": "No es seguro · estimación del modelo, {pct}%"
+    },
+    "soilShort": "{texture} · {series}",
+    "imagery": "Imágenes © USGS The National Map",
+    "offline": "Sin conexión: solo contornos de campos",
+    "mapTools": "Herramientas del mapa",
+    "zoomIn": "Acercar",
+    "zoomOut": "Alejar",
+    "showAll": "Ver el área de estudio y los pueblos cercanos",
+    "closeSheet": "Minimizar la tarjeta del campo",
+    "resetSelection": "Borrar la selección del campo",
+    "fieldTitle": "Campo {id} · {acres} acres",
+    "soilSub": "{slope} · {pct}% de inclinación promedio",
+    "hullLabel": "Nuestros 300 campos",
+    "clusterUnit": "campos",
+    "clusterTap": "300 campos: toque para acercar",
+    "legendTitle": "Leyenda del mapa",
+    "legendHull": "Área con nuestros 300 campos (lo de afuera se ve más oscuro)",
+    "legendField": "Un campo con datos (acerque el mapa para verlos)",
+    "legendSelected": "El campo que eligió",
+    "legendCounty": "Línea punteada = condado de Ellis",
+    "outsideTitle": "Aún no hay datos aquí",
+    "outsideText": "Tenemos datos de {n} campos cerca de {town}. Toque el contorno de un campo o abra el campo más cercano.",
+    "outsideNotCropland": "El lugar que tocó no parece tierra de cultivo en el mapa de cultivos del USDA.",
+    "outsideShow": "Ver nuestros 300 campos",
+    "outsideNearest": "Abrir de todos modos el campo más cercano (a {km} km)",
+    "nearestSearch": "Mostramos el campo más cercano con datos, a {km} km del lugar que buscó.",
+    "notCroplandSearch": "El lugar que buscó no parece tierra de cultivo en el mapa de cultivos del USDA, así que mostramos el campo de muestra más cercano como ejemplo.",
+    "searchOutTitle": "Aún no tenemos datos de ese lugar",
+    "searchOutText": "El campo más cercano que tenemos está a {mi} millas, cerca de {town}.",
+    "searchOpen": "Abrir ese campo",
+    "searchBack": "Volver",
+    "countyLabel": "Condado de Ellis",
+    "dallasAlt": "Dallas está a {km} km al norte, fuera del mapa",
+    "scopeTitle": "{n} campos del condado de Ellis",
+    "scopeSub": "Contornos del USDA · no todas las granjas",
+    "dallasName": "Dallas",
+    "dallasKm": "{km} km"
   },
   "farm": {
     "title": "Su granja",
@@ -113,13 +166,55 @@
     "equipment": "Equipo que tiene",
     "budget": "Presupuesto para cambios",
     "market": "¿Dónde vende o usa sus cultivos?",
-    "seeResults": "Comparar rotaciones"
+    "seeResults": "Comparar rotaciones",
+    "stepN": "Paso {n}",
+    "metaCrops": "{n} cultivos",
+    "metaPicked": "{n} elegidas",
+    "privacy": "Sus respuestas se quedan en este teléfono. Solo se recuerdan su idioma, el tema y su elección de labranza.",
+    "tillage": {
+      "title": "¿Cómo labra?",
+      "opt": {
+        "conventional": "Convencional",
+        "reduced": "Reducida",
+        "no-till": "Siembra directa"
+      },
+      "assumed": "Labranza reducida: es nuestra suposición hasta que usted nos diga. Toque una opción para cambiarla.",
+      "saved": "Guardado en este teléfono. Define la labranza de su rotación actual en el simulador de la finca."
+    }
   },
   "story": {
+    "satellite": {
+      "resetView": "Restablecer la vista del campo",
+      "speed": "Velocidad de reproducción",
+      "title": "Recorrido por imágenes satelitales",
+      "source": "Landsat 8 y 9 de la NASA y el USGS",
+      "imageAlt": "Imagen satelital del {date}. El contorno marca el campo seleccionado.",
+      "crop": "Cultivo de {year} · Mapa del USDA",
+      "cover": "Cobertura mensual · Estimación de Landsat",
+      "note": "La fecha corresponde a la captura exacta del sat?lite. USDA indica el cultivo de todo el a?o. La cobertura es una estimaci?n mensual de Landsat, no una medici?n de esta imagen individual.",
+      "unavailable": "Esta imagen satelital no está disponible.",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "timeline": "Fecha de la imagen satelital",
+      "simulate": "Pruebe una rotación en el simulador",
+      "loading": "Cargando vista satelital?",
+      "noArchive": "No hay una repetici?n disponible para esta parcela. Con?ctese a internet e int?ntelo de nuevo.",
+      "retry": "Intentar de nuevo",
+      "captured": "Fecha de la imagen",
+      "monthCover": "{month} · Cobertura estimada",
+      "frameCount": "{n} de {total}",
+      "yourField": "Su parcela",
+      "previous": "Imagen anterior",
+      "next": "Imagen siguiente",
+      "about": "Sobre las im?genes y fechas faltantes",
+      "sampling": "Vistas despejadas cada dos meses, 2022?2024. Cada p?xel de Landsat abarca 30 m; ampliar no a?ade detalle. Las fechas son irregulares y se omiten los huecos.",
+      "gaps": "No hay imagen utilizable en estos meses: {dates}. No se muestra una imagen de reemplazo.",
+      "noGaps": "Hay una imagen despejada en cada uno de los 18 meses de muestreo. Los dem?s meses no forman parte de esta repetici?n.",
+      "keyboard": "Teclado: enfoque la imagen y use Espacio para reproducir o pausar, las flechas para avanzar, Inicio o Fin para saltar. La l?nea de tiempo tambi?n acepta flechas."
+    },
+    "seeRisks": "Ver los riesgos de este campo",
     "title": "El historial de su parcela",
-    "kicker": "Hallazgo principal",
-    "headline": "Su parcela se queda con el suelo desnudo unos {months} meses al año.",
-    "headlineDetail": "Por lo general en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
+    "headlineDetail": "Suele estar desnudo en {months}. El suelo desnudo pierde tierra y agua con el viento y las lluvias fuertes.",
     "statDrought": "Años de sequía",
     "statRain": "Lluvia por año",
     "rainDetail": "Promedio ({mm} mm)",
@@ -128,14 +223,9 @@
     "statBare": "Días de suelo desnudo",
     "bareDetail": "Promedio por año, desde 2014",
     "chartTitle": "Lluvia de cada año desde {from}",
-    "chartCaption": "Cada barra es un año, con el color del tipo de año. Sequías recientes: {years}.",
+    "chartCaption": "Cada barra es un año. Años de sequía recientes: {years}.",
     "chartAlt": "Gráfica de barras de la lluvia anual de {from} a {to}. Promedio de unas {avg} pulgadas. Años de sequía: {years}.",
     "tooltipRain": "Lluvia",
-    "bareTitle": "Verde, rastrojo o desnudo: 40 años desde el espacio",
-    "bareCaption": "Cada fila es un año (el más reciente arriba), cada cuadro un mes. El número es el puntaje de cobertura de ese año.",
-    "legendBare": "Suelo desnudo",
-    "legendCovered": "Con plantas",
-    "year": "Año",
     "monthsShort": [
       "E",
       "F",
@@ -164,7 +254,7 @@
       "noviembre",
       "diciembre"
     ],
-    "next": "Ver opciones de rotación",
+    "next": "Comparar rotaciones",
     "droughtDetail": "Años {from}–{to}",
     "statScore": "Puntaje de cobertura",
     "scoreDetail": "Últimos 10 años con datos claros. 100 = nunca desnudo",
@@ -175,13 +265,9 @@
       "none": "Sin imagen clara (nubes)",
       "noImage": "Sin imagen (antes de Landsat 8)"
     },
-    "scoreCol": "Puntaje",
-    "cropCol": "Cultivo",
-    "doubleCrop": "CDL: 2 cultivos",
-    "doubleCropNote": "El mapa de cultivos dice dos cultivos este año. Confianza baja: hay muy pocos ejemplos para comprobarlo.",
     "timelineNote": "Los nombres de cultivos empiezan en 2008 (mapas de cultivos del USDA). El tiempo desnudo y verde antes de 2013 viene de satélites antiguos y es de baja confianza.",
     "replayTitle": "Revivir un mal año",
-    "replayCaption": "Los peores años en 40 años de clima de la NASA, escogidos por nuestro modelo de tipos de año. Toque uno para ver qué pasó en esta parcela.",
+    "replayCaption": "Los peores años en el registro de clima de la NASA. Los tipos de año son provisionales por ahora. Toque uno para ver qué pasó en esta parcela.",
     "replayHeading": "{year}: {type}",
     "replayRain": "{inches} pulg. de lluvia ({pct}% frente a lo normal)",
     "replayHeat": "{n} días de más de 95°F (normal: {avg})",
@@ -191,21 +277,55 @@
     "replayBare": "{days} días desnudo (puntaje {score}/100)",
     "replayStress": "Verdor por debajo de lo normal en: {months}",
     "replayNoStress": "El verdor se mantuvo cerca de lo normal toda la temporada",
-    "coverChartTitle": "La cobertura de su suelo, año por año",
-    "coverChartCaption": "Cada barra es un año. El verde es el tiempo con plantas creciendo, el beige es cobertura parcial y la parte café con rayas es suelo desnudo.",
-    "coverChartAlt": "Gráfica de barras de la cobertura del suelo de {from} a {to}. El suelo desnudo promedió {bare}% de los meses despejados desde {since}.",
-    "sensorChange": "Landsat 8",
     "sensorNote": "Antes de 2013 solo había satélites antiguos. Ven las parcelas menos verdes, así que el tiempo desnudo parece mayor de lo que fue. Tome esos años como aproximados.",
-    "typicalTitle": "Un año típico en su parcela",
-    "typicalCaption": "Probabilidad de suelo desnudo en cada mes, según los años desde {since}.",
-    "typicalBare": "Casi siempre desnudo: {months}.",
-    "typicalNone": "Ningún mes suele estar desnudo.",
+    "typicalTitle": "Un año típico",
+    "typicalBare": "Desnudo casi todos los años: {months}.",
+    "typicalNone": "Ningún mes está desnudo casi todos los años.",
     "partlyNote": "“Parcialmente cubierto” significa plantas dispersas, rastrojo o residuos del cultivo. Los satélites todavía no pueden distinguirlos.",
-    "showAll": "Ver los {n} años",
-    "showRecent": "Ver los últimos 10 años",
-    "coverShare": "{green}% creciendo, {partly}% parcialmente cubierto, {bare}% desnudo",
     "lowConfTag": "Baja confianza: satélite antiguo",
-    "noBareNumber": "Ese año hubo demasiadas nubes para contar los días desnudos."
+    "noBareNumber": "Ese año hubo demasiadas nubes para contar los días desnudos.",
+    "heroTitle": "Suelo desnudo",
+    "heroUnit": "días desnudos al año, promedio {from}–{to} (Landsat 8/9)",
+    "heroBarsAlt": "Días desnudos cada año de {from} a {to}. El más desnudo: {year}, {days} días.",
+    "undercount": "Promedio de todo el campo; puede contar menos suelo desnudo del que hay.",
+    "heroTakeaway": "El más desnudo: {year}, {days} días. El menos: {year2}, {days2} días.",
+    "tlTitle": "Cobertura del suelo, mes por mes",
+    "tlMonths": "{n} meses",
+    "tlAlt": "Una franja por mes de {from} a {to}: {green}% creciendo, {partly}% parcialmente cubierto, {bare}% suelo desnudo.",
+    "tlTakeaway": "Desde {since}, el suelo estuvo desnudo en el {bare}% de los meses despejados y verde en el {green}%.",
+    "showOlder": "Ver años anteriores (baja confianza)",
+    "hideOlder": "Ocultar años anteriores",
+    "olderAlt": "Una franja por mes de {from} a {to}, de satélites antiguos. Baja confianza.",
+    "dot": {
+      "bare": "Desnudo",
+      "green": "Verde"
+    },
+    "dotLegend": {
+      "s": "Rara vez",
+      "m": "Algunos años",
+      "l": "Casi todos los años"
+    },
+    "dotNone": "ningún mes",
+    "dotRowAlt": "{what} casi todos los años: {months}.",
+    "cropTitle": "Cultivo de cada año",
+    "cropNotSure": "no es seguro, {pct}%",
+    "cropModel": "estimación del modelo",
+    "cropLegend": "Cada etiqueta es la del mapa de cultivos del USDA para ese año.",
+    "chipAlt": {
+      "fewer": "{n} días desnudos menos al año con la {name}",
+      "more": "{n} días desnudos más al año con la {name}",
+      "same": "Los mismos días desnudos al año con la {name}"
+    },
+    "chipWhy": {
+      "fewer": "La {name} tendría unos {n} días desnudos menos al año que lo que siembra ahora. Las dos son estimaciones de calendarios de cultivo, no mediciones.",
+      "more": "La {name} tendría unos {n} días desnudos más al año que lo que siembra ahora. Las dos son estimaciones de calendarios de cultivo, no mediciones.",
+      "same": "La {name} tendría más o menos los mismos días desnudos al año que lo que siembra ahora. Las dos son estimaciones de calendarios de cultivo, no mediciones."
+    },
+    "tlCloudy": "{cloudy} meses estuvieron demasiado nublados para leerlos.",
+    "explore": "Explore su parcela",
+    "explorecrops": "Cultivos a lo largo del tiempo",
+    "explorecover": "Cobertura del suelo",
+    "exploreweather": "El tiempo"
   },
   "compare": {
     "title": "Comparar rotaciones",
@@ -244,7 +364,39 @@
     "goFarm": "Agregar mis cultivos",
     "buildOwn": "Pruebe su propia rotación",
     "buildHint": "Elija cultivos en orden. Se califica igual que las opciones de arriba.",
-    "scoreIt": "Calificar mi rotación"
+    "scoreIt": "Calificar mi rotación",
+    "short": {
+      "current": "Actual",
+      "custom": "La mía"
+    },
+    "col": {
+      "rotation": "Rotación",
+      "score": "Puntaje",
+      "bare": "Días desnudos al año",
+      "year": {
+        "drought": "Sequía de {year}",
+        "heat": "Calor de {year}",
+        "wet": "Año húmedo {year}",
+        "normal": "{year}"
+      },
+      "whatIf": "Año hipotético"
+    },
+    "scoreboardLabel": "Marcador: todas las rotaciones lado a lado",
+    "seg": {
+      "label": "Tipo de año",
+      "normal": "Año normal",
+      "bad": "Año malo"
+    },
+    "takeaway": {
+      "best": "{name} obtiene {a} contra {b} de lo que siembra ahora, con unos {bareA} días desnudos al año en lugar de {bareB}.",
+      "badYear": "Si volviera {year}: {dA} contra {dB}.",
+      "whatIf": "En su año hipotético: {dA} contra {dB}. Es hipotético, no un pronóstico.",
+      "noCurrent": "{name} obtiene el puntaje más alto: {a} de 100, con unos {bareA} días desnudos al año.",
+      "keep": "Lo que siembra ahora ya obtiene un puntaje tan alto como nuestras opciones ({b} de 100)."
+    },
+    "sendAgent": "Enviar a mi agente del condado",
+    "confTile": "Confianza",
+    "confPoints": "{n} de {max} puntos"
   },
   "handoff": {
     "title": "Resumen para su agente de extensión",
@@ -268,7 +420,14 @@
     "notesSection": "Notas",
     "sources": "Fuentes de datos",
     "sampleNote": "Este resumen usa datos de muestra, no medidas de este campo.",
-    "generated": "Hecho con Greenline el {date}"
+    "generated": "Hecho con Greenline el {date}",
+    "fieldMeta": "Campo {id} · {acres} acres",
+    "climateTitle": "Clima y suelo desnudo",
+    "bareLabel": "Días desnudos al año",
+    "bareDetail": "Landsat 8/9, desde 2014",
+    "barePill": "≈ {n} días desnudos al año (estimación)",
+    "bareNote": "Los días desnudos de cada rotación son estimaciones de calendarios de cultivo satelitales, no mediciones.",
+    "printNote": "La copia impresa siempre sale con tinta oscura sobre papel blanco."
   },
   "priorities": {
     "water": "Ahorrar agua",
@@ -419,7 +578,9 @@
     "alfalfa": "Alfalfa",
     "sunflower": "Girasol",
     "sesame": "Ajonjolí",
-    "fallow": "Barbecho (desnudo)"
+    "fallow": "Barbecho (desnudo)",
+    "soybeans": "Soya",
+    "crimson_clover": "Trébol encarnado"
   },
   "rotations": {
     "wheat_cowpea_sorghum": "Trigo, caupí, sorgo, centeno",
@@ -469,7 +630,7 @@
     },
     "confidence": {
       "title": "Confianza",
-      "text": "Alta, media o baja. Una rotación gana puntos por 30 o más años de datos del clima, 8 o más años de mapas de cultivos, cultivos que ya se han sembrado en su campo, un modelo de cultivos que acertó en años que nunca vio (precisión equilibrada de 70% o más) y dos fuentes de datos de lluvia que coinciden. Pierde puntos por cultivos nuevos en el campo, cultivos que los satélites reconocen con dificultad y rasgos de cultivos que son solo estimaciones. El nivel de detalle de los datos (mapas de 30 m frente a un clima promediado en unas 30 millas) no suma puntos. Lo indicamos para que nadie lo sobrevalore."
+      "text": "Alta, media o baja. Una rotación gana puntos por 30 o más años de datos del clima, 8 o más años de mapas de cultivos, cultivos que ya se han sembrado en su campo y dos fuentes de datos de lluvia que coinciden. Pierde puntos por cultivos nuevos en el campo y rasgos de cultivos que son solo estimaciones. El nivel de detalle de los datos (mapas de 30 m frente a un clima promediado en unas 30 millas) no suma puntos. Lo indicamos para que nadie lo sobrevalore."
     },
     "score": {
       "title": "Puntaje",
@@ -497,7 +658,7 @@
     },
     "frost": {
       "title": "Riesgo de helada y días sin helada",
-      "text": "Los días sin helada son los días entre la última helada de primavera y la primera de otoño (una mínima de 32 °F o menos). Las fechas de helada en la página de su campo vienen de PRISM (4 km, de estaciones meteorológicas): la fecha media de los últimos 10 años. El modelo de tipos de año de Greenline usa los días sin helada de NASA POWER, que en promedio dan unos 3 días más. Marcan las ventanas de siembra y si un cultivo de cobertura de temporada fresca puede terminar. Greenline todavía no califica el riesgo de helada de una rotación."
+      "text": "Los días sin helada son los días entre la última helada de primavera y la primera de otoño (una mínima de 32 °F o menos). Las fechas de helada en la página de su campo vienen de PRISM (4 km, de estaciones meteorológicas): la fecha media de los últimos 10 años. Los días sin helada de NASA POWER dan en promedio unos 3 días más. Marcan las ventanas de siembra y si un cultivo de cobertura de temporada fresca puede terminar. Greenline todavía no califica el riesgo de helada de una rotación."
     },
     "waterBalance": {
       "title": "Balance de agua",
@@ -513,7 +674,7 @@
     },
     "prism": {
       "title": "Lluvia de estaciones en tierra (PRISM)",
-      "text": "PRISM (Universidad Estatal de Oregón) mapea la lluvia en una cuadrícula de 4 km con miles de pluviómetros y estaciones meteorológicas. Lo usamos para revisar los datos de lluvia de la NASA. En 201 campos del norte de Texas (2008–2024), la lluvia anual de NASA POWER coincidió con PRISM con una correlación de 0.92 y marcó cerca de 9% menos; GPM IMERG coincidió con 0.93 y marcó cerca de 4% más. Ambos datos de la NASA se ajustan en parte con pluviómetros, así que esto muestra consistencia, no una prueba totalmente independiente. No cambia los puntos de confianza."
+      "text": "PRISM (Universidad Estatal de Oregón) mapea la lluvia en una cuadrícula de 4 km con miles de pluviómetros y estaciones meteorológicas. Lo usamos para revisar los datos de lluvia de la NASA. Lo revisamos en 201 puntos de muestra del norte de Texas, 2008–2024: la lluvia anual de NASA POWER coincidió con PRISM con una correlación de 0.92 y marcó cerca de 9% menos; GPM IMERG coincidió con 0.93 y marcó cerca de 4% más. Ambos datos de la NASA se ajustan en parte con pluviómetros, así que esto muestra consistencia, no una prueba totalmente independiente. No cambia los puntos de confianza."
     },
     "kFactor": {
       "title": "Riesgo de erosión (factor K)",
@@ -541,7 +702,11 @@
     },
     "seasonReplay": {
       "title": "Repaso de temporadas",
-      "text": "Sembramos cada rotación en papel y la pasamos día por día por cada temporada real desde 1985, con el clima de la NASA. Un balance de agua diario sigue el agua del suelo, factores de cultivo publicados convierten la falta de agua en rendimiento, y la fórmula RUSLE estima la pérdida de suelo. Para 2040 movemos esas temporadas reales según el cambio que proyectan ocho modelos de clima de la NASA. Luego cada rotación se califica en cobertura del suelo, erosión, ganancia, aguante en años malos, nitrógeno y plagas. Es una simulación basada en ciencia agrícola publicada, no un modelo entrenado, y es un punto de partida para hablar con su agente de Extensión, no una receta."
+      "text": "Sembramos cada rotación en papel y la pasamos día por día por cada temporada de 1985 a 2025, con el clima de la NASA. Un balance de agua diario sigue el agua del suelo, factores de cultivo publicados convierten la falta de agua en rendimiento, y la fórmula RUSLE estima la pérdida de suelo. Para 2040 movemos esas temporadas reales según los escenarios climáticos de la NASA. Luego cada rotación se califica en cobertura del suelo, erosión, ganancia, aguante en años malos, nitrógeno y plagas. Es una simulación basada en ciencia agrícola publicada, no un modelo entrenado, y es un punto de partida para hablar con su agente de Extensión, no una receta."
+    },
+    "privacy": {
+      "title": "Privacidad",
+      "text": "Nunca guardamos su ubicación, su dirección ni las respuestas sobre su granja. “Usar mi ubicación” se usa una sola vez, en su teléfono, para encontrar el campo de estudio más cercano. Para encontrar una dirección, la buscamos con el servicio de mapas gratuito de la Oficina del Censo de EE. UU. Nosotros no guardamos nada."
     }
   },
   "si": {
@@ -688,7 +853,10 @@
     "coverAssumption": "Supone que el cultivo de cobertura se establece. En un otoño seco puede que no.",
     "estimatedFor": "Estimado, no medido, para: {crops}.",
     "fallowNote": "El barbecho desnudo es nuestra estimación para un campo labrado. Los campos “en barbecho” del satélite suelen tener maleza, así que no lo muestran.",
-    "replayBare": "Días desnudos si volviera {year}"
+    "replayBare": "Días desnudos si volviera {year}",
+    "tileLabel": "Días desnudos al año",
+    "barsAlt": "Probabilidad de suelo desnudo en cada mes, de enero a diciembre. Mes más desnudo: {month}.",
+    "takeaway": "Más desnudo en {month}: unos {days} días de ese mes. Es una estimación."
   },
   "how": {
     "link": "Cómo lo sabemos",
@@ -699,7 +867,15 @@
     "notesTitle": "Bueno saberlo",
     "jump": "Ir a una palabra",
     "dataLabel": "Datos",
-    "back": "Volver"
+    "back": "Volver",
+    "backTo": {
+      "field": "Volver al mapa",
+      "farm": "Volver a su granja",
+      "story": "Volver al historial del campo",
+      "compare": "Volver a comparar",
+      "handoff": "Volver al resumen para el experto",
+      "how": "Volver"
+    }
   },
   "whatIf": {
     "drier": "Suposición: {pct}% menos lluvia que el año promedio de este campo.",
@@ -756,7 +932,12 @@
     "source": "Encuesta USDA NASS Quick Stats: rendimientos y precios recibidos en Texas, promedios de {years}.",
     "notInScore": "Los dólares se muestran solo como contexto. No cambian el puntaje ni el orden de las opciones.",
     "nSource": "Estimación nacional, no de Texas: precio de distribuidores de Illinois para amoníaco anhidro (82% N), informe de USDA AMS del {date}. Pregunte a su proveedor por los precios locales.",
-    "nSourceVar": "Amoníaco anhidro (82% N): ${perTon} por tonelada ÷ 1,640 lb de N = ${perLb} por libra de N"
+    "nSourceVar": "Amoníaco anhidro (82% N): ${perTon} por tonelada ÷ 1,640 lb de N = ${perLb} por libra de N",
+    "tileLabel": "Ingreso bruto",
+    "tileValue": "≈ ${usd}",
+    "tileUnit": "por acre al año",
+    "notProfitShort": "Antes de costos. No es ganancia.",
+    "barLabel": "{pct}% de la opción más alta mostrada"
   },
   "soilFacts": {
     "title": "Su suelo: {series}",
@@ -783,7 +964,17 @@
       "c": "límites por clima"
     },
     "lccDetail": "La clase 1 tiene menos límites para cultivos; la clase 8 no es para cultivos (sin riego)",
-    "source": "Estudio de suelos del USDA (SSURGO), suelo principal de su campo"
+    "source": "Estudio de suelos del USDA (SSURGO), suelo principal de su campo",
+    "grid": {
+      "k": "Riesgo de erosión",
+      "t": "Pérdida de suelo tolerable",
+      "water": "Agua que guarda el suelo",
+      "lcc": "Capacidad de la tierra"
+    },
+    "kShort": "Factor K {k}",
+    "tShort": "{t} toneladas",
+    "tUnit": "por acre al año (T)",
+    "waterShort": "{cm} cm, primeros 3.3 pies"
   },
   "frost": {
     "title": "Fechas de helada",
@@ -793,8 +984,9 @@
     "typical": "Fecha media, {from}–{to}",
     "season": "Temporada sin heladas",
     "seasonValue": "{days} días",
-    "powerNote": "NASA POWER indica {days} días. El modelo de tipos de año usa ese dato.",
-    "source": "Temperaturas diarias de PRISM (4 km, de estaciones meteorológicas), mínima de 32 °F o menos"
+    "powerNote": "NASA POWER indica {days} días.",
+    "source": "Temperaturas diarias de PRISM (4 km, de estaciones meteorológicas), mínima de 32 °F o menos",
+    "seasonLine": "Temporada sin heladas: unos {days} días."
   },
   "yearTypeYear": {
     "drought": "un año de sequía",
@@ -828,7 +1020,7 @@
   },
   "fieldShift": {
     "title": "Repaso de temporadas en el condado de Ellis",
-    "intro": "Un estudio en {n} campos del condado de Ellis: siete rotaciones repasadas día por día en cada temporada de 1985 a 2025 y con las proyecciones del clima de 2040, y luego calificadas en seis metas. Usa un campo típico y un solo punto de clima, así que no cambia los puntajes de su campo de arriba.",
+    "intro": "Un estudio en {n} campos del condado de Ellis: siete rotaciones repasadas día por día en cada temporada de 1985 a 2025 y con los escenarios climáticos de 2040, y luego calificadas en seis metas. Usa un campo típico y un solo punto de clima, así que no cambia los puntajes de su campo de arriba.",
     "priorityLabel": "Lo que más le importa",
     "preset": {
       "balanced": "Equilibrado",
@@ -873,6 +1065,706 @@
     "m3Title": "Tipos de año:",
     "m3Line": "Las temporadas de 1985–2025 agrupadas en {drought} años de sequía, {hot} calurosos, {normal} normales y {wet} húmedos. Grupos aproximados, solo como guía.",
     "notYourField": "El repaso es una simulación basada en agronomía publicada (balance de agua FAO-56, respuesta del rendimiento FAO-33, pérdida de suelo RUSLE), no aprendizaje automático. Los precios, presupuestos y pagos de apoyo son estimados que debe confirmar con su oficina de Extensión del condado y la del NRCS.",
-    "rankingHint": "Puntaje promedio en {n} escenarios (5 climas × 2 juegos de precios). Esto decide el orden."
+    "rankingHint": "Puntaje promedio en {n} escenarios (5 climas × 2 juegos de precios). Esto decide el orden.",
+    "notField": "Simulación de todo el condado en un campo típico. No es su campo.",
+    "whyDiffers": "Por qué no es la misma respuesta que las tarjetas de su campo ({field}): este estudio prueba su propia lista de siete rotaciones en un campo típico del condado, con costos del condado y proyecciones de clima. Aquí la mejor es {study}. Las tarjetas de arriba usan los datos de su propio campo y sus metas.",
+    "modelsPlaceholder": "Los modelos del campo se están reentrenando y se conectarán aquí. No mostramos sus cifras de precisión hasta entonces."
+  },
+  "search": {
+    "label": "Buscar un lugar",
+    "placeholder": "Dirección, camino o pueblo",
+    "clear": "Borrar la búsqueda",
+    "go": "Buscar",
+    "kind": {
+      "town": "Pueblo",
+      "address": "Dirección"
+    },
+    "none": "No encontramos nada. Agregue el pueblo, o toque su campo en el mapa.",
+    "error": "No pudimos conectar con el servicio de direcciones. Inténtelo de nuevo o escriba un pueblo.",
+    "offline": "La búsqueda de direcciones necesita internet. Aún puede tocar un campo o escribir un pueblo.",
+    "privacy": "Nunca guardamos su dirección ni sus datos."
+  },
+  "v2": {
+    "placeholderTag": "provisional, modelo en camino",
+    "sampleBanner": "Datos de muestra para pruebas",
+    "noText": "Aún no hay detalles disponibles.",
+    "scores": {
+      "profit": "Ganancia",
+      "risk": "Poco riesgo",
+      "soil": "Suelo",
+      "water": "Agua",
+      "nutrients": "Nutrientes",
+      "pests": "Plagas"
+    },
+    "priorities": {
+      "income": "Ingresos",
+      "soil": "Salud del suelo",
+      "lowRisk": "Poco riesgo",
+      "saveWater": "Ahorrar agua"
+    },
+    "option": {
+      "current": "Lo que siembra ahora",
+      "generated": "Opción: {crops}",
+      "rotation": "{crops}",
+      "rotationWithCover": "{crops} con {covers}"
+    },
+    "fit": {
+      "water": {
+        "pass": "El siguiente cultivo empieza con poca agua en cerca del {shortYears}% de los años.",
+        "warn": "El siguiente cultivo empieza con poca agua en cerca de {shortYears}% de los años ({waterCostMm} mm menos que la rotación de hoy).",
+        "fail": "El siguiente cultivo empieza con poca agua en cerca del {shortYears}% de los años, demasiado seguido."
+      },
+      "disease": {
+        "pass": "Sin plagas compartidas entre cultivos seguidos y sin repetir la misma familia.",
+        "warn": "La misma familia de cultivos dos años seguidos.",
+        "warnRisingRisk": "Sube el riesgo de plagas por el clima.",
+        "fail": "Un cultivo de cobertura aquí hospeda una plaga grave del siguiente cultivo comercial.",
+        "failGreenBridge": "{cover} pasaría {pest}, una plaga grave, a {nextCrop}.",
+        "warnFamilyRepeat": "Después de {crop} sigue {nextCrop}, de la misma familia, lo que mantiene vivas las plagas.",
+        "warnSharedHost": "{crop} y {nextCrop} comparten {pest}.",
+        "warnGreenBridge": "{cover} puede pasar {pest} a {nextCrop} (un riesgo pequeño).",
+        "warnWeatherRisk": "Las pérdidas por plagas ligadas al clima son {ratio} veces mayores en condiciones de 2040."
+      },
+      "market": {
+        "pass": "Los {crops} cultivos comerciales se siembran cerca.",
+        "passFewBuyers": "Se siembra en {acres} acres cercanos; confirme un comprador.",
+        "warn": "Pocos acres cercanos o un precio local débil.",
+        "warnFewAcres": "Pocos campos cercanos siembran {crop} ({share}% de los campos del estudio).",
+        "fail": "Casi nadie cerca siembra {crop}, no hay registro del condado y no se anotó ningún comprador.",
+        "warnNoCountyRecord": "No hay registro de rendimiento del condado para {crop}; unos pocos campos cercanos lo siembran ({share}%).",
+        "warnWeakPrice": "El último precio de {crop} es {ratio}% de su mediana de 10 años."
+      },
+      "season": {
+        "pass": "Cada cultivo termina antes del siguiente o de la helada.",
+        "warn": "El calendario es justo.",
+        "warn2040": "Cabe hoy, pero no terminaría en {share2040}% de las temporadas con los escenarios climáticos de 2040.",
+        "fail": "{crop} no termina en más de 1 de cada 5 temporadas simuladas.",
+        "warnTight": "{crop} no terminó (o se heló) en {share}% de las temporadas simuladas: poco margen de tiempo."
+      }
+    },
+    "reason": {
+      "profit": {
+        "median": "Retorno mediano sobre costos variables: {usd} por acre al año.",
+        "nCredit": "Incluye {usd} de fertilizante ahorrado por el nitrógeno de las leguminosas.",
+        "vsCurrent": "{usd} al año frente a su rotación actual."
+      },
+      "risk": {
+        "baseline": "El mismo resultado en el peor año que ahora.",
+        "worst10": "En el 10% de las peores temporadas: {usd} por acre.",
+        "vsCurrent": "El resultado del peor 10% es {usd} frente a su rotación actual."
+      },
+      "soil": {
+        "bareDays": "Suelo desnudo unos {days} días al año.",
+        "erosionOverT": "Erosión simulada de {erosion} toneladas por acre al año, sobre el límite del suelo de {t}.",
+        "erosionUnderT": "Erosión simulada de {erosion} toneladas por acre al año, bajo el límite del suelo de {t}.",
+        "somUp": "La materia orgánica del suelo sube unos {pct} puntos por década.",
+        "somDown": "La materia orgánica del suelo baja unos {pct} puntos por década."
+      },
+      "water": {
+        "ok": "Deja suficiente agua para el siguiente cultivo.",
+        "lowUse": "Usa poca agua.",
+        "coverUsesWater": "La cobertura usa unos {mm} mm de agua.",
+        "atPlanting": "Al sembrar, el suelo tiene {share}% del agua que puede guardar.",
+        "supply": "Los cultivos recibieron {ratio}% del agua que necesitaban."
+      },
+      "nutrients": {
+        "allBought": "Se compran las {lb} lb de nitrógeno.",
+        "legumeCredit": "Una leguminosa ahorra unas {lb} lb de nitrógeno.",
+        "bought": "Unas {lb} lb de nitrógeno compradas por acre al año.",
+        "noneBought": "No hace falta fertilizante de nitrógeno.",
+        "fixed": "Las leguminosas aportan unas {lb} lb de nitrógeno por acre al año.",
+        "mining": "Cada año sale del campo {lb} lb más de nitrógeno de lo que entra."
+      },
+      "pests": {
+        "familiesRotate": "Las familias de cultivos rotan, lo que rompe los ciclos de plagas.",
+        "grassRepeat": "Una gramínea sigue a otra gramínea.",
+        "greenBridge": "{cover} puede pasar {pest} a {nextCrop}.",
+        "lowLoss": "La pérdida simulada por plagas es baja: {pct}% del rendimiento.",
+        "loss": "Pérdida simulada por plagas: {pct}% del rendimiento.",
+        "familyRepeat": "{share}% de los cambios de cultivo se quedan en la misma familia."
+      }
+    },
+    "conf": {
+      "placeholderSlots": "{n} de los 5 modelos del campo son provisionales por ahora.",
+      "warnedCheck": "La prueba de {check} da un aviso.",
+      "beatsOften": "Supera su rotación actual en {share}% de las simulaciones de qué pasaría si.",
+      "beatsSometimes": "Supera su rotación actual en {share}% de las simulaciones: a veces, no siempre.",
+      "beatsRarely": "Supera su rotación actual en solo {share}% de las simulaciones.",
+      "isCurrent": "Su rotación actual: no se compara consigo misma.",
+      "climateDisagree": "Se sostiene en solo {agree} de {of} escenarios climáticos de 2040 (cambios simples de calor y menos lluvia).",
+      "warnedChecks": "{n} revisión(es) de ajuste muestran una advertencia.",
+      "cappedByPlaceholders": "La confianza se mantiene en media porque {slots} aún usan valores por defecto.",
+      "currentRotationGuess": "El mapa de cultivos nombra solo {known} cultivo(s) en este campo en los últimos años, así que \"su rotación de hoy\" es una suposición. Por favor revísela.",
+      "currentRotationNoHistory": "No se encontró historial de cultivos (probablemente pasto o heno); la rotación actual es una suposición."
+    },
+    "best": {
+      "mostProfitable": "Mayor ganancia esperada dentro de sus límites (típica {usd} por acre).",
+      "bestBalance": "El mejor equilibrio para sus metas.",
+      "safest": "El mejor resultado en las peores temporadas ({usd} por acre)."
+    },
+    "validation": {
+      "bareDays": "Días desnudos frente a lo medido",
+      "cropDates": "Fechas de cultivo",
+      "erosion": "Erosión",
+      "expertRanking": "Ranking de expertos",
+      "modelAccuracy": "Precisión de los modelos",
+      "neighborBacktest": "Campos vecinos",
+      "soilMoisture": "Humedad del suelo",
+      "yields": "Rendimientos frente a los del condado",
+      "pending": "Esperando los modelos del campo."
+    },
+    "zone": {
+      "steepEdge": "Borde más empinado del campo",
+      "wholeField": "Todo el campo (una zona; aún no hay datos por zona)"
+    },
+    "notice": "Algunos números usan valores provisionales hasta que nuestros modelos del campo estén listos.",
+    "placeholderShort": "provisional",
+    "placeholderListTitle": "Números provisionales en esta tarjeta",
+    "slots": {
+      "modelA": "Modelo A, historial del campo",
+      "modelB": "Modelo B, respuesta del campo",
+      "modelC": "Modelo C, tipos de año",
+      "modelD": "Modelo D, humedad del suelo",
+      "calibrationE": "Calibración E, rendimientos"
+    },
+    "risk": {
+      "dryMonths": "Seco en {share}% de los años (menos de 60% de la lluvia normal).",
+      "hotMonths": "1.5 °C más caliente de lo normal en {share}% de los años.",
+      "calmMonth": "Sin problemas regulares de clima este mes.",
+      "noData": "Sin datos para este mes.",
+      "peakErosionMonth": "La mayor erosión simulada es en {month}: {share}% del total del año.",
+      "warmingOffset": "La comparación de 2040 suma {warmC} °C de calor. Es un cálculo con escenarios climáticos simples.",
+      "rainVariabilitySame": "La variabilidad de la lluvia en 2040 se muestra igual que hoy: aún no tenemos una proyección."
+    },
+    "pest": {
+      "cereal-rust": "roya de los cereales",
+      "grass-foliar-disease": "enfermedad foliar de pastos",
+      "cotton-root-rot": "pudrición de raíz del algodón",
+      "root-knot-nematode": "nematodo agallador",
+      "charcoal-rot": "pudrición carbonosa",
+      "sugarcane-aphid": "pulgón de la caña de azúcar"
+    },
+    "honest": {
+      "confCap": "La confianza no puede ser alta hasta que nuestros modelos del campo estén listos.",
+      "tillage": "Estas cifras suponen labranza reducida.",
+      "tillageTry": "Su ajuste de labranza se usa en el simulador de la granja.",
+      "costShare": "Costos compartidos: no estimados.",
+      "fixedCosts": "Costos fijos: valores provisionales."
+    },
+    "val": {
+      "title": "Boleta de validación",
+      "intro": "Ocho pruebas del simulador contra datos medidos, en {n} campos del condado de Ellis. Mostramos todos los resultados, incluso los que fallaron.",
+      "misses": "Algunas diferencias vienen de valores provisionales que nuestros modelos del campo van a reemplazar; otras las seguimos ajustando en el motor.",
+      "target": "Meta",
+      "measured": "Medido",
+      "status": {
+        "pass": "Aprobada",
+        "fail": "Fallada",
+        "partial": "En parte",
+        "pending-model": "Esperando modelos",
+        "not-run": "Aún no se hace"
+      },
+      "n": "{n} comparaciones",
+      "check1": {
+        "name": "Precisión de los modelos",
+        "target": "Los modelos del campo puntúan bien en años que nunca vieron.",
+        "needsModels": "Necesita los modelos del campo."
+      },
+      "check2": {
+        "name": "Días desnudos vs satélite",
+        "target": "Al menos {share}% de los campos a menos de {days} días de los días desnudos del satélite.",
+        "note": "Los días desnudos del satélite vienen del promedio de todo el contorno con Landsat 8/9 y pueden subestimar el suelo desnudo. La labranza es una suposición."
+      },
+      "check3": {
+        "name": "Fechas de cultivo",
+        "target": "Fechas de cultivo simuladas a menos de {days} días de las del satélite.",
+        "note": "Se compara con el mes de mayor verdor, una medida aproximada."
+      },
+      "check4": {
+        "name": "Rendimientos vs los del condado",
+        "target": "Correlación año a año de al menos {correlation} y rendimiento a menos de {ratioError}% del rendimiento del condado.",
+        "note": "Todavía no se ajustó nada a los rendimientos; la calibración de rendimiento es provisional."
+      },
+      "check5": {
+        "name": "Erosión",
+        "target": "Erosión simulada cercana a la erosión medida.",
+        "needsMeasurements": "Necesita datos de erosión medida."
+      },
+      "check6": {
+        "name": "Humedad del suelo",
+        "target": "Humedad simulada cercana a la humedad medida por satélite.",
+        "needsModelD": "Necesita el modelo de humedad del suelo (D)."
+      },
+      "check7": {
+        "name": "Prueba con vecinos",
+        "target": "Los planes coinciden con lo que hicieron vecinos con campos parecidos.",
+        "needsModelA": "Necesita el modelo de historial de cultivos (A)."
+      },
+      "check8": {
+        "name": "Ranking de expertos",
+        "target": "Los expertos locales ordenan las opciones igual.",
+        "needsInterview": "Necesita una entrevista con expertos locales."
+      },
+      "res2": "{share}% de los campos a menos de 15 días. Simulado {sim} vs medido {meas} días desnudos al año.",
+      "res3": "Error promedio: {days} días.",
+      "res4crop": "{crop}: rendimiento simulado {ratio}% del rendimiento del condado."
+    }
+  },
+  "optionsScreen": {
+    "title": "Opciones",
+    "intro": "Lo que usted siembra ahora y las mejores opciones para este campo, lado a lado.",
+    "takeaway": "La ganancia es un rango probable, no una promesa. Consulte los puntos locales con su agente de extensión antes de cambiar algo.",
+    "current": "Lo que siembra ahora",
+    "option": "Opción {letter}",
+    "best": "La mejor opción",
+    "gradeLabel": "Nota {grade}, {total} de 100",
+    "vsToday": "puntos frente a lo que siembra ahora",
+    "scoresTitle": "Seis puntajes",
+    "fitTitle": "Cuatro pruebas de ajuste",
+    "fit": {
+      "name": {
+        "water": "Agua",
+        "disease": "Enfermedad",
+        "market": "Mercado",
+        "season": "Temporada"
+      },
+      "status": {
+        "pass": "Pasa",
+        "warn": "Aviso",
+        "fail": "Falla"
+      }
+    },
+    "profitLabel": "Ganancia sobre costos variables",
+    "perAcreYear": "por acre al año",
+    "profitRange": "Rango probable de {low} a {high}",
+    "profitBaseline": "Esto es lo que siembra ahora. Las opciones se comparan con esto.",
+    "beatsToday": "Supera lo que siembra ahora en el {pct}% de las simulaciones",
+    "soilSaved": "Suelo ahorrado",
+    "soilUnit": "toneladas por acre al año, frente a ahora",
+    "nitrogenSaved": "Nitrógeno ahorrado",
+    "nitrogenUnit": "lb de nitrógeno por acre al año, frente a ahora",
+    "local": {
+      "title": "Verifique localmente ({count})",
+      "who": "Quién lo verifica: {who}",
+      "item": {
+        "coverEstablishment": {
+          "what": "¿Nacerá el cultivo de cobertura en su suelo?",
+          "who": "agente de extensión, vecinos"
+        },
+        "equipment": {
+          "what": "Equipo (sembradora de siembra directa, segunda sembradora)",
+          "who": "usted"
+        },
+        "legumeNitrogenCredit": {
+          "what": "Crédito de nitrógeno de las leguminosas",
+          "who": "agente de extensión, análisis de suelo"
+        },
+        "seedPriceAvailability": {
+          "what": "Precio y disponibilidad de semilla",
+          "who": "distribuidor de semilla"
+        },
+        "buyersLocalPrice": {
+          "what": "Compradores y precio local",
+          "who": "usted"
+        },
+        "localPests": {
+          "what": "Qué plagas tiene realmente su condado",
+          "who": "agente de extensión"
+        },
+        "waterRights": {
+          "what": "Derechos de agua y riego",
+          "who": "usted, distrito de agua"
+        },
+        "fieldQuirks": {
+          "what": "Rarezas del campo: zonas húmedas, drenaje, manejo anterior",
+          "who": "usted"
+        },
+        "costShareEligibility": {
+          "what": "Elegibilidad para costos compartidos",
+          "who": "oficina local del NRCS"
+        }
+      }
+    },
+    "loading": "Cargando opciones…",
+    "error": {
+      "network": "No pudimos cargar las opciones. Revise su conexión e inténtelo de nuevo.",
+      "invalid": "El archivo de opciones de este campo no pasó nuestras revisiones, así que no lo mostramos.",
+      "missing": "Todavía no hay datos aquí: este campo aún no se ha calculado. Elija otro campo en el mapa."
+    },
+    "weightedFor": "Ponderado según sus metas: {goals}.",
+    "neighbors": "{count} campos a menos de {miles} millas hacen esto.",
+    "checkOf": "Prueba de {name}"
+  },
+  "placeholder": {
+    "noOutlook": "Aún no hay pronóstico; se usa el promedio del calendario."
+  },
+  "plansScreen": {
+    "title": "Mejores planes",
+    "intro": "Tres respuestas para este campo, lado a lado: el más rentable, el mejor equilibrio para sus metas y el más seguro.",
+    "loading": "Cargando planes…",
+    "error": {
+      "network": "No pudimos cargar los planes. Revise su conexión e intente de nuevo.",
+      "invalid": "El archivo de planes de este campo no pasó nuestras revisiones, así que no lo mostramos.",
+      "missing": "Todavía no hay datos aquí: este campo aún no se ha calculado. Elija otro campo en el mapa."
+    },
+    "limitsTitle": "Dentro de sus límites",
+    "limits": {
+      "risk": {
+        "worst10-no-worse-than-current": "El 10% de las peores temporadas no es peor que lo que siembra ahora."
+      },
+      "soil": {
+        "erosion-under-T": "La erosión se mantiene por debajo del límite del suelo (T)."
+      },
+      "fitChecks": {
+        "no-fail": "Ninguna revisión de ajuste falla."
+      }
+    },
+    "glanceTitle": "De un vistazo",
+    "typicalPerAcre": "típica, por acre al año",
+    "glanceChance": "Supera lo actual en {pct}% de las simulaciones",
+    "kind": {
+      "mostProfitable": {
+        "name": "Más rentable",
+        "blurb": "La mayor ganancia típica dentro de sus límites."
+      },
+      "bestBalance": {
+        "name": "Mejor equilibrio",
+        "blurb": "La que mejor encaja con las metas que eligió."
+      },
+      "safest": {
+        "name": "Más segura",
+        "blurb": "El mejor resultado en las peores temporadas."
+      }
+    },
+    "sameAs": "Mismo plan que: {name}",
+    "rotationTitle": "Rotación",
+    "vsToday": "{diff} por acre al año frente a lo que siembra ahora (típico)",
+    "mgmtTitle": "Decisiones de manejo",
+    "mgmt": {
+      "label": {
+        "plantingDate": "Fecha de siembra",
+        "nitrogen": "Nitrógeno",
+        "maturity": "Variedad",
+        "cover": "Fin del cultivo de cobertura",
+        "doubleCrop": "Cultivo doble",
+        "tillage": "Labranza",
+        "irrigation": "Riego"
+      },
+      "plantingDate": {
+        "early": "Temprana",
+        "normal": "Normal",
+        "late": "Tardía"
+      },
+      "nitrogen": {
+        "rate": "{lb} lb por acre",
+        "none": "Ninguno"
+      },
+      "maturity": {
+        "short": "Ciclo corto",
+        "full": "Ciclo completo"
+      },
+      "cover": {
+        "early": "2 a 4 semanas antes de sembrar",
+        "at-planting": "Al sembrar",
+        "none": "Sin cultivo de cobertura"
+      },
+      "doubleCrop": {
+        "yes": "Sí",
+        "no": "No"
+      },
+      "tillage": {
+        "conventional": "Convencional",
+        "reduced": "Reducida",
+        "no-till": "Siembra directa"
+      },
+      "irrigation": {
+        "none": "Ninguno (secano)",
+        "limited": "Limitado",
+        "full": "Completo"
+      }
+    },
+    "ph": {
+      "profit": "Rango de ganancia y probabilidad de superar lo actual",
+      "management": "Decisiones de manejo"
+    },
+    "takeaway": "Son los mejores resultados esperados que encontramos dentro de sus límites. No son garantías. Consulte los puntos locales con su agente de extensión antes de cambiar algo."
+  },
+  "risksScreen": {
+    "title": "Riesgos del campo",
+    "intro": "Cuándo es más vulnerable este campo, dónde el suelo está en riesgo y cómo pueden cambiar las heladas y el calor hacia 2040.",
+    "loading": "Cargando riesgos del campo…",
+    "error": {
+      "network": "No pudimos cargar los riesgos del campo. Revise su conexión e intente de nuevo.",
+      "invalid": "El archivo de riesgos de este campo no pasó nuestras revisiones, así que no lo mostramos.",
+      "missing": "Todavía no hay datos aquí: este campo aún no se ha calculado. Elija otro campo en el mapa."
+    },
+    "level": {
+      "low": "Bajo",
+      "medium": "Medio",
+      "high": "Alto"
+    },
+    "stress": {
+      "title": "Calendario de estrés",
+      "intro": "Probabilidad, en porcentaje, de que un mes traiga estrés por sequía o calor a los cultivos de aquí.",
+      "peak": "Meses de mayor riesgo: {months}.",
+      "noPeak": "Ningún mes destaca como de riesgo alto."
+    },
+    "next": {
+      "title": "Próximos meses",
+      "chanceUnit": "de probabilidad de estrés",
+      "range": "Probablemente entre {low}% y {high}%"
+    },
+    "erosion": {
+      "title": "Zonas de erosión",
+      "intro": "Las partes del campo que más suelo pierden.",
+      "share": "{pct}% del campo",
+      "unit": "toneladas por acre al año",
+      "none": "No se encontraron zonas de erosión.",
+      "zoneFallback": "Parte del campo"
+    },
+    "water": {
+      "title": "Agua y agua subterránea",
+      "word": {
+        "falling": "Bajando",
+        "steady": "Estable",
+        "rising": "Subiendo",
+        "unknown": "Se desconoce",
+        "not-applicable": "No se usa"
+      },
+      "line": {
+        "falling": "El agua subterránea bajo este campo está bajando.",
+        "steady": "El agua subterránea bajo este campo está estable.",
+        "rising": "El agua subterránea bajo este campo está subiendo.",
+        "unknown": "No conocemos la tendencia del agua subterránea de este campo.",
+        "not-applicable": "Este es un campo de secano, así que el agua subterránea no aplica."
+      }
+    },
+    "climate": {
+      "title": "Heladas y calor: ahora y en 2040",
+      "now": "Ahora",
+      "y2040": "2040",
+      "name": {
+        "frostFreeDays": "Días sin helada al año",
+        "heatDays": "Días de calor al año",
+        "rainVariability": "Variabilidad de la lluvia"
+      },
+      "rainHint": "Cuánto puede diferir la lluvia de un año de lo normal. Más alto significa menos predecible.",
+      "same": "Sin cambio",
+      "up": {
+        "days": "{n} días más",
+        "points": "{n} puntos más"
+      },
+      "down": {
+        "days": "{n} días menos",
+        "points": "{n} puntos menos"
+      }
+    },
+    "ph": {
+      "stress": "Calendario de estrés y próximos meses",
+      "erosion": "Zonas de erosión",
+      "climate": "Heladas y calor en 2040"
+    },
+    "takeaway": "Son rangos probables a partir de registros del clima y modelos del campo, no pronósticos. Confírmelos con su agente de extensión."
+  },
+  "sim": {
+    "title": "Simulador de la finca",
+    "intro": "Empiece con su finca como está hoy, cambie lo que quiera y vea pasar las temporadas día por día.",
+    "notForecast": "Muestra lo que pasaría con el clima elegido. No es un pronóstico.",
+    "running": "Calculando la simulación",
+    "error": "No se pudo hacer la simulación. Intente de nuevo o elija otro campo.",
+    "controls": {
+      "title": "Sus decisiones",
+      "show": "Mostrar decisiones",
+      "hide": "Ocultar decisiones"
+    },
+    "plan": {
+      "today": "Su finca hoy",
+      "nameA": "Plan A: su finca hoy",
+      "nameB": "Plan B",
+      "compare": "Comparar con un segundo plan",
+      "editing": "Plan que está editando",
+      "rotation": "Cultivos por año",
+      "year": "Año {n}",
+      "crop": "Cultivo",
+      "cover": "Cultivo de cobertura",
+      "noCover": "Sin cobertura",
+      "addYear": "Agregar un año",
+      "removeYear": "Quitar un año",
+      "copyA": "Copiar el plan A"
+    },
+    "in": {
+      "tillage": "Labranza",
+      "tillageOpt": {
+        "conventional": "Convencional",
+        "reduced": "Reducida",
+        "no-till": "Siembra directa"
+      },
+      "nitrogen": "Nitrógeno",
+      "nDefault": "Dosis usual de cada cultivo",
+      "nRate": "{n} lb de N por acre",
+      "irrigation": "Riego",
+      "irrOpt": {
+        "none": "Ninguno (secano)",
+        "limited": "Limitado",
+        "full": "Completo"
+      },
+      "shift": "Fecha de siembra",
+      "shiftNormal": "Fecha usual",
+      "shiftEarly": "{n} días antes",
+      "shiftLate": "{n} días después",
+      "maturity": "Madurez de la variedad",
+      "maturityOpt": {
+        "full": "Ciclo completo",
+        "short": "Ciclo corto"
+      },
+      "termination": "Fin del cultivo de cobertura",
+      "termOpt": {
+        "at-planting": "A la siembra",
+        "early": "2 semanas antes de sembrar",
+        "none": "Sin terminar (sigue creciendo)"
+      }
+    },
+    "weather": {
+      "title": "Clima",
+      "kind": "Tipo de clima",
+      "year": "Qué año",
+      "redraw": "Sortear otros años",
+      "kinds": {
+        "typical": "Un año típico",
+        "past": "Un año pasado otra vez",
+        "random": "Un sorteo de años pasados",
+        "ssp245": "2040, escenario climático medio",
+        "ssp585": "2040, escenario climático alto"
+      },
+      "rain": "Lluvia",
+      "temp": "Temperatura",
+      "asIs": "sin cambio",
+      "wetter": "{n}% más lluvia",
+      "drier": "{n}% menos lluvia",
+      "hotter": "{n}°F más caliente",
+      "cooler": "{n}°F más fresco"
+    },
+    "money": {
+      "title": "Dinero",
+      "price": "Precios de los cultivos",
+      "nPrice": "Precio del nitrógeno por lb",
+      "rent": "Renta de la tierra por acre al año",
+      "note": "Los precios parten de los números del USDA para el campo. La ganancia es el ingreso menos los costos contados aquí, antes de gastos generales y préstamos."
+    },
+    "length": {
+      "title": "Duración",
+      "years": "{n} años",
+      "note": "Empieza en enero de {year}. Un año es una temporada de cada cultivo de la rotación."
+    },
+    "play": {
+      "title": "Reproducir",
+      "play": "Reproducir",
+      "pause": "Pausar",
+      "stepDay": "Avanzar un día",
+      "jumpMonth": "Saltar un mes",
+      "scrub": "Día de la simulación",
+      "speed": "Velocidad",
+      "speeds": {
+        "slow": "Lenta",
+        "normal": "Normal",
+        "fast": "Rápida"
+      }
+    },
+    "stage": {
+      "idle": "nada creciendo",
+      "fallow": "barbecho",
+      "planted": "sembrado",
+      "growing": "creciendo",
+      "flowering": "floreciendo",
+      "filling": "llenando el grano",
+      "mature": "maduro"
+    },
+    "today": {
+      "noCrop": "Sin cultivo",
+      "weather": "Máxima / mínima",
+      "rain": "Lluvia hoy: {n} pulg",
+      "water": "Agua del suelo",
+      "waterNote": "de {cap} pulg en la zona de raíces; estrés de agua {stress}%",
+      "cover": "Suelo cubierto",
+      "erosion": "Suelo perdido hasta hoy: {n} ton/ac",
+      "money": "Ganancia hasta hoy",
+      "nitrogen": "Nitrógeno en el suelo: {n} lb/ac"
+    },
+    "unit": {
+      "%": "por ciento",
+      "in": "pulgadas",
+      "lb": "lb por acre",
+      "$": "dólares por acre"
+    },
+    "chart": {
+      "crop": {
+        "title": "Cultivo",
+        "note": "Qué tan verde está el campo: la cobertura de hojas del cultivo, en por ciento."
+      },
+      "water": {
+        "title": "Agua",
+        "note": "Agua que las raíces alcanzan, en pulgadas. Más es mejor."
+      },
+      "soil": {
+        "title": "Suelo",
+        "note": "Suelo cubierto por cultivo y rastrojo, en por ciento. Menos de 30% cuenta como suelo desnudo."
+      },
+      "nutrients": {
+        "title": "Nutrientes",
+        "note": "Nitrógeno en el suelo, en libras por acre."
+      },
+      "pests": {
+        "title": "Plagas y enfermedades",
+        "note": "El mayor riesgo por clima entre las plagas del cultivo que está en el campo."
+      },
+      "money": {
+        "title": "Dinero",
+        "note": "Ganancia por acre hasta hoy: ingresos menos costos el día en que ocurren, menos la renta."
+      }
+    },
+    "score": {
+      "title": "Toda la simulación, por año",
+      "plan": "Plan",
+      "profit": "Ganancia $/ac",
+      "soil": "Suelo perdido t/ac (límite)",
+      "bare": "Días desnudo",
+      "nLeached": "N perdido lb/ac",
+      "note": "Promedios por año en {years} años de este clima. El límite es la pérdida de suelo tolerable, T."
+    },
+    "seasons": {
+      "title": "Temporada por temporada",
+      "caption": "Cosechas",
+      "crop": "Cultivo",
+      "ended": "Terminó",
+      "yield": "Rendimiento",
+      "vs": "vs lo usual"
+    },
+    "band": {
+      "title": "Cuánto varían los resultados",
+      "intro": "Corre el primer año de su plan con cada temporada pasada, usando el clima real de esa temporada.",
+      "show": "Mostrar el rango",
+      "hide": "Ocultar el rango",
+      "takeaway": "En {n} temporadas pasadas el resultado del medio fue {mid} por acre. El peor 1 de cada 10 fue {low} o menos, el mejor 1 de cada 10 fue {high} o más."
+    },
+    "log": {
+      "title": "Qué pasó",
+      "empty": "Todavía nada. Oprima reproducir."
+    },
+    "event": {
+      "planted": "Se sembró {crop}",
+      "flowering": "{crop} floreciendo",
+      "harvested": "Se cosechó {crop} {yield}",
+      "terminated": "Se terminó la cobertura de {crop}",
+      "cut": "Corte de {crop} {yield}",
+      "frost-kill": "La helada mató el cultivo de {crop}",
+      "flower-frost": "La helada dañó las flores de {crop}",
+      "fallow-start": "El campo quedó en barbecho"
+    },
+    "ph": {
+      "yields": "Rendimientos y ganancia",
+      "calendars": "Fechas de siembra y cosecha",
+      "weather2040": "Mezcla de clima 2040",
+      "startWater": "Agua inicial del suelo"
+    }
   }
 }

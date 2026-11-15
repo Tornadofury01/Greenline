@@ -5,6 +5,7 @@
 // field and one NASA POWER weather point, so it never changes this field's own scores. All text goes through t().
 import { useState } from 'react';
 import { Award, FlaskConical } from 'lucide-react';
+import { PlaceholderTag } from './PlaceholderTag.jsx';
 import { useApp } from '../state/AppContext.jsx';
 import study from '@shared/fieldshift/ellis-study.json';
 import ChipGroup from './ChipGroup.jsx';
@@ -27,20 +28,20 @@ const ROWS = [
 
 export const showsFieldShiftStudy = (field) => field?.field?.county === 'Ellis' && field?.field?.state === 'TX';
 
-export default function FieldShiftStudy() {
+// fieldBest: the name of the best rotation on the field's own cards (or null), for the "why they differ" note.
+export default function FieldShiftStudy({ fieldBest = null }) {
   const { t, field } = useApp();
   const [preset, setPreset] = useState('balanced');
   if (!showsFieldShiftStudy(field)) return null;
   const p = study.recommender.presets[preset];
   const { current: cur, recommended: rec } = p;
   const rot = (k) => t(`fieldShift.rot.${k}`);
-  const m = study.models;
-  const pct = (x) => Number((x * 100).toFixed(1)); // 0.915 -> 91.5 (the published figure), 0.9 -> 90
 
   return (
     <section className="card fs-study" aria-labelledby="fs-title">
+      <p className="fs-flag"><FlaskConical size={16} aria-hidden="true" /><span>{t('fieldShift.notField')}</span></p>
       <h2 id="fs-title" className="section-title">
-        <FlaskConical size={20} aria-hidden="true" />{t('fieldShift.title')} <GlossaryIcon term="seasonReplay" />
+        {t('fieldShift.title')} <GlossaryIcon term="seasonReplay" />
       </h2>
       <p className="muted">{t('fieldShift.intro', { n: study.area.nFields })}</p>
 
@@ -64,6 +65,7 @@ export default function FieldShiftStudy() {
         </div>
       </div>
       <p><ConfidenceBadge level={p.confidence} /></p>
+      {fieldBest && <p className="notice-inline">{t('fieldShift.whyDiffers', { study: rot(rec.key), field: fieldBest })}</p>}
       {p.closeCall && <p className="notice-inline">{t('fieldShift.closeCall', { other: rot(p.runnerUp), gap: p.gapPoints })}</p>}
 
       <table className="fs-table">
@@ -97,12 +99,8 @@ export default function FieldShiftStudy() {
       </div>
       <p className="hint small">{t('fieldShift.rankingHint', { n: p.scenarios })}</p>
 
-      <h3 className="fs-sub">{t('fieldShift.modelsTitle')} <GlossaryIcon term="fieldShiftModels" /></h3>
-      <ul className="si-list">
-        <li><strong>{t('fieldShift.m1Title')}</strong> {t('fieldShift.m1Line', { clean: pct(m.seasonCrop.accCleanFields), all: pct(m.seasonCrop.accAllFields) })}</li>
-        <li><strong>{t('fieldShift.m2Title')}</strong> {t('fieldShift.m2Line', { acc: pct(m.vegStress.testAcc), auc: m.vegStress.testAuc })}</li>
-        <li><strong>{t('fieldShift.m3Title')}</strong> {t('fieldShift.m3Line', { drought: m.yearPatterns.groups.drought, hot: m.yearPatterns.groups.hot, normal: m.yearPatterns.groups.normal, wet: m.yearPatterns.groups.wet })}</li>
-      </ul>
+      <h3 className="fs-sub">{t('fieldShift.modelsTitle')} <PlaceholderTag /></h3>
+      <p className="muted small">{t('fieldShift.modelsPlaceholder')}</p>
       <p className="muted small">{t('fieldShift.notYourField')}</p>
       <p className="muted small">{t('how.dataLabel')}: NASA POWER, NASA NEX-GDDP-CMIP6, Landsat 5/7/8/9, HLS, USDA Cropland Data Layer, SMAP, GPM IMERG, MODIS, OpenLandMap, SRTM, Texas A&amp;M AgriLife, USDA WASDE, NRCS EQIP</p>
     </section>

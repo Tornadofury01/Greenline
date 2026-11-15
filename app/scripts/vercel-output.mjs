@@ -17,7 +17,11 @@ writeFileSync(`${out}/config.json`, JSON.stringify({
     { src: '/(sw\\.js|registerSW\\.js|manifest\\.webmanifest)', headers: { 'cache-control': 'public, max-age=0, must-revalidate' }, continue: true },
     // Hashed build files never change.
     { src: '/assets/(.*)', headers: { 'cache-control': 'public, max-age=31536000, immutable' }, continue: true },
+    // v2 field files keep their name across re-runs: short cache, the service worker refreshes them.
+    { src: '/v2f/(.*)', headers: { 'cache-control': 'public, max-age=300, must-revalidate' }, continue: true },
     { handle: 'filesystem' },
+    // A field with no file is a real 404 (the app shows "No data here yet"), not index.html.
+    { src: '/v2f/(.*)', status: 404 },
     // A build file that doesn't exist (an old tab asking for a file a newer deploy replaced) is a real 404, not
     // index.html: then the app knows the load failed and can reload instead of trying to run HTML as code.
     { src: '/assets/(.*)', status: 404 },

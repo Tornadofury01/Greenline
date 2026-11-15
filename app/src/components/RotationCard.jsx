@@ -9,10 +9,11 @@ import { useApp } from '../state/AppContext.jsx';
 import { formatReason } from '../i18n.js';
 import { PRIORITIES } from '@scoring/index.js';
 import { topReasons } from '@scoring/confidence.js';
-import { ConfidenceBadge, Receipt } from './Small.jsx';
+import { Receipt } from './Small.jsx';
 import Verdict from './Verdict.jsx';
+import TextMorph from './TextMorph.jsx';
 import CoverStrip from './CoverStrip.jsx';
-import { DollarFace, DollarDetails } from './DollarBlock.jsx';
+import { DollarTile, DollarNotes, DollarDetails } from './DollarBlock.jsx';
 import GlossaryIcon from './GlossaryIcon.jsx';
 import { cropInsight, cropDriverText, stressDriverText, modelSummary } from '../si.js';
 
@@ -64,18 +65,51 @@ function ToneList({ items, className = 'icon-list' }) {
   );
 }
 
-// The headline number for erosion: estimated bare days a year, and how many this option removes (or adds) vs. today.
-function BareBlock({ bare, delta }) {
+const DAYS_IN_MONTH = [31, 28.25, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const BAR_FULL = 0.5; // a full-height mini bar = bare half the month or more ("often bare" in the month strip)
+
+// The headline number for erosion: estimated bare days a year and how many this option removes (or adds) vs. today,
+// with a mini bar chart of the chance of bare ground in each month. The barest month is the highlighted bar, and
+// the line under the chart says it in words (the bars alone never carry the meaning).
+function BareTile({ bare, delta }) {
   const { t } = useApp();
   if (!bare) return null;
   const dir = delta == null ? null : delta < 0 ? 'fewer' : delta > 0 ? 'more' : 'same';
+  const months = bare.bareMonths;
+  const peak = Math.max(...months);
+  const worst = peak > 0 ? months.indexOf(peak) : -1;
+  const month = worst >= 0 ? t('story.monthsLong')[worst] : null;
   return (
-    <div className="bare-block">
-      <div className="bare-big">
-        <span className="bare-num">{bare.bareDays}</span>
-        <span className="bare-unit">{t('bareUi.unit')} <small>({t('bareUi.estimate')})</small></span>
+    <>
+      <div className="tile tile-wide">
+        <div className="tile-col">
+          <span className="tile-label">{t('bareUi.tileLabel')}</span>
+          <span className="tile-value">{bare.bareDays} <span className="pill-estimate">{t('bareUi.estimate')}</span></span>
+          {dir && <span className={`tile-note bare-delta ${dir}`}>{t(`bareUi.${dir}`, { n: Math.abs(delta) })}</span>}
+        </div>
+        <div className="mini-bars" role="img" aria-label={month ? t('bareUi.barsAlt', { month }) : t('bareUi.stripAltNone')}>
+          {months.map((p, i) => <span key={i} className={i === worst ? 'worst' : ''} style={{ height: `${Math.round(Math.min(1, p / BAR_FULL) * 100)}%` }} />)}
+        </div>
       </div>
-      {dir && <span className={`bare-delta ${dir}`}>{t(`bareUi.${dir}`, { n: Math.abs(delta) })}</span>}
+      <p className="takeaway small">
+        {month ? t('bareUi.takeaway', { month, days: Math.round(peak * DAYS_IN_MONTH[worst]) }) : t('bareUi.stripAltNone')}
+      </p>
+    </>
+  );
+}
+
+// Confidence as a small stat tile: the level in words and a thin bar of the points behind it.
+// 5 points are possible with the SI models, 3 without (see scoring/confidence.js).
+function ConfidenceTile({ confidence }) {
+  const { t, field } = useApp();
+  const max = field?.si ? 5 : 3;
+  const n = Math.max(0, Math.min(max, confidence.points));
+  return (
+    <div className="tile">
+      <span className="tile-label">{t('compare.confTile')} <GlossaryIcon term="confidence" /></span>
+      <span className="tile-value">{t(`confidenceLevel.${confidence.level}`)}</span>
+      <span className="tile-unit">{t('compare.confPoints', { n, max })}</span>
+      <span className="thin-bar" aria-hidden="true"><span style={{ width: `${(100 * n) / max}%` }} /></span>
     </div>
   );
 }
@@ -207,7 +241,7 @@ function EvidenceFooter({ result }) {
 }
 
 // open/onToggle are optional: pass them to control several cards together (desktop side-by-side view).
-export default function RotationCard({ result, label, name, best = false, delta = null, bareDelta = null, defaultOpen = false, open: openProp, onToggle }) {
+export default function RotationCard({ result, label, name, best = false, delta = null, bareDelta = null, maxGross = null, defaultOpen = false, open: openProp, onToggle }) {
   const { t, replayYear, whatIf } = useApp();
   // A scenario (real replay year or what-if) is on: the card shows its numbers.
   const rp = (replayYear != null || whatIf) && result.replay ? result.replay : null;
@@ -222,39 +256,40 @@ export default function RotationCard({ result, label, name, best = false, delta 
 
   return (
     <article className={`rot ${best ? 'is-best' : ''}`} aria-label={`${label}: ${name}`}>
-      {best && (
-        <div className="rot-best-bar">
-          <Award size={16} aria-hidden="true" />{t('compare.bestMatch')}
-        </div>
-      )}
       <div className="rot-main">
         <div className="rot-top">
           <div>
             <div className="rot-label">{label}</div>
+            {best && <span className="pill pill-best"><Award size={14} aria-hidden="true" />{t('compare.bestMatch')}</span>}
             {rp?.hypothetical && <span className="badge badge-hypo"><FlaskConical size={14} aria-hidden="true" />{t('whatIfUi.badge')}</span>}
             <h3>{name}</h3>
           </div>
           <div className="rot-score">
             {maxed
               ? <Verdict verdict={rp.verdict} maxed big />
-              : <div className="rot-score-num">{shown}</div>}
+              : <div className="rot-score-num"><TextMorph text={shown} /></div>}
             <div className="rot-score-of">{rp ? scenarioTitle : t('compare.outOf')}</div>
           </div>
         </div>
         <CropSteps crops={result.crops} />
-        <BareBlock bare={rp?.bareDays ?? result.bareDays} delta={bareDelta} />
-        <div className="badges">
-          <ConfidenceBadge level={result.confidence.level} />
-          {result.tags.map((tag) => {
-            const Icon = TAG_ICON[tag];
-            return <span key={tag} className="badge" title={t(`tags.explain.${tag}`)}><Icon size={14} aria-hidden="true" />{t(`tags.${tag}`)}</span>;
-          })}
-        </div>
-        <ToneList items={topReasons(result.confidence)} className="icon-list conf-face" />
         <Delta value={delta} />
         {rp && <ReplaySummary replay={rp} normal={result.total} shown={shown} maxed={maxed} />}
+        {result.tags.length > 0 && (
+          <div className="pills">
+            {result.tags.map((tag) => {
+              const Icon = TAG_ICON[tag];
+              return <span key={tag} className="pill" title={t(`tags.explain.${tag}`)}><Icon size={14} aria-hidden="true" />{t(`tags.${tag}`)}</span>;
+            })}
+          </div>
+        )}
+        <div className="tiles">
+          <ConfidenceTile confidence={result.confidence} />
+          <DollarTile dollars={result.dollars} maxGross={maxGross} />
+        </div>
+        <DollarNotes dollars={result.dollars} />
+        <BareTile bare={rp?.bareDays ?? result.bareDays} delta={bareDelta} />
+        <ToneList items={topReasons(result.confidence)} className="icon-list conf-face" />
         <TopReason crops={result.crops} />
-        <DollarFace dollars={result.dollars} />
       </div>
 
       <button type="button" className="rot-toggle" aria-expanded={open} aria-controls={detailsId} onClick={() => setOpen(!open)}>

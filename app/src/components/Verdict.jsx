@@ -1,6 +1,7 @@
 // "Holds up / Under strain / Struggles" pill for a bad-year replay. Icon + words, never colour alone.
 import { CircleCheck, TriangleAlert, CircleX } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
+import TextMorph from './TextMorph.jsx';
 
 const ICON = { holds: CircleCheck, strained: TriangleAlert, struggles: CircleX };
 
@@ -12,7 +13,7 @@ export default function Verdict({ verdict: v, maxed = false, big = false }) {
   if (!Icon) return null;
   return (
     <span className={`verdict verdict-${verdict}${big ? ' verdict-big' : ''}`}>
-      <Icon size={big ? 20 : 16} aria-hidden="true" />{t(`replayUi.verdict.${maxed ? 'maxed' : verdict}`)}
+      <Icon size={big ? 20 : 16} aria-hidden="true" /><TextMorph text={t(`replayUi.verdict.${maxed ? 'maxed' : verdict}`)} />
     </span>
   );
 }

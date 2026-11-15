@@ -16,9 +16,10 @@ export function JudgmentNote() {
   );
 }
 
-export function PageHead({ title, intro }) {
+// center: a compact centered title (screens that open with a card, like Compare).
+export function PageHead({ title, intro, center = false }) {
   return (
-    <div className="page-head">
+    <div className={`page-head${center ? ' page-head-center' : ''}`}>
       <h1>{title}</h1>
       {intro && <p>{intro}</p>}
     </div>
@@ -104,17 +105,16 @@ export function LowConfTag() {
   );
 }
 
-// Big number + simple label. `detail` is a short plain line under the label. `src` makes the label a receipt.
-export function StatCard({ icon: Icon, label, value, unit, detail, term, src }) {
+// Small stat for 2-column grids: round icon, a small label and a bold value. `src` makes the label a receipt.
+export function MiniStat({ icon: Icon, label, value, unit, detail, term, src }) {
   return (
-    <div className="stat">
-      <div className="stat-top">
-        {Icon ? <Icon size={20} aria-hidden="true" /> : <span />}
-        {term && <GlossaryIcon term={term} />}
+    <div className="mini-stat">
+      <span className="mini-stat-icon"><Icon size={18} aria-hidden="true" /></span>
+      <div className="mini-stat-body">
+        <span className="mini-stat-label">{src ? <Receipt src={src}>{label}</Receipt> : label}{term && <GlossaryIcon term={term} />}</span>
+        <span className="mini-stat-value">{value}{unit && <small>{unit}</small>}</span>
+        {detail && <span className="mini-stat-detail">{detail}</span>}
       </div>
-      <div className="stat-value">{value}{unit && <span className="stat-unit">{unit}</span>}</div>
-      <div className="stat-label">{src ? <Receipt src={src}>{label}</Receipt> : label}</div>
-      {detail && <div className="stat-detail">{detail}</div>}
     </div>
   );
 }

@@ -39,8 +39,8 @@ export default defineConfig(({ mode }) => {
           name: 'Greenline',
           short_name: 'Greenline',
           description: 'Compare crop rotations for North Texas fields using NASA Earth data.',
-          theme_color: '#2f6b3a',
-          background_color: '#f6f4ec',
+          theme_color: '#234233',
+          background_color: '#172c23',
           display: 'standalone',
           start_url: '/',
           icons: [
@@ -51,13 +51,20 @@ export default defineConfig(({ mode }) => {
         },
         workbox: {
           // App shell + bundled JSON are precached; map tiles are NOT (they need a connection).
-          globPatterns: ['**/*.{js,css,html,svg,png,json}'],
-          globIgnores: ['**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js'],
+          // v2 fields are packed into public/v2f/ (scripts/pack-v2-fields.mjs): only the demo field is precached.
+          globPatterns: ['**/*.{js,css,html,svg,png,json}', `v2f/${DEMO_FIELD_ID}.json.gz`],
+          // v1 field files (assets/fields/) and v2 field files (assets/ec-NNN-*.js): precache only the demo field.
+          globIgnores: ['**/history/**', '**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js', '**/assets/ec-!(' + DEMO_FIELD_ID.slice(3) + ')-*.js'],
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
           runtimeCaching: [{
-            urlPattern: ({ url }) => url.pathname.includes('/assets/fields/'),
+            urlPattern: ({ url }) => url.pathname.includes('/assets/fields/') || /\/assets\/ec-\d+-/.test(url.pathname),
             handler: 'CacheFirst',
-            options: { cacheName: 'greenline-fields', expiration: { maxEntries: 60 } },
+            options: { cacheName: 'greenline-fields', expiration: { maxEntries: 80 } },
+          }, {
+            // v2 field files are not hashed (same name after a re-run): show the cached copy, refresh it in the background
+            urlPattern: ({ url }) => url.pathname.includes('/v2f/'),
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'greenline-v2-fields', expiration: { maxEntries: 80 } },
           }],
         },
       }),

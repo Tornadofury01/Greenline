@@ -4,6 +4,15 @@ import { BARE_NDVI } from './data/loadField.js';
 
 export const mmToIn = (mm) => Math.round(mm / 25.4);
 
+// The bad year the Compare scoreboard shows by default: 2011 if it is one of the field's drought presets,
+// else its first drought preset, else its latest drought year. { year, yearType } or null.
+export function defaultBadYear(field) {
+  const presets = field?.si?.replayPresets
+    || (field?.climateYearly || []).filter((y) => y.yearType === 'drought').slice(-3).reverse().map((y) => ({ year: y.year, yearType: y.yearType }));
+  const droughts = presets.filter((p) => p.yearType === 'drought');
+  return droughts.find((p) => p.year === 2011) || droughts[0] || presets[0] || null;
+}
+
 // Slope in plain words (thresholds follow common NRCS slope classes).
 export function slopeWord(pct) {
   if (pct < 2) return 'flat';
@@ -92,6 +101,15 @@ export function typicalBareMonths(field) {
   return Array.from({ length: 12 }, (_, m) => {
     const seen = rows.map((r) => r.months[m]).filter(Boolean);
     return seen.length ? Math.round((100 * seen.filter((s) => s === 'bare').length) / seen.length) / 100 : 0;
+  });
+}
+
+// Chance (0-1) the ground is green in each month, over the Landsat 8/9 years (same rows as typicalBareMonths).
+export function typicalGreenMonths(field) {
+  const rows = trusted(coverRows(field));
+  return Array.from({ length: 12 }, (_, m) => {
+    const seen = rows.map((r) => r.months[m]).filter(Boolean);
+    return seen.length ? Math.round((100 * seen.filter((s) => s === 'green').length) / seen.length) / 100 : 0;
   });
 }
 

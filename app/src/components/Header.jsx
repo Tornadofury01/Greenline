@@ -1,35 +1,42 @@
-import { FlaskConical, BookOpen } from 'lucide-react';
+import { FlaskConical, BookOpen, Sun, Moon } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import Logo from './Logo.jsx';
 import { NavItems } from './BottomNav.jsx';
 
 export default function Header() {
-  const { t, lang, setLang, field, screen, openHow } = useApp();
+  const { t, lang, setLang, theme, setTheme, field, screen, setScreen, openHow } = useApp();
+  const nextTheme = theme === 'dark' ? 'light' : 'dark';
   return (
     <>
       <header className="header">
         <div className="header-inner">
-          <div className="brand">
+          {/* The logo and name are the home button: they go back to the map (the Field screen). */}
+          <button type="button" className="brand" aria-label={t('app.home')} title={t('app.home')} onClick={() => setScreen('field')}>
             <Logo />
             <span className="brand-name">{t('app.title')}</span>
             <span className="brand-tag">{t('app.tagline')}</span>
-          </div>
+          </button>
           {/* Desktop (1024px+): navigation lives in the header. Phones use the bottom bar. */}
           <nav className="top-nav" aria-label={t('nav.label')}>
             <NavItems />
           </nav>
-          <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
-            aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
-            <BookOpen size={24} aria-hidden="true" />
-          </button>
           <div className="lang" role="group" aria-label={t('app.langGroup')}>
             {['en', 'es'].map((code) => (
               <button key={code} type="button" lang={code} aria-pressed={lang === code} onClick={() => setLang(code)}
                 aria-label={t(`app.langName.${code}`)}>
-                {t(`app.langShort.${code}`)}
+                <span>{t(`app.langShort.${code}`)}</span>
               </button>
             ))}
           </div>
+          {/* Light is easier to read in bright sun; dark is easier at dusk. The choice is saved on this device. */}
+          <button type="button" className="icon-btn theme-btn" aria-label={t(`app.theme.${nextTheme}`)} title={t(`app.theme.${nextTheme}`)}
+            onClick={() => setTheme(nextTheme)}>
+            {theme === 'dark' ? <Sun size={22} aria-hidden="true" /> : <Moon size={22} aria-hidden="true" />}
+          </button>
+          <button type="button" className="icon-btn how-btn" aria-label={t('how.open')} title={t('how.open')}
+            aria-current={screen === 'how' ? 'page' : undefined} onClick={() => openHow()}>
+            <BookOpen size={22} aria-hidden="true" />
+          </button>
         </div>
       </header>
       {field?.isSampleData && (

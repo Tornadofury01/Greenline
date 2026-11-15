@@ -1,7 +1,7 @@
 // The ONE place the app gets field data.
 //
 // Real data: /shared/fields/<id>.json (built by pipeline/build_fields.py, format in /shared/data-format.md v2),
-// one file per sampled North Texas field, loaded on demand. If a file can't be loaded, the result is
+// one file per study field (300 Ellis County USDA field outlines, ec-000 ... ec-299), loaded on demand. If a file can't be loaded, the result is
 // { error: 'network' | 'missing' } and the app says so. The fake /shared/sample-field.json is only used in development
 // (npm run dev), never in a production build: a farmer must never see fake data in place of their field.
 //
@@ -9,7 +9,10 @@
 // in the cropland mask. It is never stored or sent.
 import cropLibrary from '@content/crops.json';
 import rotationLibrary from '@content/rotations.json';
-import { DEMO_FIELD_ID } from '../config.js';
+import outlineFile from '@shared/field-outlines.json';
+import mapLayerFile from '@shared/map-layers.json';
+import placeholderSlots from '@content/model-placeholders.json';
+import { slotModelC } from '@scoring/modelSlots.js';
 
 // Lazy: each field file becomes its own small chunk, fetched only when needed.
 const FIELD_FILES = import.meta.glob(['../../../shared/fields/*.json', '!../../../shared/fields/index.json']);
@@ -33,8 +36,29 @@ const coverFromNdvi = (rows) => {
   return Object.entries(byYear).map(([year, months]) => ({ year: Number(year), months, cloudyMonths: months.filter((m) => !m).length }));
 };
 
+// v2: nothing in the app may use the earlier model outputs (crop classifier, weather stress signal, year-type model,
+// their accuracy numbers). They are removed here, the ONE place field data enters, so every screen that checks
+// `field.si` simply hides that part, and the year types come from the Model C PLACEHOLDER slot
+// (content/model-placeholders.json: 2000 and 2011 drought, 2015 wet, the rest normal) until the real model is plugged in.
+// Crops per year stay the USDA Cropland Data Layer labels (the Model A placeholder), with no confidence number.
+function withPlaceholderModels(field) {
+  const c = slotModelC(field, null, placeholderSlots);
+  const typeOf = new Map(c.yearTypes.map((r) => [r.year, r.type === 'hot' ? 'heat' : r.type])); // app colors say "heat"
+  return {
+    ...field,
+    si: null,
+    sources: field.sources?.filter((x) => x.id !== 'si'), // the earlier models are not a data source any more
+    quality: field.quality ? { ...field.quality, modelAgreesWithCdlPct: undefined } : field.quality,
+    climateYearly: field.climateYearly.map((y) => ({ ...y, yearType: typeOf.get(y.year) ?? 'normal' })),
+    yearTypesPlaceholder: true,
+  };
+}
+
 // v1 files (the fake sample) lack the v2/v3 extras. Derive what we can so every screen works the same way.
 function withDerived(field) {
+  return withPlaceholderModels(addDerived(field));
+}
+function addDerived(field) {
   if (field.coverYearly) return field;
   return {
     ...field,
@@ -80,13 +104,32 @@ export async function loadFieldById(id) {
   }
 }
 
-export const loadDemoField = () => loadFieldById(DEMO_FIELD_ID);
 
 function loadIndex() {
   return INDEX_FILE['../../../shared/fields/index.json']?.fields || [];
 }
-// The sampled fields (id, county, lat, lon) for the map dots.
+// The sampled fields (id, county, lat, lon).
 export const fieldIndex = loadIndex;
+
+// The 300 USDA field outlines for the map (shared/field-outlines.json, built by pipeline/build_field_outlines.mjs):
+// [{ id, acres, rings: [[[lat, lon], ...], ...holes] }]. Bundled, so the outlines draw offline.
+export const fieldOutlines = () => outlineFile.fields;
+const OUTLINE_BY_ID = new Map(outlineFile.fields.map((f) => [f.id, f]));
+export const outlineFor = (id) => OUTLINE_BY_ID.get(id) || null;
+
+// Map context (shared/map-layers.json, built by pipeline/build_map_layers.mjs): county line, town labels, the padded
+// outline around the 300 fields and the opening view. Bundled, so it works offline.
+export const mapLayers = mapLayerFile;
+// Is this point inside the area that holds our 300 fields? (ray casting on the padded study hull)
+export function insideStudyArea(lat, lon) {
+  const r = mapLayerFile.studyHull;
+  let inside = false;
+  for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+    const [yi, xi] = r[i]; const [yj, xj] = r[j];
+    if ((yi > lat) !== (yj > lat) && lon < ((xj - xi) * (lat - yi)) / (yj - yi) + xi) inside = !inside;
+  }
+  return inside;
+}
 
 // ---- Cropland mask (shared/cropland-mask.json, built by pipeline/build_cropland_mask.py): ~400 m cells over North
 // Texas, 1 = USDA CDL cropland. Lazy chunk (precached by the service worker, so it works offline).
@@ -129,20 +172,32 @@ function km(aLat, aLon, bLat, bLon) {
   return 12742 * Math.asin(Math.sqrt(h));
 }
 
-// Tap -> the nearest sampled field. Real per-cell data for every 30 m cell is on the roadmap.
-export async function loadFieldAt(lat, lon) {
+// Point -> { id, nearestKm, notCropland } for the nearest sampled field. Only this summary is kept, never the point.
+export async function nearestTo(lat, lon) {
   const idx = loadIndex();
-  if (!idx.length) return fallback('missing');
+  if (!idx.length) return null;
   let best = idx[0];
   let bestKm = Infinity;
   for (const f of idx) {
     const d = km(lat, lon, f.lat, f.lon);
     if (d < bestKm) { best = f; bestKm = d; }
   }
-  const [field, cropland] = await Promise.all([loadFieldById(best.id), croplandAt(lat, lon)]);
-  if (field.error || field.fallbackReason) return field;
+  const cropland = await croplandAt(lat, lon);
   // Within 500 m of a sampled field counts as cropland (small fields can fall under the mask's 25 % cell rule).
-  return { ...field, nearestKm: Math.round(bestKm * 10) / 10, notCropland: cropland === false && bestKm > 0.5 };
+  return { id: best.id, nearestKm: Math.round(bestKm * 10) / 10, notCropland: cropland === false && bestKm > 0.5 };
+}
+
+// Load the field found by nearestTo(), with its distance and cropland warning.
+export async function loadNearest(info) {
+  if (!info) return fallback('missing');
+  const field = await loadFieldById(info.id);
+  if (field.error || field.fallbackReason) return field;
+  return { ...field, nearestKm: info.nearestKm, notCropland: info.notCropland };
+}
+
+// Tap -> the nearest sampled field. Real per-cell data for every 30 m cell is on the roadmap.
+export async function loadFieldAt(lat, lon) {
+  return loadNearest(await nearestTo(lat, lon));
 }
 
 // Default "current rotation" guess: distinct library crops from the last 4 years, oldest first.

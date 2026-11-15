@@ -1,0 +1,21 @@
+{
+  "_note": "DECIDED by the team (Nov 14 2026): the six scores are final. The six scores, their weights, the priority boosts and the grade cut-offs live ONLY here. The plan (docs/fieldshift-v2.md) does not name the six scores; these names came from the team on Nov 14 2026. Change a name, weight or cut-off here and nothing else needs to change (the contract refers to scores by `id`; the app shows `nameKey` from i18n).",
+  "decided": true,
+  "scoreScale": "0-100, higher is better, for every score",
+  "scores": [
+    { "id": "profit",    "nameKey": "v2.scores.profit",    "weight": 0.25, "measures": "Median return above variable costs, per acre per year, over the simulated seasons", "unit": "usd/acre/year" },
+    { "id": "risk",      "nameKey": "v2.scores.risk",      "weight": 0.20, "measures": "Result in the worst 10% of seasons compared with the current rotation", "unit": "usd/acre/year" },
+    { "id": "soil",      "nameKey": "v2.scores.soil",      "weight": 0.20, "measures": "Erosion vs soil loss tolerance T, bare days per year, organic matter trend", "unit": "mixed (see detail)" },
+    { "id": "water",     "nameKey": "v2.scores.water",     "weight": 0.15, "measures": "Water left for the next crop and water stress", "unit": "mixed (see detail)" },
+    { "id": "nutrients", "nameKey": "v2.scores.nutrients", "weight": 0.10, "measures": "Nitrogen balance and fertilizer bought (legume credit)", "unit": "lb N/acre/year" },
+    { "id": "pests",     "nameKey": "v2.scores.pests",     "weight": 0.10, "measures": "Shared hosts, green bridges, crop family repeats", "unit": "mixed (see detail)" }
+  ],
+  "priorities": {
+    "_note": "The farmer's priorities from the plan (income, soil, low risk, save water). A priority multiplies the weight of the scores it lists; weights are then re-scaled to add up to 1.",
+    "income":    { "nameKey": "v2.priorities.income",    "boost": { "profit": 2 } },
+    "soil":      { "nameKey": "v2.priorities.soil",      "boost": { "soil": 2, "nutrients": 1.5 } },
+    "lowRisk":   { "nameKey": "v2.priorities.lowRisk",   "boost": { "risk": 2, "pests": 1.5 } },
+    "saveWater": { "nameKey": "v2.priorities.saveWater", "boost": { "water": 2 } }
+  },
+  "grades": { "_note": "Weighted total (0-100) to letter grade. Lowest cut-off first match from the top.", "A": 80, "B": 65, "C": 50, "D": 35, "F": 0 }
+}
