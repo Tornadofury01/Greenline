@@ -1024,5 +1024,111 @@
     "error": "No pudimos conectar con el servicio de direcciones. Inténtelo de nuevo o escriba un pueblo.",
     "offline": "La búsqueda de direcciones necesita internet. Aún puede tocar un campo o escribir un pueblo.",
     "privacy": "Nunca guardamos su dirección ni sus datos."
+  },
+  "v2": {
+    "placeholderTag": "provisional, modelo en camino",
+    "sampleBanner": "Datos de muestra para pruebas"
+  },
+  "optionsScreen": {
+    "title": "Opciones",
+    "intro": "Lo que usted siembra ahora y las mejores opciones para este campo, lado a lado.",
+    "takeaway": "La ganancia es un rango probable, no una promesa. Consulte los puntos locales con su agente de extensión antes de cambiar algo.",
+    "current": "Lo que siembra ahora",
+    "option": "Opción {letter}",
+    "best": "La mejor opción",
+    "gradeLabel": "Nota {grade}, {total} de 100",
+    "vsToday": "puntos frente a lo que siembra ahora",
+    "scoresTitle": "Seis puntajes",
+    "score": {
+      "profit": "Ganancia",
+      "risk": "Poco riesgo",
+      "soil": "Suelo",
+      "water": "Agua",
+      "nitrogen": "Nitrógeno",
+      "carbon": "Carbono"
+    },
+    "fitTitle": "Cuatro pruebas de ajuste",
+    "fit": {
+      "name": {
+        "water": "Agua",
+        "disease": "Enfermedad",
+        "market": "Mercado",
+        "season": "Temporada"
+      },
+      "status": {
+        "pass": "Pasa",
+        "warn": "Aviso",
+        "fail": "Falla"
+      }
+    },
+    "profitLabel": "Ganancia sobre costos variables",
+    "perAcreYear": "por acre al año",
+    "profitRange": "Rango probable de {low} a {high}",
+    "profitBaseline": "Esto es lo que siembra ahora. Las opciones se comparan con esto.",
+    "beatsToday": "Supera lo que siembra ahora en el {pct}% de las simulaciones",
+    "soilSaved": "Suelo ahorrado",
+    "soilUnit": "toneladas por acre al año, frente a ahora",
+    "nitrogenSaved": "Nitrógeno ahorrado",
+    "nitrogenUnit": "lb de nitrógeno por acre al año, frente a ahora",
+    "local": {
+      "title": "Verifique localmente ({count})",
+      "who": "Quién lo verifica: {who}",
+      "item": {
+        "legumeN": {
+          "what": "Crédito de nitrógeno de las leguminosas",
+          "who": "agente de extensión, análisis de suelo"
+        },
+        "coverEstablishment": {
+          "what": "¿Nacerá el cultivo de cobertura en su suelo?",
+          "who": "agente de extensión, vecinos"
+        },
+        "seedPrice": {
+          "what": "Precio y disponibilidad de semilla",
+          "who": "distribuidor de semilla"
+        },
+        "buyers": {
+          "what": "Compradores y precio local",
+          "who": "usted"
+        },
+        "equipment": {
+          "what": "Equipo (sembradora de siembra directa, segunda sembradora)",
+          "who": "usted"
+        },
+        "pests": {
+          "what": "Qué plagas tiene realmente su condado",
+          "who": "agente de extensión"
+        },
+        "water": {
+          "what": "Derechos de agua y riego",
+          "who": "usted, distrito de agua"
+        },
+        "quirks": {
+          "what": "Rarezas del campo: zonas húmedas, drenaje, manejo anterior",
+          "who": "usted"
+        },
+        "costShare": {
+          "what": "Elegibilidad para costos compartidos",
+          "who": "oficina local del NRCS"
+        }
+      }
+    },
+    "preview": {
+      "ev": {
+        "waterPass": "El siguiente cultivo empieza con poca agua en {n} de {total} años simulados.",
+        "waterWarn": "El siguiente cultivo empieza con poca agua en {n} de {total} años simulados.",
+        "diseasePass": "Sin plagas compartidas entre cultivos y sin repetir la misma familia.",
+        "diseaseWarn": "La misma familia de cultivos dos años seguidos.",
+        "diseaseFail": "La cobertura de {crop} hospeda una plaga grave del siguiente cultivo comercial.",
+        "marketPass": "Se siembra en muchos acres del condado; hay compradores locales.",
+        "marketWarn": "Pocos acres de {crop} cerca; confirme un comprador.",
+        "seasonPass": "Termina antes de la helada y del siguiente cultivo en 38 de 40 años.",
+        "seasonWarn": "Cabe hoy, justo hacia 2040."
+      },
+      "conf": {
+        "high": "Supera lo de hoy en el {pct}% de las simulaciones y ninguna prueba falla.",
+        "medium": "Dos pruebas de ajuste son avisos.",
+        "low": "Supera lo de hoy en solo el {pct}% de las simulaciones, y una prueba falla."
+      }
+    }
   }
 }

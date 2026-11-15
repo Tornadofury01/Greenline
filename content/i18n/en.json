@@ -1024,5 +1024,111 @@
     "error": "We couldn't reach the address service. Try again, or type a town.",
     "offline": "Address search needs internet. You can still tap a field or type a town.",
     "privacy": "We never save your address or your data."
+  },
+  "v2": {
+    "placeholderTag": "placeholder, model coming",
+    "sampleBanner": "Sample data for testing"
+  },
+  "optionsScreen": {
+    "title": "Options",
+    "intro": "What you grow now, and the best options for this field, side by side.",
+    "takeaway": "Profit is a likely range, not a promise. Check the local items with your extension agent before you change anything.",
+    "current": "What you grow now",
+    "option": "Option {letter}",
+    "best": "Best match",
+    "gradeLabel": "Grade {grade}, {total} out of 100",
+    "vsToday": "points vs what you grow now",
+    "scoresTitle": "Six scores",
+    "score": {
+      "profit": "Profit",
+      "risk": "Low risk",
+      "soil": "Soil",
+      "water": "Water",
+      "nitrogen": "Nitrogen",
+      "carbon": "Carbon"
+    },
+    "fitTitle": "Four fit checks",
+    "fit": {
+      "name": {
+        "water": "Water",
+        "disease": "Disease",
+        "market": "Market",
+        "season": "Season"
+      },
+      "status": {
+        "pass": "Pass",
+        "warn": "Warn",
+        "fail": "Fail"
+      }
+    },
+    "profitLabel": "Profit above variable costs",
+    "perAcreYear": "per acre a year",
+    "profitRange": "Likely range {low} to {high}",
+    "profitBaseline": "This is what you grow now. The options are compared with it.",
+    "beatsToday": "Beats what you grow now in {pct}% of what-if runs",
+    "soilSaved": "Soil saved",
+    "soilUnit": "tons per acre a year, vs now",
+    "nitrogenSaved": "Nitrogen saved",
+    "nitrogenUnit": "lb of nitrogen per acre a year, vs now",
+    "local": {
+      "title": "Check locally ({count})",
+      "who": "Who checks: {who}",
+      "item": {
+        "legumeN": {
+          "what": "Nitrogen credit from legumes",
+          "who": "extension agent, soil test"
+        },
+        "coverEstablishment": {
+          "what": "Will the cover crop come up on your soil?",
+          "who": "extension agent, neighbors"
+        },
+        "seedPrice": {
+          "what": "Seed price and availability",
+          "who": "seed dealer"
+        },
+        "buyers": {
+          "what": "Buyers and local price",
+          "who": "you"
+        },
+        "equipment": {
+          "what": "Equipment (no-till drill, second planter)",
+          "who": "you"
+        },
+        "pests": {
+          "what": "Which pests your county really has",
+          "who": "extension agent"
+        },
+        "water": {
+          "what": "Water rights and irrigation",
+          "who": "you, water district"
+        },
+        "quirks": {
+          "what": "Field quirks: wet spots, drainage, past management",
+          "who": "you"
+        },
+        "costShare": {
+          "what": "Cost-share eligibility",
+          "who": "local NRCS office"
+        }
+      }
+    },
+    "preview": {
+      "ev": {
+        "waterPass": "The next crop starts short of water in {n} of {total} simulated years.",
+        "waterWarn": "The next crop starts short of water in {n} of {total} simulated years.",
+        "diseasePass": "No shared pests between crops and no same-family repeat.",
+        "diseaseWarn": "The same crop family two years in a row.",
+        "diseaseFail": "The {crop} cover hosts a serious pest of the next cash crop.",
+        "marketPass": "Grown on many acres in the county; local buyers exist.",
+        "marketWarn": "Few {crop} acres nearby; confirm a buyer.",
+        "seasonPass": "Finishes before frost and before the next crop in 38 of 40 years.",
+        "seasonWarn": "Fits today, tight by 2040."
+      },
+      "conf": {
+        "high": "Beats today in {pct}% of what-if runs and no fit check is a fail.",
+        "medium": "Two fit checks are warnings.",
+        "low": "Beats today in only {pct}% of runs, and one fit check fails."
+      }
+    }
   }
 }
