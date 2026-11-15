@@ -94,9 +94,9 @@ Before deploying: the precompute prints "N failed the contract check"; those fie
 | Slot | Source | Status |
 |---|---|---|
 | A field history | Model 1 v2 crop per year (USDA label where clean) | model; crop dates are still the placeholder calendars |
-| B field response | – | placeholder: Model B measures greenness response, not the yield factors the engine needs |
+| B field response | Model B per-field drought and heat sensitivity, scaling the textbook factors (0.5–2x) | model; no 1–3 month outlook (record ends Dec 2025) |
 | C year types | Model C county summer types, 2040 = 8-model mean | model |
-| D soil moisture | – | placeholder: Model D gives volumetric moisture, not a share of plant-available water |
+| D soil moisture | SMAP L4 root-zone moisture (9 km), placed in the field's own 2015–2025 range; as of 2025-12-31 | model (satellite area value, not measured on the field) |
 | E yields | Calibration E county trend yield (wheat, corn, sorghum, cotton) | model for those 4 crops; Calibration E's fit includes Hill, so Hill's yields are not a held-out test |
 
 ## Known gaps
