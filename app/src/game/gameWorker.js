@@ -1,9 +1,12 @@
 // Farm game worker: runs the SAME daily engine as the simulator (/scoring/engine, unchanged) for ONE plot.
 // The game keeps a small pool of these and runs the 4 plots (+ the hidden "farm today" run) side by side.
-//   in : { type: 'run', reqId, field, modelFile, plan: { id, crops: [{main, cover}], controls: {tillage, nScale, irrigation} },
+//   in : { type: 'run', reqId, fieldKey, field?, modelFile?, plan: { id, crops: [{main, cover}], controls: {tillage, nScale, irrigation, shiftDays?} },
 //          weatherYears: [y1..yk], prevCrop, animate }
+//        `field` (the app's field object, data/loadField.js) and `modelFile` (shared/v2/models/<id>.json or null, data/loadModels.js)
+//        are sent only when this worker has not seen `fieldKey` yet; the worker keeps the slots, weather and prices for it.
 //   out: { type: 'result', reqId, run }  or  { type: 'error', reqId, message }
 // Every number the game shows comes from here. Nothing is invented: when a value can't be computed it is null.
+// Model values come only through makeSlots (scoring/modelSlots.js): placeholder slots are listed in run.placeholderSlots.
 import library from '@content/crop-library.json';
 import placeholders from '@content/model-placeholders.json';
 import economics from '@content/economics.json';
@@ -12,13 +15,13 @@ import { createSimulation, makeWeather, pricesFromField, PEST_TABLE } from '@sco
 import { BIOMASS_G_M2_TO_LB_AC } from '@scoring/engine/constants.js';
 import { metricsOf } from '@scoring/v2/metrics.js';
 import { buildPlan, START_YEAR, libById } from '../sim/simSetup.js';
-import { playedStructure } from './plots.js';
+import { playedStructure, isSetupItem } from './plots.js';
 
 const DAY_KEYS = ['rain', 'tmax', 'rz', 'rzCap', 'stress', 'canopy', 'ground', 'residue', 'stage', 'eros', 'nShare', 'pest', 'irr', 'bare'];
 
 function runOne(field, slots, weather, prices, p, weatherYears, animate) {
   const k = weatherYears.length;
-  const controls = { tillage: p.controls.tillage, irrigation: p.controls.irrigation ?? 'none', nitrogen: 'default', shiftDays: 0, maturity: 'full', termination: 'at-planting' };
+  const controls = { tillage: p.controls.tillage, irrigation: p.controls.irrigation ?? 'none', nitrogen: 'default', shiftDays: p.controls.shiftDays ?? 0, maturity: 'full', termination: 'at-planting' };
   const plan = buildPlan(slots, p.crops.slice(0, k), controls, p.id);
   plan.management.nitrogenScale = p.controls.nScale ?? 1;
   const sim = createSimulation({ field, slots, library, plan, years: k, startYear: START_YEAR, weather, weatherYears, prices, economics });
@@ -68,6 +71,14 @@ function moneyByYear(sum, k) {
   return out.map((x) => Math.round(x * 100) / 100);
 }
 
+// This season's setup costs (planting, seed, nitrogen, pre-plant pass / no-till planter, fallow weed control), $/acre,
+// straight from the engine's ledger lines for the last played year. Shown on the toolbar before the season starts.
+function setupOf(sum, k) {
+  let usd = 0;
+  for (const e of sum.ledger) if (bucketOf(e.date, k) === k - 1 && isSetupItem(e.item)) usd += e.usd;
+  return Math.round(-usd * 100) / 100;
+}
+
 // metricsOf leaves out the first and last calendar year of a run (it was built for 41-year runs). The game plays short runs,
 // so it reads the money and season numbers over a window one year wider on each side (= exactly the played years), and the
 // per-year nitrogen numbers with the real length.
@@ -115,13 +126,19 @@ function dayEvents(sum, year, k) {
   return out.sort((a, b) => a.day - b.day);
 }
 
+let ctx = null; // { key, field, slots, weather, prices } for the field this worker last saw
+
 self.onmessage = (e) => {
   const m = e.data;
   try {
-    const field = m.field;
-    const slots = makeSlots({ field, modelFile: m.modelFile ?? null, placeholders });
-    const weather = makeWeather(field, { seed: 1 });
-    const prices = pricesFromField(field, library);
+    const t0 = performance.now();
+    if (m.field) {
+      const field = m.field;
+      const slots = makeSlots({ field, modelFile: m.modelFile ?? null, placeholders });
+      ctx = { key: m.fieldKey, field, slots, weather: makeWeather(field, { seed: 1 }), prices: pricesFromField(field, library) };
+    }
+    if (!ctx || ctx.key !== m.fieldKey) throw new Error('field not loaded in worker');
+    const { field, slots, weather, prices } = ctx;
     const k = m.weatherYears.length;
     const r = runOne(field, slots, weather, prices, m.plan, m.weatherYears, m.animate);
     const seasons = seasonDetails(r.sum, k, m.weatherYears);
@@ -139,6 +156,8 @@ self.onmessage = (e) => {
       day, cropIds: r.cropIds, dayCrop: m.animate ? Int8Array.from(r.dayCrop) : null, pestTop: m.animate ? r.pestTop : null,
       events: m.animate ? dayEvents(r.sum, r.lastYear, k) : null,
       yearType: slots.slots.C.yearTypes?.find((x) => x.year === m.weatherYears[k - 1])?.type ?? null,
+      setupUsd: setupOf(r.sum, k),
+      ms: Math.round(performance.now() - t0),
     };
     const transfer = day ? [...Object.values(day).map((a) => a.buffer), run.dayCrop.buffer] : [];
     self.postMessage({ type: 'result', reqId: m.reqId, run }, transfer);

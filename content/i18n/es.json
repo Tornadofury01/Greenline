@@ -1709,7 +1709,8 @@
       "loss": "Pérdida",
       "pass": "Aprueba",
       "warn": "Aviso",
-      "fail": "Falla"
+      "fail": "Falla",
+      "na": "Sin número"
     },
     "scene": {
       "alt": "Su campo dividido en 4 parcelas, dibujado con la simulación"
@@ -1826,7 +1827,7 @@
     },
     "setup": {
       "cost": "Parcela {n}: preparación {usd} · todas {total}",
-      "costNote": "Semilla, fertilizante, pasadas y aplicaciones para esta parcela, según la biblioteca de cultivos. Los costos de cosecha y agua se descuentan cuando ocurren.",
+      "costNote": "Semilla, siembra, fertilizante y la pasada antes de sembrar para esta parcela, según el registro de dinero del simulador. Las aplicaciones, la cosecha y el agua se descuentan cuando ocurren. — significa que aún no se calcula.",
       "start": "Iniciar temporada"
     },
     "fill": {
@@ -1838,7 +1839,6 @@
       "lockNote": "Después del año 1 solo cambian los cultivos; la labranza, el fertilizante y el agua quedan como estaban.",
       "short": "Rápido"
     },
-    "mock": "Números de prueba para ver las pantallas. No son los resultados de su campo.",
     "live": {
       "title": "Parcela {n} ahora",
       "hint": "Toque una parcela para ver cómo va.",
@@ -1895,6 +1895,7 @@
       "heat": "Fuente: temperatura NASA POWER y el límite de calor del cultivo (biblioteca de cultivos).",
       "water": "Fuente: el balance de agua del simulador en suelo SSURGO, clima NASA POWER y GPM IMERG.",
       "yield": "Fuente: el rendimiento simulado comparado con un rendimiento típico del condado (USDA NASS)."
-    }
+    },
+    "noData": "Aún no hay datos aquí"
   }
 }

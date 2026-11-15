@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Sprout, Leaf, Tractor, FlaskConical, Droplets, Lock, Wand2, Play, X } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { CASH_CROPS, COVERS } from '../sim/simSetup.js';
-import { TILLAGE, FERT, IRRIGATION, fertOf, setupCost } from './plots.js';
+import { TILLAGE, FERT, IRRIGATION, fertOf } from './plots.js';
 
 const TOOLS = [
   { id: 'seeds', Icon: Sprout },
@@ -14,7 +14,8 @@ const TOOLS = [
   { id: 'irr', Icon: Droplets, locks: true, irrigatedOnly: true },
 ];
 
-export function Toolbar({ k, plots, sel, setSel, setPlot, irrigated, fills, onStart, usd, barRef }) {
+// costs: this season's setup cost per plot from the engine's ledger ($/acre), null while it is being run or if it can't be.
+export function Toolbar({ k, plots, sel, setSel, setPlot, irrigated, fills, onStart, usd, barRef, costs }) {
   const { t } = useApp();
   const [tool, setTool] = useState(null);
   const [fillOpen, setFillOpen] = useState(false);
@@ -24,8 +25,9 @@ export function Toolbar({ k, plots, sel, setSel, setPlot, irrigated, fills, onSt
   const crop = (id) => t(`crops.${id}`);
   const setChoice = (patch) => setPlot(sel, { ...plot, crops: plot.crops.map((c, i) => (i === k ? { main: null, cover: null, ...c, ...patch } : c)), from: null });
   const setControls = (patch) => setPlot(sel, { ...plot, controls: { ...plot.controls, ...patch }, from: null });
-  const cost = setupCost(plot.crops[k] ?? { main: 'fallow' }, plot.controls);
-  const totalCost = plots.reduce((a, p) => a + setupCost(p.crops[k] ?? { main: 'fallow' }, p.controls), 0);
+  const money = (x) => (x == null || !Number.isFinite(x) ? '—' : usd(x));
+  const cost = money(costs?.[sel]);
+  const totalCost = money(costs && costs.every((c) => c != null) ? costs.reduce((a, c) => a + c, 0) : null);
   const tools = TOOLS.filter((x) => !x.irrigatedOnly || irrigated);
 
   const opt = (key, active, label, onClick) => (
@@ -64,7 +66,7 @@ export function Toolbar({ k, plots, sel, setSel, setPlot, irrigated, fills, onSt
           {tool === 'cover' && <p className="gm-note">{t('game.tool.coverNote')}</p>}
         </div>
       )}
-      <p className="gm-cost" title={t('game.setup.costNote')}>{t('game.setup.cost', { n: sel + 1, usd: usd(cost), total: usd(totalCost) })}</p>
+      <p className="gm-cost" title={t('game.setup.costNote')}>{t('game.setup.cost', { n: sel + 1, usd: cost, total: totalCost })}</p>
       <div className="gm-actions">
         <div className="gm-plotpick" role="group" aria-label={t('game.pickPlot')}>
           {plots.map((p, i) => (

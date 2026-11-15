@@ -16,7 +16,8 @@ import { Scoreboard } from './Scoreboard.jsx';
 import { EndScreen } from './EndScreen.jsx';
 import { StartScreen } from './StartScreen.jsx';
 import { makeV2Text } from '../data/v2Text.js';
-import { runSeason, USING_MOCK } from './runSource.js';
+import { runSeason, setupCosts } from './runSource.js';
+import { loadModelFile } from '../data/loadModels.js';
 import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
 import { YEARS, PLOTS, BUDGET_PER_PLOT, emptyPlot, fillPlot, starsFor, saveStars } from './plots.js';
 import './game.css';
@@ -50,7 +51,17 @@ export default function FarmGame() {
   const { t, lang, field, farm, tillage } = useApp();
   const v2 = useV2();
   const calm = useReducedMotion();
-  const slots = useMemo(() => (field ? slotsFor(field) : null), [field]);
+  // Model values: the field's model file (shared/v2/models/<id>.json) through makeSlots, placeholders where it has none.
+  const [model, setModel] = useState({ id: null, file: null });
+  useEffect(() => {
+    let live = true;
+    const id = field?.field?.id ?? null;
+    loadModelFile(id).then((file) => { if (live) setModel({ id, file }); });
+    return () => { live = false; };
+  }, [field]);
+  const modelReady = !!field && model.id === field.field?.id;
+  const modelFile = modelReady ? model.file : null;
+  const slots = useMemo(() => (field && modelReady ? slotsFor(field, modelFile) : null), [field, modelReady, modelFile]);
   const avail = useMemo(() => (field ? pastYears(field) : []), [field]);
   const irrigated = farm.waterMode === 'irrigated';
   const baseTillage = tillage ?? 'reduced';
@@ -91,14 +102,18 @@ export default function FarmGame() {
     return () => { document.body.style.overflow = prev; };
   }, [phase]);
 
-  const todaySim = useMemo(() => (field && slots ? { crops: todayCrops(field, slots), controls: { tillage: baseTillage, nScale: 1, irrigation: 'none' } } : null), [field, slots, baseTillage]);
-  const bestSim = useMemo(() => {
-    if (v2.status !== 'ready' || v2.usingSample) return null;
-    const best = buildMergedPlans(v2.data, farm).best?.option;
-    if (!best) return null;
-    const s = planToSim(best);
-    return { crops: s.crops, controls: { tillage: s.controls.tillage, nScale: s.nitrogenScale ?? 1, irrigation: irrigated ? s.controls.irrigation : 'none' } };
-  }, [v2, farm, irrigated]);
+  // Quick fill comes from the same v2 field file as the Plans page (best plan + current rotation). No real file = no button.
+  const toGame = (s) => ({ crops: s.crops, controls: { tillage: s.controls.tillage, nScale: s.nitrogenScale ?? 1, irrigation: irrigated ? s.controls.irrigation : 'none', shiftDays: s.controls.shiftDays ?? 0 } });
+  const plans = useMemo(() => (v2.status === 'ready' && !v2.usingSample ? buildMergedPlans(v2.data, farm) : null), [v2, farm]);
+  const bestSim = useMemo(() => (plans?.best?.option ? toGame(planToSim(plans.best.option)) : null), [plans, irrigated]); // eslint-disable-line react-hooks/exhaustive-deps
+  const currentSim = useMemo(() => (plans && v2.data.current?.sequence?.length ? toGame(planToSim(v2.data.current)) : null), [plans, v2, irrigated]); // eslint-disable-line react-hooks/exhaustive-deps
+  // Hidden baseline for the "vs your farm today" scores: the Plans page's current rotation, else the field's USDA crop
+  // history (model slot A), else none (then the risk meter shows "—").
+  const todaySim = useMemo(() => {
+    if (currentSim) return currentSim;
+    if (!slots?.slots.A.cropByYear?.length) return null;
+    return { crops: todayCrops(field, slots), controls: { tillage: baseTillage, nScale: 1, irrigation: 'none' } };
+  }, [currentSim, slots, field, baseTillage]);
   const loadedSim = loaded ? { crops: loaded.sim.crops, controls: { tillage: loaded.sim.controls.tillage, nScale: loaded.sim.nitrogenScale ?? 1, irrigation: irrigated ? loaded.sim.controls.irrigation : 'none' } } : null;
 
   const setPlot = (i, p) => setPlots((ps) => ps.map((x, j) => (j === i ? p : x)));
@@ -122,10 +137,24 @@ export default function FarmGame() {
 
   const prevCrop = slots?.slots.A.cropByYear?.at(-1)?.crop ?? null;
 
+  // Setup cost per plot for this season, from engine runs of the plots as set (debounced; "—" until it arrives).
+  const [costs, setCosts] = useState(null);
+  useEffect(() => {
+    if (phase !== 'setup' || !field || !slots || !years.length) return undefined;
+    let live = true;
+    setCosts(null);
+    const id = setTimeout(() => {
+      setupCosts({ field, modelFile, plots, years: years.slice(0, k + 1), prevCrop }).then((c) => { if (live) setCosts(c); }, () => { if (live) setCosts(null); });
+    }, 250);
+    return () => { live = false; clearTimeout(id); };
+  }, [phase, field, slots, modelFile, plots, years, k, prevCrop]);
+
   async function startSeason() {
     setPhase('growing'); setError(null);
     try {
-      const res = await runSeason({ field, plots, today: todaySim, years: years.slice(0, k + 1), prevCrop });
+      const shown = new Promise((r) => setTimeout(r, calm ? 0 : 400)); // let the "growing" sprout show for a moment
+      const [res] = await Promise.all([runSeason({ field, modelFile, plots, today: todaySim, years: years.slice(0, k + 1), prevCrop }), shown]);
+      if (import.meta.env.DEV) console.info(`[game] season ${k + 1}: ${res.ms} ms for ${plots.length} plots + baseline (worker runs: ${res.runs.map((r) => r.ms).join(', ')} ms)`);
       const prevRuns = lastRuns.current;
       const coinsBefore = plots.map((_, i) => BUDGET_PER_PLOT + (prevRuns ? prevRuns[i].money.reduce((a, x) => a + x, 0) : 0));
       setSeason({ runs: res.runs, prevRuns, coinsBefore, today: res.today });
@@ -153,6 +182,8 @@ export default function FarmGame() {
   }
 
   if (!field) return <div className="screen"><p className="muted">{t('common.noField')}</p></div>;
+  if (!avail.length) return <div className="screen"><h2>{t('game.noData')}</h2></div>;
+  if (!slots) return <div className="screen"><p className="muted" role="status">{t('game.loading')}</p></div>;
   if (phase === 'start') {
     const loadedName = loaded ? (makeV2Text(t, lang)(loaded.name) || loaded.sim.crops.map((c) => t(`crops.${c.main}`)).join(' → ')) : '';
     return <StartScreen loaded={loaded} loadedName={loadedName} avail={avail} sound={sound} setSound={setSound} calm={calm}
@@ -163,8 +194,8 @@ export default function FarmGame() {
   const monthName = (m) => new Intl.DateTimeFormat(lang, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2001, m, 1)));
   const plotLabel = (p) => { const c = p.crops[k]; return c?.main ? crop(c.main) : t('game.plotEmpty'); };
   const fills = [
-    { id: 'best', label: t('game.fill.best'), disabled: !bestSim, run: () => fillFrom(2, bestSim, 'best') },
-    { id: 'today', label: t('game.fill.today'), disabled: !todaySim, run: () => fillFrom(3, todaySim, 'today') },
+    ...(bestSim ? [{ id: 'best', label: t('game.fill.best'), run: () => fillFrom(2, bestSim, 'best') }] : []),
+    ...(currentSim ? [{ id: 'today', label: t('game.fill.today'), run: () => fillFrom(3, currentSim, 'today') }] : []),
     ...(loadedSim ? [{ id: 'loaded', label: t('game.fill.loaded', { n: sel + 1 }), run: () => fillFrom(sel, loadedSim, 'loaded') }] : []),
     { id: 'clear', label: t('game.fill.clear', { n: sel + 1 }), run: () => setPlot(sel, { ...plots[sel], crops: plots[sel].crops.map((c, yi) => (yi < k ? c : null)), from: null }) },
   ];
@@ -201,10 +232,9 @@ export default function FarmGame() {
             {season.runs[0].placeholderSlots?.includes('modelC') && <PlaceholderTag />}
           </p>
         )}
-        {USING_MOCK && <p className="gm-mock" role="note">{t('game.mock')}</p>}
       </div>
       {(phase === 'setup' || phase === 'growing') && (
-        <Toolbar k={k} plots={plots} sel={sel} setSel={setSel} setPlot={setPlot} irrigated={irrigated} fills={fills} usd={usd} barRef={barRef}
+        <Toolbar k={k} plots={plots} sel={sel} setSel={setSel} setPlot={setPlot} irrigated={irrigated} fills={fills} usd={usd} barRef={barRef} costs={costs}
           onStart={phase === 'setup' ? startSeason : null} />
       )}
       {phase === 'growing' && <div className="gm-growing" role="status"><span className="gm-sprout" aria-hidden="true" />{t('game.running')}</div>}

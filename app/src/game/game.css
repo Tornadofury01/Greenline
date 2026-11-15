@@ -147,7 +147,6 @@
 .gm-note { margin: 6px 0 0; font-size: 12px; color: var(--color-text-muted); display: flex; gap: 4px; align-items: flex-start; }
 
 /* season */
-.gm-mock { justify-self: start; margin: 0; padding: 3px 10px; border-radius: 999px; background: #8a2be2; color: #fff; font-size: 12px; font-weight: 700; }
 .gm-pop-slot { position: absolute; z-index: 4; left: 8px; right: 8px; top: 132px; display: grid; justify-items: center; pointer-events: none; }
 .gm-pop {
   max-width: 420px; padding: 8px 12px; border-radius: 14px; background: rgba(12, 22, 15, 0.9); border: 2px solid #ff7a5c;

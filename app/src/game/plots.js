@@ -1,10 +1,8 @@
 // Farm game rules that are not drawing and not React: the 4 plots, what the toolbar may set, planned setup costs,
 // the rotation structure for the disease check, challenges and stars. Pure JavaScript.
-// Every number here is either read from the engine's own inputs (crop library costs, engine cost constants, economics.json)
-// or is a game setting (budget, years) that is named as such.
+// Every number here is either read from the engine's results or is a game setting (budget, years) that is named as such.
+// Setup costs are not computed here: they come from the engine's ledger (gameWorker.js setupOf, runSource.js setupCosts).
 import library from '@content/crop-library.json';
-import economics from '@content/economics.json';
-import { TILLAGE_COST_PER_PASS, NOTILL_PLANTER_COST } from '@scoring/engine/constants.js';
 import { PEST_TABLE } from '@scoring/engine/pests.js';
 import { orderedCrops } from '@scoring/v2/fitChecks.js';
 import { DISEASE_SERIOUS_LOSS } from '@scoring/v2/constants.js';
@@ -35,36 +33,7 @@ export function fillPlot(plot, crops, controls, from) {
 /** The crops a plot runs for the first k+1 years (an unseeded year is fallow). */
 export const cropsUpTo = (plot, k) => Array.from({ length: k + 1 }, (_, i) => ({ cover: null, ...plot.crops[i], main: plot.crops[i]?.main ?? 'fallow' }));
 
-/**
- * Planned setup cost of one season on one plot, $/acre (positive number), from the same lines the engine books when a crop
- * starts (scoring/engine/simulator.js startEpisode / endEpisode): seed + planting + other, sprays, nitrogen x N price,
- * field passes and cover termination. Harvest and irrigation costs depend on the weather and come off when they happen.
- */
-export function setupCost(choice, controls) {
-  const till = controls.tillage;
-  const nPrice = economics.nPricePerLb;
-  let usd = 0;
-  const main = choice?.main ?? 'fallow';
-  if (main === 'fallow') {
-    usd += lib.fallow?.defaults?.costUsdPerAcre?.weedControl ?? 0;
-    if (till === 'conventional') usd += TILLAGE_COST_PER_PASS;
-  } else {
-    const d = lib[main].defaults, c = d.costUsdPerAcre;
-    usd += (c.seed ?? 0) + (c.plantingOps ?? c.planting ?? 0) + (c.other ?? 0) + (c.chemicals ?? 0);
-    usd += (d.nRateLbPerAcre ?? 0) * (controls.nScale ?? 1) * nPrice;
-    usd += till === 'no-till' ? NOTILL_PLANTER_COST : TILLAGE_COST_PER_PASS;
-    if (till === 'conventional') usd += TILLAGE_COST_PER_PASS;
-  }
-  if (choice?.cover) {
-    const c = lib[choice.cover].defaults.costUsdPerAcre;
-    usd += (c.seed ?? 0) + (c.planting ?? 0) + (c.termination ?? 0);
-    if (till !== 'no-till') usd += TILLAGE_COST_PER_PASS;
-    if (till === 'conventional') usd += TILLAGE_COST_PER_PASS;
-  }
-  return Math.round(usd);
-}
-
-/** Ledger items the game deducts when a season starts (the rest comes off on its own day). */
+/** Engine ledger items the game deducts when a season starts (the rest comes off on its own day). */
 export const isSetupItem = (item) => /^(plant:|fertilizer-N:|tillage:pre-plant|tillage:fallow|no-till-planter|fallow:weed-control)/.test(item);
 
 const fam = (crop) => (lib[crop]?.family === 'other' ? crop : lib[crop]?.family ?? crop);

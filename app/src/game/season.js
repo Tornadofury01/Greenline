@@ -1,4 +1,4 @@
-// One season of the game, prepared once from the 4 plot runs (engine or mock, same shape), then read day by day.
+// One season of the game, prepared once from the 4 plot engine runs (gameWorker.js), then read day by day.
 // Pure JavaScript. buildSeason() -> timeline; frameAt() -> what each plot looks like on a day; coinsAt() -> coins per plot.
 import { isSetupItem } from './plots.js';
 

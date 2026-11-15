@@ -35,7 +35,8 @@ export default function App() {
     // Share a sampled field's replay by id, never a GPS point or farmer answer.
     const query = new URLSearchParams(window.location.search);
     const id = query.get('field');
-    if (/^ec-\d{3}$/.test(id || '') && Number(id.slice(3)) < 300) {
+    // Any safe field id (ec-251 today, 48257-0000 after the pipeline merge); an unknown id shows the load error + Retry.
+    if (/^[A-Za-z0-9_-]{1,40}$/.test(id || '')) {
       pickFieldById(id);
       if (SCREEN_COMPONENTS[query.get('screen')]) setScreen(query.get('screen'));
     }

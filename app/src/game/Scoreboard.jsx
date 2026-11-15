@@ -27,6 +27,7 @@ export function meterView(run, id) {
   }
   if (['risk', 'soil', 'water', 'nutrients'].includes(id)) {
     const s = run.scores[id];
+    if (s.value == null) return { ring: 0, level: 'none', word: 'na', value: '—', reasons: s.reasons }; // e.g. risk with no baseline
     return { ring: s.value, level: levelOf(s.value), word: levelOf(s.value), value: s.value, reasons: s.reasons };
   }
   if (id === 'pests') {
@@ -38,8 +39,11 @@ export function meterView(run, id) {
   return { ring: 100, level: FIT_LEVEL[f.status], word: f.status, reasons: [f.evidence] };
 }
 
-/** Best plot = highest average of the six 0-100 scores (profit, risk, soil, water, nutrients, pests). */
-export const overall = (run) => SCORE_IDS.reduce((a, id) => a + run.scores[id].value, 0) / SCORE_IDS.length;
+/** Best plot = highest average of the six 0-100 scores (profit, risk, soil, water, nutrients, pests) that have a number. */
+export const overall = (run) => {
+  const v = SCORE_IDS.map((id) => run.scores[id].value).filter((x) => x != null);
+  return v.length ? v.reduce((a, x) => a + x, 0) / v.length : 0;
+};
 export const winnerOf = (runs) => runs.reduce((b, r, i) => (overall(r) > overall(runs[b]) ? i : b), 0);
 
 export function Ring({ value, level, size = 40 }) {

@@ -1709,7 +1709,8 @@
       "loss": "Loss",
       "pass": "Pass",
       "warn": "Warning",
-      "fail": "Fail"
+      "fail": "Fail",
+      "na": "No number"
     },
     "scene": {
       "alt": "Your field split into 4 plots, drawn from the simulation"
@@ -1826,7 +1827,7 @@
     },
     "setup": {
       "cost": "Plot {n} setup {usd} · all plots {total}",
-      "costNote": "Seed, fertilizer, field passes and sprays for this plot, from the crop library. Harvest and water costs come off when they happen.",
+      "costNote": "Seed, planting, fertilizer and the pre-plant field pass for this plot, from the simulator's money ledger. Sprays, harvest and water come off when they happen. — means not worked out yet.",
       "start": "Start season"
     },
     "fill": {
@@ -1838,7 +1839,6 @@
       "lockNote": "After year 1 only the crops change; tillage, fertilizer and water stay as set.",
       "short": "Quick fill"
     },
-    "mock": "Mock numbers for testing the screens. Not your field's results.",
     "live": {
       "title": "Plot {n} right now",
       "hint": "Tap a plot to see how it is doing.",
@@ -1895,6 +1895,7 @@
       "heat": "Source: NASA POWER temperature and the crop's heat limit (crop library).",
       "water": "Source: the simulator's water balance on SSURGO soil, NASA POWER and GPM IMERG weather.",
       "yield": "Source: the simulator's yield compared with a typical yield for this county (USDA NASS)."
-    }
+    },
+    "noData": "No data here yet"
   }
 }

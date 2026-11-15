@@ -6,7 +6,7 @@ The game **only reads** `scoring/engine/`, `scoring/modelSlots.js`, `content/mod
 
 ## How the engine runs for the game
 - **Screen:** `app/src/screens/FarmSimulator.jsx` (screen id `sim`, in the "More" menu) lazy-loads `game/FarmGame.jsx`. Its start screen (`game/StartScreen.jsx`) is the landing page: hero preview, how it works, Free play, challenges.
-- **Running a plot:** `game/gameWorker.js` runs `buildPlan` / `engineConfig` (`sim/simSetup.js`), then `createSimulation` (`scoring/engine/simulator.js`), then calls `step()` once per day, for one plot. `game/runSource.js` is the single place the game gets its numbers (mock for now, see G2b).
+- **Running a plot:** `game/gameWorker.js` runs `buildPlan` / `engineConfig` (`sim/simSetup.js`), then `createSimulation` (`scoring/engine/simulator.js`), then calls `step()` once per day, for one plot. `game/runSource.js` is the single place the game gets its numbers (engine only since G2c).
 - **Daily output** (one Float32Array per column):
   - weather: `rain`, `tmax`, `tmin`
   - water: `irr`, `rz`, `rzCap`, `stress`, `drain`, `runoff`
@@ -118,8 +118,7 @@ All 8 animate from the worker's daily arrays.
 
 ## G2b: the playable 4-plot game (Nov 15 2026)
 - **Shape:** full-screen isometric canvas (`game/scene.js`, `GameCanvas.jsx`) with 4 plots. Toolbar (`Toolbar.jsx`): seeds, cover, tillage / fertilizer / water (set in year 1, locked after: the engine runs one management per plot run), quick fill. Season playback per plot (`season.js`, `SeasonView.jsx`), pop-ups with source, tap a plot for live meters. Harvest coins + scoreboard (`Scoreboard.jsx`). Challenges with stars saved on the device, end screen (`EndScreen.jsx`, rules in `plots.js`).
-- **Numbers are MOCK for now** (user decision, so the UI can be reviewed first): `game/runSource.js` is the one plug-in point and returns `game/mockRuns.js` output. The game shows a "Mock numbers" tag while `USING_MOCK` is true. **Do not deploy with the mock on.**
-- **To wire the engine:** follow the steps at the top of `runSource.js`. `gameWorker.js` already runs one plot through the engine and returns the same shape (day arrays incl. N supply share and expected pest loss read from the engine state, ledger events, seasons, metrics, played-years structure).
+- Numbers were mock in G2b; G2c replaced them with the engine (below).
 - **Year-1 disease fix:** `playedStructure()` in `plots.js` compares only played years in order (year 1 vs the field's last CDL crop), instead of `structureOf()`'s loop that compared a one-year plan with itself. Used by the worker for both the disease check and the pest score.
 - **Scene rules:** a plot with a live crop is never drawn as bare soil (minimum seed / sprout); dust, cracks and gullies only on plots the run marks bare.
 
@@ -127,3 +126,16 @@ All 8 animate from the worker's daily arrays.
 - Removed the chart simulator completely: `screens/Simulator.jsx`, `components/SimCharts.jsx`, `sim/simView.js`, `sim/simWorker.js`, `sim/useSimRuns.js`, its CSS and its i18n keys (only `sim.in.tillageOpt` / `sim.in.irrOpt` stay, the toolbar reads them). `sim/simSetup.js` stays (the game worker and toolbar use it).
 - No "Simulator | Play" switch: More → Farm simulator opens the start screen. "Play this plan" (Plans / Compare) shows a "Ready to test" card there.
 - The tech plan above (PixiJS) was not used: the scene is plain Canvas 2D in `game/scene.js`.
+
+## G2c: the game runs on the engine (Nov 15 2026)
+- **No mock:** `game/mockRuns.js`, `USING_MOCK` and the "Mock numbers" line are gone. `npm run selftest` runs `app/scripts/check-no-mock.mjs`, which fails if a mock file, flag or the `game.mock` text comes back.
+- **Runs:** `game/runSource.js` keeps a pool of 2–4 `gameWorker.js` workers. Each season = one engine run per plot + one hidden run of the current rotation (baseline), all on the same real weather years (`weatherYears`, replayed from year 1 so soil, residue and pests carry over). Scores and fit checks on the main thread: `scoreOption` + `waterCheck` / `diseaseCheck` / `marketCheck` (`regional: null`) / `seasonCheck` (no 2040 scenarios), unchanged.
+- **Costs:** the toolbar's setup cost is the engine's own ledger for this season (`setupUsd`: planting, seed, N, pre-plant pass / no-till planter, fallow weed control), from a quick engine run of each plot as set; "—" until it arrives. `plots.js setupCost()` (a hand copy of the engine's cost lines) was removed. Coins = game budget ($300/plot, a named game setting) + the engine's money per season.
+- **Baseline / quick fill:** best plan and current rotation come from the field's v2 file (`buildMergedPlans`, as on the Plans page). No real v2 file (or the sample) = those quick-fill buttons are hidden. Baseline falls back to the USDA crop history (slot A); with neither, the Risk meter shows "—".
+- **Files the game reads per field** (all through the app's loaders, any field id):
+  - `shared/fields/<id>.json` via `data/loadField.js` (the app's field; weather, soil, market, CDL history)
+  - `shared/v2/models/<id>.json` via `data/loadModels.js` → `makeSlots()` (missing = placeholders, tagged)
+  - `shared/v2/fields/<id>.json` via `data/loadV2.js` (quick fill + baseline only)
+  - A field without monthly weather shows "No data here yet".
+- **Speed:** one plot-season in the worker takes 8–32 ms on the dev laptop (5 seasons replayed in year 5); the 4 plots + baseline run in parallel. The "Growing the season…" sprout shows for at least 0.4 s.
+
