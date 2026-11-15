@@ -6,7 +6,7 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {
   Layers, Mountain, Wheat, MapPin, ArrowRight, WifiOff, Lock, LocateFixed, LoaderCircle, TriangleAlert, RotateCw,
-  Plus, Minus, Scan, X, ChevronUp, Sprout, Info, Compass, ArrowLeft,
+  Plus, Minus, Scan, X, ChevronUp, Sprout, Info, Compass, ArrowLeft, Navigation2,
 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import GlossaryIcon from '../components/GlossaryIcon.jsx';
@@ -70,7 +70,7 @@ function usePlacedLabels(zoom, countyText, hullText) {
       const box = map.getContainer().getBoundingClientRect();
       const W = box.width; const H = box.height;
       const hit = (b, o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1];
-      const boxes = [...document.querySelectorAll('.header-inner > *, .map-top > *:not(.map-chips), .map-notes > *, .map-bottom > *')]
+      const boxes = [...document.querySelectorAll('.header-inner > *, .map-search, .map-search-note, .map-scope, .map-dallas, .map-attrib, .map-legend, .map-bottom > *')]
         .map((el) => el.getBoundingClientRect()).filter((r) => r.width && r.height)
         .map((r) => [r.left - box.left - 4, r.top - box.top - 4, r.right - box.left + 4, r.bottom - box.top + 4]);
       const fits = (b) => b[0] >= 4 && b[1] >= 4 && b[2] <= W - 4 && b[3] <= H - 4 && !boxes.some((o) => hit(b, o));
@@ -369,15 +369,28 @@ export default function PickField() {
       <SearchPrivacy />
       {/* Reserved for the map view chips (built later). Nothing else may sit here. */}
       <div className="map-chips" aria-hidden="true" />
+      {/* Four different kinds of note, four different looks: privacy = helper text under the box (above),
+          data scope = a small info card, Dallas = a north arrow, imagery credit = map attribution text. */}
       <div className="map-notes">
-        <p>{t('pick.note300')}</p>
         <div className="map-top-row">
-          <p>{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
-          {zoom < 13 && (
-            <p className="map-dallas" role="note" aria-label={t('pick.dallasAlt', { km: mapLayers.dallas.km })}>
-              <span aria-hidden="true">↑</span>{t('pick.dallasTop', { km: mapLayers.dallas.km })}
-            </p>
-          )}
+          <div className="map-left">
+          <div className="map-scope" role="note">
+            <span className="map-scope-icon" aria-hidden="true"><Layers size={16} /></span>
+            <span className="map-scope-text">
+              <strong>{t('pick.scopeTitle', { n: OUTLINES.length })}</strong>
+              <small>{t('pick.scopeSub')}</small>
+            </span>
+          </div>
+          <p className="map-attrib">{online ? t('pick.imagery') : <><WifiOff size={12} aria-hidden="true" />{t('pick.offline')}</>}</p>
+          </div>
+          <div className="map-side">
+            {zoom < 13 && (
+              <p className="map-dallas" role="note" aria-label={t('pick.dallasAlt', { km: mapLayers.dallas.km })}>
+                <span className="map-dallas-arrow" aria-hidden="true"><Navigation2 size={14} /></span>
+                <span><strong>{t('pick.dallasName')}</strong> {t('pick.dallasKm', { km: mapLayers.dallas.km })}</span>
+              </p>
+            )}
+          </div>
         </div>
         {legend && (
           <div className="map-legend" id="map-legend" role="region" aria-label={t('pick.legendTitle')}>

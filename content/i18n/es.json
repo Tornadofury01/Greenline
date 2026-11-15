@@ -107,8 +107,7 @@
       "notSure": "No es seguro · estimación del modelo, {pct}%"
     },
     "soilShort": "{texture} · {series}",
-    "note300": "300 campos del condado de Ellis (contornos del USDA), no todas las granjas",
-    "imagery": "Imágenes: USGS The National Map",
+    "imagery": "Imágenes © USGS The National Map",
     "offline": "Sin conexión: solo contornos de campos",
     "mapTools": "Herramientas del mapa",
     "zoomIn": "Acercar",
@@ -137,8 +136,11 @@
     "searchOpen": "Abrir ese campo",
     "searchBack": "Volver",
     "countyLabel": "Condado de Ellis",
-    "dallasTop": "Dallas {km} km",
-    "dallasAlt": "Dallas está a {km} km al norte, fuera del mapa"
+    "dallasAlt": "Dallas está a {km} km al norte, fuera del mapa",
+    "scopeTitle": "{n} campos del condado de Ellis",
+    "scopeSub": "Contornos del USDA · no todas las granjas",
+    "dallasName": "Dallas",
+    "dallasKm": "{km} km"
   },
   "farm": {
     "title": "Su granja",

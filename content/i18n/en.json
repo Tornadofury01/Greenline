@@ -107,8 +107,7 @@
       "notSure": "Not sure · model guess, {pct}%"
     },
     "soilShort": "{texture} · {series}",
-    "note300": "300 Ellis County fields (USDA outlines), not every farm",
-    "imagery": "Imagery: USGS The National Map",
+    "imagery": "Imagery © USGS The National Map",
     "offline": "Offline: field outlines only",
     "mapTools": "Map tools",
     "zoomIn": "Zoom in",
@@ -137,8 +136,11 @@
     "searchOpen": "Open that field",
     "searchBack": "Go back",
     "countyLabel": "Ellis County",
-    "dallasTop": "Dallas {km} km",
-    "dallasAlt": "Dallas is {km} km north, off the top of the map"
+    "dallasAlt": "Dallas is {km} km north, off the top of the map",
+    "scopeTitle": "{n} Ellis County fields",
+    "scopeSub": "USDA outlines · not every farm",
+    "dallasName": "Dallas",
+    "dallasKm": "{km} km"
   },
   "farm": {
     "title": "Your farm",
