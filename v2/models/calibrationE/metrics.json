@@ -1,218 +1,911 @@
 {
- "WHEAT": {
-  "unit": "BU / ACRE",
-  "countyYears": {
-   "train": 154,
-   "test": 62
-  },
-  "testYears": [
-   2013,
-   2025
-  ],
-  "scores": {
-   "trendOnly": {
-    "r2_deviation": -0.0,
-    "r2_yield": 0.2,
-    "mae_yield": 7.3,
-    "corr_deviation": null
+ "trend": "pooled",
+ "counties": 25,
+ "years": [
+  2000,
+  2025
+ ],
+ "rows": 1622,
+ "crops": {
+  "WHEAT": {
+   "unit": "BU / ACRE",
+   "best": "allCrops",
+   "leaveOneYearOut": {
+    "all25": {
+     "trendOnly": {
+      "r2_deviation": -0.0,
+      "r2_yield": 0.269,
+      "mae_yield": 7.3,
+      "n": 522,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.128,
+      "r2_yield": 0.366,
+      "mae_yield": 6.7,
+      "n": 522,
+      "corr": 0.36
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.151,
+      "r2_yield": 0.391,
+      "mae_yield": 6.6,
+      "n": 522,
+      "corr": 0.396
+     },
+     "partialPool": {
+      "r2_deviation": 0.121,
+      "r2_yield": 0.367,
+      "mae_yield": 6.6,
+      "n": 522,
+      "corr": 0.379
+     },
+     "trees": {
+      "r2_deviation": 0.084,
+      "r2_yield": 0.333,
+      "mae_yield": 6.8,
+      "n": 522,
+      "corr": 0.358
+     },
+     "allCrops": {
+      "r2_deviation": 0.153,
+      "r2_yield": 0.391,
+      "mae_yield": 6.6,
+      "n": 522,
+      "corr": 0.405
+     },
+     "weatherOnly": {
+      "r2_deviation": -0.062,
+      "r2_yield": 0.218,
+      "mae_yield": 7.5,
+      "n": 522,
+      "corr": 0.064
+     }
+    },
+    "study6": {
+     "trendOnly": {
+      "r2_deviation": -0.0,
+      "r2_yield": 0.127,
+      "mae_yield": 7.3,
+      "n": 138,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.174,
+      "r2_yield": 0.309,
+      "mae_yield": 6.5,
+      "n": 138,
+      "corr": 0.42
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.216,
+      "r2_yield": 0.342,
+      "mae_yield": 6.3,
+      "n": 138,
+      "corr": 0.469
+     },
+     "partialPool": {
+      "r2_deviation": 0.174,
+      "r2_yield": 0.312,
+      "mae_yield": 6.4,
+      "n": 138,
+      "corr": 0.426
+     },
+     "trees": {
+      "r2_deviation": 0.156,
+      "r2_yield": 0.308,
+      "mae_yield": 6.3,
+      "n": 138,
+      "corr": 0.419
+     },
+     "allCrops": {
+      "r2_deviation": 0.231,
+      "r2_yield": 0.355,
+      "mae_yield": 6.2,
+      "n": 138,
+      "corr": 0.482
+     },
+     "weatherOnly": {
+      "r2_deviation": -0.061,
+      "r2_yield": 0.067,
+      "mae_yield": 7.5,
+      "n": 138,
+      "corr": 0.077
+     }
+    },
+    "hill": {
+     "trendOnly": {
+      "r2_deviation": -0.0,
+      "r2_yield": 0.129,
+      "mae_yield": 6.1,
+      "n": 24,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.25,
+      "r2_yield": 0.357,
+      "mae_yield": 5.6,
+      "n": 24,
+      "corr": 0.502
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.346,
+      "r2_yield": 0.437,
+      "mae_yield": 5.2,
+      "n": 24,
+      "corr": 0.598
+     },
+     "partialPool": {
+      "r2_deviation": 0.318,
+      "r2_yield": 0.413,
+      "mae_yield": 5.5,
+      "n": 24,
+      "corr": 0.566
+     },
+     "trees": {
+      "r2_deviation": 0.525,
+      "r2_yield": 0.592,
+      "mae_yield": 4.1,
+      "n": 24,
+      "corr": 0.728
+     },
+     "allCrops": {
+      "r2_deviation": 0.339,
+      "r2_yield": 0.435,
+      "mae_yield": 5.4,
+      "n": 24,
+      "corr": 0.586
+     },
+     "weatherOnly": {
+      "r2_deviation": -0.073,
+      "r2_yield": 0.06,
+      "mae_yield": 6.2,
+      "n": 24,
+      "corr": 0.12
+     }
+    }
    },
-   "greennessLine": {
-    "r2_deviation": -0.125,
-    "r2_yield": 0.092,
-    "mae_yield": 7.7,
-    "corr_deviation": 0.234
+   "forward_train2000_2012_test2013_2025": {
+    "trendOnly": {
+     "r2_deviation": -0.12,
+     "r2_yield": 0.163,
+     "mae_yield": 8.4,
+     "n": 224,
+     "corr": null
+    },
+    "greennessLine": {
+     "r2_deviation": 0.07,
+     "r2_yield": 0.33,
+     "mae_yield": 7.4,
+     "n": 224,
+     "corr": 0.304
+    },
+    "ridgeSmall": {
+     "r2_deviation": -0.036,
+     "r2_yield": 0.252,
+     "mae_yield": 7.8,
+     "n": 224,
+     "corr": 0.211
+    },
+    "partialPool": {
+     "r2_deviation": -0.07,
+     "r2_yield": 0.222,
+     "mae_yield": 8.0,
+     "n": 224,
+     "corr": 0.214
+    },
+    "trees": {
+     "r2_deviation": 0.117,
+     "r2_yield": 0.353,
+     "mae_yield": 7.2,
+     "n": 224,
+     "corr": 0.384
+    },
+    "allCrops": {
+     "r2_deviation": 0.017,
+     "r2_yield": 0.292,
+     "mae_yield": 7.6,
+     "n": 224,
+     "corr": 0.261
+    },
+    "weatherOnly": {
+     "r2_deviation": -0.254,
+     "r2_yield": 0.069,
+     "mae_yield": 8.9,
+     "n": 224,
+     "corr": 0.029
+    }
    },
-   "ridge": {
-    "r2_deviation": -0.801,
-    "r2_yield": -0.479,
-    "mae_yield": 9.9,
-    "corr_deviation": -0.045
-   },
-   "trees": {
-    "r2_deviation": 0.174,
-    "r2_yield": 0.299,
-    "mae_yield": 6.6,
-    "corr_deviation": 0.51
+   "targets": {
+    "yieldPctPer0_1NdviAnomaly": 25.79,
+    "yieldPctPer0_1LateNdviAnomaly": 1.04,
+    "yieldPctPerHotDay": -0.345,
+    "yieldPctPerSpeiUnit": -8.17,
+    "yieldPctPer100mmRain": -0.09,
+    "greennessLineSlopePer0_1": 18.71
    }
   },
-  "targets": {
-   "yieldPctPerGreennessZ": 20.1,
-   "ridgePerUnit": {
-    "z_key": 24.414,
-    "z_worst": -6.492,
-    "rain_season": -0.0,
-    "hot_season": -0.799,
-    "spei_end": -13.173,
-    "def_end": -0.003,
-    "et_ratio_key": 86.96
+  "CORN": {
+   "unit": "BU / ACRE",
+   "best": "greennessLine",
+   "leaveOneYearOut": {
+    "all25": {
+     "trendOnly": {
+      "r2_deviation": -0.001,
+      "r2_yield": -0.049,
+      "mae_yield": 20.1,
+      "n": 407,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.377,
+      "r2_yield": 0.374,
+      "mae_yield": 14.6,
+      "n": 407,
+      "corr": 0.616
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.306,
+      "r2_yield": 0.289,
+      "mae_yield": 15.5,
+      "n": 407,
+      "corr": 0.559
+     },
+     "partialPool": {
+      "r2_deviation": 0.232,
+      "r2_yield": 0.218,
+      "mae_yield": 16.2,
+      "n": 407,
+      "corr": 0.511
+     },
+     "trees": {
+      "r2_deviation": 0.274,
+      "r2_yield": 0.27,
+      "mae_yield": 15.6,
+      "n": 407,
+      "corr": 0.55
+     },
+     "allCrops": {
+      "r2_deviation": 0.314,
+      "r2_yield": 0.3,
+      "mae_yield": 15.5,
+      "n": 407,
+      "corr": 0.566
+     },
+     "weatherOnly": {
+      "r2_deviation": 0.117,
+      "r2_yield": 0.066,
+      "mae_yield": 18.3,
+      "n": 407,
+      "corr": 0.362
+     }
+    },
+    "study6": {
+     "trendOnly": {
+      "r2_deviation": -0.001,
+      "r2_yield": -0.062,
+      "mae_yield": 19.1,
+      "n": 124,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.431,
+      "r2_yield": 0.41,
+      "mae_yield": 13.4,
+      "n": 124,
+      "corr": 0.659
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.335,
+      "r2_yield": 0.307,
+      "mae_yield": 14.2,
+      "n": 124,
+      "corr": 0.591
+     },
+     "partialPool": {
+      "r2_deviation": 0.3,
+      "r2_yield": 0.275,
+      "mae_yield": 14.5,
+      "n": 124,
+      "corr": 0.563
+     },
+     "trees": {
+      "r2_deviation": 0.253,
+      "r2_yield": 0.233,
+      "mae_yield": 15.1,
+      "n": 124,
+      "corr": 0.562
+     },
+     "allCrops": {
+      "r2_deviation": 0.347,
+      "r2_yield": 0.321,
+      "mae_yield": 14.2,
+      "n": 124,
+      "corr": 0.601
+     },
+     "weatherOnly": {
+      "r2_deviation": 0.139,
+      "r2_yield": 0.09,
+      "mae_yield": 16.9,
+      "n": 124,
+      "corr": 0.396
+     }
+    },
+    "hill": {
+     "trendOnly": {
+      "r2_deviation": -0.001,
+      "r2_yield": -0.099,
+      "mae_yield": 21.7,
+      "n": 26,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.563,
+      "r2_yield": 0.525,
+      "mae_yield": 13.3,
+      "n": 26,
+      "corr": 0.751
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.476,
+      "r2_yield": 0.426,
+      "mae_yield": 14.4,
+      "n": 26,
+      "corr": 0.69
+     },
+     "partialPool": {
+      "r2_deviation": 0.467,
+      "r2_yield": 0.416,
+      "mae_yield": 14.3,
+      "n": 26,
+      "corr": 0.69
+     },
+     "trees": {
+      "r2_deviation": 0.364,
+      "r2_yield": 0.309,
+      "mae_yield": 16.5,
+      "n": 26,
+      "corr": 0.637
+     },
+     "allCrops": {
+      "r2_deviation": 0.486,
+      "r2_yield": 0.438,
+      "mae_yield": 14.4,
+      "n": 26,
+      "corr": 0.698
+     },
+     "weatherOnly": {
+      "r2_deviation": 0.241,
+      "r2_yield": 0.163,
+      "mae_yield": 17.9,
+      "n": 26,
+      "corr": 0.492
+     }
+    }
+   },
+   "forward_train2000_2012_test2013_2025": {
+    "trendOnly": {
+     "r2_deviation": -1.336,
+     "r2_yield": -1.783,
+     "mae_yield": 31.3,
+     "n": 178,
+     "corr": null
+    },
+    "greennessLine": {
+     "r2_deviation": -0.277,
+     "r2_yield": -0.474,
+     "mae_yield": 22.7,
+     "n": 178,
+     "corr": 0.606
+    },
+    "ridgeSmall": {
+     "r2_deviation": -0.357,
+     "r2_yield": -0.65,
+     "mae_yield": 24.9,
+     "n": 178,
+     "corr": 0.361
+    },
+    "partialPool": {
+     "r2_deviation": -0.373,
+     "r2_yield": -0.667,
+     "mae_yield": 24.9,
+     "n": 178,
+     "corr": 0.336
+    },
+    "trees": {
+     "r2_deviation": -0.925,
+     "r2_yield": -1.269,
+     "mae_yield": 28.4,
+     "n": 178,
+     "corr": 0.332
+    },
+    "allCrops": {
+     "r2_deviation": -0.347,
+     "r2_yield": -0.636,
+     "mae_yield": 24.8,
+     "n": 178,
+     "corr": 0.398
+    },
+    "weatherOnly": {
+     "r2_deviation": -1.025,
+     "r2_yield": -1.513,
+     "mae_yield": 30.6,
+     "n": 178,
+     "corr": 0.176
+    }
+   },
+   "targets": {
+    "yieldPctPer0_1NdviAnomaly": 32.24,
+    "yieldPctPer0_1LateNdviAnomaly": -0.86,
+    "yieldPctPerHotDay": -0.084,
+    "yieldPctPerSpeiUnit": 5.61,
+    "yieldPctPer100mmRain": -2.4,
+    "greennessLineSlopePer0_1": 37.02
    }
   },
-  "worstTestYear": {
-   "year": 2022,
-   "actualDevPct": -52.1
+  "SORGHUM": {
+   "unit": "BU / ACRE",
+   "best": "allCrops",
+   "leaveOneYearOut": {
+    "all25": {
+     "trendOnly": {
+      "r2_deviation": -0.001,
+      "r2_yield": 0.065,
+      "mae_yield": 13.1,
+      "n": 386,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.123,
+      "r2_yield": 0.174,
+      "mae_yield": 12.1,
+      "n": 386,
+      "corr": 0.352
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.181,
+      "r2_yield": 0.23,
+      "mae_yield": 11.6,
+      "n": 386,
+      "corr": 0.426
+     },
+     "partialPool": {
+      "r2_deviation": 0.191,
+      "r2_yield": 0.236,
+      "mae_yield": 11.7,
+      "n": 386,
+      "corr": 0.449
+     },
+     "trees": {
+      "r2_deviation": 0.077,
+      "r2_yield": 0.137,
+      "mae_yield": 12.3,
+      "n": 386,
+      "corr": 0.329
+     },
+     "allCrops": {
+      "r2_deviation": 0.206,
+      "r2_yield": 0.253,
+      "mae_yield": 11.4,
+      "n": 386,
+      "corr": 0.454
+     },
+     "weatherOnly": {
+      "r2_deviation": -0.074,
+      "r2_yield": -0.006,
+      "mae_yield": 13.7,
+      "n": 386,
+      "corr": -0.007
+     }
+    },
+    "study6": {
+     "trendOnly": {
+      "r2_deviation": -0.001,
+      "r2_yield": -0.035,
+      "mae_yield": 13.7,
+      "n": 99,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.068,
+      "r2_yield": 0.051,
+      "mae_yield": 12.7,
+      "n": 99,
+      "corr": 0.281
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.143,
+      "r2_yield": 0.137,
+      "mae_yield": 11.9,
+      "n": 99,
+      "corr": 0.385
+     },
+     "partialPool": {
+      "r2_deviation": 0.151,
+      "r2_yield": 0.139,
+      "mae_yield": 12.2,
+      "n": 99,
+      "corr": 0.4
+     },
+     "trees": {
+      "r2_deviation": 0.058,
+      "r2_yield": 0.043,
+      "mae_yield": 12.9,
+      "n": 99,
+      "corr": 0.32
+     },
+     "allCrops": {
+      "r2_deviation": 0.174,
+      "r2_yield": 0.172,
+      "mae_yield": 11.5,
+      "n": 99,
+      "corr": 0.423
+     },
+     "weatherOnly": {
+      "r2_deviation": -0.098,
+      "r2_yield": -0.124,
+      "mae_yield": 14.4,
+      "n": 99,
+      "corr": -0.095
+     }
+    },
+    "hill": {
+     "trendOnly": {
+      "r2_deviation": -0.001,
+      "r2_yield": -0.14,
+      "mae_yield": 13.9,
+      "n": 21,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.263,
+      "r2_yield": 0.16,
+      "mae_yield": 11.7,
+      "n": 21,
+      "corr": 0.515
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.395,
+      "r2_yield": 0.318,
+      "mae_yield": 10.3,
+      "n": 21,
+      "corr": 0.63
+     },
+     "partialPool": {
+      "r2_deviation": 0.371,
+      "r2_yield": 0.295,
+      "mae_yield": 10.6,
+      "n": 21,
+      "corr": 0.611
+     },
+     "trees": {
+      "r2_deviation": 0.318,
+      "r2_yield": 0.217,
+      "mae_yield": 10.4,
+      "n": 21,
+      "corr": 0.571
+     },
+     "allCrops": {
+      "r2_deviation": 0.437,
+      "r2_yield": 0.37,
+      "mae_yield": 9.9,
+      "n": 21,
+      "corr": 0.662
+     },
+     "weatherOnly": {
+      "r2_deviation": -0.129,
+      "r2_yield": -0.279,
+      "mae_yield": 14.6,
+      "n": 21,
+      "corr": -0.125
+     }
+    }
+   },
+   "forward_train2000_2012_test2013_2025": {
+    "trendOnly": {
+     "r2_deviation": -1.275,
+     "r2_yield": -1.0,
+     "mae_yield": 18.8,
+     "n": 147,
+     "corr": null
+    },
+    "greennessLine": {
+     "r2_deviation": -0.63,
+     "r2_yield": -0.434,
+     "mae_yield": 15.9,
+     "n": 147,
+     "corr": 0.238
+    },
+    "ridgeSmall": {
+     "r2_deviation": -0.716,
+     "r2_yield": -0.509,
+     "mae_yield": 16.3,
+     "n": 147,
+     "corr": 0.226
+    },
+    "partialPool": {
+     "r2_deviation": -0.691,
+     "r2_yield": -0.508,
+     "mae_yield": 16.1,
+     "n": 147,
+     "corr": 0.3
+    },
+    "trees": {
+     "r2_deviation": -1.224,
+     "r2_yield": -0.923,
+     "mae_yield": 18.5,
+     "n": 147,
+     "corr": -0.105
+    },
+    "allCrops": {
+     "r2_deviation": -0.643,
+     "r2_yield": -0.448,
+     "mae_yield": 15.9,
+     "n": 147,
+     "corr": 0.213
+    },
+    "weatherOnly": {
+     "r2_deviation": -1.334,
+     "r2_yield": -1.084,
+     "mae_yield": 19.1,
+     "n": 147,
+     "corr": -0.005
+    }
+   },
+   "targets": {
+    "yieldPctPer0_1NdviAnomaly": 37.9,
+    "yieldPctPer0_1LateNdviAnomaly": -14.72,
+    "yieldPctPerHotDay": 0.145,
+    "yieldPctPerSpeiUnit": 3.48,
+    "yieldPctPer100mmRain": -3.3,
+    "greennessLineSlopePer0_1": 17.2
+   }
   },
-  "best": "trees"
+  "COTTON": {
+   "unit": "LB / ACRE",
+   "best": "allCrops",
+   "leaveOneYearOut": {
+    "all25": {
+     "trendOnly": {
+      "r2_deviation": -0.0,
+      "r2_yield": 0.094,
+      "mae_yield": 168.4,
+      "n": 216,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.541,
+      "r2_yield": 0.602,
+      "mae_yield": 106.9,
+      "n": 216,
+      "corr": 0.736
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.598,
+      "r2_yield": 0.655,
+      "mae_yield": 99.1,
+      "n": 216,
+      "corr": 0.774
+     },
+     "partialPool": {
+      "r2_deviation": 0.587,
+      "r2_yield": 0.648,
+      "mae_yield": 100.8,
+      "n": 216,
+      "corr": 0.766
+     },
+     "trees": {
+      "r2_deviation": 0.517,
+      "r2_yield": 0.581,
+      "mae_yield": 108.9,
+      "n": 216,
+      "corr": 0.722
+     },
+     "allCrops": {
+      "r2_deviation": 0.603,
+      "r2_yield": 0.659,
+      "mae_yield": 97.9,
+      "n": 216,
+      "corr": 0.777
+     },
+     "weatherOnly": {
+      "r2_deviation": 0.347,
+      "r2_yield": 0.408,
+      "mae_yield": 131.8,
+      "n": 216,
+      "corr": 0.592
+     }
+    },
+    "study6": {
+     "trendOnly": {
+      "r2_deviation": -0.0,
+      "r2_yield": 0.016,
+      "mae_yield": 168.9,
+      "n": 94,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.583,
+      "r2_yield": 0.626,
+      "mae_yield": 104.7,
+      "n": 94,
+      "corr": 0.764
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.684,
+      "r2_yield": 0.704,
+      "mae_yield": 91.4,
+      "n": 94,
+      "corr": 0.834
+     },
+     "partialPool": {
+      "r2_deviation": 0.679,
+      "r2_yield": 0.701,
+      "mae_yield": 93.2,
+      "n": 94,
+      "corr": 0.826
+     },
+     "trees": {
+      "r2_deviation": 0.615,
+      "r2_yield": 0.631,
+      "mae_yield": 98.1,
+      "n": 94,
+      "corr": 0.786
+     },
+     "allCrops": {
+      "r2_deviation": 0.682,
+      "r2_yield": 0.708,
+      "mae_yield": 91.4,
+      "n": 94,
+      "corr": 0.83
+     },
+     "weatherOnly": {
+      "r2_deviation": 0.484,
+      "r2_yield": 0.497,
+      "mae_yield": 116.8,
+      "n": 94,
+      "corr": 0.704
+     }
+    },
+    "hill": {
+     "trendOnly": {
+      "r2_deviation": -0.0,
+      "r2_yield": -0.096,
+      "mae_yield": 195.2,
+      "n": 25,
+      "corr": null
+     },
+     "greennessLine": {
+      "r2_deviation": 0.584,
+      "r2_yield": 0.549,
+      "mae_yield": 121.1,
+      "n": 25,
+      "corr": 0.766
+     },
+     "ridgeSmall": {
+      "r2_deviation": 0.703,
+      "r2_yield": 0.678,
+      "mae_yield": 103.9,
+      "n": 25,
+      "corr": 0.854
+     },
+     "partialPool": {
+      "r2_deviation": 0.708,
+      "r2_yield": 0.688,
+      "mae_yield": 106.1,
+      "n": 25,
+      "corr": 0.845
+     },
+     "trees": {
+      "r2_deviation": 0.617,
+      "r2_yield": 0.574,
+      "mae_yield": 118.0,
+      "n": 25,
+      "corr": 0.8
+     },
+     "allCrops": {
+      "r2_deviation": 0.694,
+      "r2_yield": 0.675,
+      "mae_yield": 107.7,
+      "n": 25,
+      "corr": 0.843
+     },
+     "weatherOnly": {
+      "r2_deviation": 0.463,
+      "r2_yield": 0.403,
+      "mae_yield": 134.9,
+      "n": 25,
+      "corr": 0.71
+     }
+    }
+   },
+   "forward_train2000_2012_test2013_2025": {
+    "trendOnly": {
+     "r2_deviation": -0.111,
+     "r2_yield": -0.094,
+     "mae_yield": 190.0,
+     "n": 95,
+     "corr": null
+    },
+    "greennessLine": {
+     "r2_deviation": 0.36,
+     "r2_yield": 0.401,
+     "mae_yield": 139.3,
+     "n": 95,
+     "corr": 0.607
+    },
+    "ridgeSmall": {
+     "r2_deviation": 0.444,
+     "r2_yield": 0.495,
+     "mae_yield": 125.9,
+     "n": 95,
+     "corr": 0.682
+    },
+    "partialPool": {
+     "r2_deviation": 0.486,
+     "r2_yield": 0.53,
+     "mae_yield": 120.7,
+     "n": 95,
+     "corr": 0.734
+    },
+    "trees": {
+     "r2_deviation": 0.33,
+     "r2_yield": 0.387,
+     "mae_yield": 141.0,
+     "n": 95,
+     "corr": 0.58
+    },
+    "allCrops": {
+     "r2_deviation": 0.461,
+     "r2_yield": 0.495,
+     "mae_yield": 127.0,
+     "n": 95,
+     "corr": 0.682
+    },
+    "weatherOnly": {
+     "r2_deviation": 0.234,
+     "r2_yield": 0.241,
+     "mae_yield": 151.4,
+     "n": 95,
+     "corr": 0.682
+    }
+   },
+   "targets": {
+    "yieldPctPer0_1NdviAnomaly": 33.27,
+    "yieldPctPer0_1LateNdviAnomaly": -13.99,
+    "yieldPctPerHotDay": -0.449,
+    "yieldPctPerSpeiUnit": 6.88,
+    "yieldPctPer100mmRain": -2.34,
+    "greennessLineSlopePer0_1": 31.65
+   }
+  }
  },
- "CORN": {
-  "unit": "BU / ACRE",
-  "countyYears": {
-   "train": 140,
-   "test": 61
+ "riesel": {
+  "WHEAT": {
+   "n": 16,
+   "years": [
+    2000,
+    2004,
+    2007,
+    2015
+   ],
+   "spearman_pred_vs_field": -0.765,
+   "spearman_county_vs_field": -0.843
   },
-  "testYears": [
-   2013,
-   2025
-  ],
-  "scores": {
-   "trendOnly": {
-    "r2_deviation": -0.068,
-    "r2_yield": -0.4,
-    "mae_yield": 19.7,
-    "corr_deviation": null
-   },
-   "greennessLine": {
-    "r2_deviation": 0.377,
-    "r2_yield": 0.085,
-    "mae_yield": 15.3,
-    "corr_deviation": 0.629
-   },
-   "ridge": {
-    "r2_deviation": 0.12,
-    "r2_yield": -0.409,
-    "mae_yield": 19.2,
-    "corr_deviation": 0.505
-   },
-   "trees": {
-    "r2_deviation": -0.099,
-    "r2_yield": -0.763,
-    "mae_yield": 20.8,
-    "corr_deviation": 0.353
-   }
-  },
-  "targets": {
-   "yieldPctPerGreennessZ": 43.0,
-   "ridgePerUnit": {
-    "z_key": 33.25,
-    "z_worst": 0.212,
-    "rain_season": -0.047,
-    "hot_season": -0.205,
-    "spei_end": 15.802,
-    "def_end": 0.011,
-    "et_ratio_key": 3.54
-   }
-  },
-  "worstTestYear": {
-   "year": 2015,
-   "actualDevPct": -44.7
-  },
-  "best": "greennessLine"
- },
- "SORGHUM": {
-  "unit": "BU / ACRE",
-  "countyYears": {
-   "train": 146,
-   "test": 36
-  },
-  "testYears": [
-   2013,
-   2023
-  ],
-  "scores": {
-   "trendOnly": {
-    "r2_deviation": -0.026,
-    "r2_yield": -0.18,
-    "mae_yield": 16.2,
-    "corr_deviation": null
-   },
-   "greennessLine": {
-    "r2_deviation": -0.051,
-    "r2_yield": -0.232,
-    "mae_yield": 15.8,
-    "corr_deviation": 0.318
-   },
-   "ridge": {
-    "r2_deviation": -0.275,
-    "r2_yield": -0.492,
-    "mae_yield": 17.2,
-    "corr_deviation": 0.17
-   },
-   "trees": {
-    "r2_deviation": -0.551,
-    "r2_yield": -0.773,
-    "mae_yield": 19.9,
-    "corr_deviation": 0.226
-   }
-  },
-  "targets": {
-   "yieldPctPerGreennessZ": 18.5,
-   "ridgePerUnit": {
-    "z_key": 13.984,
-    "z_worst": 1.226,
-    "rain_season": -0.031,
-    "hot_season": -0.194,
-    "spei_end": 3.274,
-    "def_end": 0.011,
-    "et_ratio_key": -32.363
-   }
-  },
-  "worstTestYear": {
-   "year": 2018,
-   "actualDevPct": -74.2
-  },
-  "best": "greennessLine"
- },
- "COTTON": {
-  "unit": "LB / ACRE",
-  "countyYears": {
-   "train": 121,
-   "test": 46
-  },
-  "testYears": [
-   2013,
-   2025
-  ],
-  "scores": {
-   "trendOnly": {
-    "r2_deviation": -0.018,
-    "r2_yield": 0.044,
-    "mae_yield": 193.8,
-    "corr_deviation": null
-   },
-   "greennessLine": {
-    "r2_deviation": 0.452,
-    "r2_yield": 0.493,
-    "mae_yield": 136.2,
-    "corr_deviation": 0.766
-   },
-   "ridge": {
-    "r2_deviation": 0.317,
-    "r2_yield": 0.394,
-    "mae_yield": 155.5,
-    "corr_deviation": 0.632
-   },
-   "trees": {
-    "r2_deviation": 0.311,
-    "r2_yield": 0.376,
-    "mae_yield": 142.3,
-    "corr_deviation": 0.578
-   }
-  },
-  "targets": {
-   "yieldPctPerGreennessZ": 24.9,
-   "ridgePerUnit": {
-    "z_key": 11.914,
-    "z_worst": 7.971,
-    "rain_season": 0.007,
-    "hot_season": -0.136,
-    "spei_end": 4.364,
-    "def_end": 0.006,
-    "et_ratio_key": 0.521
-   }
-  },
-  "worstTestYear": {
-   "year": 2023,
-   "actualDevPct": -69.9
-  },
-  "best": "greennessLine"
+  "CORN": {
+   "n": 43,
+   "years": [
+    2000,
+    2002,
+    2003,
+    2005,
+    2006,
+    2008,
+    2009,
+    2014
+   ],
+   "spearman_pred_vs_field": 0.616,
+   "spearman_county_vs_field": 0.757
+  }
  }
 }

@@ -14,8 +14,10 @@ UNITS = {"WHEAT": "BU / ACRE", "CORN": "BU / ACRE", "SORGHUM": "BU / ACRE", "COT
 CLASS = {"WHEAT": "WINTER", "COTTON": "UPLAND"}
 
 
-def county_yields():
-    n = pd.read_csv(DATA / "nass_county.csv", low_memory=False, dtype={"cfips": str})
+def county_yields(file="nass_county.csv"):
+    """file: nass_county.csv (6 study counties) or nass_blacklands_county.csv (all 25 Blacklands counties)."""
+    n = pd.read_csv(DATA / file, low_memory=False, dtype={"cfips": str})
+    n = n[n.cfips.notna() & ~n.cfips.astype(str).str.endswith("nan")]
     y = n[(n.statisticcat_desc == "YIELD") & (n.domain_desc == "TOTAL") & (n.prodn_practice_desc == "ALL PRODUCTION PRACTICES")]
     keep = []
     for crop, unit in UNITS.items():

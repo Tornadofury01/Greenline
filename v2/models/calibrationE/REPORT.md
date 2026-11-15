@@ -1,38 +1,37 @@
-# Calibration E: yields (Field Shift v2, North Texas)
+# Calibration E v2: county yields from MODIS crop greenness + weather
 
-**What it is:** the yield targets the simulator must hit. It predicts county yields from satellite greenness (Model B) plus weather.
+25 Blacklands counties, 2000-2025, 1622 county-crop-years. Target: % deviation of the NASS county yield from its trend. Scored leave-one-year-out (trend and county greenness means refit without the held-out year), plus a forward test (train 2000-2012, test 2013-2025).
 
-**Fit and test:** fitted on 1985–2012, tested once on 2013–2025.
+R² of the deviation (0 = no better than the trend; the trend-only line is 0 by construction).
 
-**Target:** each county-crop's % deviation from its yield trend. The trend is fitted on the training years only and extrapolated, so test years never shape it.
+| Crop | Best method | All 25 counties | 6 study counties | Hill (held out) | Forward test | MAE yield (trend → best) |
+|---|---|---|---|---|---|---|
+| Wheat (BU / ACRE) | allCrops | 0.153 | 0.231 | 0.339 | 0.017 | 7.3 → 6.6 |
+| Corn (BU / ACRE) | greennessLine | 0.377 | 0.431 | 0.563 | -0.277 | 20.1 → 14.6 |
+| Sorghum (BU / ACRE) | allCrops | 0.206 | 0.174 | 0.437 | -0.643 | 13.1 → 11.4 |
+| Cotton (LB / ACRE) | allCrops | 0.603 | 0.682 | 0.694 | 0.461 | 168.4 → 97.9 |
 
-**Yield data:** one clean NASS series per crop (`../nass_yields.py`): per harvested acre, all practices, winter wheat only.
+## Every method (leave-one-year-out, all 25 counties, R² of deviation)
 
-**Inputs per county-year:**
-- **Greenness:** z in the crop's key months (mean and worst month), from the fields Model 1 says grew the crop.
-- **Weather:** season rain and hot days.
-- **Water:** SPEI-90 and TerraClimate deficit at the end of the season, MODIS ET/PET.
-
-| Crop | Train / test county-years | Test years | R² (deviation): greenness line | Ridge | Trees | Yield error (trend → best) | Yield per +1 greenness z |
+| Crop | trendOnly | greennessLine | ridgeSmall | partialPool | trees | allCrops | weatherOnly |
 |---|---|---|---|---|---|---|---|
-| Wheat (BU / ACRE) | 154 / 62 | 2013–2025 | -0.12 | -0.80 | 0.17 | 7.3 → 6.6 | +20.1% |
-| Corn (BU / ACRE) | 140 / 61 | 2013–2025 | 0.38 | 0.12 | -0.10 | 19.7 → 15.3 | +43.0% |
-| Sorghum (BU / ACRE) | 146 / 36 | 2013–2023 | -0.05 | -0.28 | -0.55 | 16.2 → 15.8 | +18.5% |
-| Cotton (LB / ACRE) | 121 / 46 | 2013–2025 | 0.45 | 0.32 | 0.31 | 193.8 → 136.2 | +24.9% |
+| Wheat | -0.0 | 0.128 | 0.151 | 0.121 | 0.084 | 0.153 | -0.062 |
+| Corn | -0.001 | 0.377 | 0.306 | 0.232 | 0.274 | 0.314 | 0.117 |
+| Sorghum | -0.001 | 0.123 | 0.181 | 0.191 | 0.077 | 0.206 | -0.074 |
+| Cotton | -0.0 | 0.541 | 0.598 | 0.587 | 0.517 | 0.603 | 0.347 |
 
-**Reading the R² columns:** R² of the deviation from trend. 0 is "trend only"; below 0 is worse than the trend.
+## Simulator targets (ridge on all years, per unit)
 
-**Results:**
-- **Corn and cotton:** calibrated. Greenness alone explains about 38–45% of their year-to-year swings in unseen years and cuts yield error by about a quarter.
-- **Wheat:** weak. A small tree model beats the trend, but greenness alone doesn't. Blackland wheat yields are set by freezes, disease and harvest rain as much as by spring growth.
-- **Sorghum:** not predictable from these inputs. NASS stops sorghum county yields in 2023, leaving few test county-years.
+| Crop | % per +0.1 NDVI anomaly | % per +0.1 late NDVI | % per hot day | % per SPEI unit | % per 100 mm rain |
+|---|---|---|---|---|---|
+| Wheat | 25.79 | 1.04 | -0.345 | -8.17 | -0.09 |
+| Corn | 32.24 | -0.86 | -0.084 | 5.61 | -2.4 |
+| Sorghum | 37.9 | -14.72 | 0.145 | 3.48 | -3.3 |
+| Cotton | 33.27 | -13.99 | -0.449 | 6.88 | -2.34 |
 
-**Ridge and trees vs the greenness line:** with about 150 training county-years, the extra weather inputs often overfit. The single greenness line is the most reliable target.
+## Field check: USDA-ARS Riesel watersheds (McLennan County, never used for fitting)
 
-**How the simulator uses this:**
-- **Corn and cotton:** the engine's per-crop settings (water productivity, heat thresholds) are tuned until its simulated yield deviations match these targets year by year (`metrics.json` → `targets`).
-- **Wheat and sorghum:** the published FAO-33 response is kept and reported as uncalibrated.
+- Wheat: 16 field harvests (2000-2015). Spearman of E's county prediction vs the field's own deviation -0.765 (actual county yield vs field: -0.843).
+- Corn: 43 field harvests (2000-2014). Spearman of E's county prediction vs the field's own deviation 0.616 (actual county yield vs field: 0.757).
 
-**The engine itself isn't built yet:** this step supplies the targets and the test protocol.
-
-**Files:** `calibrationE.joblib` (per-crop ridge + trees + training-year trends), `metrics.json`.
+Methods: trendOnly (0), greennessLine (deviation ~ key-window NDVI anomaly), ridgeSmall (5 inputs, counties pooled), partialPool (ridgeSmall + county greenness slopes shrunk toward the shared one), trees (10 inputs), allCrops (one ridge for all crops, shared + crop slopes), weatherOnly (no greenness).
