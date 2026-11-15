@@ -6,7 +6,8 @@ import { dayNumber, daysInYear } from './weather.js';
 
 export const DEFAULT_MANAGEMENT = {
   tillage: 'conventional',          // conventional | reduced | no-till
-  nitrogenLbPerAcre: 'default',     // number, or 'default' = the library's extension rate for each crop
+  nitrogenLbPerAcre: 'default',     // number (the same lb N/acre for every cash crop), or 'default' = the library's extension rate for each crop
+  nitrogenScale: 1,                 // multiplies the library rate when nitrogenLbPerAcre is 'default' (the optimizer's N-rate knob; 0 = none)
   irrigation: 'none',               // none | limited | full
   maturity: 'full',                 // full | short (scales the heat sum by days short / days full)
   coverTermination: 'at-planting',  // at-planting (the plan's end date) | early (14 days earlier, saves water) | none

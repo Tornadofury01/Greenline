@@ -2,6 +2,8 @@
 
 You write one JSON file per field. The engine reads it. **Nothing else needs to change**: no app code, no engine code, no placeholder edits. Until a file exists, the engine uses fixed placeholders and the app tags those values "default value, field model coming".
 
+The six scores the engine reports are final (decided by the team, Nov 14 2026): Profit, Risk, Soil, Water, Nutrients, Pests (`content/v2-scores.json`).
+
 Full format and meaning of every key: `docs/v2-data-contract.md`, section 1. This page is the short version.
 
 ## 1. Where the file goes and what it is called

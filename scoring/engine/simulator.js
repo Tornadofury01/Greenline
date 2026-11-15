@@ -116,7 +116,7 @@ export function createSimulation(cfg) {
     const c = def.defaults.costUsdPerAcre;
     const seedCost = (c.seed ?? 0) + (c.plantingOps ?? c.planting ?? 0) + (c.other ?? 0);
     if (seedCost) book(`plant:${ep.crop}`, -seedCost, { crop: ep.crop });
-    const rate = mgmt.nitrogenLbPerAcre === 'default' || mgmt.nitrogenLbPerAcre == null ? def.defaults.nRateLbPerAcre : mgmt.nitrogenLbPerAcre;
+    const rate = mgmt.nitrogenLbPerAcre === 'default' || mgmt.nitrogenLbPerAcre == null ? def.defaults.nRateLbPerAcre * (mgmt.nitrogenScale ?? 1) : mgmt.nitrogenLbPerAcre;
     if (rate > 0 && def.kind === 'cash') {
       S.organic.nMin += rate; S.cum.fertN += rate;
       book(`fertilizer-N:${ep.crop}`, -rate * nPrice, { crop: ep.crop, lbN: rate });
