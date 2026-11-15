@@ -310,6 +310,9 @@ export function makeSlots({ field, modelFile = null, placeholders }) {
     fieldId: field?.field?.id ?? null,
     slots: { A, B, C, D, E }, sources,
     placeholderSlots: SLOT_NAMES.filter((s) => sources[s] === 'placeholder'),
+    // versions of the models that filled the non-placeholder slots (from the slot file)
+    modelVersions: Object.fromEntries(Object.entries(isObj(modelFile?.modelVersions) ? modelFile.modelVersions : {})
+      .filter(([k, v]) => typeof v === 'string' && sources[{ A: 'modelA', B: 'modelB', C: 'modelC', D: 'modelD', E: 'calibrationE' }[k]] === 'model')),
     problems: [...new Set(problems)],
   };
 }

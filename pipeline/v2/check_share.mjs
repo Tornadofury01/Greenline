@@ -53,13 +53,17 @@ for (const c of counties) {
   for (const [dir, label] of need) {
     const missing = [], broken = [];
     for (const id of ids) {
+      // results: fields with no soil data (gravel pits) are skipped by the precompute on purpose
+      if ((dir === 'shared/v2/fields' || dir === 'shared/v2/validation-raw') && readJson(resolve(root, 'shared/v2/inputs', `${id}.json`))?.soil?.waterStorage100Cm == null) continue;
       const p = resolve(root, dir, `${id}.json`);
       if (!existsSync(p)) { missing.push(id); continue; }
       const j = readJson(p);
       const owner = j?.field?.id ?? j?.fieldId;
       if (!j || (owner !== undefined && owner !== id)) broken.push(id);
     }
-    const name = `${NAMES[c] ?? c} (${c}): ${ids.length - missing.length - broken.length}/${ids.length} ${label} files in ${dir}/`;
+    const skipped = (dir === 'shared/v2/fields' || dir === 'shared/v2/validation-raw') ? ids.filter((id) => readJson(resolve(root, 'shared/v2/inputs', `${id}.json`))?.soil?.waterStorage100Cm == null).length : 0;
+    const expected = ids.length - skipped;
+    const name = `${NAMES[c] ?? c} (${c}): ${expected - missing.length - broken.length}/${expected} ${label} files in ${dir}/${skipped ? ` (${skipped} not-farmland fields skipped)` : ''}`;
     if (!missing.length && !broken.length) ok(name);
     else bad(`${name}; missing ${missing.length} (e.g. ${missing.slice(0, 3).join(', ') || '-'}), unreadable ${broken.length} (e.g. ${broken.slice(0, 3).join(', ') || '-'})`);
   }

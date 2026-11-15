@@ -60,7 +60,7 @@ The expected greenness for the target month and the field's current greenness le
 
 ### NASS county yields
 
-**Method:** greenness in each crop's key months against the county yield's deviation from its trend, using the 6 counties and every year NASS reports. One clean NASS series per crop: per harvested acre, all practices, winter wheat only (`v2/models/nass_yields.py`).
+**Method:** greenness in each crop's key months against the county yield's deviation from its trend, using the 6 counties and every year NASS reports. One clean NASS series per crop: per harvested acre, all practices, winter wheat only (`v2/models/nass_yields.py`). One clean NASS series per crop: per harvested acre, all practices, winter wheat only (`v2/models/nass_yields.py`).
 
 | Crop | Key months | County-years | Correlation | R², leave one year out | Yield change per −1 z |
 |---|---|---|---|---|---|

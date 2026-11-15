@@ -11,8 +11,9 @@ What each slot is built from (sections left out stay PLACEHOLDERS, tagged in the
   modelC        Model C (`modelC/year_types.csv`): the field's county, summer-season type per year; 2040 shares =
                 the 8-model mean for the summer season (`modelC/metrics.json` -> 2040). Types are hard rule cut-offs,
                 so probability = 1.
-  calibrationE  Calibration E (`calibrationE/predictions.csv`): the county's trend yield in its latest NASS year for
-                wheat, corn, sorghum, cotton; every other crop keeps its placeholder yield.
+  calibrationE  Calibration E (`calibrationE/predictions.csv`): the county's fitted yield trend (a straight line per
+                county and crop) read at TREND_YEAR, for wheat, corn, sorghum, cotton; every other crop keeps its
+                placeholder yield.
   modelB        Model B (`modelB/field_sensitivity.csv` + `metrics.json`): how much THIS field's crop browns per unit of
                 drought (z per SPEI) and per hot day, relative to the average field with that crop. The engine's
                 textbook factors (FAO-33 droughtKy, heatLossPerDay) are scaled by that ratio, clipped to 0.5-2x, so
@@ -40,6 +41,7 @@ E_TO_CROP = {"WHEAT": "winter_wheat", "CORN": "corn", "SORGHUM": "grain_sorghum"
 # Model B crop group -> crop library ids it speaks for (cash crops of that group)
 B_GROUP_CROPS = {"summer_grain": ["corn", "grain_sorghum"], "winter_grain": ["winter_wheat"], "cotton": ["cotton"],
                  "soybeans": ["soybeans"]}
+TREND_YEAR = 2025         # Calibration E: typical yield = the county trend in this year
 B_RATIO = (0.5, 2.0)      # clip on field / average sensitivity
 B_HEAT_MIN = -0.005       # scale heat only where the crop's average greenness clearly drops on hot days (z per day)
 
@@ -83,7 +85,17 @@ def main():
     c2040 = json.loads((M / "modelC" / "metrics.json").read_text())["2040"]
     freq = {s: {t: round(c2040[s]["summer"]["meanShare"][t], 3) for t in ("drought", "hot", "wet", "normal")} for s in ("ssp245", "ssp585")}
     e = pd.read_csv(M / "calibrationE" / "predictions.csv", usecols=["cfips", "year", "crop", "trend"])
-    e = e.sort_values("year").groupby(["cfips", "crop"]).last().reset_index()
+    # the trend is linear per county and crop: read it at TREND_YEAR from any two of its points
+    trend_rows = []
+    for (cfips, crop), g in e.dropna(subset=["trend"]).groupby(["cfips", "crop"]):
+        g = g.drop_duplicates("year").sort_values("year")
+        if len(g) >= 2:
+            (y1, t1), (y2, t2) = g[["year", "trend"]].iloc[0], g[["year", "trend"]].iloc[-1]
+            v = t1 + (t2 - t1) * (TREND_YEAR - y1) / (y2 - y1)
+        else:
+            v = g.trend.iloc[0]
+        trend_rows.append({"cfips": cfips, "crop": crop, "trend": max(0.0, float(v)), "year": TREND_YEAR, "lastNass": int(g.year.max())})
+    e = pd.DataFrame(trend_rows)
     bs = pd.read_csv(M / "modelB" / "field_sensitivity.csv")
     bs = bs[bs.fid.isin(ids)].set_index(["fid", "crop"])
     bmean = json.loads((M / "modelB" / "metrics.json").read_text())["sensitivityByCrop"]
@@ -142,8 +154,8 @@ def main():
                 crop = E_TO_CROP.get(r.crop)
                 if crop and crop in crops and pd.notna(r.trend):
                     crops[crop]["typicalYield"] = round(float(r.trend), 1)
-                    fitted.append(f"{crop} ({int(r.year)})")
-            doc["calibrationE"] = {"_note": "County trend yield in its latest NASS year for: " + ", ".join(fitted)
+                    fitted.append(f"{crop} (last NASS year {r.lastNass})")
+            doc["calibrationE"] = {"_note": f"County yield trend read at {TREND_YEAR} for: " + ", ".join(fitted)
                                             + ". Other crops keep the placeholder yield.",
                                    "crops": crops, "wpScale": ph["calibrationE"].get("wpScale", 1),
                                    "heatThresholdOffsetC": ph["calibrationE"].get("heatThresholdOffsetC", 0),

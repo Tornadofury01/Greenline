@@ -12,7 +12,7 @@ fields_v2.geojson. No Earth Engine, no network. Does NOT run the precompute.
     python pipeline/v2/build_inputs.py                              # all six counties
 
 Field ids are the USDA Crop Sequence Boundary ids from fields_v2.geojson (`48139-0021` = county FIPS + number).
-Weather: Daymet (daily, 1 km, complete 1985-2025) for rain, temperature, heat days, heavy-rain days and frost; PRISM
+Weather: Daymet (daily, 1 km, complete 1985-2025; gridMET has gaps) for rain, temperature, heat days, heavy-rain days and frost; PRISM
 and IMERG kept as rain cross-checks (both have missing years).
 Bare days and cover: Landsat 8/9 only (2014+); the Landsat 5/7/8/9 record is kept for display (pre-2013 = low
 confidence), same rules as pipeline/build_fields.py. A scene counts when >= 70 % of the field's pixels are clear and
@@ -191,8 +191,8 @@ def doy_date(year, doy):
 
 def daymet(ee, fids):
     """climateMonthly rows and per field-year heat days, heavy-rain days, frost (Daymet V4, 1 km, deg C and mm).
-    Daymet, not gridMET: the gridMET export has empty files for 1989, 1995, 2001, 2007, 2013, 2019 and 2025 (one
-    account's jobs), Daymet is complete 1985-2025. Daymet drops Dec 31 in leap years (365-day calendar)."""
+    Daymet, not gridMET: the gridMET export is missing about a third of the field rows in 1989, 1995, 2001, 2007,
+    2013, 2019 and 2025; Daymet is complete 1985-2025. Daymet drops Dec 31 in leap years (365-day calendar)."""
     monthly, yearly = [], []
     for y, d in read_daily(ee, "daymet", ["prcp", "tmax", "tmin"], fids).items():
         pr, tx, tn = (d[daily_cols(d.columns, b)] for b in ("prcp", "tmax", "tmin"))

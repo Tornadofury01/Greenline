@@ -101,8 +101,10 @@ Before deploying: the precompute prints "N failed the contract check"; those fie
 
 ## Known gaps
 
-- Weather comes from **Daymet**, not gridMET: the gridMET export has empty files for 1989, 1995, 2001, 2007, 2013,
-  2019 and 2025. Models B and C were trained on gridMET; check how they handled those years.
+- Weather comes from **Daymet**, not gridMET: the gridMET export misses about a third of the field rows in 1989,
+  1995, 2001, 2007, 2013, 2019 and 2025. Model B now treats those months as unknown (it had counted them as 0 hot
+  days); Model C averages per county, so it had data for every year.
+- Two Kaufman fields (48257-0003, 48257-0195) are gravel pits with no soil data: the precompute skips them.
 - IMERG has empty years (2001–2003, 2008–2009, 2014–2015, 2020–2021) and PRISM has missing years; both are only
   cross-checks.
 - The map still shows the 300 old Ellis outlines (`ec-*`) and the demo field is `ec-251`. Switching the map to the

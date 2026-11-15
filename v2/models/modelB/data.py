@@ -98,10 +98,11 @@ def gridmet():
         r = d[["fid", "year", "month"]].copy()
         r["rain"] = d[c("pr")].sum(axis=1, min_count=1)
         r["tmax_mean"] = d[c("tmmx")].mean(axis=1) - 273.15
-        r["hot_days"] = (d[c("tmmx")] >= 308.15).sum(axis=1)
+        known = d[c("tmmx")].notna().any(axis=1)   # some gridMET rows are empty (1989, 1995, ... 2025): unknown, not 0
+        r["hot_days"] = ((d[c("tmmx")] >= 308.15).sum(axis=1)).where(known)
         r["vpd"] = d[c("vpd")].mean(axis=1)
         r["eto"] = d[c("eto")].sum(axis=1, min_count=1)
-        r["rain_days"] = (d[c("pr")] >= 1).sum(axis=1)
+        r["rain_days"] = ((d[c("pr")] >= 1).sum(axis=1)).where(d[c("pr")].notna().any(axis=1))
         out.append(r)
     return pd.concat(out, ignore_index=True)
 

@@ -64,6 +64,10 @@ if (isMainThread) {
     const missing = ids.filter((id) => !existsSync(resolve(rootPath, `shared/v2/inputs/${id}.json`)));
     if (missing.length) console.warn(`skipping ${missing.length} fields with no input file in shared/v2/inputs (e.g. ${missing.slice(0, 3).join(', ')})`);
     ids = ids.filter((id) => !missing.includes(id));
+    // Not farmland: no soil data at all (SSURGO "Pits, gravel" and the like). The app shows "No data here yet".
+    const noSoil = ids.filter((id) => readJson(resolve(rootPath, `shared/v2/inputs/${id}.json`)).soil?.waterStorage100Cm == null);
+    if (noSoil.length) console.warn(`skipping ${noSoil.length} fields with no soil data (not farmland): ${noSoil.join(', ')}`);
+    ids = ids.filter((id) => !noSoil.includes(id));
   }
   mkdirSync(outDir, { recursive: true });
   const cropFieldShare = Object.fromEntries([...new Set(index.map((x) => x.county))].map((k) => [k, cropShareFor(k)]));

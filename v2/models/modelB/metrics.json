@@ -4,10 +4,10 @@
    "unseenYears": {
     "model": {
      "n": 56503,
-     "auc": 0.879,
-     "brier": 0.0727,
-     "accuracy": 0.904,
-     "balancedAccuracy": 0.675,
+     "auc": 0.882,
+     "brier": 0.0719,
+     "accuracy": 0.906,
+     "balancedAccuracy": 0.676,
      "stressedShare": 0.122
     },
     "lastGreennessOnly": {
@@ -20,7 +20,7 @@
     },
     "logisticRegression": {
      "n": 56503,
-     "auc": 0.791,
+     "auc": 0.792,
      "brier": 0.0878,
      "accuracy": 0.887,
      "balancedAccuracy": 0.562,
@@ -46,10 +46,10 @@
    "hill": {
     "model": {
      "n": 24481,
-     "auc": 0.891,
+     "auc": 0.892,
      "brier": 0.0725,
-     "accuracy": 0.905,
-     "balancedAccuracy": 0.699,
+     "accuracy": 0.903,
+     "balancedAccuracy": 0.693,
      "stressedShare": 0.13
     },
     "lastGreennessOnly": {
@@ -88,10 +88,10 @@
    "hill_unseenYears": {
     "model": {
      "n": 8916,
-     "auc": 0.855,
-     "brier": 0.0626,
-     "accuracy": 0.923,
-     "balancedAccuracy": 0.63,
+     "auc": 0.863,
+     "brier": 0.0624,
+     "accuracy": 0.921,
+     "balancedAccuracy": 0.616,
      "stressedShare": 0.09
     },
     "lastGreennessOnly": {
@@ -104,10 +104,10 @@
     },
     "logisticRegression": {
      "n": 8916,
-     "auc": 0.727,
-     "brier": 0.0736,
+     "auc": 0.726,
+     "brier": 0.0735,
      "accuracy": 0.914,
-     "balancedAccuracy": 0.555,
+     "balancedAccuracy": 0.554,
      "stressedShare": 0.09
     },
     "cropMonthClimatology": {
@@ -132,10 +132,10 @@
    "unseenYears": {
     "model": {
      "n": 55984,
-     "auc": 0.793,
+     "auc": 0.794,
      "brier": 0.0915,
-     "accuracy": 0.884,
-     "balancedAccuracy": 0.567,
+     "accuracy": 0.883,
+     "balancedAccuracy": 0.569,
      "stressedShare": 0.123
     },
     "lastGreennessOnly": {
@@ -149,8 +149,8 @@
     "logisticRegression": {
      "n": 55984,
      "auc": 0.647,
-     "brier": 0.1066,
-     "accuracy": 0.869,
+     "brier": 0.1064,
+     "accuracy": 0.87,
      "balancedAccuracy": 0.501,
      "stressedShare": 0.123
     },
@@ -174,10 +174,10 @@
    "hill": {
     "model": {
      "n": 24389,
-     "auc": 0.855,
-     "brier": 0.0818,
-     "accuracy": 0.893,
-     "balancedAccuracy": 0.642,
+     "auc": 0.854,
+     "brier": 0.082,
+     "accuracy": 0.892,
+     "balancedAccuracy": 0.643,
      "stressedShare": 0.13
     },
     "lastGreennessOnly": {
@@ -190,8 +190,8 @@
     },
     "logisticRegression": {
      "n": 24389,
-     "auc": 0.676,
-     "brier": 0.1055,
+     "auc": 0.677,
+     "brier": 0.1054,
      "accuracy": 0.872,
      "balancedAccuracy": 0.517,
      "stressedShare": 0.13
@@ -216,10 +216,10 @@
    "hill_unseenYears": {
     "model": {
      "n": 8844,
-     "auc": 0.805,
-     "brier": 0.0732,
+     "auc": 0.799,
+     "brier": 0.0741,
      "accuracy": 0.907,
-     "balancedAccuracy": 0.535,
+     "balancedAccuracy": 0.54,
      "stressedShare": 0.091
     },
     "lastGreennessOnly": {
@@ -232,8 +232,8 @@
     },
     "logisticRegression": {
      "n": 8844,
-     "auc": 0.655,
-     "brier": 0.0828,
+     "auc": 0.656,
+     "brier": 0.0827,
      "accuracy": 0.906,
      "balancedAccuracy": 0.503,
      "stressedShare": 0.091
@@ -260,10 +260,10 @@
    "unseenYears": {
     "model": {
      "n": 55277,
-     "auc": 0.745,
-     "brier": 0.0999,
+     "auc": 0.739,
+     "brier": 0.1003,
      "accuracy": 0.875,
-     "balancedAccuracy": 0.538,
+     "balancedAccuracy": 0.536,
      "stressedShare": 0.124
     },
     "lastGreennessOnly": {
@@ -276,8 +276,8 @@
     },
     "logisticRegression": {
      "n": 55277,
-     "auc": 0.54,
-     "brier": 0.1107,
+     "auc": 0.541,
+     "brier": 0.1106,
      "accuracy": 0.876,
      "balancedAccuracy": 0.5,
      "stressedShare": 0.124
@@ -302,9 +302,9 @@
    "hill": {
     "model": {
      "n": 24376,
-     "auc": 0.833,
-     "brier": 0.0868,
-     "accuracy": 0.886,
+     "auc": 0.832,
+     "brier": 0.0869,
+     "accuracy": 0.887,
      "balancedAccuracy": 0.613,
      "stressedShare": 0.13
     },
@@ -318,10 +318,10 @@
     },
     "logisticRegression": {
      "n": 24376,
-     "auc": 0.651,
-     "brier": 0.1074,
+     "auc": 0.654,
+     "brier": 0.1072,
      "accuracy": 0.871,
-     "balancedAccuracy": 0.505,
+     "balancedAccuracy": 0.504,
      "stressedShare": 0.13
     },
     "cropMonthClimatology": {
@@ -344,10 +344,10 @@
    "hill_unseenYears": {
     "model": {
      "n": 8766,
-     "auc": 0.768,
-     "brier": 0.0777,
+     "auc": 0.758,
+     "brier": 0.0781,
      "accuracy": 0.905,
-     "balancedAccuracy": 0.519,
+     "balancedAccuracy": 0.515,
      "stressedShare": 0.092
     },
     "lastGreennessOnly": {
@@ -360,8 +360,8 @@
     },
     "logisticRegression": {
      "n": 8766,
-     "auc": 0.611,
-     "brier": 0.0867,
+     "auc": 0.62,
+     "brier": 0.0863,
      "accuracy": 0.908,
      "balancedAccuracy": 0.5,
      "stressedShare": 0.092
@@ -386,97 +386,97 @@
   }
  },
  "response": {
-  "conformalHalfWidth90": 1.292,
+  "conformalHalfWidth90": 1.294,
   "unseenYears": {
    "n": 57002,
-   "r2": 0.53,
-   "mae": 0.594,
+   "r2": 0.528,
+   "mae": 0.595,
    "r2_lastMonthOnly": -0.004,
-   "coverage90": 0.895,
-   "stressAuc": 0.887
+   "coverage90": 0.896,
+   "stressAuc": 0.886
   },
   "hill": {
    "n": 24569,
-   "r2": 0.597,
-   "mae": 0.515,
+   "r2": 0.595,
+   "mae": 0.516,
    "r2_lastMonthOnly": -0.233,
    "coverage90": 0.92,
-   "stressAuc": 0.91
+   "stressAuc": 0.911
   },
   "hill_unseenYears": {
    "n": 8984,
-   "r2": 0.453,
-   "mae": 0.608,
+   "r2": 0.449,
+   "mae": 0.611,
    "r2_lastMonthOnly": -0.271,
    "coverage90": 0.9,
-   "stressAuc": 0.882
+   "stressAuc": 0.884
   }
  },
  "sensitivityByCrop": {
   "cotton": {
-   "z_per_spei90": 0.295,
-   "z_per_hot_day": 0.0,
-   "z_if_spei_minus2": -0.59
+   "z_per_spei90": 0.302,
+   "z_per_hot_day": -0.0004,
+   "z_if_spei_minus2": -0.6
   },
   "fallow": {
-   "z_per_spei90": 0.142,
-   "z_per_hot_day": -0.003,
+   "z_per_spei90": 0.139,
+   "z_per_hot_day": -0.0022,
    "z_if_spei_minus2": -0.28
   },
   "grass_hay": {
-   "z_per_spei90": 0.323,
-   "z_per_hot_day": -0.0096,
-   "z_if_spei_minus2": -0.65
+   "z_per_spei90": 0.32,
+   "z_per_hot_day": -0.0091,
+   "z_if_spei_minus2": -0.64
   },
   "other": {
-   "z_per_spei90": -0.125,
-   "z_per_hot_day": 0.007,
-   "z_if_spei_minus2": 0.25
+   "z_per_spei90": -0.13,
+   "z_per_hot_day": 0.0067,
+   "z_if_spei_minus2": 0.26
   },
   "soybeans": {
-   "z_per_spei90": 0.182,
-   "z_per_hot_day": 0.0076,
-   "z_if_spei_minus2": -0.36
+   "z_per_spei90": 0.188,
+   "z_per_hot_day": 0.0066,
+   "z_if_spei_minus2": -0.38
   },
   "summer_grain": {
    "z_per_spei90": 0.152,
-   "z_per_hot_day": -0.0231,
+   "z_per_hot_day": -0.0241,
    "z_if_spei_minus2": -0.3
   },
   "winter_grain": {
-   "z_per_spei90": 0.209,
-   "z_per_hot_day": -0.0182,
-   "z_if_spei_minus2": -0.42
+   "z_per_spei90": 0.215,
+   "z_per_hot_day": -0.018,
+   "z_if_spei_minus2": -0.43
   }
  },
  "fieldSensitivitySpread": {
   "cotton": [
-   0.144,
-   0.461
+   0.151,
+   0.471
   ],
   "fallow": [
-   0.033,
-   0.278
+   0.042,
+   0.269
   ],
   "grass_hay": [
-   0.123,
-   0.462
+   0.128,
+   0.458
   ],
   "other": [
-   -0.167,
-   -0.099
+   -0.182,
+   -0.089
   ],
   "soybeans": [
-   0.032,
-   0.336
+   0.042,
+   0.333
   ],
   "summer_grain": [
-   -0.025,
-   0.321
+   -0.028,
+   0.33
   ],
   "winter_grain": [
-   -0.006,
-   0.37
+   0.003,
+   0.377
   ]
  },
  "yieldLink": {
@@ -560,17 +560,17 @@
   ]
  },
  "shapTop_h1": {
-  "target_normal": 0.9149,
-  "ndvi": 0.6309,
-  "z_known": 0.2855,
-  "et_ratio": 0.281,
-  "ndvi_l1": 0.2751,
-  "tmax_mean": 0.2552,
-  "z": 0.1642,
-  "tcrop_summer_grain": 0.1322,
-  "smap_sm_surface": 0.1312,
-  "z_l2": 0.1248,
-  "eto": 0.0993,
-  "tc_def": 0.0993
+  "target_normal": 0.9171,
+  "ndvi": 0.6324,
+  "z_known": 0.2813,
+  "et_ratio": 0.2793,
+  "ndvi_l1": 0.2684,
+  "tmax_mean": 0.2588,
+  "z": 0.1665,
+  "tcrop_summer_grain": 0.1317,
+  "z_l2": 0.1249,
+  "smap_sm_surface": 0.1159,
+  "tc_def": 0.0958,
+  "month": 0.0933
  }
 }

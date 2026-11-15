@@ -167,7 +167,7 @@ def response(d, res):
 
     # sensitivity: how far greenness z actually moves per unit of drought (SPEI 90-day) and per hot day, growing
     # months, fitted per crop and per field (field slopes shrunk toward the crop's slope when a field has few months)
-    t = x[x.spei90d.notna()].copy()
+    t = x[x.spei90d.notna() & x.hot_days.notna()].copy()   # months with no gridMET temperature are left out
     X = lambda v: np.c_[np.ones(len(v)), v.spei90d.values, v.hot_days.values]
     crop_b = {}
     for c, g in t.groupby("crop"):

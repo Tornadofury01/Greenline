@@ -220,7 +220,7 @@ export function analyzeField(cfg) {
   t = lap('risks', t);
 
   const sources = [
-    ...(field.sources ?? []).map((s) => ({ id: s.id, name: fixMojibake(s.dataset ?? s.name), resolution: fixMojibake(s.resolution), scale: s.scale === 'field' ? 'field' : 'regional' })),
+    ...(field.sources ?? []).map((s) => ({ id: s.id, name: fixMojibake(s.dataset ?? s.name), resolution: fixMojibake(s.resolution), scale: s.scale === 'field' || s.scale === 'patch' ? 'field' : 'regional' })),
     { id: 'simulator', name: 'Field Shift v2 daily simulator (published agronomy, not a trained model)', resolution: 'daily, this field', scale: 'field' },
     { id: 'crop-library', name: 'Crop library (FAO-56, FAO-33, ECOCROP, extension guides; not verified)', resolution: 'per crop', scale: 'regional' },
     ...(placeholderSlots.length ? [{ id: 'placeholder', name: 'Fixed placeholder values (content/model-placeholders.json)', resolution: 'none', scale: 'placeholder' }] : []),
@@ -230,7 +230,7 @@ export function analyzeField(cfg) {
     schemaVersion: 1, isSampleData: false,
     generatedAt: now, engineVersion: V2_ENGINE_VERSION,
     field: field.field,
-    slots: { sources: slots.sources, placeholderSlots, modelVersions: {} },
+    slots: { sources: slots.sources, placeholderSlots, modelVersions: slots.modelVersions ?? {} },
     priorities: { selected, weights },
     simulation: { startYear: SIM_START_YEAR, years: SIM_YEARS, weather: 'monthly totals 2008-2025, field average before; days are generated inside real month totals', currentTillageAssumed: ctx.constraints.currentTillage, climateScenarios: CLIMATE_SCENARIOS, whatIfRuns: WHAT_IF_RUNS },
     cropScreen: { kept: screen.kept, dropped: screen.dropped, flaggedBy2040: screen.flaggedBy2040 },
