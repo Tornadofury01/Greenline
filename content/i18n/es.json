@@ -1839,5 +1839,206 @@
       "crop-library": "Rasgos de cultivos publicados (sin verificar)",
       "cdl": "Mapa de cultivos USDA"
     }
+  },
+  "game": {
+    "mode": {
+      "label": "Simulador o juego",
+      "sim": "Simulador",
+      "play": "Jugar"
+    },
+    "title": "Juego de la granja",
+    "intro": "Pruebe un plan en su propio campo, una temporada a la vez.",
+    "loading": "Cargando el juego…",
+    "playThis": "Jugar este plan",
+    "banner": "Repite el clima real de años pasados en su campo. No es un pronóstico.",
+    "progress": "Año {n} de {total}",
+    "running": "Creciendo la temporada…",
+    "error": "No se pudo simular la temporada.",
+    "weatherOf": "Clima de {year} en este campo",
+    "sign": "Condado de {county} · {acres} acres",
+    "perAcre": "/acre",
+    "meters": {
+      "title": "Los medidores de su granja"
+    },
+    "meter": {
+      "money": {
+        "name": "Dinero",
+        "what": "Dinero que queda después de los costos que cuenta el modelo (semilla, fertilizante, pasadas, cosecha), por acre. No incluye la renta de la tierra ni su propio trabajo.",
+        "src": "Fuente: el registro de dinero del simulador, con precios de USDA NASS para este condado.",
+        "value": "último año {year}, todos los años {total}"
+      },
+      "risk": {
+        "name": "Riesgo",
+        "what": "Cómo se comparan sus peores temporadas con su granja de hoy con el mismo clima (0 a 100, más alto es más seguro).",
+        "src": "Fuente: el simulador, con la misma puntuación de la página de Planes."
+      },
+      "soil": {
+        "name": "Suelo",
+        "what": "Suelo perdido comparado con lo que el suelo tolera (T), días de suelo desnudo y materia orgánica (0 a 100).",
+        "src": "Fuente: el simulador con suelo SSURGO, erosión diaria (RUSLE)."
+      },
+      "water": {
+        "name": "Agua",
+        "what": "Agua que queda en el suelo para el siguiente cultivo y cuánta agua le faltó al cultivo (0 a 100).",
+        "src": "Fuente: el balance diario de agua del simulador, suelo SSURGO, clima de NASA POWER."
+      },
+      "nutrients": {
+        "name": "Nutrientes",
+        "what": "Nitrógeno comprado, nitrógeno fijado por leguminosas y si el suelo se está agotando (0 a 100).",
+        "src": "Fuente: el simulador y la biblioteca de cultivos (rasgos aún sin verificar)."
+      },
+      "pests": {
+        "name": "Plagas y enfermedades",
+        "what": "Pérdida por plagas en la simulación y cultivos de la misma familia seguidos (0 a 100).",
+        "src": "Fuente: los contadores de plagas del simulador y la biblioteca de cultivos.",
+        "oneYear": "Con un solo año jugado, las revisiones lo tratan como el mismo cultivo sembrado cada año."
+      },
+      "market": {
+        "name": "Mercado",
+        "what": "Si hay un registro de rendimiento del condado o un comprador para cada cultivo, y si su precio está bajo.",
+        "src": "Fuente: USDA NASS Quick Stats para este condado."
+      },
+      "season": {
+        "name": "Temporada",
+        "what": "Si cada cultivo terminó antes de la helada o la cosecha.",
+        "src": "Fuente: las etapas del cultivo y los días de helada del simulador."
+      },
+      "score": "puntuación {n} de 100"
+    },
+    "word": {
+      "good": "Bien",
+      "fair": "Regular",
+      "low": "Bajo",
+      "gain": "Ganancia",
+      "loss": "Pérdida",
+      "pass": "Aprueba",
+      "warn": "Aviso",
+      "fail": "Falla",
+      "none": "Sin jugar"
+    },
+    "trend": {
+      "up": "sube respecto al año pasado",
+      "down": "baja respecto al año pasado",
+      "same": "igual que el año pasado"
+    },
+    "scene": {
+      "alt": "Su campo en {month}, dibujado a partir de la simulación"
+    },
+    "play": {
+      "play": "Reproducir",
+      "pause": "Pausa",
+      "speed": "Velocidad",
+      "skip": "Saltar a la cosecha",
+      "results": "Ver los resultados"
+    },
+    "choose": {
+      "title": "Año {n} de {total}: sus decisiones",
+      "hidden": "El clima es un año real del pasado en este campo. Verá cuál es cuando se juegue la temporada.",
+      "mode": "Cuántas decisiones",
+      "simple": "Sencillo",
+      "expert": "Experto",
+      "crop": "Cultivo de este año",
+      "cover": "Cultivo de cobertura de invierno antes",
+      "tillage": "Labranza",
+      "dryland": "El riego no aparece porque su granja es de temporal (página Granja).",
+      "lockNote": "La labranza y las decisiones de experto se mantienen los 5 años: el modelo usa una sola forma de trabajar para todo el plan.",
+      "locked": "La labranza y las decisiones de experto se fijaron en el año 1 y se mantienen los 5 años.",
+      "go": "Sembrar y jugar la temporada"
+    },
+    "why": {
+      "noCash": "No hubo cultivo comercial este año, así que no hay dinero de cosecha.",
+      "killed": "La helada mató el {crop} antes de que terminara.",
+      "pests": "Las plagas y enfermedades se llevaron cerca del {pct}% del {crop}.",
+      "heat": "El calor dañó el {crop}: {n} días por encima de su límite de calor.",
+      "dry": "Una racha seca frenó el {crop}: {n} días con falta de agua.",
+      "steady": "Una temporada estable: {crop} al {pct}% de un rendimiento típico."
+    },
+    "results": {
+      "title": "Año {n}: el clima de {year}",
+      "vsTypical": "{pct}% de lo típico",
+      "yield": "Rendimiento",
+      "money": "Dinero",
+      "perAcre": "por acre, después de los costos contados",
+      "soil": "Suelo perdido",
+      "vsT": "toneladas por acre; el suelo tolera {t}",
+      "rain": "Lluvia",
+      "bare": "{n} días de suelo desnudo",
+      "yieldPh": "Los rendimientos usan valores por defecto hasta que se conecten los modelos del campo.",
+      "src": "Fuente: el simulador con el clima mensual real de {year} en este campo (NASA POWER, GPM IMERG); el patrón diario dentro de cada mes es simulado.",
+      "srcClimatology": "Fuente: el simulador. {year} no tiene un registro completo de clima aquí, así que se usó el clima promedio del campo.",
+      "next": "Año siguiente",
+      "end": "Ver su boleta de calificaciones"
+    },
+    "yearType": {
+      "drought": "Año de sequía",
+      "hot": "Año caluroso",
+      "wet": "Año húmedo",
+      "normal": "Año normal"
+    },
+    "event": {
+      "water": "Marchitez: el siguiente cultivo empieza con falta de agua.",
+      "disease": "El riesgo de enfermedad sube en esta rotación.",
+      "diseaseRepeat": "{crop} y luego {nextCrop}: la misma familia de cultivo, más enfermedad.",
+      "marketFail": "No hay comprador ni registro del condado cerca para {crop}. El modelo no rebaja el precio; es solo un aviso.",
+      "marketWarn": "Aviso de mercado para {crop}.",
+      "season": "Una helada o una temporada corta raleó el cultivo."
+    },
+    "eventSrc": {
+      "water": "Revisión de agua: balance de agua del simulador con suelo SSURGO.",
+      "disease": "Revisión de enfermedades: hospederos de la biblioteca de cultivos y contadores de plagas del simulador.",
+      "diseaseRepeat": "Revisión de enfermedades: familias de cultivos de la biblioteca de cultivos.",
+      "marketFail": "Revisión de mercado: registros del condado de USDA NASS Quick Stats.",
+      "marketWarn": "Revisión de mercado: registros del condado de USDA NASS Quick Stats y precios de Texas.",
+      "season": "Revisión de temporada: etapas simuladas del cultivo y días de helada."
+    },
+    "challenge": {
+      "drought": {
+        "name": "La sequía de 2011",
+        "goal": "Gane más dinero que su granja de hoy de 2009 a 2013."
+      },
+      "soil": {
+        "name": "Cuide el suelo",
+        "goal": "Mantenga la pérdida de suelo por debajo de lo que el suelo tolera cada año, de 2015 a 2019."
+      },
+      "cover": {
+        "name": "Cubra el suelo",
+        "goal": "Tenga menos días de suelo desnudo que su granja de hoy, de 2019 a 2023."
+      }
+    },
+    "start": {
+      "title": "Juegue 5 temporadas",
+      "intro": "Cada año usted elige un cultivo y luego se juega un año real de clima del pasado en su campo. Ocho medidores muestran lo que pasó.",
+      "loaded": "Plan cargado:",
+      "playLoaded": "Jugar este plan",
+      "free": "Juego libre (años pasados al azar)",
+      "challenges": "Retos"
+    },
+    "planNote": {
+      "doubleCrop": "Este plan tiene un doble cultivo. El juego usa un cultivo por año, así que se omite el segundo.",
+      "cover": "Un cultivo de cobertura de este plan no está en el juego y se omite.",
+      "maturity": "El plan usa variedades de ciclo corto; el juego usa ciclo completo (la variedad aún no está bien modelada).",
+      "termination": "El plan termina la cobertura antes; el juego la termina al sembrar (otras fechas aún no están bien modeladas)."
+    },
+    "sound": {
+      "on": "Sonido activado",
+      "off": "Sonido apagado"
+    },
+    "end": {
+      "title": "Su boleta de calificaciones",
+      "goalMet": "Meta cumplida: {goal}",
+      "goalMissed": "Meta no cumplida: {goal}",
+      "sameWeather": "Los tres planes usaron los mismos años de clima: {years}.",
+      "meter": "Medidor",
+      "col": {
+        "you": "Su plan",
+        "today": "Su granja hoy",
+        "best": "Mejor equilibrio"
+      },
+      "noBest": "El plan de mejor equilibrio aún no está disponible para este campo.",
+      "moneyNote": "El dinero es el total de los 5 años, por acre, después de los costos que cuenta el modelo.",
+      "phNote": "Algunos números usan valores por defecto hasta que se conecten los modelos del campo.",
+      "again": "Jugar el mismo clima otra vez",
+      "another": "Probar otro plan"
+    }
   }
 }

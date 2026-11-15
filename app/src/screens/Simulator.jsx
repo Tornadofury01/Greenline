@@ -1,7 +1,7 @@
 // Farm simulator (under "More"): start from "your farm today", change the plan, inputs, money, weather and length, then play it
 // day by day. The same engine as the recommendations (/scoring/engine) runs in a web worker. Two plans can run on the same weather.
 // It shows what would happen under the chosen weather. It is not a forecast. Yields are placeholders until Calibration E is plugged in.
-import { useEffect, useId, useMemo, useState } from 'react';
+import { Suspense, lazy, useEffect, useId, useMemo, useState } from 'react';
 import { Play, Pause, StepForward, FastForward, Plus, Minus, Copy, Lightbulb, RotateCcw } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { PageHead } from '../components/Small.jsx';
@@ -11,6 +11,10 @@ import { useSimRuns } from '../sim/useSimRuns.js';
 import { slotsFor, todayCrops, defaultControls, pastYears, START_YEAR, MAX_YEARS, CASH_CROPS, COVERS } from '../sim/simSetup.js';
 import { readout, totalsOf, eventLog, isoOf, DAY_MS } from '../sim/simView.js';
 import economics from '@content/economics.json';
+import { hasPlayPlan } from '../game/playPlan.js';
+
+// The farm game loads only when Play opens (its own chunk, with its scene and worker).
+const FarmGame = lazy(() => import('../game/FarmGame.jsx'));
 
 const SPEEDS = { slow: 2, normal: 7, fast: 30 };
 const KINDS = ['typical', 'past', 'random', 'ssp245', 'ssp585'];
@@ -167,7 +171,7 @@ function SeasonTable({ plan, label, showLabel }) {
   );
 }
 
-export default function Simulator() {
+function SimulatorView() {
   const { t, field, lang, tillage } = useApp();
   const { status, progress, result, band, bandStatus, error, start } = useSimRuns();
   const slots = useMemo(() => (field ? slotsFor(field) : null), [field]);
@@ -355,5 +359,25 @@ export default function Simulator() {
         </>
       )}
     </div>
+  );
+}
+
+// "Simulator | Play": the same page holds the free-form simulator and the farm game. "Play this plan" opens Play.
+export default function Simulator() {
+  const { t } = useApp();
+  const [mode, setMode] = useState(() => (hasPlayPlan() ? 'play' : 'sim'));
+  return (
+    <>
+      <div className="segmented sim-mode-switch" style={{ maxWidth: 360, margin: '0 auto 8px' }} role="group" aria-label={t('game.mode.label')}>
+        <button type="button" aria-pressed={mode === 'sim'} onClick={() => setMode('sim')}>{t('game.mode.sim')}</button>
+        <button type="button" aria-pressed={mode === 'play'} onClick={() => setMode('play')}>{t('game.mode.play')}</button>
+      </div>
+      {mode === 'sim' ? <SimulatorView /> : (
+        <div className="screen screen-sim">
+          <PageHead title={t('game.title')} intro={t('game.intro')} />
+          <Suspense fallback={<p className="muted" role="status">{t('game.loading')}</p>}><FarmGame /></Suspense>
+        </div>
+      )}
+    </>
   );
 }

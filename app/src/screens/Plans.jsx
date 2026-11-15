@@ -1,6 +1,6 @@
 // One decision page: existing v2 recommendations in the original Compare card layout.
 import { useMemo, useState } from 'react';
-import { Award, ArrowRight, ChevronDown, Droplet, Layers, Lightbulb } from 'lucide-react';
+import { Award, ArrowRight, ChevronDown, Droplet, Layers, Lightbulb, Gamepad2 } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { buildMergedPlans, fitReason, eligibleAlternative, supportedReturn } from '../data/mergedPlans.js';
 import { buildOptionCards } from '../data/v2Options.js';
@@ -9,6 +9,7 @@ import { Steps, ScoreGrid, FitChecks, ConfidenceNotes } from '../components/Opti
 import { ConfidenceBadge, PageHead } from '../components/Small.jsx';
 import { SampleBanner, PlaceholderPanel } from '../components/PlaceholderTag.jsx';
 import V2Gate from '../components/V2Gate.jsx';
+import { setPlayPlan } from '../game/playPlan.js';
 
 // Management choices as label + value rows. An enum value we have no text for shows as it came, never blank.
 function Management({ plan }) {
@@ -108,7 +109,7 @@ function PlanDetails({ strategy, data }) {
 }
 
 function StrategyCard({ strategy, data, showWater = false, showCover = false, browsing = false }) {
-  const { t, farm } = useApp();
+  const { t, farm, setScreen } = useApp();
   const label = browsing ? t('optionsScreen.option', { letter: strategy.card.letter }) : strategy.kind === 'best' ? t('mergedPlans.best') : strategy.kind === 'current' ? t('mergedPlans.current') : t(`rotationPlans.${strategy.label || 'alternative'}`);
   const tillage = strategy.option.management?.tillage;
   const eligible = eligibleAlternative(strategy.option);
@@ -126,6 +127,7 @@ function StrategyCard({ strategy, data, showWater = false, showCover = false, br
       {!browsing && <Measures strategy={strategy} showWater={showWater} showCover={showCover} />}
       {browsing && !eligible && <p className="small decision-warning">{t('rotationPlans.notEligible')}</p>}
       {tillage && <p className="decision-assumption small muted">{t('rotationPlans.assumes', { tillage: t(`plansScreen.mgmt.tillage.${tillage}`) })}</p>}
+      <button type="button" className="btn btn-block" onClick={() => { setPlayPlan(strategy.option); setScreen('sim'); }}><Gamepad2 size={18} aria-hidden="true" />{t('game.playThis')}</button>
     </div>
     <details className="plan-details"><summary className="rot-toggle">{t('mergedPlans.details')}<ChevronDown size={18} aria-hidden="true" /></summary><PlanDetails strategy={strategy} data={data} /></details>
   </article>;
