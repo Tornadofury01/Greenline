@@ -1,17 +1,83 @@
-/* Farm game (Play mode on the Farm simulator page). Loaded only with the game chunk. Uses the app's theme tokens, so it
+/* Farm simulator (More -> Farm simulator). Loaded only with the game chunk. Uses the app's theme tokens, so it
    follows dark and light mode. Tap targets >= 44 px, text >= 12 px, no sideways scroll at 375 px. */
-.gm-card { display: grid; gap: var(--s-2); min-width: 0; }
-.gm-card h2, .gm-card h3 { margin: 0; }
-.gm-banner { margin: 0; padding: var(--s-1) var(--s-2); border-radius: var(--radius); background: var(--color-warn-soft); color: var(--color-warn); font-weight: var(--weight-medium); }
-.gm-challenges { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-1); }
-.gm-challenge { display: grid; justify-items: start; text-align: left; gap: 2px; height: auto; min-height: 56px; }
-.gm-challenge-top { display: flex; width: 100%; align-items: center; gap: var(--s-1); }
+
+/* ---------- start screen ---------- */
+/* Challenge accents. Strips are decorative (the title and icon carry the meaning); each is >= 3:1 on the card surface. */
+:root {
+  --gm-sun: #b54a00;        /* 5.4:1 on white */
+  --gm-soil: #7a4e2d;       /* 7.9:1 */
+  --gm-soil-top: #a0703f;
+  --gm-soil-deep: #553520;
+  --gm-mint: #23805f;       /* 4.9:1 */
+}
+:root[data-theme="dark"] {
+  --gm-sun: #ff9a5c;        /* 6.4:1 on #203b2f */
+  --gm-soil: #b8855a;       /* 3.9:1 */
+  --gm-soil-top: #d2a679;
+  --gm-soil-deep: #8a5d3b;
+  --gm-mint: #7fdcb5;       /* 7.6:1 */
+}
+.gm-landing { width: 100%; max-width: 720px; margin-inline: auto; gap: var(--s-2); text-align: left; }
+.gm-landing h1, .gm-landing h2, .gm-landing p { margin: 0; }
+
+.gm-hero { overflow: hidden; border-radius: var(--radius-card); border: var(--border); background: var(--color-surface); }
+.gm-hero-art { position: relative; height: 180px; background: #7fb3de; }
+@media (min-width: 600px) { .gm-hero-art { height: 220px; } }
+.gm-hero-canvas { display: block; width: 100%; height: 100%; }
+.gm-hero-sound {
+  position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 44px; height: 44px;
+  border: 0; border-radius: var(--radius-pill); background: rgba(12, 22, 15, 0.72); color: #fff; cursor: pointer;
+}
+.gm-hero-sound[aria-pressed="true"] { background: var(--color-accent); color: var(--color-on-accent); }
+.gm-hero-sound:focus-visible { outline: 3px solid #fff; outline-offset: 2px; border-radius: var(--radius-pill); }
+.gm-hero-text { display: grid; gap: var(--s-half); padding: var(--s-2); }
+.gm-hero-text p { color: var(--color-text-muted); }
+
+.gm-info { display: flex; align-items: flex-start; gap: var(--s-1); padding: 0 var(--s-half); font-size: var(--text-xs); color: var(--color-text-muted); }
+.gm-info svg { flex: none; margin-top: 3px; }
+
+.gm-ready { display: grid; gap: var(--s-2); padding: var(--s-2); border-radius: var(--radius-card); border: 2px solid var(--color-accent-border); background: var(--color-primary-soft); }
+.gm-ready-text { display: grid; gap: var(--s-half); min-width: 0; }
+.gm-ready h2 { font-size: var(--text-md); overflow-wrap: anywhere; }
+@media (min-width: 600px) { .gm-ready { grid-template-columns: 1fr auto; align-items: center; } }
+
+.gm-kicker { font-size: var(--text-xs); font-weight: var(--weight-bold); letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: var(--s-1) !important; }
+.gm-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-1); }
+@media (min-width: 600px) { .gm-steps { grid-template-columns: repeat(3, 1fr); } }
+.gm-steps li { display: flex; align-items: center; gap: var(--s-1); min-height: 44px; padding: var(--s-1) 12px; border-radius: var(--radius); background: var(--color-surface-sunken); font-weight: var(--weight-medium); }
+.gm-step-icon { display: grid; place-items: center; width: 32px; height: 32px; flex: none; border-radius: var(--radius-pill); background: var(--color-surface); color: var(--color-primary); }
+.gm-step-n { font-weight: var(--weight-num); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+
+.gm-free { min-height: 56px; padding: var(--s-1) var(--s-2); justify-content: flex-start; text-align: left; font-size: var(--text-base); }
+.gm-free svg { flex: none; }
+@media (min-width: 600px) { .gm-free { font-size: var(--text-md); } }
+
+.gm-tiles { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+@media (min-width: 600px) { .gm-tiles { grid-template-columns: 1fr 1fr; } }
+.gm-tiles li { display: flex; min-width: 0; }
+.gm-tile {
+  position: relative; display: grid; grid-template-columns: 48px 1fr; align-items: start; gap: 12px; width: 100%;
+  min-height: 44px; padding: var(--s-2) var(--s-2) var(--s-2) 22px; text-align: left; font: inherit; color: var(--color-text);
+  background: var(--color-surface); border: var(--border); border-radius: var(--radius-card); cursor: pointer; overflow: hidden;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+.gm-tile::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--tile-accent); }
+.gm-tile.tone-sun { --tile-accent: var(--gm-sun); }
+.gm-tile.tone-soil { --tile-accent: var(--gm-soil); }
+.gm-tile.tone-mint { --tile-accent: var(--gm-mint); }
+@media (hover: hover) { .gm-tile:hover { border-color: var(--color-border-strong); background: var(--color-surface-sunken); } }
+.gm-tile:active { transform: scale(0.985); background: var(--color-surface-sunken); }
+.gm-tile:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; border-radius: var(--radius-card); }
+.gm-tile-icon { color: var(--color-text); }
+.gm-tile-body { display: grid; gap: 6px; min-width: 0; }
+.gm-tile-title { font-size: var(--text-md); font-weight: var(--weight-bold); line-height: 1.25; padding-right: 68px; min-height: 22px; }
+.gm-tile-goal { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.4; }
+.gm-tile-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+.gm-chip { display: inline-flex; align-items: center; min-height: 24px; padding: 0 10px; border-radius: var(--radius-pill); border: var(--border); background: var(--color-surface-sunken); font-size: 12px; font-weight: var(--weight-bold); font-variant-numeric: tabular-nums; }
+.gm-tile .gm-stars { position: absolute; top: var(--s-2); right: var(--s-2); margin: 0; }
+
 .gm-stars { margin-left: auto; display: inline-flex; gap: 2px; color: var(--color-warn-fill); }
-.gm-stars .off { color: var(--color-text-muted); opacity: 0.5; }
-.gm-loaded { display: grid; gap: var(--s-1); padding: var(--s-2); border-radius: var(--radius); background: var(--color-primary-soft); }
-.gm-loaded p { margin: 0; }
-.gm-sound { justify-self: start; min-height: 44px; display: inline-flex; align-items: center; gap: 6px; }
-.sim-mode { max-width: 360px; }
+.gm-stars .off { color: var(--color-text-muted); }
 
 /* ---------- full-screen game view (above the bottom nav on phones, below the header on desktop) ---------- */
 .gm-full {

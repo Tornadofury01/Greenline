@@ -8,7 +8,7 @@ import FieldStory from './screens/FieldStory.jsx';
 import CompareRotations from './screens/CompareRotations.jsx';
 import Plans from './screens/Plans.jsx';
 import Risks from './screens/Risks.jsx';
-import Simulator from './screens/Simulator.jsx';
+import FarmSimulator from './screens/FarmSimulator.jsx';
 import ExpertHandoff from './screens/ExpertHandoff.jsx';
 import HowWeKnow from './screens/HowWeKnow.jsx';
 
@@ -20,7 +20,7 @@ const SCREEN_COMPONENTS = {
   risks: Risks,
   options: Plans, // compatibility: the navigation setter opens Browse all rotations
   plans: Plans,
-  sim: Simulator,
+  sim: FarmSimulator,
   compare: CompareRotations,
   handoff: ExpertHandoff,
   how: HowWeKnow, // opened from the header and from card links, not a bottom tab

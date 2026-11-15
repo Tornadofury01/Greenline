@@ -1,9 +1,9 @@
-// Farm game ("Play" on the Farm simulator page): 4 plots on your own field, 5 seasons of real past weather.
+// Farm simulator (More -> Farm simulator): 4 plots on your own field, 5 seasons of real past weather.
 // Set up each plot with the toolbar (seed, cover, tillage, fertilizer, irrigation), start the season, and watch every plot
 // grow from ITS OWN daily engine run. Every number comes from the engine (gameWorker.js); the scene only draws those numbers.
-// Lazy: this file, the scene and the workers load only when Play opens.
+// Lazy: this file, the scene and the workers load only when the Farm simulator screen opens (screens/FarmSimulator.jsx).
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { X, Volume2, VolumeX, Coins, Pause, Play, ArrowRight } from 'lucide-react';
+import { X, Volume2, VolumeX, Coins, Pause, Play } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import { useV2 } from '../state/useV2.js';
 import { slotsFor, todayCrops, pastYears } from '../sim/simSetup.js';
@@ -13,10 +13,12 @@ import { GameCanvas } from './GameCanvas.jsx';
 import { Toolbar } from './Toolbar.jsx';
 import { SeasonView } from './SeasonView.jsx';
 import { Scoreboard } from './Scoreboard.jsx';
-import { EndScreen, Stars } from './EndScreen.jsx';
+import { EndScreen } from './EndScreen.jsx';
+import { StartScreen } from './StartScreen.jsx';
+import { makeV2Text } from '../data/v2Text.js';
 import { runSeason, USING_MOCK } from './runSource.js';
 import { PlaceholderTag } from '../components/PlaceholderTag.jsx';
-import { YEARS, PLOTS, BUDGET_PER_PLOT, CHALLENGES, emptyPlot, fillPlot, starsFor, loadStars, saveStars } from './plots.js';
+import { YEARS, PLOTS, BUDGET_PER_PLOT, emptyPlot, fillPlot, starsFor, saveStars } from './plots.js';
 import './game.css';
 
 const rand = (n) => Math.floor(Math.random() * n);
@@ -42,47 +44,6 @@ function useReducedMotion() {
 const accentColor = () => {
   try { return getComputedStyle(document.documentElement).getPropertyValue('--color-accent').trim() || '#c8f05a'; } catch { return '#c8f05a'; }
 };
-
-// ---------------------------------------------------------------------------------------------------------------- start screen
-function StartScreen({ loaded, avail, sound, setSound, onStart }) {
-  const { t } = useApp();
-  const best = useMemo(loadStars, []);
-  const ok = (c) => c.years.every((y) => avail.includes(y));
-  return (
-    <section className="card gm-card">
-      <h2>{t('game.start.title')}</h2>
-      <p>{t('game.start.intro')}</p>
-      <p className="gm-banner" role="note">{t('game.banner')}</p>
-      {loaded && (
-        <div className="gm-loaded">
-          <p><strong>{t('game.start.loaded')}</strong> {loaded.sim.crops.map((c) => t(`crops.${c.main}`)).join(' → ')}</p>
-          {loaded.sim.notes.map((n) => <p key={n} className="small muted">{t(`game.planNote.${n}`)}</p>)}
-          <p className="small muted">{t('game.start.loadedWhere')}</p>
-        </div>
-      )}
-      <h3>{t('game.start.challenges')}</h3>
-      <ul className="gm-challenges">
-        {CHALLENGES.filter(ok).map((c) => (
-          <li key={c.id}>
-            <button type="button" className="btn btn-block gm-challenge" onClick={() => onStart({ kind: 'challenge', id: c.id }, c.years)}>
-              <span className="gm-challenge-top"><strong>{t(`game.challenge.${c.id}.name`)}</strong><Stars n={best[c.id] ?? 0} label={t('game.end.stars', { n: best[c.id] ?? 0 })} /></span>
-              <span className="small">{t(`game.challenge.${c.id}.goal`)}</span>
-            </button>
-          </li>
-        ))}
-        <li>
-          <button type="button" className="btn btn-block gm-challenge" onClick={() => onStart({ kind: 'free' }, pickYears(avail))}>
-            <strong>{t('game.challenge.free.name')}</strong>
-            <span className="small">{t('game.challenge.free.goal')}</span>
-          </button>
-        </li>
-      </ul>
-      <button type="button" className="chip gm-sound" aria-pressed={sound} onClick={() => setSound(!sound)}>
-        {sound ? <Volume2 size={16} aria-hidden="true" /> : <VolumeX size={16} aria-hidden="true" />}{t(sound ? 'game.sound.on' : 'game.sound.off')}
-      </button>
-    </section>
-  );
-}
 
 // ---------------------------------------------------------------------------------------------------------------- the game
 export default function FarmGame() {
@@ -119,7 +80,7 @@ export default function FarmGame() {
   // "Play this plan" from Plans / Compare.
   useEffect(() => {
     const option = takePlayPlan();
-    if (option) setLoaded({ id: option.id, sim: planToSim(option) });
+    if (option) setLoaded({ id: option.id, name: option.name, sim: planToSim(option) });
   }, []);
 
   // Full screen: no page scroll behind the game.
@@ -191,8 +152,12 @@ export default function FarmGame() {
     setK(k + 1); setSeason(null); setPhase('setup');
   }
 
-  if (!field) return <p className="muted">{t('common.noField')}</p>;
-  if (phase === 'start') return <StartScreen loaded={loaded} avail={avail} sound={sound} setSound={setSound} onStart={startGame} />;
+  if (!field) return <div className="screen"><p className="muted">{t('common.noField')}</p></div>;
+  if (phase === 'start') {
+    const loadedName = loaded ? (makeV2Text(t, lang)(loaded.name) || loaded.sim.crops.map((c) => t(`crops.${c.main}`)).join(' → ')) : '';
+    return <StartScreen loaded={loaded} loadedName={loadedName} avail={avail} sound={sound} setSound={setSound} calm={calm}
+      onFree={() => startGame({ kind: 'free' }, pickYears(avail))} onChallenge={(c) => startGame({ kind: 'challenge', id: c.id }, c.years)} />;
+  }
 
   const crop = (id) => t(`crops.${id}`);
   const monthName = (m) => new Intl.DateTimeFormat(lang, { month: 'long', timeZone: 'UTC' }).format(new Date(Date.UTC(2001, m, 1)));

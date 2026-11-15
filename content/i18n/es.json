@@ -34,7 +34,7 @@
     "compareLong": "Comparar rotaciones",
     "risksLong": "Riesgos del campo",
     "handoffLong": "Entrega al experto",
-    "sim": "Simulador",
+    "sim": "Simulador de la finca",
     "simLong": "Simulador de la finca"
   },
   "common": {
@@ -179,7 +179,7 @@
         "no-till": "Siembra directa"
       },
       "assumed": "Labranza reducida: es nuestra suposición hasta que usted nos diga. Toque una opción para cambiarla.",
-      "saved": "Guardado en este teléfono. Define la labranza de su rotación actual en el simulador de la finca."
+      "saved": "Guardado en este teléfono. Sus parcelas en el Simulador de la finca empiezan con esta labranza."
     }
   },
   "story": {
@@ -196,7 +196,7 @@
       "play": "Reproducir",
       "pause": "Pausar",
       "timeline": "Fecha de la imagen satelital",
-      "simulate": "Pruebe una rotación en el simulador",
+      "simulate": "Pruebe una rotación en el Simulador de la finca",
       "loading": "Cargando vista satelital?",
       "noArchive": "No hay una repetici?n disponible para esta parcela. Con?ctese a internet e int?ntelo de nuevo.",
       "retry": "Intentar de nuevo",
@@ -1249,7 +1249,7 @@
     "honest": {
       "confCap": "La confianza no puede ser alta hasta que nuestros modelos del campo estén listos.",
       "tillage": "Estas cifras suponen labranza reducida.",
-      "tillageTry": "Su ajuste de labranza se usa en el simulador de la granja.",
+      "tillageTry": "Pruebe su labranza en 4 parcelas en el Simulador de la finca.",
       "costShare": "Costos compartidos: no estimados.",
       "fixedCosts": "Costos fijos: valores provisionales."
     },
@@ -1566,204 +1566,17 @@
     "takeaway": "Son rangos probables a partir de registros del clima y modelos del campo, no pronósticos. Confírmelos con su agente de extensión."
   },
   "sim": {
-    "title": "Simulador de la finca",
-    "intro": "Empiece con su finca como está hoy, cambie lo que quiera y vea pasar las temporadas día por día.",
-    "notForecast": "Muestra lo que pasaría con el clima elegido. No es un pronóstico.",
-    "running": "Calculando la simulación",
-    "error": "No se pudo hacer la simulación. Intente de nuevo o elija otro campo.",
-    "controls": {
-      "title": "Sus decisiones",
-      "show": "Mostrar decisiones",
-      "hide": "Ocultar decisiones"
-    },
-    "plan": {
-      "today": "Su finca hoy",
-      "nameA": "Plan A: su finca hoy",
-      "nameB": "Plan B",
-      "compare": "Comparar con un segundo plan",
-      "editing": "Plan que está editando",
-      "rotation": "Cultivos por año",
-      "year": "Año {n}",
-      "crop": "Cultivo",
-      "cover": "Cultivo de cobertura",
-      "noCover": "Sin cobertura",
-      "addYear": "Agregar un año",
-      "removeYear": "Quitar un año",
-      "copyA": "Copiar el plan A"
-    },
     "in": {
-      "tillage": "Labranza",
       "tillageOpt": {
         "conventional": "Convencional",
         "reduced": "Reducida",
         "no-till": "Siembra directa"
       },
-      "nitrogen": "Nitrógeno",
-      "nDefault": "Dosis usual de cada cultivo",
-      "nRate": "{n} lb de N por acre",
-      "irrigation": "Riego",
       "irrOpt": {
         "none": "Ninguno (secano)",
         "limited": "Limitado",
         "full": "Completo"
-      },
-      "shift": "Fecha de siembra",
-      "shiftNormal": "Fecha usual",
-      "shiftEarly": "{n} días antes",
-      "shiftLate": "{n} días después",
-      "maturity": "Madurez de la variedad",
-      "maturityOpt": {
-        "full": "Ciclo completo",
-        "short": "Ciclo corto"
-      },
-      "termination": "Fin del cultivo de cobertura",
-      "termOpt": {
-        "at-planting": "A la siembra",
-        "early": "2 semanas antes de sembrar",
-        "none": "Sin terminar (sigue creciendo)"
       }
-    },
-    "weather": {
-      "title": "Clima",
-      "kind": "Tipo de clima",
-      "year": "Qué año",
-      "redraw": "Sortear otros años",
-      "kinds": {
-        "typical": "Un año típico",
-        "past": "Un año pasado otra vez",
-        "random": "Un sorteo de años pasados",
-        "ssp245": "2040, escenario climático medio",
-        "ssp585": "2040, escenario climático alto"
-      },
-      "rain": "Lluvia",
-      "temp": "Temperatura",
-      "asIs": "sin cambio",
-      "wetter": "{n}% más lluvia",
-      "drier": "{n}% menos lluvia",
-      "hotter": "{n}°F más caliente",
-      "cooler": "{n}°F más fresco"
-    },
-    "money": {
-      "title": "Dinero",
-      "price": "Precios de los cultivos",
-      "nPrice": "Precio del nitrógeno por lb",
-      "rent": "Renta de la tierra por acre al año",
-      "note": "Los precios parten de los números del USDA para el campo. La ganancia es el ingreso menos los costos contados aquí, antes de gastos generales y préstamos."
-    },
-    "length": {
-      "title": "Duración",
-      "years": "{n} años",
-      "note": "Empieza en enero de {year}. Un año es una temporada de cada cultivo de la rotación."
-    },
-    "play": {
-      "title": "Reproducir",
-      "play": "Reproducir",
-      "pause": "Pausar",
-      "stepDay": "Avanzar un día",
-      "jumpMonth": "Saltar un mes",
-      "scrub": "Día de la simulación",
-      "speed": "Velocidad",
-      "speeds": {
-        "slow": "Lenta",
-        "normal": "Normal",
-        "fast": "Rápida"
-      }
-    },
-    "stage": {
-      "idle": "nada creciendo",
-      "fallow": "barbecho",
-      "planted": "sembrado",
-      "growing": "creciendo",
-      "flowering": "floreciendo",
-      "filling": "llenando el grano",
-      "mature": "maduro"
-    },
-    "today": {
-      "noCrop": "Sin cultivo",
-      "weather": "Máxima / mínima",
-      "rain": "Lluvia hoy: {n} pulg",
-      "water": "Agua del suelo",
-      "waterNote": "de {cap} pulg en la zona de raíces; estrés de agua {stress}%",
-      "cover": "Suelo cubierto",
-      "erosion": "Suelo perdido hasta hoy: {n} ton/ac",
-      "money": "Ganancia hasta hoy",
-      "nitrogen": "Nitrógeno en el suelo: {n} lb/ac"
-    },
-    "unit": {
-      "%": "por ciento",
-      "in": "pulgadas",
-      "lb": "lb por acre",
-      "$": "dólares por acre"
-    },
-    "chart": {
-      "crop": {
-        "title": "Cultivo",
-        "note": "Qué tan verde está el campo: la cobertura de hojas del cultivo, en por ciento."
-      },
-      "water": {
-        "title": "Agua",
-        "note": "Agua que las raíces alcanzan, en pulgadas. Más es mejor."
-      },
-      "soil": {
-        "title": "Suelo",
-        "note": "Suelo cubierto por cultivo y rastrojo, en por ciento. Menos de 30% cuenta como suelo desnudo."
-      },
-      "nutrients": {
-        "title": "Nutrientes",
-        "note": "Nitrógeno en el suelo, en libras por acre."
-      },
-      "pests": {
-        "title": "Plagas y enfermedades",
-        "note": "El mayor riesgo por clima entre las plagas del cultivo que está en el campo."
-      },
-      "money": {
-        "title": "Dinero",
-        "note": "Ganancia por acre hasta hoy: ingresos menos costos el día en que ocurren, menos la renta."
-      }
-    },
-    "score": {
-      "title": "Toda la simulación, por año",
-      "plan": "Plan",
-      "profit": "Ganancia $/ac",
-      "soil": "Suelo perdido t/ac (límite)",
-      "bare": "Días desnudo",
-      "nLeached": "N perdido lb/ac",
-      "note": "Promedios por año en {years} años de este clima. El límite es la pérdida de suelo tolerable, T."
-    },
-    "seasons": {
-      "title": "Temporada por temporada",
-      "caption": "Cosechas",
-      "crop": "Cultivo",
-      "ended": "Terminó",
-      "yield": "Rendimiento",
-      "vs": "vs lo usual"
-    },
-    "band": {
-      "title": "Cuánto varían los resultados",
-      "intro": "Corre el primer año de su plan con cada temporada pasada, usando el clima real de esa temporada.",
-      "show": "Mostrar el rango",
-      "hide": "Ocultar el rango",
-      "takeaway": "En {n} temporadas pasadas el resultado del medio fue {mid} por acre. El peor 1 de cada 10 fue {low} o menos, el mejor 1 de cada 10 fue {high} o más."
-    },
-    "log": {
-      "title": "Qué pasó",
-      "empty": "Todavía nada. Oprima reproducir."
-    },
-    "event": {
-      "planted": "Se sembró {crop}",
-      "flowering": "{crop} floreciendo",
-      "harvested": "Se cosechó {crop} {yield}",
-      "terminated": "Se terminó la cobertura de {crop}",
-      "cut": "Corte de {crop} {yield}",
-      "frost-kill": "La helada mató el cultivo de {crop}",
-      "flower-frost": "La helada dañó las flores de {crop}",
-      "fallow-start": "El campo quedó en barbecho"
-    },
-    "ph": {
-      "yields": "Rendimientos y ganancia",
-      "calendars": "Fechas de siembra y cosecha",
-      "weather2040": "Mezcla de clima 2040",
-      "startWater": "Agua inicial del suelo"
     }
   },
   "mergedPlans": {
@@ -1787,7 +1600,6 @@
     "why": "Por qué encaja.",
     "details": "Ver detalles",
     "scoreNote": "Seis puntajes v2 sobre 100, según los supuestos del plan guardado.",
-    "precomputed": "Mejor equilibrio del análisis v2 guardado de esta parcela. Pruebe cambios de su finca en el Simulador.",
     "limitsWarning": "No se cumplieron algunos límites de la parcela. Revise los controles antes de elegir este plan.",
     "compareTitle": "Compare las estrategias",
     "sameBasis": "Misma parcela y análisis v2. Retornos tras costos variables; agua y cobertura estimadas.",
@@ -1797,9 +1609,6 @@
     "overlap": "Las recomendaciones coinciden. La alternativa es otra rotación apta de Opciones.",
     "options": "Explorar todas las Opciones",
     "explore": "Explorar más",
-    "build": "Crear su rotación en el Simulador",
-    "weather": "Probar un año difícil u otro clima en el Simulador",
-    "exploreNote": "El Simulador permite cambiar cultivos, manejo y clima. Sus escenarios son distintos de las estimaciones v2 guardadas de arriba.",
     "noBest": "No hay un plan de mejor equilibrio para esta parcela. Explore Opciones para ver las rotaciones disponibles."
   },
   "rotationPlans": {
@@ -1830,8 +1639,8 @@
     "gap": "No hay dos alternativas diferentes que cumplan los controles. Mostramos las aptas; la lista completa incluye otras posibilidades y sus desventajas.",
     "browse": "Explorar todas las rotaciones",
     "browseNote": "Las {count} rotaciones guardadas. La lista también incluye opciones que no pasan todos los controles.",
-    "simulatorNotice": "El Simulador empieza con la referencia de la parcela. Aún no permite cargar exactamente una rotación sugerida y su manejo.",
-    "openSimulator": "Abrir Simulador desde la referencia de la parcela",
+    "simulatorNotice": "Pruebe sus propios planes en 4 parcelas de su campo, lado a lado, con el clima real de años pasados. Use \"Jugar este plan\" en una tarjeta para traer ese plan.",
+    "openSimulator": "Abrir el Simulador de la finca",
     "sources": {
       "simulator": "Simulación agronómica v2",
       "ssurgo": "Estudio de suelos USDA SSURGO",
@@ -1841,14 +1650,8 @@
     }
   },
   "game": {
-    "mode": {
-      "label": "Simulador o juego",
-      "sim": "Simulador",
-      "play": "Jugar"
-    },
-    "title": "Juego de la granja",
-    "intro": "Cuatro parcelas en su propio campo, cinco temporadas con clima real del pasado. Prepare cada parcela y véala crecer.",
-    "loading": "Cargando el juego…",
+    "title": "Simulador de la finca",
+    "loading": "Cargando el Simulador de la finca…",
     "playThis": "Jugar este plan",
     "banner": "Repite el clima real de años pasados en su campo. No es un pronóstico.",
     "progress": "Año {n}/{total}",
@@ -1938,33 +1741,40 @@
     "challenge": {
       "drought": {
         "name": "Sobrevivir 2011",
-        "goal": "Cinco temporadas, de 2009 a 2013, con la sequía de 2011 en medio. No se quede sin dinero."
+        "goal": "Pase la sequía de 2011 sin quedarse sin dinero."
       },
       "soil": {
         "name": "Cuidar el suelo",
-        "goal": "De 2015 a 2019, con un año muy lluvioso. Mantenga la pérdida de suelo por debajo de lo que el suelo tolera."
+        "goal": "Mantenga la pérdida de suelo por debajo de lo que su suelo tolera, incluso en un año lluvioso."
       },
       "beat": {
         "name": "Supere su rotación actual",
-        "goal": "De 2019 a 2023. Gane a su campo de hoy en dinero, luego en suelo y luego en agua."
-      },
-      "free": {
-        "name": "Juego libre",
-        "goal": "Cinco años pasados al azar. Sin meta, solo pruebe."
+        "goal": "Supere a su campo de hoy en dinero, luego en suelo y luego en agua."
       }
     },
     "start": {
-      "title": "Juegue 5 temporadas en 4 parcelas",
-      "intro": "Divida su campo en 4 parcelas y pruebe un plan distinto en cada una. El mismo clima real del pasado cae sobre las cuatro, así ve qué plan aguanta.",
-      "loaded": "Plan cargado:",
-      "challenges": "Elija un juego",
-      "loadedWhere": "Va en la parcela 1. Puede cambiarlo ahí."
+      "subtitle": "Divida su campo en 4 parcelas, pruebe un plan en cada una y vea cómo aguantan con el clima real de años pasados.",
+      "heroAlt": "Una pequeña finca con 4 parcelas de cultivos creciendo",
+      "howTitle": "Cómo funciona",
+      "step1": "Prepare 4 parcelas",
+      "step2": "Juegue una temporada",
+      "step3": "Vea qué parcela gana",
+      "free": "Juego libre · 5 años pasados al azar",
+      "challenges": "Retos",
+      "ready": "Listo para probar: {name}",
+      "playIt": "Jugarlo",
+      "loadedWhere": "Va en la parcela 1. Puede cambiarlo ahí.",
+      "level": {
+        "easy": "Fácil",
+        "medium": "Media",
+        "hard": "Difícil"
+      }
     },
     "planNote": {
-      "doubleCrop": "Este plan tiene un doble cultivo. El juego usa un cultivo por año, así que se omite el segundo.",
-      "cover": "Un cultivo de cobertura de este plan no está en el juego y se omite.",
-      "maturity": "El plan usa variedades de ciclo corto; el juego usa ciclo completo (la variedad aún no está bien modelada).",
-      "termination": "El plan termina la cobertura antes; el juego la termina al sembrar (otras fechas aún no están bien modeladas)."
+      "doubleCrop": "Este plan tiene un doble cultivo. El Simulador de la finca usa un cultivo por año, así que se omite el segundo.",
+      "cover": "Un cultivo de cobertura de este plan no está en el Simulador de la finca y se omite.",
+      "maturity": "El plan usa variedades de ciclo corto; el Simulador de la finca usa ciclo completo (la variedad aún no está bien modelada).",
+      "termination": "El plan termina la cobertura antes; el Simulador de la finca la termina al sembrar (otras fechas aún no están bien modeladas)."
     },
     "sound": {
       "on": "Sonido activado",

@@ -34,7 +34,7 @@
     "compareLong": "Compare rotations",
     "risksLong": "Field risks",
     "handoffLong": "Expert handoff",
-    "sim": "Simulator",
+    "sim": "Farm simulator",
     "simLong": "Farm simulator"
   },
   "common": {
@@ -179,7 +179,7 @@
         "no-till": "No-till"
       },
       "assumed": "Reduced tillage: our assumption until you tell us. Tap a choice to change it.",
-      "saved": "Saved on this phone. It sets the tillage of your current rotation in the farm simulator."
+      "saved": "Saved on this phone. Your plots in the Farm simulator start with this tillage."
     }
   },
   "story": {
@@ -196,7 +196,7 @@
       "play": "Play",
       "pause": "Pause",
       "timeline": "Satellite replay date",
-      "simulate": "Try a rotation in the simulator",
+      "simulate": "Try a rotation in the Farm simulator",
       "loading": "Loading satellite view?",
       "noArchive": "No replay is available for this field. Connect to the internet and try again.",
       "retry": "Try again",
@@ -1249,7 +1249,7 @@
     "honest": {
       "confCap": "Confidence can't be high until our field models are ready.",
       "tillage": "These numbers assume reduced tillage.",
-      "tillageTry": "Your tillage setting is used in the farm simulator.",
+      "tillageTry": "Try your tillage on 4 plots in the Farm simulator.",
       "costShare": "Cost-share: not estimated.",
       "fixedCosts": "Fixed costs: placeholder values."
     },
@@ -1566,204 +1566,17 @@
     "takeaway": "These are likely ranges from weather records and field models, not forecasts. Confirm with your extension agent."
   },
   "sim": {
-    "title": "Farm simulator",
-    "intro": "Start from your farm as it is today, change anything, and watch the seasons play out day by day.",
-    "notForecast": "Shows what would happen under the chosen weather, not a forecast.",
-    "running": "Running the simulation",
-    "error": "The simulation could not run. Try again or pick another field.",
-    "controls": {
-      "title": "Your choices",
-      "show": "Show choices",
-      "hide": "Hide choices"
-    },
-    "plan": {
-      "today": "Your farm today",
-      "nameA": "Plan A: your farm today",
-      "nameB": "Plan B",
-      "compare": "Compare with a second plan",
-      "editing": "Plan being edited",
-      "rotation": "Crops by year",
-      "year": "Year {n}",
-      "crop": "Crop",
-      "cover": "Cover crop",
-      "noCover": "No cover crop",
-      "addYear": "Add a year",
-      "removeYear": "Remove a year",
-      "copyA": "Copy plan A"
-    },
     "in": {
-      "tillage": "Tillage",
       "tillageOpt": {
         "conventional": "Conventional",
         "reduced": "Reduced",
         "no-till": "No-till"
       },
-      "nitrogen": "Nitrogen",
-      "nDefault": "Usual rate for each crop",
-      "nRate": "{n} lb N per acre",
-      "irrigation": "Irrigation",
       "irrOpt": {
         "none": "None (dryland)",
         "limited": "Limited",
         "full": "Full"
-      },
-      "shift": "Planting date",
-      "shiftNormal": "Usual date",
-      "shiftEarly": "{n} days earlier",
-      "shiftLate": "{n} days later",
-      "maturity": "Variety maturity",
-      "maturityOpt": {
-        "full": "Full season",
-        "short": "Short season"
-      },
-      "termination": "Cover crop ending",
-      "termOpt": {
-        "at-planting": "At planting",
-        "early": "2 weeks before planting",
-        "none": "Not ended (grows on)"
       }
-    },
-    "weather": {
-      "title": "Weather",
-      "kind": "Kind of weather",
-      "year": "Which year",
-      "redraw": "Draw different years",
-      "kinds": {
-        "typical": "A typical year",
-        "past": "A past year again",
-        "random": "A random draw of past years",
-        "ssp245": "2040, middle climate scenario",
-        "ssp585": "2040, high climate scenario"
-      },
-      "rain": "Rain",
-      "temp": "Temperature",
-      "asIs": "as is",
-      "wetter": "{n}% wetter",
-      "drier": "{n}% drier",
-      "hotter": "{n}°F hotter",
-      "cooler": "{n}°F cooler"
-    },
-    "money": {
-      "title": "Money",
-      "price": "Crop prices",
-      "nPrice": "Nitrogen price per lb",
-      "rent": "Land rent per acre per year",
-      "note": "Prices start from the field's USDA numbers. Profit is return above the costs counted here, before overhead and loans."
-    },
-    "length": {
-      "title": "Length",
-      "years": "{n} years",
-      "note": "Runs from January {year}. One year is one season of each crop in the rotation."
-    },
-    "play": {
-      "title": "Play it",
-      "play": "Play",
-      "pause": "Pause",
-      "stepDay": "Step a day",
-      "jumpMonth": "Jump a month",
-      "scrub": "Day of the simulation",
-      "speed": "Speed",
-      "speeds": {
-        "slow": "Slow",
-        "normal": "Normal",
-        "fast": "Fast"
-      }
-    },
-    "stage": {
-      "idle": "nothing growing",
-      "fallow": "fallow",
-      "planted": "planted",
-      "growing": "growing",
-      "flowering": "flowering",
-      "filling": "filling the grain",
-      "mature": "mature"
-    },
-    "today": {
-      "noCrop": "No crop",
-      "weather": "High / low",
-      "rain": "Rain today: {n} in",
-      "water": "Soil water",
-      "waterNote": "of {cap} in the root zone; water stress {stress}%",
-      "cover": "Ground covered",
-      "erosion": "Soil lost so far: {n} tons/ac",
-      "money": "Profit so far",
-      "nitrogen": "Nitrogen in soil: {n} lb/ac"
-    },
-    "unit": {
-      "%": "percent",
-      "in": "inches",
-      "lb": "lb per acre",
-      "$": "dollars per acre"
-    },
-    "chart": {
-      "crop": {
-        "title": "Crop",
-        "note": "How green the field is: the crop's leaf cover, in percent."
-      },
-      "water": {
-        "title": "Water",
-        "note": "Water the roots can reach, in inches. Higher is better."
-      },
-      "soil": {
-        "title": "Soil",
-        "note": "Ground covered by crop and residue, in percent. Under 30% counts as bare."
-      },
-      "nutrients": {
-        "title": "Nutrients",
-        "note": "Nitrogen in the soil, in pounds per acre."
-      },
-      "pests": {
-        "title": "Pests and disease",
-        "note": "Highest weather risk among the pests of the crop in the field."
-      },
-      "money": {
-        "title": "Money",
-        "note": "Profit per acre so far: revenue minus costs on the day they happen, minus rent."
-      }
-    },
-    "score": {
-      "title": "The whole run, per year",
-      "plan": "Plan",
-      "profit": "Profit $/ac",
-      "soil": "Soil lost t/ac (limit)",
-      "bare": "Bare days",
-      "nLeached": "N lost lb/ac",
-      "note": "Averages per year over {years} years of this weather. The limit is the soil's tolerable loss, T."
-    },
-    "seasons": {
-      "title": "Season by season",
-      "caption": "Harvests",
-      "crop": "Crop",
-      "ended": "Ended",
-      "yield": "Yield",
-      "vs": "vs usual"
-    },
-    "band": {
-      "title": "How much results vary",
-      "intro": "Runs the first year of your plan through every past season, using that season's real weather.",
-      "show": "Show the range",
-      "hide": "Hide the range",
-      "takeaway": "Across {n} past seasons the middle result was {mid} per acre. The worst 1 in 10 was {low} or less, the best 1 in 10 was {high} or more."
-    },
-    "log": {
-      "title": "What happened",
-      "empty": "Nothing yet. Press play."
-    },
-    "event": {
-      "planted": "Planted {crop}",
-      "flowering": "{crop} flowering",
-      "harvested": "Harvested {crop} {yield}",
-      "terminated": "Ended the {crop} cover crop",
-      "cut": "Cut {crop} {yield}",
-      "frost-kill": "Frost killed the {crop}",
-      "flower-frost": "Frost hit the {crop} flowers",
-      "fallow-start": "Field left fallow"
-    },
-    "ph": {
-      "yields": "Yields and profit",
-      "calendars": "Planting and harvest dates",
-      "weather2040": "2040 weather mix",
-      "startWater": "Starting soil water"
     }
   },
   "mergedPlans": {
@@ -1787,7 +1600,6 @@
     "why": "Why it fits.",
     "details": "View details",
     "scoreNote": "Six v2 scores out of 100; based on the stored plan assumptions.",
-    "precomputed": "Best balance from this field's saved v2 analysis. Test changes to your farm settings in Simulator.",
     "limitsWarning": "Some field limits could not be met. Review fit checks before choosing this plan.",
     "compareTitle": "How the strategies compare",
     "sameBasis": "Same field and v2 analysis. Returns are after variable costs; water and cover are estimates.",
@@ -1797,9 +1609,6 @@
     "overlap": "The named recommendations overlap. The alternative is a different eligible rotation from Options.",
     "options": "Browse all Options",
     "explore": "Explore more",
-    "build": "Build your own in Simulator",
-    "weather": "Try a bad year or weather what-if in Simulator",
-    "exploreNote": "Simulator can edit crops, management and weather. Its scenarios are separate from the saved v2 estimates above.",
     "noBest": "A best-balance plan is not available for this field. Browse Options for the available rotations."
   },
   "rotationPlans": {
@@ -1830,8 +1639,8 @@
     "gap": "Two distinct eligible alternatives are not available. We show what passes the field checks; the full list includes other choices and their tradeoffs.",
     "browse": "Browse all rotations",
     "browseNote": "All {count} stored rotations. This list also includes choices that do not pass every field check.",
-    "simulatorNotice": "Simulator currently starts from the field’s baseline. Loading an exact suggested rotation and its management is not wired up yet.",
-    "openSimulator": "Open Simulator from the field baseline",
+    "simulatorNotice": "Try your own plans on 4 plots of your field, side by side, in real past weather. Use \"Play this plan\" on a card to bring that plan along.",
+    "openSimulator": "Open the Farm simulator",
     "sources": {
       "simulator": "v2 agronomy simulation",
       "ssurgo": "USDA SSURGO soil survey",
@@ -1841,14 +1650,8 @@
     }
   },
   "game": {
-    "mode": {
-      "label": "Simulator or game",
-      "sim": "Simulator",
-      "play": "Play"
-    },
-    "title": "Farm game",
-    "intro": "Four plots on your own field, five seasons of real past weather. Set up each plot, then watch it grow.",
-    "loading": "Loading the game…",
+    "title": "Farm simulator",
+    "loading": "Loading the Farm simulator…",
     "playThis": "Play this plan",
     "banner": "Replays real past weather on your field. Not a forecast.",
     "progress": "Year {n}/{total}",
@@ -1938,33 +1741,40 @@
     "challenge": {
       "drought": {
         "name": "Survive 2011",
-        "goal": "Five seasons, 2009 to 2013, with the 2011 drought in the middle. Don't run out of money."
+        "goal": "Get through the 2011 drought without running out of money."
       },
       "soil": {
         "name": "Keep the soil",
-        "goal": "2015 to 2019, including a very wet year. Keep soil loss under what the soil can tolerate."
+        "goal": "Keep soil loss under what your soil can tolerate, wet year included."
       },
       "beat": {
         "name": "Beat your current rotation",
-        "goal": "2019 to 2023. Beat your farm today on money, then soil, then water."
-      },
-      "free": {
-        "name": "Free play",
-        "goal": "Five random past years. No goal, just try things."
+        "goal": "Beat your farm today on money, then soil, then water."
       }
     },
     "start": {
-      "title": "Play 5 seasons on 4 plots",
-      "intro": "Split your field into 4 plots and try a different plan on each. The same real past weather plays on all four, so you see which plan holds up.",
-      "loaded": "Plan loaded:",
-      "challenges": "Pick a game",
-      "loadedWhere": "It goes on plot 1. You can change it there."
+      "subtitle": "Split your field into 4 plots, try a plan on each, and see how they hold up in real past weather.",
+      "heroAlt": "A small farm with 4 plots of growing crops",
+      "howTitle": "How it works",
+      "step1": "Set up 4 plots",
+      "step2": "Play a season",
+      "step3": "See which plot wins",
+      "free": "Free play · 5 random past years",
+      "challenges": "Challenges",
+      "ready": "Ready to test: {name}",
+      "playIt": "Play it",
+      "loadedWhere": "It goes on plot 1. You can change it there.",
+      "level": {
+        "easy": "Easy",
+        "medium": "Medium",
+        "hard": "Hard"
+      }
     },
     "planNote": {
-      "doubleCrop": "This plan has a double crop. The game plays one crop a year, so the second crop is left out.",
-      "cover": "One cover crop in this plan is not offered in the game and is left out.",
-      "maturity": "The plan uses short-season varieties; the game uses full season (variety is not fully modeled yet).",
-      "termination": "The plan ends its cover early; the game ends covers at planting (other end dates are not fully modeled yet)."
+      "doubleCrop": "This plan has a double crop. The Farm simulator plays one crop a year, so the second crop is left out.",
+      "cover": "One cover crop in this plan is not offered in the Farm simulator and is left out.",
+      "maturity": "The plan uses short-season varieties; the Farm simulator uses full season (variety is not fully modeled yet).",
+      "termination": "The plan ends its cover early; the Farm simulator ends covers at planting (other end dates are not fully modeled yet)."
     },
     "sound": {
       "on": "Sound on",

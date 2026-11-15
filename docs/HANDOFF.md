@@ -98,8 +98,9 @@ Ten global awards: Best Use of Science, **Best Use of Data**, Best Use of Techno
 4. **Field story:** green / partly covered / bare months from Landsat 8/9 (2014+), pre-2013 shown muted with a low-confidence tag; drought/wet/heat/normal years; bare days per year; soil facts (K, T, water in top 1 m, land capability class); PRISM frost dates.
 5. **Compare rotations:** current + best suggestions + "build my own". Each card: score, bare days per year, why / evidence (dataset receipts) / benefits / gaps / risks, tags (nitrogen-fixing, cover crop, deep roots, diverse, drought-tolerant, pest-cycle break), confidence with up and down reasons, AI insights, dollar estimates (gross revenue, before costs, not profit; fertilizer value from N fixing).
 6. **Replay a bad year** (2011, 2023, 2007, 2004, 2018, 2000): each rotation re-scored under real weather, verdicts Holds up / Under strain / Struggles / Struggles badly. **What-if sliders:** rain −50…+50 %, extra days ≥ 95 °F 0…+40, labeled "Hypothetical, not a forecast". A scenario can only lower the normal score.
-7. **Expert handoff:** printable page for the county extension agent with evidence, confidence, questions, NRCS cost-share note.
-8. **How we know** (book icon): glossary (NDVI, residue, ET, soil moisture anomaly, frost, water balance, bare days, confidence, held-out accuracy, satellite vs ground, why 2013 matters).
+7. **Farm simulator** (More menu, a game): split your field into 4 plots, set each one up (crop, cover, tillage, fertilizer, irrigation), then play 5 seasons of real past weather and see which plot holds up (money, soil, water). Free play (5 random past years) or 3 challenges with stars (Survive 2011, Keep the soil, Beat your current rotation). "Play this plan" on Plans / Compare loads a plan onto plot 1. Labeled "Replays real past weather on your field. Not a forecast." **Numbers are mock until the engine is wired in `app/src/game/runSource.js`** (the game shows a "Mock numbers" tag). It replaced the old chart simulator (docs/game-plan.md, G2d).
+8. **Expert handoff:** printable page for the county extension agent with evidence, confidence, questions, NRCS cost-share note.
+9. **How we know** (book icon): glossary (NDVI, residue, ET, soil moisture anomaly, frost, water balance, bare days, confidence, held-out accuracy, satellite vs ground, why 2013 matters).
 
 ---
 
