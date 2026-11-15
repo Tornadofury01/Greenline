@@ -1847,11 +1847,11 @@
       "play": "Jugar"
     },
     "title": "Juego de la granja",
-    "intro": "Pruebe un plan en su propio campo, una temporada a la vez.",
+    "intro": "Cuatro parcelas en su propio campo, cinco temporadas con clima real del pasado. Prepare cada parcela y véala crecer.",
     "loading": "Cargando el juego…",
     "playThis": "Jugar este plan",
     "banner": "Repite el clima real de años pasados en su campo. No es un pronóstico.",
-    "progress": "Año {n} de {total}",
+    "progress": "Año {n}/{total}",
     "running": "Creciendo la temporada…",
     "error": "No se pudo simular la temporada.",
     "weatherOf": "Clima de {year} en este campo",
@@ -1922,7 +1922,7 @@
       "same": "igual que el año pasado"
     },
     "scene": {
-      "alt": "Su campo en {month}, dibujado a partir de la simulación"
+      "alt": "Su campo dividido en 4 parcelas, dibujado con la simulación"
     },
     "play": {
       "play": "Reproducir",
@@ -1993,25 +1993,28 @@
     },
     "challenge": {
       "drought": {
-        "name": "La sequía de 2011",
-        "goal": "Gane más dinero que su granja de hoy de 2009 a 2013."
+        "name": "Sobrevivir 2011",
+        "goal": "Cinco temporadas, de 2009 a 2013, con la sequía de 2011 en medio. No se quede sin dinero."
       },
       "soil": {
-        "name": "Cuide el suelo",
-        "goal": "Mantenga la pérdida de suelo por debajo de lo que el suelo tolera cada año, de 2015 a 2019."
+        "name": "Cuidar el suelo",
+        "goal": "De 2015 a 2019, con un año muy lluvioso. Mantenga la pérdida de suelo por debajo de lo que el suelo tolera."
       },
-      "cover": {
-        "name": "Cubra el suelo",
-        "goal": "Tenga menos días de suelo desnudo que su granja de hoy, de 2019 a 2023."
+      "beat": {
+        "name": "Supere su rotación actual",
+        "goal": "De 2019 a 2023. Gane a su campo de hoy en dinero, luego en suelo y luego en agua."
+      },
+      "free": {
+        "name": "Juego libre",
+        "goal": "Cinco años pasados al azar. Sin meta, solo pruebe."
       }
     },
     "start": {
-      "title": "Juegue 5 temporadas",
-      "intro": "Cada año usted elige un cultivo y luego se juega un año real de clima del pasado en su campo. Ocho medidores muestran lo que pasó.",
+      "title": "Juegue 5 temporadas en 4 parcelas",
+      "intro": "Divida su campo en 4 parcelas y pruebe un plan distinto en cada una. El mismo clima real del pasado cae sobre las cuatro, así ve qué plan aguanta.",
       "loaded": "Plan cargado:",
-      "playLoaded": "Jugar este plan",
-      "free": "Juego libre (años pasados al azar)",
-      "challenges": "Retos"
+      "challenges": "Elija un juego",
+      "loadedWhere": "Va en la parcela 1. Puede cambiarlo ahí."
     },
     "planNote": {
       "doubleCrop": "Este plan tiene un doble cultivo. El juego usa un cultivo por año, así que se omite el segundo.",
@@ -2039,6 +2042,43 @@
       "phNote": "Algunos números usan valores por defecto hasta que se conecten los modelos del campo.",
       "again": "Jugar el mismo clima otra vez",
       "another": "Probar otro plan"
+    },
+    "plotN": "Parcela {n}",
+    "plotEmpty": "Sin semilla",
+    "pickPlot": "Elija una parcela",
+    "noCover": "Sin cobertura",
+    "hud": {
+      "exit": "Salir del juego",
+      "coins": "Monedas: {usd}"
+    },
+    "tool": {
+      "label": "Herramientas",
+      "seeds": "Semillas",
+      "cover": "Cobertura",
+      "tillage": "Labranza",
+      "fert": "Fertilizante",
+      "irr": "Agua",
+      "locked": "Se fija en el año 1. El modelo usa una sola forma de trabajar cada parcela durante los 5 años.",
+      "coverNote": "Una cobertura de invierno crece antes del cultivo de este año y se termina al sembrar."
+    },
+    "fert": {
+      "low": "Bajo (media dosis)",
+      "med": "Dosis usual",
+      "high": "Alto (1.5 ×)"
+    },
+    "setup": {
+      "cost": "Parcela {n}: preparación {usd} · todas {total}",
+      "costNote": "Semilla, fertilizante, pasadas y aplicaciones para esta parcela, según la biblioteca de cultivos. Los costos de cosecha y agua se descuentan cuando ocurren.",
+      "start": "Iniciar temporada"
+    },
+    "fill": {
+      "title": "Llenado rápido",
+      "best": "Mejor plan en la parcela 3",
+      "today": "Mi rotación actual en la parcela 4",
+      "loaded": "Plan cargado en la parcela {n}",
+      "clear": "Vaciar la parcela {n}",
+      "lockNote": "Después del año 1 solo cambian los cultivos; la labranza, el fertilizante y el agua quedan como estaban.",
+      "short": "Rápido"
     }
   }
 }

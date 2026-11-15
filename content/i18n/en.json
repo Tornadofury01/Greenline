@@ -1847,11 +1847,11 @@
       "play": "Play"
     },
     "title": "Farm game",
-    "intro": "Try a plan on your own field, one season at a time.",
+    "intro": "Four plots on your own field, five seasons of real past weather. Set up each plot, then watch it grow.",
     "loading": "Loading the game…",
     "playThis": "Play this plan",
     "banner": "Replays real past weather on your field. Not a forecast.",
-    "progress": "Year {n} of {total}",
+    "progress": "Year {n}/{total}",
     "running": "Growing the season…",
     "error": "The season could not be run.",
     "weatherOf": "Weather of {year} on this field",
@@ -1922,7 +1922,7 @@
       "same": "same as last year"
     },
     "scene": {
-      "alt": "Your field in {month}, drawn from the simulation"
+      "alt": "Your field split into 4 plots, drawn from the simulation"
     },
     "play": {
       "play": "Play",
@@ -1993,25 +1993,28 @@
     },
     "challenge": {
       "drought": {
-        "name": "The 2011 drought",
-        "goal": "Make more money than your farm today over 2009 to 2013."
+        "name": "Survive 2011",
+        "goal": "Five seasons, 2009 to 2013, with the 2011 drought in the middle. Don't run out of money."
       },
       "soil": {
         "name": "Keep the soil",
-        "goal": "Keep soil loss under what the soil can tolerate every year, 2015 to 2019."
+        "goal": "2015 to 2019, including a very wet year. Keep soil loss under what the soil can tolerate."
       },
-      "cover": {
-        "name": "Cover the ground",
-        "goal": "Have fewer bare days than your farm today, 2019 to 2023."
+      "beat": {
+        "name": "Beat your current rotation",
+        "goal": "2019 to 2023. Beat your farm today on money, then soil, then water."
+      },
+      "free": {
+        "name": "Free play",
+        "goal": "Five random past years. No goal, just try things."
       }
     },
     "start": {
-      "title": "Play 5 seasons",
-      "intro": "Each year you pick a crop, then a real past year of weather plays out on your field. Eight meters show what happened.",
+      "title": "Play 5 seasons on 4 plots",
+      "intro": "Split your field into 4 plots and try a different plan on each. The same real past weather plays on all four, so you see which plan holds up.",
       "loaded": "Plan loaded:",
-      "playLoaded": "Play this plan",
-      "free": "Free play (random past years)",
-      "challenges": "Challenges"
+      "challenges": "Pick a game",
+      "loadedWhere": "It goes on plot 1. You can change it there."
     },
     "planNote": {
       "doubleCrop": "This plan has a double crop. The game plays one crop a year, so the second crop is left out.",
@@ -2039,6 +2042,43 @@
       "phNote": "Some numbers use default model values until the field models are plugged in.",
       "again": "Play the same weather again",
       "another": "Try another plan"
+    },
+    "plotN": "Plot {n}",
+    "plotEmpty": "No seed",
+    "pickPlot": "Pick a plot",
+    "noCover": "No cover",
+    "hud": {
+      "exit": "Leave the game",
+      "coins": "Coins: {usd}"
+    },
+    "tool": {
+      "label": "Farm tools",
+      "seeds": "Seeds",
+      "cover": "Cover",
+      "tillage": "Tillage",
+      "fert": "Fertilizer",
+      "irr": "Water",
+      "locked": "Set in year 1. The model runs one way of farming on each plot for all 5 years.",
+      "coverNote": "A winter cover grows before this year's crop and is ended at planting."
+    },
+    "fert": {
+      "low": "Low (half rate)",
+      "med": "Usual rate",
+      "high": "High (1.5 ×)"
+    },
+    "setup": {
+      "cost": "Plot {n} setup {usd} · all plots {total}",
+      "costNote": "Seed, fertilizer, field passes and sprays for this plot, from the crop library. Harvest and water costs come off when they happen.",
+      "start": "Start season"
+    },
+    "fill": {
+      "title": "Quick fill",
+      "best": "Best plan on plot 3",
+      "today": "My current rotation on plot 4",
+      "loaded": "Loaded plan on plot {n}",
+      "clear": "Clear plot {n}",
+      "lockNote": "After year 1 only the crops change; tillage, fertilizer and water stay as set.",
+      "short": "Quick fill"
     }
   }
 }
