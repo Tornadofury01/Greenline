@@ -1395,7 +1395,10 @@
     },
     "weightedFor": "Weighted for your goals: {goals}.",
     "neighbors": "{count} fields within {miles} miles do this.",
-    "checkOf": "{name} check"
+    "checkOf": "{name} check",
+    "indexLabel": "On this page",
+    "sideBySide": "Side by side",
+    "seeDetails": "See details"
   },
   "placeholder": {
     "noOutlook": "No outlook yet; the calendar average is used."

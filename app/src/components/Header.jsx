@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { BookOpen, Plus, Sun, Moon, X } from 'lucide-react';
+import { BookOpen, Plus, X } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import Logo from './Logo.jsx';
 import { NavItems, SCREENS } from './BottomNav.jsx';
@@ -17,9 +17,8 @@ const MENU_LABEL = {
 };
 
 export default function Header() {
-  const { t, lang, setLang, theme, setTheme, field, screen, setScreen, openHow } = useApp();
+  const { t, lang, setLang, field, screen, setScreen, openHow } = useApp();
   const [open, setOpen] = useState(false);
-  const nextTheme = theme === 'dark' ? 'light' : 'dark';
   useEffect(() => { setOpen(false); }, [screen]);
   useEffect(() => {
     if (!open) return undefined;
@@ -66,10 +65,6 @@ export default function Header() {
                 </button>
               ))}
             </div>
-            <button type="button" className="menu-theme" onClick={() => setTheme(nextTheme)}>
-              {theme === 'dark' ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
-              {t(`app.theme.${nextTheme}`)}
-            </button>
           </div>
         </div>
       )}

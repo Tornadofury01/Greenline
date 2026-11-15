@@ -11,8 +11,8 @@
 
 /* ---------- Shared: type, spacing, shape, sizes, motion ---------- */
 :root {
-  --font: Manrope, "Segoe UI", system-ui, sans-serif;
-  --font-display: "Instrument Serif", Georgia, serif;
+  --font: "Inter Tight Variable", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Inter Tight Variable", "Helvetica Neue", Arial, sans-serif;
   --text-xs: 0.875rem;   /* 14px: source lines and meta only */
   --text-base: 1rem;     /* 16px minimum for body */
   --text-md: 1.125rem;   /* 18px */
@@ -34,9 +34,9 @@
   --s-5: 48px;
 
   /* Shape */
-  --radius-sm: 8px;
-  --radius: 14px;         /* buttons and cards stay flat, like a printed sheet */
-  --radius-card: 24px;
+  --radius-sm: 2px;
+  --radius: 2px;         /* buttons and cards stay flat, like a printed sheet */
+  --radius-card: 2px;
   --radius-pill: 999px;
   --border: 1px solid var(--color-border);
   --brand-forest: #12402f;
@@ -71,22 +71,22 @@
 /* ---------- Light theme (also the print theme) ---------- */
 :root, :root[data-theme="light"] {
   color-scheme: light;
-  --color-bg: #f4efe2;
-  --color-surface: #fbf8f0;
-  --color-surface-sunken: #e5ead6;
-  --color-text: #10301f;
-  --color-text-muted: #4b5f4f;
-  --color-border: #dcd5c0;
-  --color-border-strong: #8e9c86;
+  --color-bg: #f1f0ea;
+  --color-surface: #f1f0ea;
+  --color-surface-sunken: #e6e4da;
+  --color-text: #141a16;
+  --color-text-muted: #545a53;
+  --color-border: #d3cfc2;
+  --color-border-strong: #8d9086;
 
-  --color-primary: #12402f;
-  --color-primary-hover: #0b2f22;
-  --color-primary-soft: #dde9cf;
-  --color-on-primary: #f4efe2;
-  --color-accent: #12402f;
-  --color-accent-hover: #0b2f22;
-  --color-on-accent: #f4efe2;
-  --color-accent-border: #12402f;
+  --color-primary: #1e5a3c;
+  --color-primary-hover: #164a31;
+  --color-primary-soft: #dbe5d2;
+  --color-on-primary: #f1f0ea;
+  --color-accent: #1e5a3c;
+  --color-accent-hover: #164a31;
+  --color-on-accent: #f1f0ea;
+  --color-accent-border: #1e5a3c;
 
   --color-soil: #7a4e2d;
   --color-soil-soft: #f1e7dc;
@@ -111,23 +111,23 @@
   --chart-none: #ebe6d6;
   --hatch: rgb(255 255 255 / 0.35);
 
-  --glass: rgb(251 248 240 / 0.94);  /* cards and bars floating over the map */
-  --color-focus: #2f6a4c;
+  --glass: rgb(241 240 234 / 0.95);  /* cards and bars floating over the map */
+  --color-focus: #1e5a3c;
   /* Map (light): bright imagery, white map chrome, dark labels with a white halo */
-  --map-bg: #efeadc;          /* behind the tiles, and the whole map when offline */
+  --map-bg: #f1f0ea;          /* behind the tiles, and the whole map when offline */
   --map-outline: #ffffff;     /* the 300 field outlines */
   --map-selected: var(--brand-sage);
-  --map-ink: #10301f;         /* labels and notes on the imagery (14:1 on --map-scrim) */
-  --map-halo: rgb(251 248 240 / 0.95);
-  --map-scrim: rgb(251 248 240 / 0.88);
+  --map-ink: #141a16;         /* labels and notes on the imagery (14:1 on --map-scrim) */
+  --map-halo: rgb(241 240 234 / 0.95);
+  --map-scrim: rgb(241 240 234 / 0.9);
   --map-mask: rgb(255 255 255 / 0.38); /* dims everything outside the study area */
-  --map-line: #10301f;        /* county line */
+  --map-line: #141a16;        /* county line */
   --map-dim: brightness(1.04) saturate(0.95);
   --shadow-float: 0 10px 30px -12px rgb(16 48 31 / 0.28);
   --backdrop: rgb(27 31 28 / 0.45);
   /* Moncalisse slide card (cream sheet, brown ink) and Eloqwnt cards (white, 11px and 20px corners). */
-  --mc-paper: #fbf8f0;
-  --mc-ink: #10301f;
+  --mc-paper: #f1f0ea;
+  --mc-ink: #141a16;
   --eq-radius: 24px;
   --eq-radius-sm: 11px;
 }
