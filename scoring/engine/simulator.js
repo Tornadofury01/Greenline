@@ -5,6 +5,11 @@
 //   sim.run()       // advance to the end, returns the summary
 //   sim.state       // everything (soil water, carbon, nitrogen, crop, pests, ledger) in plain objects
 //
+// Optional cfg.initialState = { soilW: [mm x 3 layers], organic: { cFast, cSlow, nMin, nRes, residueLb, residueCoeff }, pests: { id: { counter, pressure } } }
+// replaces the default starting soil water, carbon / nitrogen / residue and pest pressure (e.g. the end state of a run over the
+// field's real crop history). Missing keys keep the defaults; without it nothing changes. The water / N balances and the SOM
+// trend start from the state actually used.
+//
 // Order of work every day (docs/fieldshift-v2.md "The engine"):
 //   0 events due today (planting, tillage, fertilizer, harvest / termination, cuts)   1 weather in
 //   2 irrigation decision + water balance (rain, runoff, evaporation, transpiration, drainage)
@@ -77,6 +82,7 @@ export function createSimulation(cfg) {
     epIdx: 0, acc: emptyAcc(), years: [], episodes: [], ledger: [], events: [],
     cum: { rain: 0, irr: 0, runoff: 0, evap: 0, transp: 0, drain: 0, erosion: 0, bareDays: 0, leachN: 0, fertN: 0, fixN: 0, removedN: 0, revenue: 0, cost: 0, waterResidual: 0, waterResidualMaxDay: 0, mineralized: 0 },
   };
+  applyInitialState(S, cfg.initialState);
   const storage0 = soil.w[0] + soil.w[1] + soil.w[2];
   const totalN0 = totalN(S.organic);
   const somStart = somPercent(S.organic);
@@ -356,4 +362,21 @@ export function createSimulation(cfg) {
 /** Convenience: build, run, return the summary. */
 export function runSimulation(cfg) {
   return createSimulation(cfg).run();
+}
+
+const isFiniteNum = (v) => typeof v === 'number' && Number.isFinite(v);
+/** Copy a starting state (see the header) onto a fresh S. Only finite, non-negative numbers are taken. */
+function applyInitialState(S, init) {
+  if (!init) return;
+  if (Array.isArray(init.soilW)) init.soilW.forEach((v, i) => { if (i < S.soil.w.length && isFiniteNum(v) && v >= 0) S.soil.w[i] = Math.min(v, S.soil.cap[i]); });
+  for (const k of ['cFast', 'cSlow', 'nMin', 'nRes', 'residueLb', 'residueCoeff']) {
+    const v = init.organic?.[k];
+    if (isFiniteNum(v) && v >= 0) S.organic[k] = v;
+  }
+  if (isFiniteNum(init.organic?.cSlow) && init.organic.cSlow >= 0) S.organic.cSlow0 = init.organic.cSlow;
+  for (const [id, p] of Object.entries(init.pests ?? {})) {
+    if (!S.pests[id]) continue;
+    if (isFiniteNum(p?.counter)) S.pests[id].counter = p.counter;
+    if (isFiniteNum(p?.pressure)) S.pests[id].pressure = p.pressure;
+  }
 }

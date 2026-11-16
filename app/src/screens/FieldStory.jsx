@@ -208,7 +208,7 @@ function YearDetail({ year }) {
       </section>
 
       <div className="lg:col-span-2">
-        <button type="button" className="btn btn-primary btn-lg rounded-none px-7" onClick={() => { setReplayYear(year); setScreen('compare'); }}>
+        <button type="button" className="btn btn-primary btn-lg rounded-none px-7" onClick={() => { setReplayYear(year); setScreen('rotations'); setTimeout(() => scrollToId('test'), 600); }}>
           {t('replayUi.see', { year })}<ArrowRight size={20} aria-hidden="true" />
         </button>
       </div>

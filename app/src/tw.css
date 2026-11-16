@@ -80,3 +80,13 @@ main:has(.options-page) { max-width: none; }
 .history-replay-page .satellite-replay-facts dt { font-size: .875rem; }
 .history-replay-page .satellite-replay-facts dd { font-size: 1.0625rem; }
 @media (max-width: 639px) { .history-replay-page .replay-play { min-width: 0; padding-inline: 12px; } }
+/* Phone tabs (Field, Farm, Rotations, Simulator, More): the floating bottom bar is back below 1024px; the desktop keeps
+   the Menu. The map page already sits its card above the bar (.map-bottom in styles.css). */
+@media (max-width: 1023px) {
+  .bottom-nav { display: block; }
+  .app:not(.app-map) { padding-bottom: calc(var(--nav-h) + var(--nav-gap) * 2 + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 1023px) {
+  /* Map page: keep the field card and map tools above the phone tab bar. */
+  .app-map .map-bottom { bottom: calc(var(--nav-h) + var(--nav-gap) * 2 + env(safe-area-inset-bottom)); }
+}

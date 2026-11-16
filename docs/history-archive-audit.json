@@ -1,0 +1,425 @@
+{
+  "verifiedFields": 300,
+  "playable": 300,
+  "frameCountRange": [
+    16,
+    18
+  ],
+  "frameCounts": {
+    "17": 64,
+    "18": 233,
+    "16": 3
+  },
+  "sharedScenes": 24,
+  "referencedImageBytes": 10391395,
+  "fieldsWithGaps": [
+    {
+      "fieldId": "ec-000",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-003",
+      "missingPeriods": [
+        "2024-04",
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-005",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-006",
+      "missingPeriods": [
+        "2024-04",
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-008",
+      "missingPeriods": [
+        "2024-04",
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-009",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-016",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-018",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-019",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-022",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-024",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-026",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-031",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-032",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-046",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-047",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-048",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-049",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-054",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-057",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-069",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-071",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-072",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-077",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-078",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-079",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-088",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-091",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-095",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-096",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-104",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-115",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-121",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-123",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-129",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-130",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-133",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-134",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-142",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-143",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-159",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-186",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-193",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-194",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-197",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-202",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-204",
+      "missingPeriods": [
+        "2024-02"
+      ]
+    },
+    {
+      "fieldId": "ec-207",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-209",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-210",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-220",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-231",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-234",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-236",
+      "missingPeriods": [
+        "2024-04"
+      ]
+    },
+    {
+      "fieldId": "ec-246",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-253",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-257",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-259",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-261",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-262",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-264",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-269",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-272",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-278",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-282",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-292",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    },
+    {
+      "fieldId": "ec-296",
+      "missingPeriods": [
+        "2024-06"
+      ]
+    }
+  ],
+  "missingMonthlyOrAnnualLabels": [],
+  "outlineChecks": "All vertices match the mapped outlines in EPSG:3857",
+  "darkOrEmptyFieldViews": []
+}

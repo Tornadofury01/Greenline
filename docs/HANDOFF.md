@@ -1,7 +1,5 @@
 # Greenline: Full Handoff for Claude Code
 
-> **Update, Nov 14 2026 (after this file was written).** The 201 sampled `nt-*` fields, the demo field `nt-103` and the three original models described below are **retired** (kept in git history, tag `v1.1-checkpoint`). The app now runs on **300 Ellis County fields (USDA outlines, `ec-000` … `ec-299`, demo `ec-251`)** with the Field Shift models (`pipeline/MODELS.md`) and one shared county weather series. Sections 5, 6, 8 and 9 below are the retired numbers; the current ones are in section 8a and in `CLAUDE.md` (Build status). Work happens on branch `nikkibranch`.
-
 **Read this first, all of it, before touching anything.** It is the complete context from the long planning and build conversation with the team (Divya and teammates, Brightcone), written so a fresh Claude Code session can continue without asking the team to re-explain. It complements `CLAUDE.md` (which stays the source of truth for code paths and commands). Where this file and `CLAUDE.md` disagree about code, trust the code and `CLAUDE.md`, then tell the user.
 
 Live app: https://greenline-psi.vercel.app · Repo: github.com/Tornadofury01/Greenline (public) · Last tag: `v1.0-checkpoint` on `main`.
@@ -73,7 +71,8 @@ Ten global awards: Best Use of Science, **Best Use of Data**, Best Use of Techno
 - No recognizable people under 18. Adults must consent to NASA's use of name and likeness. No personal information.
 - Click **"Submit for Judging"** before the local event's deadline (its time zone). Submissions are final; late ones are not judged. **"Save Progress" makes the page publicly visible.** Test every link in a private browser.
 - All team members must be confirmed at the same Local Event.
-- **The exact deadline and time zone are NOT confirmed. Ask the user to confirm with the Local Lead.**
+- **Deadline (from the official Judging & Awards Guide): Sunday, November 15, 2026 at 11:59 p.m. local time of the Local Event (Dallas = Central Time).** Confirm with the Dallas Local Lead, but plan for this. No new features after the freeze; protect the submission.
+- **Award focus (decided Nov 14 after studying the 2023–2025 winners): Local Impact** ("greatest potential for making a difference in their local community"). The data rigor (7 NASA sources, PRISM validation, the Landsat sensor catch) is the evidence that backs the local story, not a second story. Every piece of submission text and the video should lead with North Texas / Ellis County, a sourced local number, real farmer input, and a concrete next step with the local extension office. Local numbers: Ellis County has 2,563 farms and 203,455 acres of cropland (corn 34,337, wheat 29,231, cotton 17,349, sorghum 9,165 acres; 2022 Census of Agriculture); Texas farms lost a record $7.62 billion to the 2011 drought (Texas AgriLife Extension economists).
 
 ---
 
@@ -99,8 +98,9 @@ Ten global awards: Best Use of Science, **Best Use of Data**, Best Use of Techno
 4. **Field story:** green / partly covered / bare months from Landsat 8/9 (2014+), pre-2013 shown muted with a low-confidence tag; drought/wet/heat/normal years; bare days per year; soil facts (K, T, water in top 1 m, land capability class); PRISM frost dates.
 5. **Compare rotations:** current + best suggestions + "build my own". Each card: score, bare days per year, why / evidence (dataset receipts) / benefits / gaps / risks, tags (nitrogen-fixing, cover crop, deep roots, diverse, drought-tolerant, pest-cycle break), confidence with up and down reasons, AI insights, dollar estimates (gross revenue, before costs, not profit; fertilizer value from N fixing).
 6. **Replay a bad year** (2011, 2023, 2007, 2004, 2018, 2000): each rotation re-scored under real weather, verdicts Holds up / Under strain / Struggles / Struggles badly. **What-if sliders:** rain −50…+50 %, extra days ≥ 95 °F 0…+40, labeled "Hypothetical, not a forecast". A scenario can only lower the normal score.
-7. **Expert handoff:** printable page for the county extension agent with evidence, confidence, questions, NRCS cost-share note.
-8. **How we know** (book icon): glossary (NDVI, residue, ET, soil moisture anomaly, frost, water balance, bare days, confidence, held-out accuracy, satellite vs ground, why 2013 matters).
+7. **Farm simulator** (More menu, a game): split your field into 4 plots, set each one up (crop, cover, tillage, fertilizer, irrigation), then play 5 seasons of real past weather and see which plot holds up (money, soil, water). Free play (5 random past years) or 3 challenges with stars (Survive 2011, Keep the soil, Beat your current rotation). "Play this plan" on Plans / Compare loads a plan onto plot 1. Labeled "Replays real past weather on your field. Not a forecast." **Numbers are mock until the engine is wired in `app/src/game/runSource.js`** (the game shows a "Mock numbers" tag). It replaced the old chart simulator (docs/game-plan.md, G2d).
+8. **Expert handoff:** printable page for the county extension agent with evidence, confidence, questions, NRCS cost-share note.
+9. **How we know** (book icon): glossary (NDVI, residue, ET, soil moisture anomaly, frost, water balance, bare days, confidence, held-out accuracy, satellite vs ground, why 2013 matters).
 
 ---
 
@@ -191,18 +191,7 @@ Held-out stability 97.6 %; agreement with a percentile rule 64.3 %; clusters nor
 
 ---
 
-## 8a. Current pitch numbers (ec-251, Ellis County, dryland, goals water + soil; read from the scoring on Nov 14 2026)
-
-| Rotation | Bare days/yr | Normal score | 2011 drought | Verdict |
-|---|---|---|---|---|
-| Current, the app's guess: cotton, corn, sorghum | 54 | 31 | 12 | Struggles |
-| Current, set by hand to cotton → corn | 62 | 21 | 0 | Struggles |
-| **Option A: wheat, cowpea, sorghum, rye** | **16** | **80** | 67 | Under strain |
-| Option B: wheat, sorghum-sudan, rye, sorghum | 25 | 76 | 63 | Under strain |
-
-Field: about 42 bare days a year (Landsat 8/9, 2014–2025; a whole-outline average that may undercount bare soil, MODELS.md #1); 2011 rain 24.7 in (−34 % by NASA POWER, −37 % by PRISM); soil holds 6.3 in. Model 1: 83.1 % on unseen years 2023–2025 (91.7 % on clean-label fields) vs 58 % for "same as last year"; fallow recall 0 %. Model 2: AUC 0.936 on unseen years.
-
-## 8. RETIRED pitch numbers (nt-103, v1.1-checkpoint; Ellis County, dryland, goals water + soil)
+## 8. Pitch numbers (nt-103, Ellis County, dryland, goals water + soil)
 
 | Rotation | Bare days/yr | Normal score | 2011 drought | Verdict |
 |---|---|---|---|---|

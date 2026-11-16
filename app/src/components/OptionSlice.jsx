@@ -1,5 +1,5 @@
 // One rotation's details on the Options page, built from daisyUI parts (steps, progress, badges, stats, collapse)
-// with no card around it. Shown one rotation at a time (tabs in screens/Options.jsx) so the page stays roomy and
+// with no card around it. Shown one rotation at a time (tabs in screens/Rotations.jsx) so the page stays roomy and
 // readable. Props only (data/v2Options.js).
 import { useId, useMemo, useState } from 'react';
 import { ArrowUpRight, ArrowUp, ArrowDown, CircleCheck, TriangleAlert, CircleX, Users, MapPinned } from 'lucide-react';

@@ -80,7 +80,7 @@ export default function YourFarm() {
 
       <p className="source"><Lock size={14} aria-hidden="true" /><span>{t('farm.privacy')}</span></p>
 
-      <button type="button" className="btn btn-primary btn-block btn-cta" onClick={() => setScreen('compare')}>
+      <button type="button" className="btn btn-primary btn-block btn-cta" onClick={() => setScreen('rotations')}>
         {t('farm.seeResults')}<ArrowRight size={20} aria-hidden="true" />
       </button>
     </div>
