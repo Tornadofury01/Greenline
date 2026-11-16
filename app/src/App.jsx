@@ -5,8 +5,7 @@ import BottomNav from './components/BottomNav.jsx';
 import PickField from './screens/PickField.jsx';
 import YourFarm from './screens/YourFarm.jsx';
 import FieldStory from './screens/FieldStory.jsx';
-import CompareRotations from './screens/CompareRotations.jsx';
-import Plans from './screens/Plans.jsx';
+import Rotations from './screens/Rotations.jsx';
 import Risks from './screens/Risks.jsx';
 import FarmSimulator from './screens/FarmSimulator.jsx';
 import ExpertHandoff from './screens/ExpertHandoff.jsx';
@@ -18,11 +17,8 @@ const SCREEN_COMPONENTS = {
   farm: YourFarm,
   story: FieldStory,
   risks: Risks,
-  options: Plans, // compatibility: the navigation setter opens Browse all rotations
-  plans: Plans,
-  rotations: Plans, // the one Rotations page (Options + Plans + Compare); old ids redirect here in AppContext
+  rotations: Rotations, // the one decision page (was Options + Plans + Compare); old ids redirect here in AppContext
   sim: FarmSimulator,
-  compare: CompareRotations,
   handoff: ExpertHandoff,
   how: HowWeKnow, // opened from the header and from card links, not a bottom tab
 };

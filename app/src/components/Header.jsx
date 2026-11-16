@@ -7,12 +7,10 @@ import { NavItems, SCREENS } from './BottomNav.jsx';
 const MENU_LABEL = {
   field: 'nav.field',
   farm: 'nav.farmLong',
+  rotations: 'nav.rotationsLong',
   story: 'nav.story',
-  options: 'nav.options',
-  plans: 'nav.plans',
-  risks: 'nav.risksLong',
   sim: 'nav.simLong',
-  compare: 'nav.compareLong',
+  risks: 'nav.risksLong',
   handoff: 'nav.handoffLong',
 };
 

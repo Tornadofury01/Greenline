@@ -91,3 +91,19 @@ export async function setupCosts({ field, modelFile, plots, years, prevCrop, sta
   const runs = await Promise.all(plots.map((p) => runPlot({ field, modelFile, plan: { id: `cost${p.id}`, crops: cropsUpTo(p, k), controls: p.controls }, weatherYears: years, prevCrop, animate: false, start })));
   return runs.map((r) => r.setupUsd);
 }
+
+/**
+ * Rotations page, "Test in a bad year": runs several v2 rotations through the same past weather year (each rotation year
+ * replays that year), optionally with a what-if scenario { warmC, rain }. The first plan is the baseline (today's
+ * rotation): every run gets the same scores and fit checks as the game, judged against it.
+ * plans: [{ id, crops: [{ main, cover }], controls, nScale }]. Returns { runs: [run], ms }.
+ */
+export async function testPlans({ field, modelFile, plans, year, scenario = null, prevCrop = null, start }) {
+  const t0 = performance.now();
+  const raw = await Promise.all(plans.map((p) => post(field, modelFile, {
+    type: 'run', plan: { id: p.id, crops: p.crops, controls: { ...p.controls, nScale: p.nScale ?? 1 } },
+    weatherYears: p.crops.map(() => year), prevCrop, animate: false, start, scenario,
+  })));
+  const base = judge(raw[0], raw[0], field);
+  return { runs: [base, ...raw.slice(1).map((r) => judge(r, base, field))], ms: Math.round(performance.now() - t0) };
+}

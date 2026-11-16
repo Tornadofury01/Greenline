@@ -2,15 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { MapPin, Tractor, CloudRain, ClipboardList, Trophy, ThermometerSun, Ellipsis, FlaskRound } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 
-// Screen ids in order, with one Lucide icon each. `more: true` = lives in the "More" menu on phones and tablets
-// (eight tabs do not fit at 375 px; the Farm simulator is in this menu); the desktop header shows all of them.
+// Screen ids in menu order: Field, Farm, Rotations, History, Farm simulator, Risks, Expert. `more: true` = in the phone's
+// "More" menu (phone tabs: Field, Farm, Rotations, Simulator, More); the desktop Menu lists all of them in this order.
 export const SCREENS = [
   { id: 'field', Icon: MapPin },
   { id: 'farm', Icon: Tractor },
-  { id: 'story', Icon: CloudRain },
-  { id: 'plans', Icon: Trophy },
+  { id: 'rotations', Icon: Trophy },
+  { id: 'story', Icon: CloudRain, more: true },
+  { id: 'sim', Icon: FlaskRound },
   { id: 'risks', Icon: ThermometerSun, more: true },
-  { id: 'sim', Icon: FlaskRound, more: true },
   { id: 'handoff', Icon: ClipboardList, more: true },
 ];
 const TABS = SCREENS.filter((s) => !s.more);
@@ -58,7 +58,7 @@ export default function BottomNav() {
         {TABS.map(({ id, Icon }) => (
           <button key={id} type="button" aria-current={screen === id ? 'page' : undefined} onClick={() => setScreen(id)}>
             <Icon size={24} strokeWidth={screen === id ? 2.25 : 1.75} aria-hidden="true" />
-            <span>{t(`nav.${id}`)}</span>
+            <span>{t(id === 'sim' ? 'nav.simShort' : `nav.${id}`)}</span>
           </button>
         ))}
         <button type="button" className={inMore ? 'is-active' : undefined} aria-current={inMore ? 'page' : undefined}

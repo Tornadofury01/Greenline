@@ -17,6 +17,7 @@ import { makeSlots } from '@scoring/modelSlots.js';
 import { createSimulation, makeWeather, pricesFromField, PEST_TABLE } from '@scoring/engine/index.js';
 import { BIOMASS_G_M2_TO_LB_AC } from '@scoring/engine/constants.js';
 import { metricsOf } from '@scoring/v2/metrics.js';
+import { scenarioWeather } from '@scoring/v2/context.js';
 import { buildPlan, START_YEAR, libById } from '../sim/simSetup.js';
 import { playedStructure, isSetupItem } from './plots.js';
 import { spinUp, startStateFor } from './startState.js';
@@ -30,8 +31,18 @@ function startFor(c, start, stopDay, probeState) {
   return startStateFor({ slots: c.slots, probeState, spun: c.spun.get(key), opts: { lastCrop: start?.lastCrop ?? null, soilTestNLb: start?.soilTestNLb } });
 }
 
-function runOne(c, p, weatherYears, animate, start) {
-  const { field, slots, weather, prices } = c;
+// `scenario` = { warmC, rain } (optional, the Rotations page's what-if): the same engine weather shifted by the engine's own
+// scenarioWeather (scoring/v2/context.js). Cached per scenario so repeated runs reuse it.
+function weatherFor(c, scenario) {
+  if (!scenario || (!scenario.warmC && !scenario.rain)) return c.weather;
+  const key = `${scenario.warmC ?? 0}|${scenario.rain ?? 0}`;
+  if (!c.scen.has(key)) c.scen.set(key, scenarioWeather(c.weather, { warmC: scenario.warmC ?? 0, rain: scenario.rain ?? 0 }, c.field.field?.lat ?? 32));
+  return c.scen.get(key);
+}
+
+function runOne(c, p, weatherYears, animate, start, scenario = null) {
+  const { field, slots, prices } = c;
+  const weather = weatherFor(c, scenario);
   const k = weatherYears.length;
   const controls = { tillage: p.controls.tillage, irrigation: p.controls.irrigation ?? 'none', nitrogen: 'default', shiftDays: p.controls.shiftDays ?? 0, maturity: 'full', termination: 'at-planting' };
   const plan = buildPlan(slots, p.crops.slice(0, k), controls, p.id);
@@ -150,7 +161,7 @@ self.onmessage = (e) => {
     if (m.field) {
       const field = m.field;
       const slots = makeSlots({ field, modelFile: m.modelFile ?? null, placeholders });
-      ctx = { key: m.fieldKey, field, slots, weather: makeWeather(field, { seed: 1 }), prices: pricesFromField(field, library), spun: new Map() };
+      ctx = { key: m.fieldKey, field, slots, weather: makeWeather(field, { seed: 1 }), prices: pricesFromField(field, library), spun: new Map(), scen: new Map() };
     }
     if (!ctx || ctx.key !== m.fieldKey) throw new Error('field not loaded in worker');
     const { slots } = ctx;
@@ -163,7 +174,7 @@ self.onmessage = (e) => {
       return;
     }
     const k = m.weatherYears.length;
-    const r = runOne(ctx, m.plan, m.weatherYears, m.animate, m.start);
+    const r = runOne(ctx, m.plan, m.weatherYears, m.animate, m.start, m.scenario ?? null);
     const seasons = seasonDetails(r.sum, k, m.weatherYears);
     const day = m.animate ? Object.fromEntries(DAY_KEYS.map((x) => [x, Float32Array.from(r.cols[x])])) : null;
     const run = {
