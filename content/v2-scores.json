@@ -17,5 +17,9 @@
     "lowRisk":   { "nameKey": "v2.priorities.lowRisk",   "boost": { "risk": 2, "pests": 1.5 } },
     "saveWater": { "nameKey": "v2.priorities.saveWater", "boost": { "water": 2 } }
   },
+  "rankStrength": {
+    "_note": "The farmer ranks their priorities. A priority at rank r applies its boost at strength values[r-1]: boost ** strength (rank 1 = the full boost, later ranks a smaller one; past the list, the last value). One priority, or none, gives the same weights as before ranking. Same strengths as RANK_STRENGTH in scoring/scoreRotation.js.",
+    "values": [1, 0.6, 0.35, 0.2, 0.1]
+  },
   "grades": { "_note": "Weighted total (0-100) to letter grade. Lowest cut-off first match from the top.", "A": 80, "B": 65, "C": 50, "D": 35, "F": 0 }
 }

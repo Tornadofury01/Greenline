@@ -21,6 +21,7 @@ import { setPlayPlan } from '../game/playPlan.js';
 import OptionSlice, { optionLabel, rotationText } from '../components/OptionSlice.jsx';
 import RotationTest from '../components/RotationTest.jsx';
 import AllRotations from '../components/AllRotations.jsx';
+import RankedPriorities from '../components/RankedPriorities.jsx';
 import { SampleBanner, PlaceholderNotice } from '../components/PlaceholderTag.jsx';
 import { NeedField } from '../components/Small.jsx';
 import { useSmoothScroll, scrollToId } from '../state/useSmoothScroll.js';
@@ -87,7 +88,6 @@ export function RotationsView({ data, sample = false }) {
   };
   const labelFor = (e) => (e.card.kind === 'current' ? t('optionsScreen.current') : e === extra ? `${t('rotations.rank', { n: e.rank })}` : t('optionsScreen.option', { letter: 'ABC'[r.top.indexOf(e)] ?? '' }));
   const open = (id) => { setPicked(id); scrollToId('details'); };
-  const togglePriority = (id) => updateFarm({ priorities: farm.priorities.includes(id) ? farm.priorities.filter((p) => p !== id) : [...farm.priorities, id] });
   const placeholders = tabs.some((e) => e.card.placeholders.length > 0);
   const eligibleCount = r.all.filter((e) => e.eligible).length;
 
@@ -136,27 +136,16 @@ export function RotationsView({ data, sample = false }) {
 
           {/* The priorities: the ranking is calculated from these */}
           <div className="gl-card border-primary/40 lg:col-span-2">
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-start gap-3">
-                <span className="grid h-10 w-10 flex-none place-items-center bg-primary text-primary-content"><Target size={20} aria-hidden="true" /></span>
-                <div>
-                  <h2 className="m-0 text-xl font-bold tracking-tight sm:text-2xl">{t('rotations.prioritiesTitle')}</h2>
-                  <p className="m-0 mt-1 max-w-2xl text-base leading-relaxed text-base-content/80">{t('rotations.prioritiesNote')}</p>
-                </div>
-              </div>
-              <div role="group" aria-label={t('rotations.prioritiesTitle')} className="flex flex-wrap gap-2">
-                {PRIORITIES.map((id) => {
-                  const on = farm.priorities.includes(id);
-                  return (
-                    <button key={id} type="button" aria-pressed={on} onClick={() => togglePriority(id)}
-                      className={`btn btn-md rounded-full px-5 text-base ${on ? 'btn-primary' : 'btn-outline border-base-300 bg-base-100 font-medium'}`}>
-                      {t(`priorities.${id}`)}
-                    </button>
-                  );
-                })}
+            <div className="flex items-start gap-3">
+              <span className="grid h-10 w-10 flex-none place-items-center bg-primary text-primary-content"><Target size={20} aria-hidden="true" /></span>
+              <div>
+                <h2 id="rot-prio-title" className="m-0 text-xl font-bold tracking-tight sm:text-2xl">{t('rotations.prioritiesTitle')}</h2>
+                <p className="m-0 mt-1 max-w-3xl text-base leading-relaxed text-base-content/80">{t('rotations.prioritiesNote')}</p>
               </div>
             </div>
-            {farm.priorities.length === 0 && <p className="m-0 mt-3 text-sm text-base-content/70">{t('rotations.prioritiesNone')}</p>}
+            <div className="mt-4 border-t border-base-300 pt-4">
+              <RankedPriorities options={PRIORITIES} value={farm.priorities} onChange={(v) => updateFarm({ priorities: v })} labelledBy="rot-prio-title" />
+            </div>
           </div>
 
           <div className="flex flex-wrap gap-3 lg:col-span-2">

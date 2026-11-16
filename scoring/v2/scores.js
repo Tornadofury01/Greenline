@@ -13,13 +13,22 @@ const lin = (x, zero, full) => 100 * clamp01((x - zero) / (full - zero)); // 0 a
 const rnd = (x, d = 0) => { const m = 10 ** d; return Math.round(x * m) / m; };
 const toneOf = (sub) => (sub >= 50 + REASON_MIN_DELTA ? 'up' : sub <= 50 - REASON_MIN_DELTA ? 'down' : 'note');
 
-/** Weights for the selected priorities: each selected priority multiplies the weights of the scores it lists, then they add up to 1. */
+/**
+ * Weights for the farmer's priorities, IN RANK ORDER (selected[0] = most important). A priority at rank r multiplies the
+ * weights of the scores it lists by boost ** strength(r) (cfg.rankStrength.values: rank 1 = the full boost, later ranks less),
+ * then the weights are re-scaled to add up to 1. One priority, or none, gives the same weights as before ranking existed.
+ */
+export const rankStrength = (rank, cfg) => {
+  const v = cfg.rankStrength?.values ?? [1];
+  return v[Math.min(rank, v.length - 1)] ?? 1;
+};
 export function weightsFor(selected, cfg) {
   const w = Object.fromEntries(cfg.scores.map((s) => [s.id, s.weight]));
-  for (const p of selected ?? []) {
+  (selected ?? []).forEach((p, rank) => {
     const boost = cfg.priorities?.[p]?.boost;
-    if (boost) for (const [id, m] of Object.entries(boost)) if (id in w) w[id] *= m;
-  }
+    const k = rankStrength(rank, cfg);
+    if (boost) for (const [id, m] of Object.entries(boost)) if (id in w) w[id] *= m ** k;
+  });
   const sum = Object.values(w).reduce((a, b) => a + b, 0);
   return Object.fromEntries(Object.entries(w).map(([id, v]) => [id, Math.round((v / sum) * 10000) / 10000]));
 }
