@@ -165,7 +165,7 @@
     "intro": "Tres pasos rápidos. Sus respuestas se quedan en este teléfono.",
     "step1": "¿Qué siembra ahora?",
     "step2": "¿Qué es lo más importante?",
-    "step2Hint": "Elija una o más. Cuentan doble en el puntaje.",
+    "step2Hint": "Elija lo que le importa y póngalo en orden: la 1 cuenta más en cada puntaje, cada una después un poco menos. La página Rotaciones ordena todas las rotaciones según este orden.",
     "step3": "¿Cuáles son sus límites?",
     "waterMode": "¿Usa riego?",
     "waterSource": "¿De dónde viene su agua?",
@@ -657,7 +657,7 @@
     "title": "Rotaciones",
     "intro": "Todas las rotaciones de cultivos que evaluamos para esta parcela, ordenadas por lo que a usted le importa. Empiece con sus 3 mejores, pruébelas en un mal año o abra la lista completa.",
     "prioritiesTitle": "Ordenado según sus prioridades",
-    "prioritiesNote": "Cada puntaje y orden de esta página se calcula con las prioridades que elija aquí. Si las cambia, todas las rotaciones se vuelven a puntuar y a ordenar. Son las mismas opciones de Su granja.",
+    "prioritiesNote": "Cada puntaje y orden de esta página se calcula con sus prioridades, en el orden en que las ponga: la 1 cuenta más. Si las cambia, todas las rotaciones se vuelven a puntuar y a ordenar. Son las mismas prioridades de Su granja.",
     "prioritiesNone": "Sin prioridad elegida: cada puntaje cuenta con su peso normal.",
     "statBest": "Mejor para sus prioridades",
     "statGain": "Mejor que hoy",
@@ -2075,5 +2075,15 @@
       "go": "Preparar mis parcelas",
       "open": "Inicio"
     }
+  },
+  "priorityRank": {
+    "rankedLabel": "Sus prioridades, la más importante primero",
+    "rankOf": "Prioridad {n}:",
+    "moveUp": "Subir {name}",
+    "remove": "Quitar {name}",
+    "add": "Agregar {name} como prioridad {n}",
+    "addLabel": "Todavía no es prioridad",
+    "hint": "La 1 cuenta más; cada una después cuenta un poco menos. Use la flecha para subir una. Toque + para agregar otra.",
+    "none": "Sin prioridad elegida: cada puntaje cuenta con su peso normal. Toque + para agregar una."
   }
 }

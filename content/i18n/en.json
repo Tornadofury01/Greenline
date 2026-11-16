@@ -165,7 +165,7 @@
     "intro": "Three quick steps. Your answers stay on this phone.",
     "step1": "What do you grow now?",
     "step2": "What matters most?",
-    "step2Hint": "Pick one or more. These count double in the score.",
+    "step2Hint": "Pick what matters and rank it: the 1st counts most in every score, each next one a little less. The Rotations page ranks every rotation by this order.",
     "step3": "What are your limits?",
     "waterMode": "Do you irrigate?",
     "waterSource": "Where does your water come from?",
@@ -657,7 +657,7 @@
     "title": "Rotations",
     "intro": "Every crop rotation we scored for this field, ranked by what matters to you. Start with your top 3, test them in a bad year, or open the full list.",
     "prioritiesTitle": "Ranked for your priorities",
-    "prioritiesNote": "Every score and ranking on this page is calculated from the priorities you pick here. Change them and all rotations are re-scored and re-ranked. These are the same choices as on Your farm.",
+    "prioritiesNote": "Every score and ranking on this page is calculated from your priorities, in the order you rank them: the 1st counts most. Change them and all rotations are re-scored and re-ranked. These are the same priorities as on Your farm.",
     "prioritiesNone": "No priority picked: every score counts at its standard weight.",
     "statBest": "Best for your priorities",
     "statGain": "Better than today",
@@ -2075,5 +2075,15 @@
       "go": "Set up my plots",
       "open": "Start"
     }
+  },
+  "priorityRank": {
+    "rankedLabel": "Your priorities, most important first",
+    "rankOf": "Priority {n}:",
+    "moveUp": "Move {name} up",
+    "remove": "Remove {name}",
+    "add": "Add {name} as priority {n}",
+    "addLabel": "Not a priority yet",
+    "hint": "1 counts most; each next one counts a little less. Use the arrow to move one up. Tap + to add another.",
+    "none": "No priority picked: every score counts at its standard weight. Tap + to add one."
   }
 }

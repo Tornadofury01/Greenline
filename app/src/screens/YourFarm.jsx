@@ -2,6 +2,7 @@
 import { ArrowRight, Sprout, Target, SlidersHorizontal, Lock } from 'lucide-react';
 import { useApp } from '../state/AppContext.jsx';
 import ChipGroup from '../components/ChipGroup.jsx';
+import RankedPriorities from '../components/RankedPriorities.jsx';
 import RotationPicker from '../components/RotationPicker.jsx';
 import { PageHead } from '../components/Small.jsx';
 import { PRIORITIES } from '@scoring/index.js';
@@ -54,7 +55,8 @@ export default function YourFarm() {
 
       <FarmSection id="farm-priorities" icon={Target} title={t('farm.step2')} meta={t('farm.metaPicked', { n: farm.priorities.length })}>
         <p className="hint">{t('farm.step2Hint')}</p>
-        <ChipGroup multi label={t('farm.step2')} options={PRIORITIES} value={farm.priorities} onChange={(v) => updateFarm({ priorities: v })} labelFor={(id) => t(`priorities.${id}`)} />
+        {/* Ranked: the 1st counts most in every score (same picker as the Rotations page) */}
+        <RankedPriorities options={PRIORITIES} value={farm.priorities} onChange={(v) => updateFarm({ priorities: v })} />
       </FarmSection>
 
       <FarmSection id="farm-limits" className="farm-limits" icon={SlidersHorizontal} title={t('farm.step3')}>

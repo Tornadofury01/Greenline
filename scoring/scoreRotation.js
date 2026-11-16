@@ -43,8 +43,15 @@ const EVIDENCE = {
 
 const COVER_ESTABLISHED_IN_DROUGHT = 0.5; // drought replay: cover crops count as half established (a dry fall can stop them)
 const REPLAY_WEIGHT = 3; // when replaying a year, how it held up counts like a priority the farmer picked, plus one (sets how much a bad year pulls the score down)
-const SELECTED_WEIGHT = 2; // priorities the farmer picked count double
+const SELECTED_WEIGHT = 2; // the farmer's 1st priority counts double
 const OTHER_WEIGHT = 1;
+// The farmer ranks their priorities (priorities[0] = most important). Rank r adds (SELECTED_WEIGHT - 1) x RANK_STRENGTH[r]
+// on top of OTHER_WEIGHT: 1st x2, 2nd x1.6, 3rd x1.35, 4th x1.2, 5th x1.1. Same strengths as content/v2-scores.json rankStrength.
+export const RANK_STRENGTH = [1, 0.6, 0.35, 0.2, 0.1];
+export const priorityWeight = (priorities, p) => {
+  const r = priorities.indexOf(p);
+  return r < 0 ? OTHER_WEIGHT : OTHER_WEIGHT + (SELECTED_WEIGHT - OTHER_WEIGHT) * RANK_STRENGTH[Math.min(r, RANK_STRENGTH.length - 1)];
+};
 
 // Pest-cycle break: crops of one plant family share pests and diseases, so a different family between them interrupts the cycle.
 // True when the rotation has a grass crop AND a non-grass crop, and no crop is followed (looping back to the start) by one
@@ -70,9 +77,9 @@ export function scoreRotation(rotation, field, priorities = [], constraints = {}
   const raw = {}; // unrounded rule scores
   for (const p of PRIORITIES) {
     const result = RULES[p](crops, field, constraints, { bareDays });
-    const weight = priorities.includes(p) ? SELECTED_WEIGHT : OTHER_WEIGHT;
+    const weight = priorityWeight(priorities, p);
     raw[p] = result.score;
-    breakdown[p] = { score: Math.round(result.score * 10) / 10, weight, selected: weight === SELECTED_WEIGHT, reasons: result.reasons };
+    breakdown[p] = { score: Math.round(result.score * 10) / 10, weight, selected: priorities.includes(p), rank: priorities.includes(p) ? priorities.indexOf(p) + 1 : null, reasons: result.reasons };
     weighted += result.score * weight;
     weights += weight;
   }

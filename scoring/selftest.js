@@ -1,6 +1,8 @@
 // Quick sanity check: node scoring/selftest.js
 import { readFileSync } from 'node:fs';
 import { scoreRotation, suggestRotations } from './index.js';
+import { priorityWeight } from './scoreRotation.js';
+import { weightsFor } from './v2/scores.js';
 import { topReasons, estimatedTraits } from './confidence.js';
 import { yearHazards, hazardsFromRow } from './rules/replay.js';
 
@@ -153,5 +155,19 @@ check(rotations.every((r) => { const x = scoreRotation(r, real, ['water'], dry, 
 check(normal.breakdown.water.reasons.some((r) => r.key === 'reasons.soilStore.high'), 'water rule: ec-251 Houston Black clay holds a lot of water');
 const ero = scoreRotation({ crops: rot }, real, ['erosion'], dry, lib).breakdown.erosion.reasons;
 check(ero.some((r) => r.key === 'reasons.erodible' && r.params.k === 0.24), 'erosion rule: K x slope reason on ec-251');
+
+// Ranked priorities: the 1st counts most, later ones less, unpicked ones the base weight; one or no priority is unchanged.
+const v2cfg = load('../content/v2-scores.json');
+const wNone = weightsFor([], v2cfg), wWater = weightsFor(['saveWater'], v2cfg);
+const wWS = weightsFor(['saveWater', 'soil'], v2cfg), wSW = weightsFor(['soil', 'saveWater'], v2cfg);
+check(wWS.water > wSW.water && wSW.soil > wWS.soil, 'v2 weights: the same two priorities in a different order give the 1st one more weight');
+check(Math.abs(Object.values(wWS).reduce((a, b) => a + b, 0) - 1) < 1e-3, 'v2 weights still add up to 1 with ranked priorities');
+check(wWater.water > wNone.water && Math.abs(weightsFor(['saveWater'], { ...v2cfg, rankStrength: undefined }).water - wWater.water) < 1e-9,
+  'v2 weights: a single priority gets its full boost, as before ranking');
+check(priorityWeight(['water', 'soil'], 'water') === 2 && priorityWeight(['water', 'soil'], 'soil') === 1.6 && priorityWeight(['water', 'soil'], 'income') === 1,
+  'v1 weights: 1st priority x2, 2nd x1.6, unpicked x1');
+const ranked = scoreRotation({ crops: rot }, real, ['water', 'erosion'], dry, lib).breakdown;
+check(ranked.water.rank === 1 && ranked.erosion.rank === 2 && ranked.income.rank === null && ranked.water.weight > ranked.erosion.weight,
+  'v1 breakdown carries the rank of each priority, and the 1st outweighs the 2nd');
 
 process.exit(failed ? 1 : 0);
