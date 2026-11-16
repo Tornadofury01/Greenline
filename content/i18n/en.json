@@ -710,7 +710,8 @@
     "failed": "Failed: {checks}",
     "empty": "No scored rotation grows that crop.",
     "perAcre": "{usd}/acre",
-    "bareShort": "{n} bare days"
+    "bareShort": "{n} bare days",
+    "noBetter": "None of the {count} rotations we scored passes every check for this field. Most often that means none is as safe as what you grow now in the worst years. The full list below still shows them all, flagged, so you can compare."
   },
   "soil": {
     "texture": {

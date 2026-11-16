@@ -710,7 +710,8 @@
     "failed": "No pasó: {checks}",
     "empty": "Ninguna rotación evaluada siembra ese cultivo.",
     "perAcre": "{usd}/acre",
-    "bareShort": "{n} días desnudo"
+    "bareShort": "{n} días desnudo",
+    "noBetter": "Ninguna de las {count} rotaciones evaluadas pasa todas las pruebas para esta parcela. Casi siempre significa que ninguna es tan segura como lo que siembra ahora en los peores años. La lista completa abajo las muestra todas, marcadas, para que pueda comparar."
   },
   "soil": {
     "texture": {

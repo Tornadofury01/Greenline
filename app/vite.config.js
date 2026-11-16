@@ -56,10 +56,11 @@ export default defineConfig(({ mode }) => {
           // v2 fields are packed into public/v2f/ (scripts/pack-v2-fields.mjs): only the demo field is precached.
           globPatterns: ['**/*.{js,css,html,svg,png,json}', `v2f/${DEMO_FIELD_ID}.json.gz`],
           // v1 field files (assets/fields/) and v2 field files (assets/ec-NNN-*.js): precache only the demo field.
-          globIgnores: ['**/history/**', '**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js', '**/assets/ec-!(' + DEMO_FIELD_ID.slice(3) + ')-*.js'],
+          // County fields (5-digit FIPS ids like 48139-0057) are never precached either: they are cached when opened.
+          globIgnores: ['**/history/**', '**/assets/fields/!(' + DEMO_FIELD_ID + ')-*.js', '**/assets/ec-!(' + DEMO_FIELD_ID.slice(3) + ')-*.js', '**/assets/48[0-9][0-9][0-9]-*.js'],
           maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
           runtimeCaching: [{
-            urlPattern: ({ url }) => url.pathname.includes('/assets/fields/') || /\/assets\/ec-\d+-/.test(url.pathname),
+            urlPattern: ({ url }) => url.pathname.includes('/assets/fields/') || /\/assets\/(ec|\d{5})-\d+-/.test(url.pathname),
             handler: 'CacheFirst',
             options: { cacheName: 'greenline-fields', expiration: { maxEntries: 80 } },
           }, {

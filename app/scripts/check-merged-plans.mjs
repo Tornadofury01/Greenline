@@ -11,11 +11,22 @@ try {
   const { pickBestPlans } = await server.ssrLoadModule('@scoring/v2/analyzeField.js');
   const { weightsFor } = await server.ssrLoadModule('@scoring/v2/scores.js');
   const config = JSON.parse(await readFile(new URL('../../content/v2-scores.json', import.meta.url), 'utf8'));
-  let distinct = 0, overlap = 0, alternatives = 0, fallback = 0;
+  let distinct = 0, overlap = 0, alternatives = 0, fallback = 0, noEligible = 0;
   for (const file of files) {
     const data = JSON.parse(await readFile(new URL(file, dir), 'utf8'));
     const original = JSON.stringify(data);
     const built = buildMergedPlans(data);
+    // Some fields have no rotation that passes every limit (e.g. none is as safe as today in the worst years). Then there
+    // is no "best" and only today's rotation is shown: never an invented alternative.
+    const anyEligible = data.options.some((o) => eligibleAlternative(o) && rotationKey(o) !== rotationKey(data.current));
+    assert.equal(!!built.best, anyEligible, file + ' best exists exactly when an eligible rotation exists');
+    if (!built.best) {
+      noEligible++;
+      assert.equal(built.strategies.length, 1, file + ' no eligible rotation: only today is shown');
+      assert.equal(built.strategies[0].option, data.current, file);
+      assert.equal(JSON.stringify(data), original, 'Presentation must not mutate v2 data');
+      continue;
+    }
     assert.equal(built.best.option.id, data.bestPlans.bestBalance.optionId, file);
     assert.equal(built.best.returns.typical, built.best.option.profit.returnAboveVariable.typical, file);
     assert.equal(built.strategies[0].option, data.current, file);
@@ -35,8 +46,9 @@ try {
     for (const [priorities, mapped] of [[['water', 'soil'], ['saveWater', 'soil']], [['income'], ['income']], [['soil'], ['soil']]]) {
       const farm = { priorities, waterMode: 'dryland' };
       const pool = data.options.filter((o) => eligibleAlternative(o, farm) && rotationKey(o) !== rotationKey(data.current));
-      const expected = pickBestPlans(pool, data.current, weightsFor(mapped, config), config).bestBalance.optionId;
       const actual = buildMergedPlans(data, farm);
+      if (!pool.length) { assert.equal(actual.best, null, file + ' priority selection: none eligible'); continue; }
+      const expected = pickBestPlans(pool, data.current, weightsFor(mapped, config), config).bestBalance.optionId;
       assert.equal(actual.best.option.id, expected, file + ' priority selection');
       assert.equal(new Set(actual.strategies.map((s) => rotationKey(s.option))).size, actual.strategies.length, file + ' duplicate crop cycle');
       const alt = actual.strategies.find((s) => s.kind === 'alternative');
@@ -59,7 +71,7 @@ try {
   assert.equal(supportedReturn({ profit: { returnAboveVariable: { typical: 10, unit: 'usd/acre' } } }), null);
   assert.equal(supportedReturn({ profit: { returnAboveVariable: { typical: 10, low: 20, high: 30, unit: 'usd/acre/year' } } }).low, null);
   assert.equal(supportedReturn({ profit: { returnAboveVariable: { typical: -10, low: -20, high: 0, unit: 'usd/acre/year' } } }).typical, -10);
-  console.log(JSON.stringify({ fields: files.length, distinct, overlap, alternatives, fallback, guards: 'passed' }));
+  console.log(JSON.stringify({ fields: files.length, distinct, overlap, alternatives, fallback, noEligible, guards: 'passed' }));
 } finally {
   await server.close();
 }

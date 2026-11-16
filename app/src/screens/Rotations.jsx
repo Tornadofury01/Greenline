@@ -190,6 +190,16 @@ export function RotationsView({ data, sample = false }) {
         </ol>
       </section>
 
+      {/* No rotation passed every check and limit for this field: say so plainly, never invent one */}
+      {r.top.length === 0 && (
+        <section className="w-full px-5 pb-4 sm:px-8 lg:px-12">
+          <p role="note" className="gl-card m-0 flex items-start gap-3 text-base leading-relaxed">
+            <TriangleAlert size={22} className="mt-0.5 flex-none text-warning" aria-hidden="true" />
+            <span>{t('rotations.noBetter', { count: r.all.length })}</span>
+          </p>
+        </section>
+      )}
+
       {/* One rotation at a time */}
       <section id="details" ref={detailsRef} className="w-full px-5 pb-12 pt-4 sm:px-8 lg:px-12">
         <h2 className="m-0 text-3xl font-bold tracking-tight sm:text-4xl">{t('rotations.detailsTitle')}</h2>
